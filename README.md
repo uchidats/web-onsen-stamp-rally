@@ -1,6 +1,8 @@
 # 温泉の旅（My Onsen Journey）
 
-67施設の公開情報と利用者個人の記録を分離した静的サイトです。公開時は `index.html`、`data.js`、`records.js`、`app.js` を配置してください。Googleログイン・Firebaseは未実装です。
+67施設の公開情報と利用者個人の記録を分離した静的サイトです。公開時はHTML、CSS、JavaScript（`analytics.js`を含む）と `vendor/`・`assets/` を配置してください。Googleログイン・Firebaseは未実装です。
+
+GA4は公開URLでアクセス解析に同意した場合だけ読み込みます。ローカルでは計測しません。公開前のGA4拡張計測設定・同意・検証の手順は[analytics.md](docs/analytics.md)を参照してください。
 
 ## 保存と施設ID
 

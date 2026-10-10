@@ -1,0 +1,18 @@
+{
+  "tagRequests": [
+    "https://www.googletagmanager.com/gtag/js?id=G-5P0Y0M7SNM"
+  ],
+  "pageView": [
+    "event",
+    "page_view",
+    {
+      "send_to": "G-5P0Y0M7SNM",
+      "page_location": "https://uchidats.github.io/web-onsen-stamp-rally/",
+      "page_title": "温泉の旅 | My Onsen Journey",
+      "page_referrer": ""
+    }
+  ],
+  "exceptions": [],
+  "unexpectedCollect": [],
+  "productionContent": "local source intercepted at production URL; Google script stubbed, no live GA data sent"
+}
