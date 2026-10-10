@@ -2,6 +2,9 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
 
 test('E2E: Edge browser map interaction, synchronization, and accessibility', async (t) => {
   const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
@@ -10,12 +13,15 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     return;
   }
 
-  const htmlUrl = 'file:///c:/Users/uchid/Documents/GitHub/web-onsen-stamp-rally/index.html';
+  const htmlUrl = pathToFileURL(path.resolve('index.html')).href;
+  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-map-browser-'));
   const port = 9225;
 
   const edge = spawn(edgePath, [
     '--headless=new',
     '--disable-gpu',
+    '--no-first-run',
+    `--user-data-dir=${profile}`,
     `--remote-debugging-port=${port}`,
     '--remote-allow-origins=*',
     htmlUrl
@@ -26,7 +32,8 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
 
     const res = await fetch(`http://localhost:${port}/json`);
     const pages = await res.json();
-    const page = pages.find(p => p.type === 'page' || p.url.includes('index.html')) || pages[0];
+    const page = pages.find(p => p.type === 'page' && p.url === htmlUrl);
+    assert.ok(page, 'Application browser page must be available');
 
     const ws = new globalThis.WebSocket(page.webSocketDebuggerUrl);
     await new Promise((resolve, reject) => {
@@ -53,6 +60,47 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     async function evaluate(expr) {
       const res = await send('Runtime.evaluate', { expression: expr, returnByValue: true });
       return res.result?.value;
+    }
+
+    for (let attempt = 0; attempt < 50; attempt++) {
+      if (await evaluate(`!!document.querySelector('.geolonia-svg-map .prefecture')`)) break;
+      await new Promise(r => setTimeout(r, 100));
+    }
+
+    // Measure actual painted geometry, not just the presence of SVG nodes.
+    fs.mkdirSync('scratch/map-screenshots', { recursive: true });
+    for (const width of [1440, 1280, 768, 390, 320]) {
+      await send('Emulation.setDeviceMetricsOverride', {
+        width, height: 1500, deviceScaleFactor: 1, mobile: width <= 390
+      });
+      await evaluate(`document.getElementById('regional-progress').scrollIntoView()`);
+      await new Promise(r => setTimeout(r, 150));
+      const layout = await evaluate(`(() => {
+        const svg = document.querySelector('.geolonia-svg-map');
+        const frame = svg.getBoundingClientRect();
+        const prefs = [...svg.querySelectorAll('.prefecture')];
+        const cards = document.getElementById('prefgrid').getBoundingClientRect();
+        const panel = document.getElementById('japanMap').getBoundingClientRect();
+        return {
+          overflow: document.documentElement.scrollWidth > innerWidth,
+          stacked: cards.top >= panel.bottom,
+          columns: getComputedStyle(document.getElementById('prefgrid')).gridTemplateColumns.split(' ').length,
+          contained: prefs.every(p => {
+            const r = p.getBoundingClientRect();
+            return r.width > 0 && r.height > 0 && r.left >= frame.left - 1 &&
+              r.right <= frame.right + 1 && r.top >= frame.top - 1 && r.bottom <= frame.bottom + 1;
+          }),
+          separated: prefs.find(p => p.dataset.code === '1').getBoundingClientRect().left >
+            prefs.find(p => p.dataset.code === '40').getBoundingClientRect().right
+        };
+      })()`);
+      assert.equal(layout.overflow, false, `${width}px: no horizontal overflow`);
+      assert.equal(layout.stacked, true, `${width}px: cards below map`);
+      assert.equal(layout.contained, true, `${width}px: all 47 shapes visible within SVG`);
+      assert.equal(layout.separated, true, `${width}px: Hokkaido and Kyushu must not overlap`);
+      assert.equal(layout.columns, width === 320 ? 1 : width === 390 ? 2 : width === 768 ? 3 : 4);
+      const screenshot = await send('Page.captureScreenshot', { format: 'png' });
+      fs.writeFileSync(`scratch/map-screenshots/map-${width}.png`, Buffer.from(screenshot.data, 'base64'));
     }
 
     // 1. Initial 47 prefectures and empty states
@@ -104,6 +152,50 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
       })()
     `);
     assert.equal(keyboardGunma, true, 'Gunma should be selected via keyboard Enter');
+
+    await send('Emulation.setDeviceMetricsOverride', {
+      width: 1280, height: 1500, deviceScaleFactor: 1, mobile: false
+    });
+    await evaluate(`document.getElementById('resetPref').click(); document.getElementById('regional-progress').scrollIntoView()`);
+    await new Promise(r => setTimeout(r, 500));
+    async function hitPoint(code) {
+      return evaluate(`(() => {
+        const node = document.querySelector('.prefecture[data-code="${code}"]');
+        const r = node.getBoundingClientRect();
+        for (let x = r.left + 1; x < r.right; x += 2) {
+          for (let y = r.top + 1; y < r.bottom; y += 2) {
+            if (document.elementFromPoint(x, y)?.closest('.prefecture') === node) return {x, y};
+          }
+        }
+      })()`);
+    }
+    const point = await hitPoint(2);
+    assert.ok(point, 'Aomori must have a painted, hit-testable surface');
+    await send('Input.dispatchMouseEvent', { type: 'mouseMoved', ...point });
+    const tooltip = await evaluate(`document.getElementById('japanMapTooltip').textContent`);
+    assert.ok(tooltip.includes('青森県') && tooltip.includes('0 / 4') && tooltip.includes('0%'));
+    await send('Input.dispatchMouseEvent', { type: 'mousePressed', ...point, button: 'left', clickCount: 1 });
+    await send('Input.dispatchMouseEvent', { type: 'mouseReleased', ...point, button: 'left', clickCount: 1 });
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '4 件の温泉');
+
+    await send('Emulation.setDeviceMetricsOverride', {
+      width: 390, height: 1500, deviceScaleFactor: 1, mobile: true
+    });
+    await send('Emulation.setTouchEmulationEnabled', { enabled: true });
+    await evaluate(`document.getElementById('resetPref').click(); document.getElementById('regional-progress').scrollIntoView()`);
+    await new Promise(r => setTimeout(r, 500));
+    const touchPoint = await hitPoint(1);
+    assert.ok(touchPoint, 'Hokkaido must be tappable on mobile');
+    await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [touchPoint] });
+    await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    assert.equal(await evaluate(`document.querySelector('.pref[data-pref="北海道"]').classList.contains('selected')`), true);
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '1 件の温泉');
+
+    await evaluate(`document.querySelector('.prefecture[data-code="10"]').focus()`);
+    await send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+    await send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
+    assert.equal(await evaluate(`document.querySelector('.prefecture[data-code="10"]').getAttribute('aria-pressed')`), 'true');
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '8 件の温泉');
 
     ws.close();
   } finally {

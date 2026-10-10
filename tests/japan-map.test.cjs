@@ -271,3 +271,15 @@ test('Integration with actual data.js: verifies 67 onsens across prefectures', (
     }
   }
 });
+
+test('Embedded map preserves every source coordinate transform and boundary shape', () => {
+  const source = fs.readFileSync('assets/japan-map-geolonia.svg', 'utf8');
+  const { SVG_MARKUP } = loadJapanMap();
+  for (const tag of source.match(/<g\b[^>]*data-code="\d+"[^>]*>/g)) {
+    const code = tag.match(/data-code="(\d+)"/)[1];
+    const transform = tag.match(/transform="([^"]+)"/)[1];
+    const embedded = SVG_MARKUP.match(new RegExp(`<g\\b[^>]*data-code="${code}"[^>]*>`))[0];
+    assert.ok(embedded.includes(`transform="${transform}"`), `Preserve position of prefecture ${code}`);
+  }
+  assert.deepEqual(SVG_MARKUP.match(/<(?:path|polygon)\b[^>]*>/g), source.match(/<(?:path|polygon)\b[^>]*>/g));
+});
