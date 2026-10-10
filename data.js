@@ -17,7 +17,8 @@ window.ONSEN_DATA = [
     "distanceKm": 28,
     "elevationM": 70,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%9F%A5%E5%86%85%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E5%8C%97%E6%B5%B7%E9%81%93"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%9F%A5%E5%86%85%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E5%8C%97%E6%B5%B7%E9%81%93",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-002",
@@ -37,7 +38,8 @@ window.ONSEN_DATA = [
     "distanceKm": 29,
     "elevationM": 890,
     "springType": "硫黄泉・酸性泉",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%85%B8%E3%83%B6%E6%B9%AF%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E9%9D%92%E6%A3%AE%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%85%B8%E3%83%B6%E6%B9%AF%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E9%9D%92%E6%A3%AE%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-003",
@@ -57,7 +59,8 @@ window.ONSEN_DATA = [
     "distanceKm": 32,
     "elevationM": 450,
     "springType": "単純温泉",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%94%A6%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E9%9D%92%E6%A3%AE%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%94%A6%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E9%9D%92%E6%A3%AE%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-004",
@@ -77,7 +80,8 @@ window.ONSEN_DATA = [
     "distanceKm": 2,
     "elevationM": 10,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%BB%84%E9%87%91%E5%B4%8E%E4%B8%8D%E8%80%81%E3%81%B5%E6%AD%BB%E6%B8%A9%E6%B3%89%20%E9%9D%92%E6%A3%AE%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%BB%84%E9%87%91%E5%B4%8E%E4%B8%8D%E8%80%81%E3%81%B5%E6%AD%BB%E6%B8%A9%E6%B3%89%20%E9%9D%92%E6%A3%AE%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-005",
@@ -97,7 +101,8 @@ window.ONSEN_DATA = [
     "distanceKm": 0,
     "elevationM": 0,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A7%89%E6%88%B8%E5%B7%9D%E6%B8%A9%E6%B3%89%20%E9%9D%92%E6%A3%AE%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A7%89%E6%88%B8%E5%B7%9D%E6%B8%A9%E6%B3%89%20%E9%9D%92%E6%A3%AE%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-006",
@@ -117,7 +122,8 @@ window.ONSEN_DATA = [
     "distanceKm": 48,
     "elevationM": 700,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B3%A1%E9%9B%B2%E8%8D%98%20%E5%B2%A9%E6%89%8B%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B3%A1%E9%9B%B2%E8%8D%98%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-007",
@@ -137,7 +143,8 @@ window.ONSEN_DATA = [
     "distanceKm": 32,
     "elevationM": 200,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%97%A4%E4%B8%89%E6%97%85%E9%A4%A8%20%E5%B2%A9%E6%89%8B%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%97%A4%E4%B8%89%E6%97%85%E9%A4%A8%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-008",
@@ -157,7 +164,8 @@ window.ONSEN_DATA = [
     "distanceKm": 30,
     "elevationM": 150,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B1%B1%E6%B0%B4%E9%96%A3%20%E5%B2%A9%E6%89%8B%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B1%B1%E6%B0%B4%E9%96%A3%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-009",
@@ -177,7 +185,8 @@ window.ONSEN_DATA = [
     "distanceKm": 30,
     "elevationM": 400,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%85%83%E6%B9%AF%E5%A4%8F%E6%B2%B9%20%E5%B2%A9%E6%89%8B%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%85%83%E6%B9%AF%E5%A4%8F%E6%B2%B9%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-010",
@@ -197,7 +206,8 @@ window.ONSEN_DATA = [
     "distanceKm": 18,
     "elevationM": 650,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%9F%B3%E5%A1%9A%E6%97%85%E9%A4%A8%20%E5%B2%A9%E6%89%8B%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%9F%B3%E5%A1%9A%E6%97%85%E9%A4%A8%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-011",
@@ -217,7 +227,8 @@ window.ONSEN_DATA = [
     "distanceKm": 0,
     "elevationM": 0,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%BB%E3%81%A3%E3%81%A8%E3%82%86%E3%81%A0%20%E5%B2%A9%E6%89%8B%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%BB%E3%81%A3%E3%81%A8%E3%82%86%E3%81%A0%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-012",
@@ -237,7 +248,8 @@ window.ONSEN_DATA = [
     "distanceKm": 45,
     "elevationM": 1350,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%BD%A9%E9%9B%B2%E8%8D%98%20%E5%B2%A9%E6%89%8B%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%BD%A9%E9%9B%B2%E8%8D%98%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-013",
@@ -257,7 +269,8 @@ window.ONSEN_DATA = [
     "distanceKm": 38,
     "elevationM": 500,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E7%8E%89%E5%B7%9D%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E7%8E%89%E5%B7%9D%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-014",
@@ -277,7 +290,8 @@ window.ONSEN_DATA = [
     "distanceKm": 38,
     "elevationM": 500,
     "springType": "酸性泉・放射能泉",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%8E%89%E5%B7%9D%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%8E%89%E5%B7%9D%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-015",
@@ -297,7 +311,8 @@ window.ONSEN_DATA = [
     "distanceKm": 20,
     "elevationM": 530,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%B6%B4%E3%81%AE%E6%B9%AF%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%B6%B4%E3%81%AE%E6%B9%AF%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-016",
@@ -317,7 +332,8 @@ window.ONSEN_DATA = [
     "distanceKm": null,
     "elevationM": null,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A6%99%E4%B9%83%E6%B9%AF%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A6%99%E4%B9%83%E6%B9%AF%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-017",
@@ -337,7 +353,8 @@ window.ONSEN_DATA = [
     "distanceKm": 15,
     "elevationM": 40,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%85%83%E6%B9%AF%E9%9B%84%E5%B1%B1%E9%96%A3%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%85%83%E6%B9%AF%E9%9B%84%E5%B1%B1%E9%96%A3%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-018",
@@ -357,7 +374,8 @@ window.ONSEN_DATA = [
     "distanceKm": 45,
     "elevationM": 780,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%BE%8C%E7%94%9F%E6%8E%9B%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%BE%8C%E7%94%9F%E6%8E%9B%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-019",
@@ -377,7 +395,8 @@ window.ONSEN_DATA = [
     "distanceKm": 30,
     "elevationM": 250,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%B7%B9%E3%81%AE%E6%B9%AF%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%B7%B9%E3%81%AE%E6%B9%AF%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-020",
@@ -397,7 +416,8 @@ window.ONSEN_DATA = [
     "distanceKm": 48,
     "elevationM": 900,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%92%B8%E3%83%8E%E6%B9%AF%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%92%B8%E3%83%8E%E6%B9%AF%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-021",
@@ -417,7 +437,8 @@ window.ONSEN_DATA = [
     "distanceKm": 32,
     "elevationM": 600,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A5%A5%E5%B1%B1%E6%97%85%E9%A4%A8%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A5%A5%E5%B1%B1%E6%97%85%E9%A4%A8%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-022",
@@ -437,7 +458,8 @@ window.ONSEN_DATA = [
     "distanceKm": null,
     "elevationM": null,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B7%9D%E5%8E%9F%E6%AF%9B%E5%A4%A7%E6%B9%AF%E6%BB%9D%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B7%9D%E5%8E%9F%E6%AF%9B%E5%A4%A7%E6%B9%AF%E6%BB%9D%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-023",
@@ -457,7 +479,8 @@ window.ONSEN_DATA = [
     "distanceKm": 0.4,
     "elevationM": 5,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E7%80%AC%E3%83%9B%E3%83%86%E3%83%AB%20%E7%A7%8B%E7%94%B0%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E7%80%AC%E3%83%9B%E3%83%86%E3%83%AB%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-024",
@@ -477,7 +500,8 @@ window.ONSEN_DATA = [
     "distanceKm": 40,
     "elevationM": 800,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B3%A9%E3%80%85%E6%B8%A9%E6%B3%89%20%E5%AE%AE%E5%9F%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B3%A9%E3%80%85%E6%B8%A9%E6%B3%89%20%E5%AE%AE%E5%9F%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-025",
@@ -497,7 +521,8 @@ window.ONSEN_DATA = [
     "distanceKm": 35,
     "elevationM": 500,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B2%A1%E5%B4%8E%E6%97%85%E9%A4%A8%20%E5%AE%AE%E5%9F%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B2%A1%E5%B4%8E%E6%97%85%E9%A4%A8%20%E5%AE%AE%E5%9F%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-026",
@@ -517,7 +542,8 @@ window.ONSEN_DATA = [
     "distanceKm": 6,
     "elevationM": 120,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%99%82%E9%9F%B3%E3%81%AE%E5%AE%BF%20%E6%B9%AF%E4%B8%BB%E4%B8%80%E6%A2%9D%20%E5%AE%AE%E5%9F%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%99%82%E9%9F%B3%E3%81%AE%E5%AE%BF%20%E6%B9%AF%E4%B8%BB%E4%B8%80%E6%A2%9D%20%E5%AE%AE%E5%9F%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-027",
@@ -537,7 +563,8 @@ window.ONSEN_DATA = [
     "distanceKm": 0.4,
     "elevationM": 5,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%97%85%E9%A4%A8%E5%A4%A7%E6%B2%BC%20%E5%AE%AE%E5%9F%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%97%85%E9%A4%A8%E5%A4%A7%E6%B2%BC%20%E5%AE%AE%E5%9F%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-028",
@@ -557,7 +584,8 @@ window.ONSEN_DATA = [
     "distanceKm": 18,
     "elevationM": 600,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E5%B1%8B%20%E5%B1%B1%E5%BD%A2%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E5%B1%8B%20%E5%B1%B1%E5%BD%A2%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-029",
@@ -577,7 +605,8 @@ window.ONSEN_DATA = [
     "distanceKm": 5,
     "elevationM": 50,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%AE%88%E3%81%AE%E5%AE%BF%E4%B8%89%E4%B9%8B%E4%BA%9F%20%E5%B1%B1%E5%BD%A2%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%AE%88%E3%81%AE%E5%AE%BF%E4%B8%89%E4%B9%8B%E4%BA%9F%20%E5%B1%B1%E5%BD%A2%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-030",
@@ -597,7 +626,8 @@ window.ONSEN_DATA = [
     "distanceKm": 40,
     "elevationM": 300,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%AE%BF%E5%85%83%E6%B2%B3%E5%8E%9F%E6%B9%AF%20%E5%B1%B1%E5%BD%A2%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%AE%BF%E5%85%83%E6%B2%B3%E5%8E%9F%E6%B9%AF%20%E5%B1%B1%E5%BD%A2%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-031",
@@ -617,7 +647,8 @@ window.ONSEN_DATA = [
     "distanceKm": 4,
     "elevationM": 230,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B3%B6%E5%B1%8B%20%E5%B1%B1%E5%BD%A2%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B3%B6%E5%B1%8B%20%E5%B1%B1%E5%BD%A2%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-032",
@@ -637,7 +668,8 @@ window.ONSEN_DATA = [
     "distanceKm": 8,
     "elevationM": 680,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%A1%9D%E5%BD%A2%E5%B1%8B%20%E5%B1%B1%E5%BD%A2%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%A1%9D%E5%BD%A2%E5%B1%8B%20%E5%B1%B1%E5%BD%A2%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-033",
@@ -657,7 +689,8 @@ window.ONSEN_DATA = [
     "distanceKm": 20,
     "elevationM": 850,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%90%BE%E5%A6%BB%E5%B1%8B%20%E5%B1%B1%E5%BD%A2%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%90%BE%E5%A6%BB%E5%B1%8B%20%E5%B1%B1%E5%BD%A2%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-034",
@@ -677,7 +710,8 @@ window.ONSEN_DATA = [
     "distanceKm": 16,
     "elevationM": 730,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%97%85%E9%A4%A8%E7%8E%89%E5%AD%90%E6%B9%AF%20%E7%A6%8F%E5%B3%B6%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%97%85%E9%A4%A8%E7%8E%89%E5%AD%90%E6%B9%AF%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-035",
@@ -697,7 +731,8 @@ window.ONSEN_DATA = [
     "distanceKm": 16,
     "elevationM": 730,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%AE%89%E9%81%94%E5%B1%8B%E6%97%85%E9%A4%A8%20%E7%A6%8F%E5%B3%B6%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%AE%89%E9%81%94%E5%B1%8B%E6%97%85%E9%A4%A8%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-036",
@@ -717,7 +752,8 @@ window.ONSEN_DATA = [
     "distanceKm": 28,
     "elevationM": 1100,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E5%9C%B0%E6%B8%A9%E6%B3%89%E3%83%9B%E3%83%86%E3%83%AB%20%E7%A6%8F%E5%B3%B6%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E5%9C%B0%E6%B8%A9%E6%B3%89%E3%83%9B%E3%83%86%E3%83%AB%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-037",
@@ -737,7 +773,8 @@ window.ONSEN_DATA = [
     "distanceKm": 45,
     "elevationM": 600,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9F%8F%E5%B1%8B%E6%97%85%E9%A4%A8%20%E7%A6%8F%E5%B3%B6%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9F%8F%E5%B1%8B%E6%97%85%E9%A4%A8%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-038",
@@ -757,7 +794,8 @@ window.ONSEN_DATA = [
     "distanceKm": 18,
     "elevationM": 900,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%97%85%E9%A4%A8%E4%BA%8C%E9%9A%8E%E5%A0%82%20%E7%A6%8F%E5%B3%B6%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%97%85%E9%A4%A8%E4%BA%8C%E9%9A%8E%E5%A0%82%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-039",
@@ -777,7 +815,8 @@ window.ONSEN_DATA = [
     "distanceKm": 18,
     "elevationM": 500,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%BE%A1%E5%AE%BF%20%E4%B8%87%E8%91%89%E4%BA%AD%20%E7%A6%8F%E5%B3%B6%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%BE%A1%E5%AE%BF%20%E4%B8%87%E8%91%89%E4%BA%AD%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-040",
@@ -797,7 +836,8 @@ window.ONSEN_DATA = [
     "distanceKm": 30,
     "elevationM": 450,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%98%8E%E8%B3%80%E5%B1%8B%E6%9C%AC%E9%A4%A8%20%E6%A0%83%E6%9C%A8%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%98%8E%E8%B3%80%E5%B1%8B%E6%9C%AC%E9%A4%A8%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-041",
@@ -817,7 +857,8 @@ window.ONSEN_DATA = [
     "distanceKm": 45,
     "elevationM": 950,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%8A%A0%E4%BB%81%E6%B9%AF%20%E6%A0%83%E6%9C%A8%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%8A%A0%E4%BB%81%E6%B9%AF%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-042",
@@ -837,7 +878,8 @@ window.ONSEN_DATA = [
     "distanceKm": 45,
     "elevationM": 950,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%85%AB%E4%B8%81%E3%81%AE%E6%B9%AF%20%E6%A0%83%E6%9C%A8%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%85%AB%E4%B8%81%E3%81%AE%E6%B9%AF%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-043",
@@ -857,7 +899,8 @@ window.ONSEN_DATA = [
     "distanceKm": 32,
     "elevationM": 550,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A7%98%E6%B9%AF%E3%81%AE%E5%AE%BF%20%E5%85%83%E6%B3%89%E9%A4%A8%20%E6%A0%83%E6%9C%A8%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A7%98%E6%B9%AF%E3%81%AE%E5%AE%BF%20%E5%85%83%E6%B3%89%E9%A4%A8%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-044",
@@ -877,7 +920,8 @@ window.ONSEN_DATA = [
     "distanceKm": 28,
     "elevationM": 800,
     "springType": "酸性硫黄泉",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%82%A3%E9%A0%88%20%E9%B9%BF%E3%81%AE%E6%B9%AF%20%E6%A0%83%E6%9C%A8%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%82%A3%E9%A0%88%20%E9%B9%BF%E3%81%AE%E6%B9%AF%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-045",
@@ -897,7 +941,8 @@ window.ONSEN_DATA = [
     "distanceKm": null,
     "elevationM": null,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%BB%92%E5%B1%8B%20%E6%A0%83%E6%9C%A8%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%BB%92%E5%B1%8B%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-046",
@@ -917,7 +962,8 @@ window.ONSEN_DATA = [
     "distanceKm": 35,
     "elevationM": 400,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B1%AA%E6%B3%89%E9%96%A3%20%E7%BE%A4%E9%A6%AC%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B1%AA%E6%B3%89%E9%96%A3%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-047",
@@ -937,7 +983,8 @@ window.ONSEN_DATA = [
     "distanceKm": 25,
     "elevationM": 410,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%95%B7%E5%AF%BF%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%95%B7%E5%AF%BF%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-048",
@@ -957,7 +1004,8 @@ window.ONSEN_DATA = [
     "distanceKm": 18,
     "elevationM": 300,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%8D%BE%E5%AF%BF%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%8D%BE%E5%AF%BF%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-049",
@@ -977,7 +1025,8 @@ window.ONSEN_DATA = [
     "distanceKm": 18,
     "elevationM": 300,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A9%8D%E5%96%84%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A9%8D%E5%96%84%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-050",
@@ -997,7 +1046,8 @@ window.ONSEN_DATA = [
     "distanceKm": 14,
     "elevationM": 600,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%E5%B1%8B%E6%97%85%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%98%AA%E5%B1%8B%E6%97%85%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-051",
@@ -1017,7 +1067,8 @@ window.ONSEN_DATA = [
     "distanceKm": 14,
     "elevationM": 600,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E6%BB%9D%E4%B9%83%E6%B9%AF%20%E7%BE%A4%E9%A6%AC%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E6%BB%9D%E4%B9%83%E6%B9%AF%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-052",
@@ -1037,7 +1088,8 @@ window.ONSEN_DATA = [
     "distanceKm": 24,
     "elevationM": 1100,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%97%A5%E9%80%B2%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%97%A5%E9%80%B2%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-053",
@@ -1057,7 +1109,8 @@ window.ONSEN_DATA = [
     "distanceKm": 14,
     "elevationM": 200,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%AE%BF%20%E4%B8%89%E6%B2%B3%E5%B1%8B%20%E7%BE%A4%E9%A6%AC%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%AE%BF%20%E4%B8%89%E6%B2%B3%E5%B1%8B%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-054",
@@ -1077,7 +1130,8 @@ window.ONSEN_DATA = [
     "distanceKm": 32,
     "elevationM": 1300,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%A9%E3%83%B3%E3%83%97%E3%81%AE%E5%AE%BF%E9%AB%98%E5%B3%B0%E6%B8%A9%E6%B3%89%20%E9%95%B7%E9%87%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%A9%E3%83%B3%E3%83%97%E3%81%AE%E5%AE%BF%E9%AB%98%E5%B3%B0%E6%B8%A9%E6%B3%89%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-055",
@@ -1097,7 +1151,8 @@ window.ONSEN_DATA = [
     "distanceKm": null,
     "elevationM": null,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E6%A3%9A%E8%8D%98%20%E9%95%B7%E9%87%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E6%A3%9A%E8%8D%98%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-056",
@@ -1117,7 +1172,8 @@ window.ONSEN_DATA = [
     "distanceKm": 15,
     "elevationM": 250,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A5%88%E8%89%AF%E5%B1%8B%E6%97%85%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A5%88%E8%89%AF%E5%B1%8B%E6%97%85%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-057",
@@ -1137,7 +1193,8 @@ window.ONSEN_DATA = [
     "distanceKm": 45,
     "elevationM": 800,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%85%83%E9%BD%8B%E8%97%A4%E6%97%85%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%85%83%E9%BD%8B%E8%97%A4%E6%97%85%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-058",
@@ -1157,7 +1214,8 @@ window.ONSEN_DATA = [
     "distanceKm": 11,
     "elevationM": 150,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%8D%89%E3%81%AE%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%8D%89%E3%81%AE%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-059",
@@ -1177,7 +1235,8 @@ window.ONSEN_DATA = [
     "distanceKm": 5,
     "elevationM": 250,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E4%B9%83%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E4%B9%83%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-060",
@@ -1197,7 +1256,8 @@ window.ONSEN_DATA = [
     "distanceKm": 35,
     "elevationM": 250,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%B2%E3%81%AA%E3%81%AE%E5%AE%BF%E3%81%A1%E3%81%A8%E3%81%9B%20%E6%96%B0%E6%BD%9F%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%B2%E3%81%AA%E3%81%AE%E5%AE%BF%E3%81%A1%E3%81%A8%E3%81%9B%20%E6%96%B0%E6%BD%9F%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-061",
@@ -1217,7 +1277,8 @@ window.ONSEN_DATA = [
     "distanceKm": 18,
     "elevationM": 100,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%87%AA%E5%9C%A8%E9%A4%A8%20%E6%96%B0%E6%BD%9F%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%87%AA%E5%9C%A8%E9%A4%A8%20%E6%96%B0%E6%BD%9F%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-062",
@@ -1237,7 +1298,8 @@ window.ONSEN_DATA = [
     "distanceKm": 10,
     "elevationM": 350,
     "springType": "単純硫黄泉",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%B2%9D%E6%8E%9B%E6%B8%A9%E6%B3%89%20%E6%96%B0%E6%BD%9F%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%B2%9D%E6%8E%9B%E6%B8%A9%E6%B3%89%20%E6%96%B0%E6%BD%9F%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-063",
@@ -1257,7 +1319,8 @@ window.ONSEN_DATA = [
     "distanceKm": null,
     "elevationM": null,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%80%AC%E6%B3%A2%E3%82%B0%E3%83%A9%E3%83%B3%E3%83%89%E3%83%9B%E3%83%86%E3%83%AB%E3%81%AF%E3%81%8E%E3%81%AE%E3%82%84%20%E6%96%B0%E6%BD%9F%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%80%AC%E6%B3%A2%E3%82%B0%E3%83%A9%E3%83%B3%E3%83%89%E3%83%9B%E3%83%86%E3%83%AB%E3%81%AF%E3%81%8E%E3%81%AE%E3%82%84%20%E6%96%B0%E6%BD%9F%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-064",
@@ -1277,7 +1340,8 @@ window.ONSEN_DATA = [
     "distanceKm": 22,
     "elevationM": 150,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B5%90%E6%B8%93%E8%8D%98%20%E6%96%B0%E6%BD%9F%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B5%90%E6%B8%93%E8%8D%98%20%E6%96%B0%E6%BD%9F%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-065",
@@ -1297,7 +1361,8 @@ window.ONSEN_DATA = [
     "distanceKm": 40,
     "elevationM": 100,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E7%89%A7%E6%B8%A9%E6%B3%89%E8%A6%B3%E5%85%89%E6%97%85%E9%A4%A8%20%E5%AF%8C%E5%B1%B1%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E7%89%A7%E6%B8%A9%E6%B3%89%E8%A6%B3%E5%85%89%E6%97%85%E9%A4%A8%20%E5%AF%8C%E5%B1%B1%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-066",
@@ -1317,7 +1382,8 @@ window.ONSEN_DATA = [
     "distanceKm": null,
     "elevationM": null,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%BF%E3%81%8F%E3%82%8A%E3%81%8C%E6%B1%A0%E6%B8%A9%E6%B3%89%20%E5%AF%8C%E5%B1%B1%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%BF%E3%81%8F%E3%82%8A%E3%81%8C%E6%B1%A0%E6%B8%A9%E6%B3%89%20%E5%AF%8C%E5%B1%B1%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   },
   {
     "id": "onsen-067",
@@ -1337,6 +1403,7 @@ window.ONSEN_DATA = [
     "distanceKm": 20,
     "elevationM": 250,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%9B%E3%83%86%E3%83%AB%E3%81%8A%E3%81%8C%E3%82%8F%20%E5%AF%8C%E5%B1%B1%E7%9C%8C"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%9B%E3%83%86%E3%83%AB%E3%81%8A%E3%81%8C%E3%82%8F%20%E5%AF%8C%E5%B1%B1%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-11"
   }
 ];

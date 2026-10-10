@@ -1,0 +1,82 @@
+[
+  {
+    "id": "onsen-002",
+    "facility": "酸ヶ湯温泉旅館",
+    "latitude": 40.6506075,
+    "longitude": 140.8504857,
+    "pixelError": 0,
+    "popup": "酸ヶ湯温泉酸ヶ湯温泉旅館未訪問 · 訪問 0回 · 最終訪問日 —詳細を見る →Google Maps ↗",
+    "unvisited": true,
+    "width": 1280
+  },
+  {
+    "id": "onsen-003",
+    "facility": "蔦温泉旅館",
+    "latitude": 40.5968847,
+    "longitude": 140.953423,
+    "pixelError": 0,
+    "popup": "蔦温泉蔦温泉旅館未訪問 · 訪問 0回 · 最終訪問日 —詳細を見る →Google Maps ↗",
+    "unvisited": true,
+    "width": 1280
+  },
+  {
+    "id": "onsen-004",
+    "facility": "黄金崎不老ふ死温泉",
+    "latitude": 40.6149829,
+    "longitude": 139.8625913,
+    "pixelError": 0,
+    "popup": "黄金崎不老ふ死温泉黄金崎不老ふ死温泉未訪問 · 訪問 0回 · 最終訪問日 —詳細を見る →Google Maps ↗",
+    "unvisited": true,
+    "width": 1280
+  },
+  {
+    "id": "onsen-005",
+    "facility": "姉戸川温泉",
+    "latitude": 40.7107893,
+    "longitude": 141.2991867,
+    "pixelError": 0,
+    "popup": "姉戸川温泉姉戸川温泉未訪問 · 訪問 0回 · 最終訪問日 —詳細を見る →Google Maps ↗",
+    "unvisited": true,
+    "width": 1280
+  },
+  {
+    "id": "onsen-002",
+    "facility": "酸ヶ湯温泉旅館",
+    "latitude": 40.6506075,
+    "longitude": 140.8504857,
+    "pixelError": 0,
+    "popup": "酸ヶ湯温泉酸ヶ湯温泉旅館未訪問 · 訪問 0回 · 最終訪問日 —詳細を見る →Google Maps ↗",
+    "unvisited": true,
+    "width": 390
+  },
+  {
+    "id": "onsen-003",
+    "facility": "蔦温泉旅館",
+    "latitude": 40.5968847,
+    "longitude": 140.953423,
+    "pixelError": 0,
+    "popup": "蔦温泉蔦温泉旅館未訪問 · 訪問 0回 · 最終訪問日 —詳細を見る →Google Maps ↗",
+    "unvisited": true,
+    "width": 390
+  },
+  {
+    "id": "onsen-004",
+    "facility": "黄金崎不老ふ死温泉",
+    "latitude": 40.6149829,
+    "longitude": 139.8625913,
+    "pixelError": 0,
+    "popup": "黄金崎不老ふ死温泉黄金崎不老ふ死温泉未訪問 · 訪問 0回 · 最終訪問日 —詳細を見る →Google Maps ↗",
+    "unvisited": true,
+    "width": 390
+  },
+  {
+    "id": "onsen-005",
+    "facility": "姉戸川温泉",
+    "latitude": 40.7107893,
+    "longitude": 141.2991867,
+    "pixelError": 0,
+    "popup": "姉戸川温泉姉戸川温泉未訪問 · 訪問 0回 · 最終訪問日 —詳細を見る →Google Maps ↗",
+    "unvisited": true,
+    "width": 390
+  }
+]
