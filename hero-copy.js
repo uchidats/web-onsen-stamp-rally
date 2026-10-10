@@ -25,8 +25,10 @@
   let previous;
   try { previous = root.sessionStorage.getItem(STORAGE_KEY); } catch { /* Storage may be disabled. */ }
   const copy = choose(COPIES.ja, previous);
-  // Keep Japanese phrases together, allowing a natural break after each comma.
-  const phrases = copy.match(/[^、]+、?/g) || [copy];
+  // Short phrase groups avoid breaking Japanese expressions on narrow screens.
+  const phrases = copy === '人はなぜ、温泉が恋しくなるのだろう。'
+    ? ['人はなぜ、', '温泉が', '恋しくなるのだろう。']
+    : copy.match(/[^、]+、?/g) || [copy];
   target.replaceChildren(...phrases.map(phrase => {
     const span = root.document.createElement('span');
     span.textContent = phrase;

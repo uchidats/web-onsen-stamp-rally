@@ -231,14 +231,19 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
               return r.left >= box.left && r.right <= box.right + 1 && r.bottom <= box.bottom + 1;
             }),
             buttonTop: document.querySelector('.hero-actions').getBoundingClientRect().top,
-            heading: document.querySelector('.hero h1').textContent
+            heading: document.querySelector('.hero h1').textContent,
+            singleCopy: document.querySelectorAll('#heroCopy').length === 1 && copy.tagName === 'H1' && !document.querySelector('.hero-subcopy'),
+            lineHeight: parseFloat(getComputedStyle(copy).lineHeight),
+            phraseHeight: Math.max(...[...copy.children].map(span => span.getBoundingClientRect().height))
           };
         })()`);
         assert.equal(hero.text, copies[i], `${width}px: copy ${i + 1}`);
         assert.equal(hero.overflow, false);
         assert.equal(hero.contained, true);
-        assert.equal(hero.heading, 'そうだ、温泉に行こう。');
-        if (buttonTop !== undefined) assert.ok(Math.abs(hero.buttonTop - buttonTop) < 1, 'Buttons must stay in place');
+        assert.equal(hero.heading, copies[i]);
+        assert.equal(hero.singleCopy, true, 'Random copy must appear only in the main heading');
+        if (width >= 768) assert.ok(hero.phraseHeight <= hero.lineHeight + 1, 'Desktop phrases must fit on one line');
+        if (buttonTop !== undefined) assert.ok(Math.abs(hero.buttonTop - buttonTop) < 1, `${width}px copy ${i + 1}: button top ${hero.buttonTop} should match ${buttonTop}`);
         buttonTop = hero.buttonTop;
         const screenshot = await send('Page.captureScreenshot', { format: 'png' });
         fs.writeFileSync(`scratch/hero-screenshots/hero-${width}-${i + 1}.png`, Buffer.from(screenshot.data, 'base64'));
