@@ -1,6 +1,6 @@
 # GA4導入と公開後の確認
 
-測定ID：`G-5P0Y0M7SNM`。`index.html`のheadで`analytics.js`を読み込み、同意した公開URLでのみGoogle公式gtag.jsを追加します。commit・push・公開はこの変更には含みません。
+測定ID：`G-5P0Y0M7SNM`。`index.html`のheadで`analytics.js`を読み込み、同意した公開URLでのみGoogle公式gtag.jsを追加します。[公開時の検証記録](ga4-deployment.md)も参照してください。
 
 ## 計測条件と同意
 
