@@ -46,7 +46,9 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .hero-main { padding: 76px 0 32px; max-width: 800px; }
 .eyebrow { color: var(--gold); font-size: 11px; letter-spacing: .19em; line-height: 1.6; font-weight: 600; }
 .hero h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 4.8vw, 60px); letter-spacing: .035em; line-height: 1.5; margin: 22px 0 26px; text-wrap: balance; }
-.hero-title-line { display: block; }
+.hero-title-line { display: inline-block; white-space: nowrap; }
+.hero .hero-subcopy { font-family: var(--serif); font-size: clamp(17px, 2vw, 24px); color: var(--surface); margin: 0 0 24px; line-height: 1.8; }
+.hero-subcopy span { display: inline-block; white-space: nowrap; }
 .hero p { line-height: 2; color: #d4dbce; font-size: 15px; max-width: 620px; }
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
 .btn { display: inline-flex; justify-content: center; align-items: center; text-align: center; min-height: 46px; border-radius: 4px; padding: 12px 22px; border: 1px solid var(--line); background: var(--surface); color: var(--moss); font-size: 14px; font-weight: 600; line-height: 1.5; white-space: normal; }
@@ -131,6 +133,7 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   .hero { padding: 24px 0 54px; }
   .hero-main { padding: 48px 0 28px; }
   .hero h1 { font-size: clamp(26px, 7.7vw, 36px); letter-spacing: .01em; margin-top: 20px; line-height: 1.6; }
+  .hero .hero-subcopy { font-size: clamp(16px, 4.4vw, 20px); }
   .hero p { font-size: 14px; }
   .hero-actions { gap: 12px; margin-top: 28px; }
   .hero::after { inset: 55% -10% 0 10%; opacity: .6; }
