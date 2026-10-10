@@ -1,0 +1,31 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+require('../records.js');const R=globalThis.OnsenRecords;
+const memory=()=>{const m=new Map();return {getItem:k=>m.has(k)?m.get(k):null,setItem:(k,v)=>m.set(k,v)}};
+const ctx={window:{}};vm.runInNewContext(fs.readFileSync('data.js','utf8'),ctx);const data=ctx.window.ONSEN_DATA;
+const privatePath=process.env.ONSEN_PRIVATE_MIGRATION_FILE;const synthetic=Object.fromEntries(data.map((x,i)=>[x.id,{visited:i>=1&&i<=45,visitCount:i>=1&&i<=45?1:0,firstVisit:null,lastVisit:null,notes:''}]));const migration=privatePath&&fs.existsSync(privatePath)?JSON.parse(fs.readFileSync(privatePath,'utf8').replace(/^\uFEFF/,'')):{format:'onsen-stamp-rally-v2',userData:{schemaVersion:2,visits:synthetic,rankings:[],rankingVisibility:'private',gpsStamps:[]},legacyBaseline:synthetic,migration:true};
+assert.equal(data.length,67);assert.equal(data.some(x=>x.category==='マイベスト'),false);assert.equal(new Set(data.map(x=>x.id)).size,67);
+assert.equal(JSON.stringify(data.map(x=>x.id)),JSON.stringify(Object.keys(migration.userData.visits)));
+for(const x of data)for(const k of ['sourceVisited','sourceFirstVisit','sourceLastVisit','sourceVisitCount','memo'])assert.equal(k in x,false);
+const storage=memory(),repo=R.create(storage);let state=repo.load();assert.equal(Object.keys(state.userData.visits).length,0);
+state=repo.setVisited(state,'onsen-001',true);assert.equal(R.create(storage).load().userData.visits['onsen-001'].visited,true);
+state=repo.setVisited(state,'onsen-001',false);assert.equal(repo.load().userData.visits['onsen-001'].visited,false);
+let restored=repo.prepareImport(repo.backup(state),state);assert.deepEqual(restored,state);state.userData.favoriteOnsenIds=[];assert.deepEqual(repo.prepareImport(repo.backup(state),state).userData.favoriteOnsenIds,[]);
+assert.throws(()=>repo.prepareImport({format:'onsen-stamp-rally-v1',overrides:{}},state));
+restored=repo.prepareImport(migration,state);assert.equal(Object.values(restored.userData.visits).filter(x=>x.visited).length,45);
+storage.setItem(R.LEGACY,JSON.stringify({'onsen-001':true,'onsen-002':false}));
+restored=repo.prepareImport(migration,state);assert.equal(restored.userData.visits['onsen-001'].visited,true);assert.equal(restored.userData.visits['onsen-002'].visited,false);
+assert.equal(restored.userData.visits['onsen-003'].notes,migration.userData.visits['onsen-003'].notes);
+state=repo.replace(restored,state);assert.ok(storage.getItem(R.SAFETY));assert.ok(storage.getItem(R.LEGACY));
+const old=repo.prepareImport({format:'onsen-stamp-rally-v1',overrides:{'onsen-001':false}},state);assert.equal(old.userData.visits['onsen-001'].visited,false);assert.equal(Object.values(old.userData.visits).filter(x=>x.visited).length,45);
+assert.throws(()=>repo.prepareImport({format:'onsen-stamp-rally-v1',overrides:{'onsen-001':'true'}},state));
+assert.throws(()=>repo.prepareImport({format:'onsen-stamp-rally-v2',userData:{schemaVersion:3}},state));
+const damaged=memory();damaged.setItem(R.KEY,'broken');const bad=R.create(damaged);assert.throws(()=>bad.load());assert.throws(()=>bad.setVisited(bad.empty(),'onsen-001',true));assert.equal(damaged.getItem(R.KEY),'broken');
+const failing=R.create({getItem:()=>null,setItem:()=>{throw Error('quota')}});const original=failing.empty();assert.throws(()=>failing.setVisited(original,'onsen-001',true));assert.deepEqual(original.userData.visits,{});
+// Execute the actual UI rendering with a minimal DOM and persistent storage.
+const elements=new Map();function el(id){if(!elements.has(id))elements.set(id,{value:'',style:{},innerHTML:'',textContent:'',dataset:{},classList:{toggle(){}},querySelectorAll:()=>[],addEventListener(){},scrollIntoView(){}});return elements.get(id)}
+const uiStorage=memory();const window={ONSEN_DATA:data,OnsenRecords:R};const document={getElementById:el,querySelectorAll:()=>[],addEventListener(){}};
+const ui={window,document,localStorage:uiStorage,setTimeout:()=>0,clearTimeout(){},console};
+const app=fs.readFileSync('app.js','utf8');vm.runInNewContext(app,ui);assert.equal(el('totalText').textContent,'0 / 67 施設を訪問済み');assert.equal(el('nextCount').textContent,'未訪問 67 施設');
+let us=R.create(uiStorage);us.setVisited(us.load(),'onsen-001',true);vm.runInNewContext(app,ui);assert.equal(el('totalText').textContent,'1 / 67 施設を訪問済み');assert.match(el('prefgrid').innerHTML,/北海道<\/strong><span class="fraction">1 \/ 1 施設 · 100%/);
+el('statusSelect').value='visited';vm.runInNewContext(app,ui);assert.equal(el('resultCount').textContent,'1 件の温泉');
+console.log('PASS: public data, IDs, fresh start, persistence, reload, prefectures, filters, v2 roundtrip, 45 legacy visits, overrides, invalid files, safety copy, storage failure');

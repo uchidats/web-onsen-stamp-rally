@@ -1,0 +1,9 @@
+exclude:
+  - README.md
+  - tests
+  - private-data
+  - personal-data
+  - backups
+  - backup
+  - migration-data
+  - .gitignore
