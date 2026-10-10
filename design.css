@@ -53,9 +53,9 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
     radial-gradient(ellipse 49% 53% at 77% 87%, #80917b16 48%, transparent 73%),
     radial-gradient(ellipse 39% 41% at 27% 100%, #73846e12 48%, transparent 75%);
 }
-.top { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-.logo { font-size: 19px; font-weight: 650; letter-spacing: .1em; line-height: 1.5; }
-.logo small { display: block; color: #bdc8b8; font-size: 10px; letter-spacing: .2em; margin-top: 7px; font-weight: 500; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 20px clamp(10px, 2vw, 20px); flex-wrap: wrap; }
+.logo { font-size: 22.8px; font-weight: 650; letter-spacing: .08em; line-height: 1.4; }
+.logo small { display: block; color: #bdc8b8; font-size: 11.8px; letter-spacing: .17em; line-height: 1.5; margin-top: 8px; font-weight: 500; }
 .login { border: 1px solid #a7b19d70; background: transparent; color: #e2e5d9; padding: 10px 16px; border-radius: 4px; font-size: 12px; min-height: 44px; max-width: 100%; }
 .hero-main { padding: 76px 0 32px; }
 .eyebrow { color: var(--gold); font-size: 11px; letter-spacing: .19em; line-height: 1.6; font-weight: 600; }
@@ -214,8 +214,8 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   .hero-actions { gap: 12px; margin-top: 28px; }
   .hero::before { opacity: .75; }
   .hero::after { inset: 45% -28% -16% 0; opacity: .7; }
-  .logo { font-size: 17px; }
-  .logo small { font-size: 9px; }
+  .logo { font-size: 20.4px; }
+  .logo small { font-size: 10.6px; }
   .login { padding: 9px 12px; font-size: 11px; }
   .dashboard { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: -24px; }
   .progressPanel, .dashright { padding: 26px 24px; }
