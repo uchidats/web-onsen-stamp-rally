@@ -62,6 +62,8 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
       return res.result?.value;
     }
 
+    await send('Page.enable');
+
     for (let attempt = 0; attempt < 50; attempt++) {
       if (await evaluate(`!!document.querySelector('.geolonia-svg-map .prefecture')`)) break;
       await new Promise(r => setTimeout(r, 100));
@@ -196,6 +198,68 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     await send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
     assert.equal(await evaluate(`document.querySelector('.prefecture[data-code="10"]').getAttribute('aria-pressed')`), 'true');
     assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '8 件の温泉');
+
+    // Hero copy: force each random bucket on a real reload, then test normal reloads.
+    fs.mkdirSync('scratch/hero-screenshots', { recursive: true });
+    const copies = await evaluate('OnsenHeroCopy.COPIES.ja');
+    const visitStorageBefore = await evaluate('JSON.stringify(localStorage)');
+    for (const width of [1440, 1280, 768, 390, 320]) {
+      await send('Emulation.setDeviceMetricsOverride', {
+        width, height: 1000, deviceScaleFactor: 1, mobile: width <= 390
+      });
+      let buttonTop;
+      for (let i = 0; i < copies.length; i++) {
+        const injection = await send('Page.addScriptToEvaluateOnNewDocument', {
+          source: `Math.random = () => ${(i + .5) / 5}; try { sessionStorage.removeItem('onsen-hero-copy-ja'); } catch {}`
+        });
+        await send('Page.reload');
+        for (let attempt = 0; attempt < 50; attempt++) {
+          const loaded = await evaluate(`document.readyState === 'complete' && document.getElementById('heroCopy')?.textContent === ${JSON.stringify(copies[i])}`);
+          if (loaded) break;
+          await new Promise(r => setTimeout(r, 100));
+        }
+        await send('Page.removeScriptToEvaluateOnNewDocument', { identifier: injection.identifier });
+        await evaluate('scrollTo(0, 0)');
+        const hero = await evaluate(`(() => {
+          const copy = document.getElementById('heroCopy');
+          const box = copy.getBoundingClientRect();
+          return {
+            text: copy.textContent,
+            overflow: document.documentElement.scrollWidth > innerWidth,
+            contained: [...copy.children].every(span => {
+              const r = span.getBoundingClientRect();
+              return r.left >= box.left && r.right <= box.right + 1 && r.bottom <= box.bottom + 1;
+            }),
+            buttonTop: document.querySelector('.hero-actions').getBoundingClientRect().top,
+            heading: document.querySelector('.hero h1').textContent
+          };
+        })()`);
+        assert.equal(hero.text, copies[i], `${width}px: copy ${i + 1}`);
+        assert.equal(hero.overflow, false);
+        assert.equal(hero.contained, true);
+        assert.equal(hero.heading, 'そうだ、温泉に行こう。');
+        if (buttonTop !== undefined) assert.ok(Math.abs(hero.buttonTop - buttonTop) < 1, 'Buttons must stay in place');
+        buttonTop = hero.buttonTop;
+        const screenshot = await send('Page.captureScreenshot', { format: 'png' });
+        fs.writeFileSync(`scratch/hero-screenshots/hero-${width}-${i + 1}.png`, Buffer.from(screenshot.data, 'base64'));
+      }
+    }
+    let previous = await evaluate(`document.getElementById('heroCopy').textContent`);
+    for (let i = 0; i < 8; i++) {
+      await send('Page.reload');
+      let next;
+      for (let attempt = 0; attempt < 50; attempt++) {
+        next = await evaluate(`document.readyState === 'complete' ? document.getElementById('heroCopy')?.textContent : null`);
+        if (next && next !== previous) break;
+        await new Promise(r => setTimeout(r, 100));
+      }
+      assert.ok(copies.includes(next));
+      assert.notEqual(next, previous, 'Reload must exclude the previous copy');
+      previous = next;
+    }
+    assert.equal(await evaluate('JSON.stringify(localStorage)'), visitStorageBefore, 'Hero must preserve visit storage');
+    await evaluate(`document.getElementById('search').value = '青森'; document.getElementById('search').dispatchEvent(new Event('input'))`);
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '4 件の温泉');
 
     ws.close();
   } finally {
