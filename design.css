@@ -106,7 +106,16 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .tag { font-size: 11px; color: #4a5d4c; background: #e9ede2; padding: 4px 8px; border-radius: 2px; overflow-wrap: anywhere; }
 .tag.gold { background: #eee8d8; color: #746039; }
 .card h3 { font-size: 21px; font-weight: 550; line-height: 1.55; margin: 20px 0 7px; overflow-wrap: anywhere; }
-.facility { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.facility { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+.facility-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.facility-links { display: inline-flex; align-items: center; flex: none; gap: 2px; }
+.facility-link, .map-link { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; color: var(--moss); border-radius: 4px; }
+.facility-link { font-size: 11px; letter-spacing: .06em; }
+.map-link { position: relative; }
+.map-link svg { flex: none; }
+.map-tooltip { position: absolute; right: 0; bottom: calc(100% + 6px); width: max-content; padding: 6px 10px; border-radius: 4px; background: var(--deep); color: var(--surface); font-size: 11px; line-height: 1.6; white-space: nowrap; visibility: hidden; opacity: 0; pointer-events: none; z-index: 2; }
+.map-link:focus-visible .map-tooltip { visibility: visible; opacity: 1; }
+.detail-prefecture { margin-top: 2px; font-size: 12px; }
 .desc { line-height: 1.85; font-size: 13px; color: var(--muted); min-height: 48px; margin-top: 20px; overflow-wrap: anywhere; }
 .card-foot { border-top: 1px solid #e4e1d7; padding: 16px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; }
 .stamp { border: 1px solid #cbd1c3; background: #f1f3e9; color: var(--moss); border-radius: 4px; padding: 10px 13px; min-height: 44px; font-size: 12px; font-weight: 600; line-height: 1.5; white-space: normal; }
@@ -129,6 +138,8 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .hide { display: none !important; }
 #onsens { scroll-margin-top: 28px; }
 @media (hover: hover) {
+  .facility-link:hover, .map-link:hover { color: #596d4e; background: #344f4309; }
+  .map-link:hover .map-tooltip { visibility: visible; opacity: 1; }
   .pref:hover { border-color: #748774; background: #eef1e7; }
   .card:hover { border-color: #bfc7b8; box-shadow: 0 4px 14px #30383208; }
   .btn:hover, .stamp:hover, .tools button:hover { filter: brightness(.96); }
