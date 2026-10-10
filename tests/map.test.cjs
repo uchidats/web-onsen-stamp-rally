@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');require('../map.js');const M=globalThis.OnsenMap;
+const good={id:'onsen-001',coordinateVerified:true,latitude:40,longitude:140,coordinateSource:'https://www.openstreetmap.org/node/1',prefecture:'青森県'};
+const unknown={...good,id:'onsen-002',coordinateVerified:false};
+const south={...good,id:'onsen-003',latitude:36,prefecture:'長野県'};
+const rows=[good,unknown,south];const visited=x=>x.id==='onsen-001';
+assert.deepEqual(M.selection(rows,'','',visited),[good,south]);assert.deepEqual(M.selection(rows,'visited','',visited),[good]);assert.deepEqual(M.selection(rows,'unvisited','',visited),[south]);assert.deepEqual(M.selection(rows,'','長野県',visited),[south]);assert.deepEqual(M.selection(rows,'visited','長野県',visited),[]);
+for(const patch of [{latitude:null},{latitude:NaN},{longitude:181},{latitude:91},{coordinateVerified:'true'},{coordinateSource:''}])assert.equal(M.verified({...good,...patch}),false);
+assert.equal(M.config.tileUrl,'https://tile.openstreetmap.org/{z}/{x}/{y}.png');assert.ok(M.config.attribution.includes('https://www.openstreetmap.org/copyright'));
+const fs=require('node:fs');const source=fs.readFileSync('map.js','utf8');assert.ok(!source.includes('getCurrentPosition'));assert.ok(!source.includes('watchPosition'));assert.ok(source.includes('spiderfyOnMaxZoom:true'));assert.ok(source.includes('scrollWheelZoom:false'));
+console.log('PASS: verified-coordinate guard, status/prefecture filters, attribution, cluster/spiderfy and no GPS requests');

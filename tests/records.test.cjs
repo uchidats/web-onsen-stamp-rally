@@ -15,7 +15,7 @@ restored=repo.prepareImport(migration,state);assert.equal(Object.values(restored
 storage.setItem(R.LEGACY,JSON.stringify({'onsen-001':true,'onsen-002':false}));
 restored=repo.prepareImport(migration,state);assert.equal(restored.userData.visits['onsen-001'].visited,true);assert.equal(restored.userData.visits['onsen-002'].visited,false);
 assert.equal(restored.userData.visits['onsen-003'].notes,migration.userData.visits['onsen-003'].notes);
-state=repo.replace(restored,state);assert.ok(storage.getItem(R.SAFETY));assert.ok(storage.getItem(R.LEGACY));
+state=repo.replace(restored,state,true);assert.ok(storage.getItem(R.SAFETY));assert.ok(storage.getItem(R.LEGACY));
 const old=repo.prepareImport({format:'onsen-stamp-rally-v1',overrides:{'onsen-001':false}},state);assert.equal(old.userData.visits['onsen-001'].visited,false);assert.equal(Object.values(old.userData.visits).filter(x=>x.visited).length,45);
 assert.throws(()=>repo.prepareImport({format:'onsen-stamp-rally-v1',overrides:{'onsen-001':'true'}},state));
 assert.throws(()=>repo.prepareImport({format:'onsen-stamp-rally-v2',userData:{schemaVersion:3}},state));

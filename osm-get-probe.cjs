@@ -1,0 +1,2 @@
+const q='[out:json][timeout:20];nwr["name"="酸ヶ湯温泉"](40,140,41,141);out center tags;';
+(async()=>{for(const base of ['https://overpass-api.de/api/interpreter','https://overpass.private.coffee/api/interpreter']){try{const r=await fetch(base+'?data='+encodeURIComponent(q),{headers:{'User-Agent':'MyOnsenJourney/1.0 (https://github.com/uchidats/web-onsen-stamp-rally)'},signal:AbortSignal.timeout(25000)});console.log(base,r.status,(await r.text()).slice(0,1800))}catch(e){console.log(base,e.message)}}})();

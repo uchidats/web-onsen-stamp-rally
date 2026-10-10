@@ -1,49 +1,31 @@
-/* Storage adapter: replace create(storage) with a cloud repository after authentication. */
+/* Personal repository. Public facility IDs never depend on visit IDs. */
 (function(root){'use strict';
-const KEY='onsen-rally-user-v2',LEGACY='onsen-rally-visits-v1',SAFETY='onsen-rally-before-restore-v2';
-const copy=x=>JSON.parse(JSON.stringify(x));
-const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
-function validateVisits(visits){
- if(!object(visits))throw Error('訪問記録の形式が正しくありません');
- for(const [id,v] of Object.entries(visits)){
-  if(!/^onsen-[a-zA-Z0-9-]+$/.test(id)||!object(v)||typeof v.visited!=='boolean')throw Error('訪問記録の形式が正しくありません');
-  if(v.visitCount!==undefined&&(!Number.isInteger(v.visitCount)||v.visitCount<0))throw Error('訪問回数が正しくありません');
-  for(const k of ['firstVisit','lastVisit','notes'])if(v[k]!=null&&typeof v[k]!=='string')throw Error('訪問情報が正しくありません');
- }
-}
-function validate(state){
- if(!object(state)||state.schemaVersion!==2)throw Error('未対応の保存形式です');
- validateVisits(state.visits);
- if(!Array.isArray(state.rankings)||!Array.isArray(state.gpsStamps)||!['private','public'].includes(state.rankingVisibility))throw Error('個人データの形式が正しくありません');
-}
-function create(storage){
- let blocked=false;
- const empty=()=>({userData:{schemaVersion:2,visits:{},rankings:[],rankingVisibility:'private',gpsStamps:[]}});
- function check(state){validate(state.userData);if(state.legacyBaseline)validateVisits(state.legacyBaseline)}
- function load(){try{const raw=storage.getItem(KEY);if(raw===null)return empty();const state=JSON.parse(raw);check(state);return state}catch(e){blocked=true;throw e}}
- function persist(state){if(blocked)throw Error('既存データを復元してから変更してください');check(state);storage.setItem(KEY,JSON.stringify(state));return state}
- function legacy(){const raw=storage.getItem(LEGACY);if(raw===null)return {};const values=JSON.parse(raw);if(!object(values)||Object.values(values).some(v=>typeof v!=='boolean'))throw Error('旧チェック記録が不正です。元データは保持しています');return values}
- function applyOverrides(baseline,overrides){const result=copy(baseline);for(const [id,v] of Object.entries(overrides)){if(!/^onsen-[a-zA-Z0-9-]+$/.test(id)||typeof v!=='boolean')throw Error('旧バックアップが不正です');result[id]={...result[id],visited:v}}return result}
- function prepareImport(file,current){
-  if(!object(file))throw Error('正しいバックアップファイルではありません');
-  if(file.format==='onsen-stamp-rally-v1'){
-   if(!object(file.overrides))throw Error('旧バックアップが不正です');
-   if(!current.legacyBaseline)throw Error('旧版のバックアップは変更分のみです。先に移行用バックアップを復元してください');
-   const next=copy(current);next.userData.visits=applyOverrides(next.legacyBaseline,file.overrides);check(next);return next;
-  }
-  if(file.format!=='onsen-stamp-rally-v2')throw Error('未対応のバックアップ形式です');
-  const next={userData:copy(file.userData)};
-  if(file.legacyBaseline)next.legacyBaseline=copy(file.legacyBaseline);
-  check(next);
-  if(file.migration===true){if(!next.legacyBaseline)throw Error('移行元の記録がありません');next.userData.visits=applyOverrides(next.legacyBaseline,legacy())}
-  return next;
- }
- return {empty,load,hasLegacy:()=>storage.getItem(LEGACY)!==null,
-  setVisited(state,id,value){const next=copy(state);next.userData.visits[id]={...next.userData.visits[id],visited:value};return persist(next)},
-  backup(state){check(state);return {format:'onsen-stamp-rally-v2',exportedAt:new Date().toISOString(),...copy(state)}},
-  prepareImport,
-  replace(next,current){check(next);const existing=storage.getItem(KEY);storage.setItem(SAFETY,existing===null?JSON.stringify(current):existing);blocked=false;try{return persist(next)}catch(e){blocked=true;throw e}}
- };
-}
-root.OnsenRecords={create,KEY,LEGACY,SAFETY};
+const KEY='onsen-rally-user-v3',OLD_KEY='onsen-rally-user-v2',LEGACY='onsen-rally-visits-v1',SAFETY='onsen-rally-before-restore-v3',MIGRATION='onsen-rally-before-migration-v3';
+const copy=x=>JSON.parse(JSON.stringify(x)),object=x=>x&&typeof x==='object'&&!Array.isArray(x),facilityId=id=>/^onsen-[a-zA-Z0-9-]+$/.test(id);
+function validDate(value){if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value)||value<'0001-01-01')return false;const d=new Date(value+'T00:00:00Z');return !Number.isNaN(d.getTime())&&d.toISOString().slice(0,10)===value}
+function summary(v){const records=v?.records||[],dates=records.map(r=>r.date).filter(Boolean).sort();return {visited:records.length>0,visitCount:records.length,firstVisit:dates[0]||null,lastVisit:dates.at(-1)||null,unknownCount:records.filter(r=>r.date===null).length}}
+function validateOld(visits){if(!object(visits))throw Error('訪問記録の形式が正しくありません');for(const [id,v] of Object.entries(visits)){if(!facilityId(id)||!object(v)||typeof v.visited!=='boolean')throw Error('旧訪問記録の形式が正しくありません');if(v.visitCount!==undefined&&(!Number.isInteger(v.visitCount)||v.visitCount<0))throw Error('訪問回数が正しくありません')}}
+function validateUser(user,version){if(!object(user)||user.schemaVersion!==version||!object(user.visits))throw Error('未対応の保存形式です');if(!Array.isArray(user.rankings)||!Array.isArray(user.gpsStamps)||!['private','public'].includes(user.rankingVisibility))throw Error('個人データの形式が正しくありません')}
+function check(state){validateUser(state?.userData,3);const ids=new Set();for(const [id,v] of Object.entries(state.userData.visits)){if(!facilityId(id)||!object(v)||!Array.isArray(v.records)||typeof v.notes!=='string')throw Error('訪問記録の形式が正しくありません');for(const r of v.records){if(!object(r)||typeof r.id!=='string'||!r.id||ids.has(r.id)||(r.date!==null&&!validDate(r.date))||typeof r.notes!=='string'||!Array.isArray(r.photos)||(r.gpsStamp!==null&&!object(r.gpsStamp)))throw Error('訪問日または訪問IDが正しくありません');ids.add(r.id)}Object.assign(v,summary(v))}if(state.legacyBaseline)validateOld(state.legacyBaseline)}
+function oldDate(value){const m=/^(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})日?$/.exec(value.trim());if(!m)return null;const date=m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');return validDate(date)?date:null}
+function convertVisits(visits){validateOld(visits);const out={};for(const [id,v] of Object.entries(visits)){const records=[];const add=raw=>{if(raw===null){records.push({id:'legacy-'+id+'-'+(records.length+1),date:null,notes:'',photos:[],gpsStamp:null});return}if(typeof raw!=='string')throw Error('旧訪問日の形式が正しくありません');const date=oldDate(raw);records.push({id:'legacy-'+id+'-'+(records.length+1),date,notes:'',photos:[],gpsStamp:null,...(!date?{legacyDate:raw}:{})})};const list=v.visitDates??v.dates;if(list!==undefined){if(!Array.isArray(list))throw Error('旧訪問日の一覧が正しくありません');for(const raw of list)add(raw)}for(const key of ['firstVisit','lastVisit']){const raw=v[key];if(raw!=null&&raw!==''){if(typeof raw!=='string')throw Error('旧訪問日の形式が正しくありません');for(const part of raw.split(/[,、;；\n\r]+/).map(s=>s.trim()).filter(Boolean)){const date=oldDate(part);if(!records.some(r=>date?r.date===date:r.legacyDate===part))add(part)}}}const count=Math.max(records.length,v.visitCount||0,v.visited?1:0);while(records.length<count)records.push({id:'legacy-'+id+'-'+(records.length+1),date:null,notes:'',photos:[],gpsStamp:null});out[id]={records,notes:typeof v.notes==='string'?v.notes:'',legacyVisitInfo:copy(v),...summary({records})}}return out}
+function convert(state){validateUser(state?.userData,2);const next=copy(state);next.userData.schemaVersion=3;next.userData.visits=convertVisits(state.userData.visits);check(next);return next}
+function override(baseline,values){validateOld(baseline);if(!object(values))throw Error('旧チェック記録が不正です');const result=copy(baseline);for(const [id,value] of Object.entries(values)){if(!facilityId(id)||typeof value!=='boolean')throw Error('旧チェック記録が不正です');if(value)result[id]={...result[id],visited:true};else result[id]={...result[id],visited:false,visitCount:0}}return result}
+function create(storage){let blocked=false,pending=false,source=null,expected=null;const empty=()=>({userData:{schemaVersion:3,visits:{},rankings:[],rankingVisibility:'private',gpsStamps:[]}});
+function load(){try{expected=storage.getItem(KEY);if(expected!==null){const s=JSON.parse(expected);check(s);pending=false;return s}const old=storage.getItem(OLD_KEY),legacy=storage.getItem(LEGACY);source={old,legacy};if(old!==null){pending=true;return convert(JSON.parse(old))}if(legacy!==null){const s=empty(),values=JSON.parse(legacy);s.userData.visits=convertVisits(override({},values));pending=true;return s}pending=false;return empty()}catch(e){blocked=true;throw e}}
+function persist(state){if(blocked)throw Error('既存データを復元してから変更してください');if(pending)throw Error('先に旧記録のバックアップと移行を確認してください');if(storage.getItem(KEY)!==expected)throw Error('別のタブで記録が更新されました。再読み込みしてください');check(state);const raw=JSON.stringify(state);storage.setItem(KEY,raw);expected=raw;return state}
+function sourceBackup(){if(!pending||!source)throw Error('移行対象の旧記録はありません');return {format:'onsen-stamp-rally-migration-source',exportedAt:new Date().toISOString(),storage:copy(source)}}
+function prepareImport(file,current){if(!object(file))throw Error('正しいバックアップファイルではありません');if(file.format==='onsen-stamp-rally-migration-source'){if(!object(file.storage)||!['old','legacy'].every(k=>file.storage[k]===null||typeof file.storage[k]==='string'))throw Error('移行元バックアップが不正です');if(file.storage.old!==null)return convert(JSON.parse(file.storage.old));const next=empty();next.userData.visits=convertVisits(override({},file.storage.legacy===null?{}:JSON.parse(file.storage.legacy)));check(next);return next}if(file.format==='onsen-stamp-rally-v1'){if(!current.legacyBaseline)throw Error('旧版のバックアップは変更分のみです。先に移行用バックアップを復元してください');const next=copy(current);next.userData.visits=convertVisits(override(next.legacyBaseline,file.overrides));check(next);return next}if(!['onsen-stamp-rally-v2','onsen-stamp-rally-v3'].includes(file.format))throw Error('未対応のバックアップ形式です');let next={userData:copy(file.userData)};if(file.legacyBaseline)next.legacyBaseline=copy(file.legacyBaseline);if(file.format==='onsen-stamp-rally-v2'){if(file.migration===true){validateUser(next.userData,2);if(!next.legacyBaseline)throw Error('移行元の記録がありません');const raw=storage.getItem(LEGACY);next.userData.visits=override(next.legacyBaseline,raw===null?{}:JSON.parse(raw))}next=convert(next)}check(next);return next}
+function change(state,id,action){if(!facilityId(id))throw Error('施設IDが正しくありません');const next=copy(state),v=next.userData.visits[id]||(next.userData.visits[id]={records:[],notes:''});action(v);return persist(next)}
+let sequence=0;function newId(){return root.crypto?.randomUUID?root.crypto.randomUUID():'visit-'+Date.now().toString(36)+'-'+(++sequence)+'-'+Math.random().toString(36).slice(2)}
+return {empty,load,needsMigration:()=>pending,hasLegacy:()=>storage.getItem(LEGACY)!==null,sourceBackup,
+migrate(state,confirmed){if(confirmed!==true)throw Error('移行の確認が必要です');if(!pending)return state;if(storage.getItem(KEY)!==null||storage.getItem(OLD_KEY)!==source.old||storage.getItem(LEGACY)!==source.legacy)throw Error('記録が更新されました。再読み込みしてください');storage.setItem(MIGRATION,JSON.stringify(sourceBackup()));pending=false;try{return persist(copy(state))}catch(e){pending=true;throw e}},
+setVisited(state,id,value){if(typeof value!=='boolean')throw Error('訪問状態が正しくありません');return change(state,id,v=>{if(value&&!v.records.length)v.records.push({id:newId(),date:null,notes:'',photos:[],gpsStamp:null});if(!value){if(v.records.length>1||v.records.some(r=>r.date!==null))throw Error('訪問日一覧から記録を編集・削除してください');v.records=[]}})},
+addVisit(state,id,date){if(date!==null&&!validDate(date))throw Error('正しい訪問日を入力してください');return change(state,id,v=>v.records.push({id:newId(),date,notes:'',photos:[],gpsStamp:null}))},
+editVisit(state,id,visitId,date){if(date!==null&&!validDate(date))throw Error('正しい訪問日を入力してください');return change(state,id,v=>{const r=v.records.find(r=>r.id===visitId);if(!r)throw Error('訪問記録が見つかりません');r.date=date;delete r.legacyDate})},
+deleteVisit(state,id,visitId){return change(state,id,v=>{const i=v.records.findIndex(r=>r.id===visitId);if(i<0)throw Error('訪問記録が見つかりません');v.records.splice(i,1)})},
+backup(state){check(state);return {format:'onsen-stamp-rally-v3',exportedAt:new Date().toISOString(),...copy(state)}},prepareImport,
+replace(next,current,confirmed){if(confirmed!==true)throw Error('復元の確認が必要です');check(next);if(storage.getItem(KEY)!==expected)throw Error('別のタブで記録が更新されました。再読み込みしてください');storage.setItem(SAFETY,expected===null?JSON.stringify(current):expected);if(pending)storage.setItem(MIGRATION,JSON.stringify(sourceBackup()));const wasPending=pending;blocked=false;pending=false;try{return persist(copy(next))}catch(e){blocked=true;pending=wasPending;throw e}}
+};}
+root.OnsenRecords={create,KEY,OLD_KEY,LEGACY,SAFETY,MIGRATION,summary,validDate};
 })(typeof window==='undefined'?globalThis:window);
