@@ -27,17 +27,31 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
   color: var(--surface); padding: 30px 0 76px;
-  background: linear-gradient(120deg, #192e29 10%, #293d33 65%, #3b4b3d);
+  background: linear-gradient(120deg, #192e29 10%, #293d33 65%, #35483b);
 }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(ellipse at 88% 65%, #b8bb9820, transparent 54%),
-    linear-gradient(175deg, transparent 56%, #dad8bd0b 58%, transparent 68%);
+  /* Three diffuse mist banks veil the vertical shadows at the forest edges. */
+  background:
+    radial-gradient(ellipse 75% 17% at 72% 94%, #d9d8c316, transparent 78%),
+    radial-gradient(ellipse 62% 14% at 94% 71%, #b9c5b51a, transparent 82%),
+    radial-gradient(ellipse 58% 12% at 52% 57%, #c7cec00c, transparent 85%),
+    radial-gradient(ellipse 1.1% 85% at 97% 32%, #102a2352, transparent 90%),
+    radial-gradient(ellipse .7% 76% at 92% 40%, #142d2440, transparent 90%),
+    radial-gradient(ellipse 1.3% 90% at 87% 25%, #122b233d, transparent 90%),
+    radial-gradient(ellipse .8% 70% at 81% 45%, #152d2530, transparent 90%),
+    radial-gradient(ellipse .9% 88% at 2% 29%, #10282145, transparent 90%),
+    radial-gradient(ellipse .6% 76% at 6% 42%, #122b2333, transparent 90%),
+    radial-gradient(ellipse 1% 80% at 10% 38%, #142c2424, transparent 90%);
 }
 .hero::after {
-  content: ""; position: absolute; inset: 42% -3% 0 38%; z-index: -1; pointer-events: none;
-  background: linear-gradient(180deg, #82907a18, #14251f3b);
-  clip-path: polygon(0 100%, 14% 66%, 27% 76%, 47% 20%, 64% 53%, 77% 34%, 100% 72%, 100% 100%);
+  content: ""; position: absolute; inset: 30% -8% -22% 30%; z-index: -2; pointer-events: none;
+  /* Soft, overlapping slopes replace the angular ridge; no external assets. */
+  background:
+    radial-gradient(ellipse 50% 42% at 89% 105%, #10271f38 55%, transparent 72%),
+    radial-gradient(ellipse 43% 46% at 53% 97%, #172d2530 55%, transparent 74%),
+    radial-gradient(ellipse 49% 53% at 77% 87%, #80917b16 48%, transparent 73%),
+    radial-gradient(ellipse 39% 41% at 27% 100%, #73846e12 48%, transparent 75%);
 }
 .top { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .logo { font-size: 19px; font-weight: 650; letter-spacing: .1em; line-height: 1.5; }
@@ -136,7 +150,8 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   .hero .hero-subcopy { font-size: clamp(16px, 4.4vw, 20px); }
   .hero p { font-size: 14px; }
   .hero-actions { gap: 12px; margin-top: 28px; }
-  .hero::after { inset: 55% -10% 0 10%; opacity: .6; }
+  .hero::before { opacity: .75; }
+  .hero::after { inset: 45% -28% -16% 0; opacity: .7; }
   .logo { font-size: 17px; }
   .logo small { font-size: 9px; }
   .login { padding: 9px 12px; font-size: 11px; }
