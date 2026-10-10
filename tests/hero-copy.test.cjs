@@ -8,10 +8,10 @@ test('Every copy is reachable, previous copy is excluded, and stale values are h
   const context = {};
   vm.runInNewContext(code, context);
   const { COPIES, choose } = context.OnsenHeroCopy;
-  assert.equal(COPIES.ja.length, 5);
+  assert.equal(COPIES.ja.length, 6);
   for (const previous of [undefined, 'old copy', ...COPIES.ja]) {
     const results = new Set(Array.from({ length: 100 }, (_, i) => choose(COPIES.ja, previous, () => i / 100)));
-    assert.equal(results.size, COPIES.ja.includes(previous) ? 4 : 5);
+    assert.equal(results.size, COPIES.ja.includes(previous) ? 5 : 6);
     assert.equal(results.has(previous), false);
   }
 });

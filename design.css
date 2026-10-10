@@ -542,3 +542,8 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   .prefgrid { grid-template-columns: minmax(0, 1fr); }
 }
 
+
+/* One map, two views. Keep hidden Leaflet containers out of layout. */
+#japanMap[hidden], #prefectureMap[hidden], .map-canvas[hidden] { display: none; }
+#prefectureMap { width: 100%; min-width: 0; }
+#mapHeading { font-size: 1.35rem; }

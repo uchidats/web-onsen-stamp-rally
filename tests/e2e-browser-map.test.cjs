@@ -13,7 +13,15 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     return;
   }
 
-  const htmlUrl = pathToFileURL(path.resolve('index.html')).href;
+  const server = require('node:http').createServer((req,res)=>{
+    const file = path.resolve('.'+new URL(req.url,'http://localhost').pathname);
+    if(!file.startsWith(process.cwd()+path.sep)){res.writeHead(403).end();return;}
+    const type={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css','.png':'image/png','.svg':'image/svg+xml'}[path.extname(file)];
+    if(type)res.setHeader('Content-Type',type);
+    fs.createReadStream(file).on('error',()=>res.writeHead(404).end()).pipe(res);
+  });
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  const htmlUrl = `http://127.0.0.1:${server.address().port}/index.html`;
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-map-browser-'));
   const port = 9225;
 
@@ -193,11 +201,48 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     assert.equal(await evaluate(`document.querySelector('.pref[data-pref="北海道"]').classList.contains('selected')`), true);
     assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '1 件の温泉');
 
-    await evaluate(`document.querySelector('.prefecture[data-code="10"]').focus()`);
+    await evaluate(`document.getElementById('resetPref').click();document.getElementById('regional-progress').scrollIntoView();document.querySelector('.prefecture[data-code="10"]').focus()`);
     await send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
     await send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
     assert.equal(await evaluate(`document.querySelector('.prefecture[data-code="10"]').getAttribute('aria-pressed')`), 'true');
     assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '8 件の温泉');
+
+    // Unified view: verified markers, status sync, popup history, return and every prefecture.
+    await evaluate(`document.getElementById('resetPref').click(); document.querySelector('.pref[data-pref="青森県"]').click()`);
+    for(let attempt=0;attempt<50;attempt++){
+      if(await evaluate(`!!document.querySelector('#mapCanvas .leaflet-marker-icon')`))break;
+      await new Promise(r=>setTimeout(r,100));
+    }
+    assert.equal(await evaluate(`document.getElementById('japanMap').hidden && !document.getElementById('prefectureMap').hidden`),true);
+    assert.equal(await evaluate(`document.getElementById('mapCount').textContent.includes('表示 4施設')`),true);
+    for(const width of [1440,768,390,320]){
+      await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<400});
+      await new Promise(r=>setTimeout(r,150));
+      assert.equal(await evaluate(`document.documentElement.scrollWidth<=innerWidth`),true);
+      assert.ok(await evaluate(`document.querySelectorAll('#mapCanvas .onsen-map-marker.is-unvisited').length>0`));
+      assert.equal(await evaluate(`document.getElementById('mapCount').textContent.includes('表示 4施設')`),true);
+      const shot = await send('Page.captureScreenshot', {format:'png'});
+      fs.writeFileSync(`scratch/map-screenshots/unified-${width}.png`,Buffer.from(shot.data,'base64'));
+    }
+    await evaluate(`document.querySelector('#mapCanvas .onsen-map-marker').click()`);
+    assert.equal(await evaluate(`document.querySelector('.onsen-popup').textContent.includes('訪問 0回')`),true);
+    assert.equal(await evaluate(`document.querySelector('.onsen-popup a').href.startsWith('https://')`),true);
+    await evaluate(`document.querySelector('.onsen-popup button').click(); document.getElementById('detailStamp').click(); document.getElementById('modalClose').click()`);
+    assert.equal(await evaluate(`document.querySelectorAll('#mapCanvas .onsen-map-marker.is-visited').length`),1);
+    await evaluate(`document.getElementById('mapStatus').value='visited';document.getElementById('mapStatus').dispatchEvent(new Event('change'))`);
+    assert.equal(await evaluate(`document.getElementById('statusSelect').value`),'visited');
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`),'1 件の温泉');
+    await evaluate(`document.getElementById('clearFilter').click()`);
+    for(const pref of await evaluate(`JapanPrefMap.PREFECTURES.map(p=>p.name)`)){
+      await evaluate(`document.querySelector('.prefecture[data-pref="${pref}"]').dispatchEvent(new MouseEvent('click',{bubbles:true}))`);
+      assert.equal(await evaluate(`document.getElementById('prefSelect').value`),pref);
+      assert.equal(await evaluate(`document.getElementById('mapHeading').textContent`),pref+'の温泉マップ');
+      await evaluate(`document.getElementById('mapReset').click()`);
+      assert.equal(await evaluate(`document.getElementById('japanMap').hidden`),false);
+      assert.equal(await evaluate(`document.getElementById('prefSelect').value`),'');
+    }
+    await evaluate(`localStorage.clear();location.reload()`);
+    await new Promise(r=>setTimeout(r,300));
 
     // Hero copy: force each random bucket on a real reload, then test normal reloads.
     fs.mkdirSync('scratch/hero-screenshots', { recursive: true });
@@ -210,7 +255,7 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
       let buttonTop;
       for (let i = 0; i < copies.length; i++) {
         const injection = await send('Page.addScriptToEvaluateOnNewDocument', {
-          source: `Math.random = () => ${(i + .5) / 5}; try { sessionStorage.removeItem('onsen-hero-copy-ja'); } catch {}`
+          source: `Math.random = () => ${(i + .5) / copies.length}; try { sessionStorage.removeItem('onsen-hero-copy-ja'); } catch {}`
         });
         await send('Page.reload');
         for (let attempt = 0; attempt < 50; attempt++) {
@@ -269,5 +314,6 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     ws.close();
   } finally {
     edge.kill();
+    server.closeAllConnections();server.close();
   }
 });

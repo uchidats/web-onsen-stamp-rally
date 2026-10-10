@@ -134,10 +134,11 @@
       let content = '<strong>' + stats.name + '</strong>';
       if (stats.total === 0) {
         content += '<div class="tooltip-stat muted">登録施設なし</div>';
+        content += '<div class="tooltip-stat">訪問: 0 / 0 施設</div><div class="tooltip-stat">達成率: —</div>';
       } else {
         content += '<div class="tooltip-stat">訪問: ' + stats.visitedCount + ' / ' + stats.total + ' 施設</div>';
         content += '<div class="tooltip-stat bold">達成率: ' + stats.pct + '%</div>';
-        content += '<div class="tooltip-hint">クリックで一覧を絞り込み</div>';
+        content += '<div class="tooltip-hint">クリックで県の地図を表示</div>';
       }
       tooltip.innerHTML = content;
       tooltip.hidden = false;
@@ -173,7 +174,7 @@
         detailBar.innerHTML =
           '<div class="detail-info">' +
             '<span class="detail-title">全国</span>' +
-            '<span class="detail-desc">都道府県を選ぶと温泉一覧を絞り込めます</span>' +
+            '<span class="detail-desc">都道府県を選ぶと県の地図と温泉一覧を表示します</span>' +
           '</div>';
         return;
       }
