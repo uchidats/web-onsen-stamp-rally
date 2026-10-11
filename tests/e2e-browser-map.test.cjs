@@ -207,6 +207,38 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     assert.equal(await evaluate(`document.querySelector('.prefecture[data-code="10"]').getAttribute('aria-pressed')`), 'true');
     assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '8 件の温泉');
 
+    // Iwate facilities remain individual at the regional zoom on desktop and mobile.
+    await evaluate("document.getElementById('resetPref').click();document.getElementById('prefSelect').value='岩手県';document.getElementById('prefSelect').dispatchEvent(new Event('change'))");
+    for (let attempt = 0; attempt < 50; attempt++) {
+      if (await evaluate("document.querySelectorAll('#mapCanvas .onsen-map-marker').length === 3")) break;
+      await new Promise(r => setTimeout(r, 100));
+    }
+    for (const width of [1280, 390]) {
+      await send('Emulation.setDeviceMetricsOverride', {width, height:1000, deviceScaleFactor:1, mobile:width === 390});
+      await send('Emulation.setTouchEmulationEnabled', {enabled:width === 390});
+      await evaluate("document.getElementById('mapCanvas').scrollIntoView()");
+      await new Promise(r => setTimeout(r, 350));
+      const expected = await evaluate("ONSEN_DATA.filter(x => x.prefecture === '岩手県' && OnsenMap.verified(x)).map(x => x.id).sort()");
+      const actual = await evaluate("[...document.querySelectorAll('#mapCanvas .onsen-map-marker')].map(x => x.dataset.onsenId).sort()");
+      assert.deepEqual(actual, expected, width + 'px: every Iwate facility has its own marker');
+      assert.equal(await evaluate("document.querySelectorAll('.onsen-map-cluster, .marker-cluster').length"), 0);
+      assert.equal(await evaluate("document.querySelectorAll('#mapCanvas .onsen-map-marker.is-unvisited').length"), expected.length);
+      assert.equal(await evaluate("!!window.L.markerClusterGroup"), false, 'Cluster plugin is not loaded');
+      const point = await evaluate("(() => {const r = document.querySelector('#mapCanvas .onsen-map-marker span').getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}})()");
+      if (width === 390) {
+        await send('Input.dispatchTouchEvent', {type:'touchStart', touchPoints:[point]});
+        await send('Input.dispatchTouchEvent', {type:'touchEnd', touchPoints:[]});
+      } else {
+        await send('Input.dispatchMouseEvent', {type:'mousePressed', ...point, button:'left', clickCount:1});
+        await send('Input.dispatchMouseEvent', {type:'mouseReleased', ...point, button:'left', clickCount:1});
+      }
+      await new Promise(r => setTimeout(r, 350));
+      assert.ok(await evaluate("!!document.querySelector('.onsen-popup button')"), width + 'px: pointer opens popup');
+      const shot = await send('Page.captureScreenshot', {format:'png'});
+      fs.writeFileSync('scratch/map-screenshots/individual-iwate-' + width + '.png', Buffer.from(shot.data,'base64'));
+      await evaluate("document.querySelector('.leaflet-popup-close-button').click()");
+    }
+
     // Unified view: verified markers, status sync, popup history, return and every prefecture.
     await evaluate(`document.getElementById('resetPref').click(); document.querySelector('.pref[data-pref="青森県"]').click()`);
     for(let attempt=0;attempt<50;attempt++){
