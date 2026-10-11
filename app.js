@@ -7,6 +7,10 @@ function facilityName(x,context='card'){
   const url=officialUrl(x.officialUrl),map=officialUrl(mapUrl(x)),tooltipId=context+'-map-'+x.id;
   const official=url?`<a class="facility-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(x.facility)}の公式サイト（新しいタブで開く）">公式</a>`:'';
   const pin=map?`<a class="map-link"${context==='detail'?' id="detailMap"':''} href="${esc(map)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(x.facility)}をGoogle Mapsで表示（新しいタブで開く）" aria-describedby="${esc(tooltipId)}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span class="map-tooltip" id="${esc(tooltipId)}" role="tooltip">Google Mapsで表示</span></a>`:'';
+  if(context==='card'){
+    const name=url?`<a class="facility-name facility-name-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(x.facility)}の公式サイト（新しいタブで開く）">${esc(x.facility)}</a>`:`<span class="facility-name">${esc(x.facility)}</span>`;
+    return `${name}${pin}`;
+  }
   return `<span class="facility-name">${esc(x.facility)}</span><span class="facility-links">${official}${pin}</span>`;
 }
 function renderDashboard(){const done=DATA.filter(visited).length,tot=DATA.length,p=Math.round(done/tot*1000)/10;$('totalPercent').innerHTML=p+'<small>%</small>';$('totalText').textContent=`${done} / ${tot} 施設を訪問済み`;$('totalBar').style.width=p+'%';$('nextCount').textContent=`未訪問 ${tot-done} 施設`}

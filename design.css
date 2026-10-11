@@ -107,6 +107,11 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .card h3 { font-size: 21px; font-weight: 550; line-height: 1.55; margin: 20px 0 7px; overflow-wrap: anywhere; }
 .facility { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
 .facility-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.card .facility { align-items: flex-start; gap: 6px; font-size: 16px; font-weight: 500; line-height: 1.65; color: var(--ink); }
+.card .facility-name { flex: 0 1 auto; padding-block: 8px; }
+.card .facility-name-link { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.card .facility-name-link:hover { color: var(--moss); text-decoration-color: currentColor; }
+.card .map-link { flex: none; }
 .facility-links { display: inline-flex; align-items: center; flex: none; gap: 2px; }
 .facility-link, .map-link { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; color: var(--moss); border-radius: 4px; }
 .facility-link { font-size: 11px; letter-spacing: .06em; }

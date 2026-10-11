@@ -10,7 +10,7 @@ function render(rows){const elements=new Map(),saved=new Map();const el=id=>{if(
   for(let i=0;i<4;i++)el('showMore').onclick();return el('cards').innerHTML;
 }
 const html=render(data);
-assert.equal((html.match(/class="facility-link"/g)||[]).length,data.filter(x=>x.officialUrl).length);
+assert.equal((html.match(/class="facility-name facility-name-link"/g)||[]).length,data.filter(x=>x.officialUrl).length);
 assert.equal((html.match(/data-detail=/g)||[]).length,67);
 assert.equal((html.match(/data-visit=/g)||[]).length,67);
 assert.equal((html.match(/<h3>/g)||[]).length,67);
@@ -18,13 +18,21 @@ assert.ok(!/<h3>\s*<a/.test(html));
 for(const x of data){if(x.officialUrl){assert.ok(html.includes('href="'+x.officialUrl+'" target="_blank" rel="noopener noreferrer"'));}else{assert.ok(html.includes('<span class="facility-name">'+x.facility+'</span>'))}}
 assert.equal((html.match(/class="map-link"/g)||[]).length,67);
 assert.equal((html.match(/role="tooltip"/g)||[]).length,67);
-assert.equal((html.match(/>公式<\/a>/g)||[]).length,data.filter(x=>x.officialUrl).length);
+assert.equal((html.match(/>公式<\/a>/g)||[]).length,0);
 for(const x of data){assert.ok(html.includes('href="'+x.mapUrl.replaceAll('&','&amp;')+'"'));assert.ok(html.includes('aria-describedby="card-map-'+x.id+'"'))}
 assert.ok(html.includes('aria-hidden="true" focusable="false"'));
 assert.ok(!render([{...data[0],mapUrl:'javascript:alert(1)'}]).includes('class="map-link"'));
 const invalid=['',null,undefined,42,'javascript:alert(1)','data:text/html,test','ftp://example.com/','//example.com','/relative','https://','https://user:password@example.com/','httpx://example.com/'];
-for(const officialUrl of invalid){const s=render([{...data[0],officialUrl}]);assert.ok(!s.includes('class="facility-link"'),String(officialUrl));assert.ok(s.includes('<span class="facility-name">'+data[0].facility+'</span>'))}
-for(const officialUrl of ['http://example.com/','https://example.com/','HTTPS://example.com/',' https://example.com/ '])assert.ok(render([{...data[0],officialUrl}]).includes('class="facility-link"'));
+for(const officialUrl of invalid){const s=render([{...data[0],officialUrl}]);assert.ok(!s.includes('class="facility-name facility-name-link"'),String(officialUrl));assert.ok(s.includes('<span class="facility-name">'+data[0].facility+'</span>'))}
+for(const officialUrl of ['http://example.com/','https://example.com/','HTTPS://example.com/',' https://example.com/ '])assert.ok(render([{...data[0],officialUrl}]).includes('class="facility-name facility-name-link"'));
+for(const official of [false,true])for(const maps of [false,true]){
+  const row={...data[0],officialUrl:official?'https://example.com/':'',mapUrl:maps?'https://maps.google.com/':''};
+  const s=render([row]);
+  assert.equal(s.includes('class="facility-name facility-name-link"'),official);
+  assert.equal(s.includes('class="map-link"'),maps);
+  assert.ok(!s.includes('>公式</a>'));
+  assert.ok(!s.includes('class="facility-links"'));
+}
 const escaped=render([{...data[0],facility:'宿"<&>',officialUrl:'https://example.com/?q="&x=1'}]);
 assert.ok(escaped.includes('宿&quot;&lt;&amp;&gt;'));
 assert.ok(escaped.includes('href="https://example.com/?q=%22&amp;x=1"'));
