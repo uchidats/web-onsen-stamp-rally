@@ -167,6 +167,8 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .map-idle { display: grid; place-content: center; text-align: center; gap: 12px; min-height: 260px; padding: 28px; background: #e8ece2; color: var(--moss); }
 .map-idle p { font-family: var(--serif); }
 .map-canvas { height: clamp(380px, 60vh, 620px); background: #e7ebe2; z-index: 0; font-family: inherit; }
+/* Warm ink and paper tones belong only to the background tiles, below markers and controls. */
+#mapCanvas .leaflet-tile-pane .leaflet-tile { filter: grayscale(1) sepia(.16) saturate(.55) contrast(.94) brightness(1.03); }
 .map-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 16px 24px; color: var(--muted); font-size: 12px; }
 .map-bottom a { text-decoration: underline; text-underline-offset: 3px; }
 .map-notice { margin: 0; padding: 12px 24px; }
