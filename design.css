@@ -85,6 +85,16 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; letter-spacing: .04em; line-height: 1.5; text-wrap: balance; }
 .lead { font-size: 13px; margin-top: 10px; line-height: 1.8; max-width: 62ch; }
 .prefgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.pref-progress { border: 1px solid var(--line); border-radius: 6px; background: var(--surface); min-width: 0; }
+.pref-progress-toggle { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px; cursor: pointer; list-style: none; }
+.pref-progress-toggle::-webkit-details-marker { display: none; }
+.pref-progress-toggle::marker { content: ""; }
+.pref-progress-toggle strong { font-size: 16px; font-weight: 500; line-height: 1.6; }
+.pref-progress-meta { display: block; color: var(--muted); font-size: 12px; line-height: 1.8; margin-top: 4px; }
+.pref-progress-chevron { flex: none; color: var(--muted); }
+.pref-progress[open] .pref-progress-chevron { transform: rotate(180deg); }
+.pref-progress .prefgrid { padding: 0 16px 16px; }
+.pref-progress-toggle:focus-visible { outline: 2px solid var(--moss); outline-offset: 3px; }
 .pref { border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); text-align: left; padding: 20px; }
 .pref strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 10px; }
 .pref .fraction { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }

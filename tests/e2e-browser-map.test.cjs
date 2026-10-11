@@ -77,6 +77,9 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
       await new Promise(r => setTimeout(r, 100));
     }
 
+    assert.equal(await evaluate("document.getElementById('prefProgress').open"),false);
+    // Expand the supplemental cards before measuring their existing grid layout.
+    await evaluate("document.querySelector('#prefProgress summary').click()");
     // Measure actual painted geometry, not just the presence of SVG nodes.
     fs.mkdirSync('scratch/map-screenshots', { recursive: true });
     for (const width of [1440, 1280, 768, 390, 320]) {
