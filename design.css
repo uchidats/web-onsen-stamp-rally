@@ -178,6 +178,10 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .map-pending button { min-height: 44px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--moss); font: inherit; padding: 8px 12px; }
 /* Leaflet CSS loads later and sets marker icons to block. Keep the dot centered on its coordinate anchor. */
 .map-canvas .onsen-map-marker { display: grid; place-items: center; background: transparent; }
+/* Keep the focusable anchor, but let only the painted circle receive pointer input.
+   The ID selector also wins over Leaflet's interactive-icon rule loaded later. */
+#mapCanvas .onsen-map-marker { pointer-events: none; }
+#mapCanvas .onsen-map-marker span { pointer-events: auto; clip-path: circle(50%); }
 .onsen-map-marker span { display: block; width: 20px; height: 20px; background: var(--marker-color); border: 3px solid var(--surface); border-radius: 50%; box-shadow: 0 1px 5px #192e2940; }
 .onsen-map-marker.is-visited span::after { content: ""; display: block; width: 6px; height: 3px; border-left: 1.5px solid var(--surface); border-bottom: 1.5px solid var(--surface); transform: rotate(-45deg); margin: 4px auto; }
 .map-canvas .leaflet-control-zoom a { width: 44px; height: 44px; line-height: 44px; background: var(--surface); color: var(--moss); }
