@@ -10,7 +10,14 @@ class MockElement {
     this.children = [];
     this.attributes = new Map();
     this.listeners = new Map();
-    this.classList = new Set();
+    const set = new Set();
+    this.classList = {
+      _set: set,
+      add(...classes) { for (const c of classes) set.add(c); },
+      remove(...classes) { for (const c of classes) set.delete(c); },
+      contains(c) { return set.has(c); },
+      has(c) { return set.has(c); }
+    };
     this.innerHTMLValue = '';
     this.hidden = false;
     this.style = {};
@@ -45,7 +52,8 @@ class MockElement {
   setAttribute(k, v) {
     this.attributes.set(k, String(v));
     if (k === 'class') {
-      this.classList = new Set(String(v).split(/\s+/).filter(Boolean));
+      this.classList._set.clear();
+      String(v).split(/\s+/).filter(Boolean).forEach(c => this.classList._set.add(c));
     }
   }
 
@@ -55,7 +63,7 @@ class MockElement {
 
   removeAttribute(k) {
     this.attributes.delete(k);
-    if (k === 'class') this.classList.clear();
+    if (k === 'class') this.classList._set.clear();
   }
 
   addEventListener(type, fn) {
@@ -68,6 +76,11 @@ class MockElement {
     for (const h of handlers) h(event);
   }
 
+  appendChild(child) {
+    this.children.push(child);
+    return child;
+  }
+
   querySelector(selector) {
     const list = this.querySelectorAll(selector);
     return list.length ? list[0] : null;
@@ -77,11 +90,13 @@ class MockElement {
     const results = [];
     for (const child of this.children) {
       if (selector === '.japan-map-svg-frame' && child.classList.has('japan-map-svg-frame')) results.push(child);
+      else if (selector === '.geolonia-svg-map' && child.classList.has('geolonia-svg-map')) results.push(child);
       else if (selector === '#japanMapTooltip' && child.getAttribute('id') === 'japanMapTooltip') results.push(child);
       else if (selector === '#japanMapDetailBar' && child.getAttribute('id') === 'japanMapDetailBar') results.push(child);
       else if (selector === '.prefecture[data-pref]' && child.classList.has('prefecture') && child.getAttribute('data-pref')) results.push(child);
       else if (selector === '.clear-pref-btn' && child.classList.has('clear-pref-btn')) results.push(child);
       else if (selector === '.scroll-pref-btn' && child.classList.has('scroll-pref-btn')) results.push(child);
+      else if (selector === '.japan-map-marker' && child.classList.has('japan-map-marker')) results.push(child);
       results.push(...child.querySelectorAll(selector));
     }
     return results;
@@ -118,6 +133,9 @@ function createMockElement(tagName = 'div') {
     },
     contains(c) {
       return set.has(c);
+    },
+    has(c) {
+      return set.has(c);
     }
   };
   return el;
@@ -125,8 +143,14 @@ function createMockElement(tagName = 'div') {
 
 function loadJapanMap() {
   const code = fs.readFileSync('japan-map.js', 'utf8');
+  const mockDoc = {
+    createElementNS(ns, tag) {
+      return createMockElement(tag);
+    }
+  };
   const context = {
     globalThis: {},
+    document: mockDoc,
     console: console
   };
   vm.createContext(context);
@@ -282,4 +306,65 @@ test('Embedded map preserves every source coordinate transform and boundary shap
     assert.ok(embedded.includes(`transform="${transform}"`), `Preserve position of prefecture ${code}`);
   }
   assert.deepEqual(SVG_MARKUP.match(/<(?:path|polygon)\b[^>]*>/g), source.match(/<(?:path|polygon)\b[^>]*>/g));
+});
+
+test('JapanPrefMap: displays exactly 40 verified onsen markers and 0 unverified markers', () => {
+  const MapModule = loadJapanMap();
+  const dataCode = fs.readFileSync('data.js', 'utf8');
+  const win = {};
+  vm.runInNewContext(dataCode, { window: win });
+  const DATA = win.ONSEN_DATA;
+
+  const container = createMockElement('div');
+  const visitedSet = new Set(['onsen-001', 'onsen-002']);
+  let selectedId = null;
+
+  const instance = MapModule.create({
+    container: container,
+    data: DATA,
+    isVisited: x => visitedSet.has(x.id),
+    onDetail: id => { selectedId = id; },
+    getSelectedPref: () => '青森県'
+  });
+
+  assert.ok(instance, 'Map instance should be created');
+  assert.equal(instance.getMarkerCount(), 40, 'Must render exactly 40 verified markers');
+
+  const markers = container.querySelectorAll('.japan-map-marker');
+  assert.equal(markers.length, 40, 'DOM should contain 40 marker elements');
+
+  // Verify none of the 27 unverified onsens have a marker
+  const unverified = DATA.filter(x => !x.coordinateVerified);
+  assert.equal(unverified.length, 27, 'Should have 27 unverified onsens');
+  for (const u of unverified) {
+    const found = markers.find(m => m.getAttribute('data-onsen-id') === u.id);
+    assert.equal(found, undefined, `Unverified facility ${u.id} (${u.facility}) must NOT have a marker on the map`);
+  }
+
+  // Verify all 40 verified facilities have a marker
+  const verified = DATA.filter(x => x.coordinateVerified);
+  assert.equal(verified.length, 40, 'Should have 40 verified onsens');
+  for (const v of verified) {
+    const found = markers.find(m => m.getAttribute('data-onsen-id') === v.id);
+    assert.ok(found, `Verified facility ${v.id} (${v.facility}) must have a marker`);
+  }
+
+  // Check visited vs unvisited classes
+  const m1 = markers.find(m => m.getAttribute('data-onsen-id') === 'onsen-001');
+  assert.ok(m1.classList.contains('is-visited'), 'onsen-001 should have is-visited class');
+  assert.ok(!m1.classList.contains('is-unvisited'), 'onsen-001 should not have is-unvisited class');
+
+  const m3 = markers.find(m => m.getAttribute('data-onsen-id') === 'onsen-003');
+  assert.ok(m3.classList.contains('is-unvisited'), 'onsen-003 should have is-unvisited class');
+  assert.ok(!m3.classList.contains('is-visited'), 'onsen-003 should not have is-visited class');
+
+  // Check prefecture selection emphasis (selected pref is 青森県)
+  // onsen-002 is in 青森県, onsen-001 is in 北海道
+  const m2 = markers.find(m => m.getAttribute('data-onsen-id') === 'onsen-002');
+  assert.ok(m2.classList.contains('is-selected-pref'), 'Aomori marker should have is-selected-pref');
+  assert.ok(!m1.classList.contains('is-selected-pref'), 'Hokkaido marker should not have is-selected-pref');
+
+  // Check click triggers onDetail
+  m1.dispatchEvent({ type: 'click', preventDefault: () => {}, stopPropagation: () => {} });
+  assert.equal(selectedId, 'onsen-001', 'Clicking marker must trigger onDetail with facility id');
 });

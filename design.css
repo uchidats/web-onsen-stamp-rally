@@ -355,6 +355,55 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   stroke-width: .7px;
 }
 
+.japan-map-markers-layer {
+  cursor: pointer;
+}
+
+.japan-map-marker {
+  cursor: pointer;
+  transition: transform 0.15s ease, stroke-width 0.15s ease, filter 0.15s ease;
+  vector-effect: non-scaling-stroke;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+/* Visited: calm moss green (#344f43) with kinari/white border */
+.japan-map-marker.is-visited {
+  fill: #344f43;
+  stroke: #ffffff;
+  stroke-width: 1.2px;
+}
+
+/* Unvisited: subtle golden brown (#a17b3f) with kinari/white border */
+.japan-map-marker.is-unvisited {
+  fill: #a17b3f;
+  stroke: #fbf9f3;
+  stroke-width: 1.2px;
+}
+
+/* Hover & focus states: subtle pop */
+.japan-map-marker:hover,
+.japan-map-marker:focus-visible {
+  stroke-width: 2.2px;
+  stroke: #fff9ea;
+  filter: drop-shadow(0 1px 3px rgba(25, 46, 41, 0.45));
+  outline: none;
+}
+
+/* When a prefecture is selected: emphasize its markers */
+.japan-map-marker.is-selected-pref {
+  r: 5.5px;
+  stroke-width: 2px;
+  stroke: #ffffff;
+  filter: drop-shadow(0 2px 5px rgba(25, 46, 41, 0.5));
+}
+
+.japan-map-marker.is-selected-pref:hover,
+.japan-map-marker.is-selected-pref:focus-visible {
+  r: 6.5px;
+  stroke-width: 2.5px;
+}
+
 .japan-map-inset-note { margin: 0; color: var(--muted); font-size: 12px; }
 
 .japan-map-tooltip {
@@ -384,6 +433,12 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .japan-map-tooltip .tooltip-stat {
   font-variant-numeric: tabular-nums;
   color: #dbe2d6;
+}
+
+.japan-map-tooltip .tooltip-stat.facility-sub {
+  font-size: 11px;
+  color: #c4cdc0;
+  margin-bottom: 2px;
 }
 
 .japan-map-tooltip .tooltip-stat.bold {
@@ -419,9 +474,22 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .japan-map-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 14px;
+  align-items: center;
+  gap: 12px 20px;
   font-size: 11px;
   color: var(--muted);
+}
+
+.legend-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.legend-group.marker-legend {
+  padding-left: 12px;
+  border-left: 1px solid var(--line);
 }
 
 .legend-item {
@@ -436,6 +504,24 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   border-radius: 2px;
   border: 1px solid var(--pref-stroke);
   flex: none;
+}
+
+.legend-marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+  border: 1.5px solid #ffffff;
+  box-shadow: 0 0 0 1px rgba(25, 46, 41, 0.15);
+}
+
+.legend-marker.is-visited {
+  background: #344f43;
+}
+
+.legend-marker.is-unvisited {
+  background: #a17b3f;
+  border-color: #fbf9f3;
 }
 
 .legend-swatch.status-complete { background: var(--pref-complete); border-color: #0f1f18; }
