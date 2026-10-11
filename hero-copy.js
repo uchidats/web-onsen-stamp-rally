@@ -4,14 +4,21 @@
   const COPIES = {
     ja: [
       'まだ知らない名湯が、きっとある。',
-      '人はなぜ、温泉が恋しくなるのだろう。',
+      '温泉に浸かる。それだけでいい。',
       '私にとっての、本物の温泉はどこだろう。',
       '地球の鼓動に、身をゆだねる。',
       'さあ、温泉の魅力を語ろう。',
       '命の洗濯、してますか？'
     ]
   };
+  const SEASONAL_COPY = '温泉の恋しい季節がやってきました。';
   const STORAGE_KEY = 'onsen-hero-copy-ja';
+
+  function candidates(date = new Date()) {
+    // getMonth uses the browser's local date: October through March, every year.
+    const month = date.getMonth();
+    return month >= 9 || month <= 2 ? [...COPIES.ja, SEASONAL_COPY] : [...COPIES.ja];
+  }
 
   function choose(copies, previous, random = Math.random) {
     const alternatives = copies.filter(copy => copy !== previous);
@@ -19,17 +26,19 @@
     return pool[Math.floor(random() * pool.length)];
   }
 
-  root.OnsenHeroCopy = { COPIES, choose };
+  root.OnsenHeroCopy = { COPIES, candidates, choose };
   const target = root.document?.getElementById('heroCopy');
   if (!target) return;
 
   let previous;
   try { previous = root.sessionStorage.getItem(STORAGE_KEY); } catch { /* Storage may be disabled. */ }
-  const copy = choose(COPIES.ja, previous);
+  const copy = choose(candidates(), previous);
   // Short phrase groups avoid breaking Japanese expressions on narrow screens.
-  const phrases = copy === '人はなぜ、温泉が恋しくなるのだろう。'
-    ? ['人はなぜ、', '温泉が', '恋しくなるのだろう。']
-    : copy.match(/[^、]+、?/g) || [copy];
+  const phrases = copy === SEASONAL_COPY
+    ? ['温泉の恋しい季節が', 'やってきました。']
+    : copy === '温泉に浸かる。それだけでいい。'
+      ? ['温泉に浸かる。', 'それだけでいい。']
+      : copy.match(/[^、]+、?/g) || [copy];
   target.replaceChildren(...phrases.map(phrase => {
     const span = root.document.createElement('span');
     span.textContent = phrase;

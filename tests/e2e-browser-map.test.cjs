@@ -278,7 +278,7 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
 
     // Hero copy: force each random bucket on a real reload, then test normal reloads.
     fs.mkdirSync('scratch/hero-screenshots', { recursive: true });
-    const copies = await evaluate('OnsenHeroCopy.COPIES.ja');
+    const copies = await evaluate('OnsenHeroCopy.candidates()');
     const visitStorageBefore = await evaluate('JSON.stringify(localStorage)');
     for (const width of [1440, 1280, 768, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', {
