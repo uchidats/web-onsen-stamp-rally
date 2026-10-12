@@ -1,4 +1,5 @@
-/* Quiet landscapes, warm paper, and clear controls. No external font or image requests. */
+/* Quiet landscapes, warm paper, and clear controls. Fonts are served locally. */
+@import url("assets/fonts/cards.css");
 :root {
   --paper: #f3f0e7;
   --surface: #fbf9f3;
@@ -120,10 +121,10 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .tags { display: flex; gap: 7px; flex-wrap: wrap; }
 .tag { font-size: 11px; color: #4a5d4c; background: #e9ede2; padding: 4px 8px; border-radius: 2px; overflow-wrap: anywhere; }
 .tag.gold { background: #eee8d8; color: #746039; }
-.card h3 { font-size: 21px; font-weight: 550; line-height: 1.4; margin: 8px 0 6px; overflow-wrap: anywhere; }
+.card h3 { font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: 20px; font-weight: 600; line-height: 1.4; margin: 8px 0 6px; overflow-wrap: anywhere; }
 .facility { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
 .facility-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
-.card .facility { display: block; font-size: 16px; font-weight: 500; line-height: 1.45; color: var(--ink); }
+.card .facility { display: block; font-size: 16px; font-weight: 600; line-height: 1.45; color: var(--ink); }
 .card .facility-name { display: inline; padding: 0; }
 .card .facility-name-link { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .card .facility-name-link:hover { color: var(--moss); text-decoration-color: currentColor; }
@@ -691,6 +692,9 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 @media (max-width: 600px) { .analytics-notice { padding: 16px; bottom: max(12px, env(safe-area-inset-bottom)); } }
 
 /* Compact facility rows remain independent inside display-only groups. */
+#cards .card { font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif; font-weight: 500; }
+#cards .facility-detail, #cards .map-tooltip, #cards .tag { font-family: inherit; font-weight: 500; }
+#cards .conquered-badge { font-family: inherit; font-weight: 600; }
 .card .tags { gap: 4px; }
 .card .tag { font-size: 10px; line-height: 1.4; padding: 2px 6px; }
 .facility-entry + .facility-entry { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; }

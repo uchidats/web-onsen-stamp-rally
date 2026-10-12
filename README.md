@@ -69,6 +69,10 @@ v3の `userData.visits[温泉固定ID].records` は訪問ごとの配列です�
 
 5サイズすべてで、知内温泉の単独カードは約148pxから155px、乳頭温泉郷は約215pxから229pxになりました。施設名と操作・状態・タグの行を分けるため各施設につき約7px高くなります。全62カードのPC／タブレットの同じ列の縦余白は16〜約90px、スマートフォンは一律14pxです。比較画像には最初の18カード、訪問済み・未訪問が混在する乳頭温泉郷を保存しています。以前のカード縮小時の比較は `scratch/card-compact-qa/report.md` に保持しています。
 
+カード一覧のみ、温泉地名はShippori Mincho（20px／600）、施設名はNoto Sans JP（16px／600）、操作・都道府県・特徴タグはNoto Sans JP（既存サイズ／500）、制覇バッジはNoto Sans JP（600）を使います。他の見出し・地図・詳細画面の字体は変更しません。Google Fonts正規配布のWOFF2を `assets/fonts/` に同梱し、外部フォント通信は発生しません。67施設の表示文字に限定したサブセットで、Shippori Mincho 26,204 bytes、Noto Sans JP 95,724 bytes（500／600共通）、合計121,928 bytes（約119.1 KiB）です。`font-display: swap` により読み込み前や失敗時も端末の代替フォントで表示します。
+
+両フォントはSIL Open Font License 1.1で配布されています。著作権・ライセンス全文は `assets/fonts/shipporimincho-OFL.txt` と `assets/fonts/notosansjp-OFL.txt` に保持し、配布元・収録文字・容量は `assets/fonts/manifest.json` に記載しています。施設名やタグなどを追加・変更した場合は、サブセットの収録文字も更新してください。
+
 `node tests/records.test.cjs` で新規0件、保存・再読込、都道府県別集計、フィルター、バックアップ復元、旧45施設の移行、異常データ拒否、退避、保存失敗保護を検証します。通常は架空のテストデータを使用します。実移行データの検証はGit管理外ファイルのパスを `ONSEN_PRIVATE_MIGRATION_FILE` に指定します。
 
 `node tests/multiple-visits.test.cjs` で複数訪問の追加・編集・削除、日付と回数、日付不明の保持、確認を伴う移行、元データの保護、保存失敗、複数タブの更新競合を検証します。`node tests/official-links.test.cjs` は施設リンクと67施設の固定IDを検証します。
