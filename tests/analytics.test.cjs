@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs');
 const source=fs.readFileSync('analytics.js','utf8');
 function run(url='https://uchidats.github.io/web-onsen-stamp-rally/',saved=null,blocked=false){
-  const scripts=[],reads=[],writes=[],nodes={};for(const id of ['analyticsNotice','analyticsSettings','analyticsChoice','analyticsAccept','analyticsDecline','analyticsMessage'])nodes[id]={hidden:true,textContent:'',focus(){this.focused=true;}};
+  const scripts=[],reads=[],writes=[],nodes={};for(const id of ['analyticsNotice','analyticsSettings','analyticsChoice','analyticsAccept','analyticsDecline','analyticsMessage','analyticsNoticeAccept','analyticsNoticeDecline','analyticsControls','privacyDialog','privacyMore','privacyClose'])nodes[id]={hidden:true,open:false,textContent:'',focus(){this.focused=true;},showModal(){this.open=true;},close(){this.open=false;}};
   const location=new URL(url);location.reload=()=>location.reloads=(location.reloads||0)+1;
   const storage={getItem(k){reads.push(k);if(blocked)throw Error('blocked');return saved;},setItem(k,v){writes.push([k,v]);if(blocked)throw Error('blocked');saved=v;}};
   const cookies=new Map([['_ga','synthetic'],['other_cookie','keep']]);
@@ -33,11 +33,20 @@ test('Denied, expired, malformed and blocked preferences do not auto-send; store
   const blocked=run(undefined,null,true);assert.equal(blocked.scripts.length,0);blocked.root.OnsenAnalytics.setConsent('granted');blocked.scripts[0].onload();assert.equal(blocked.commands().filter(x=>x[0]==='event').length,1);
 });
 test('Decline remains usable; withdrawal disables GA, clears only analytics cookies and unloads tag',()=>{
-  const r=run();r.nodes.analyticsDecline.onclick();assert.equal(r.scripts.length,0);assert.equal(r.nodes.analyticsNotice.hidden,true);r.nodes.analyticsSettings.onclick();assert.equal(r.nodes.analyticsNotice.hidden,false);
+  const r=run();r.nodes.analyticsNoticeDecline.onclick();assert.equal(r.scripts.length,0);assert.equal(r.nodes.analyticsNotice.hidden,true);r.nodes.analyticsSettings.onclick();assert.equal(r.nodes.privacyDialog.open,true);assert.equal(r.nodes.analyticsNotice.hidden,true);
   r.nodes.analyticsAccept.onclick();r.nodes.analyticsDecline.onclick();r.scripts[0].onload();assert.equal(r.root['ga-disable-G-5P0Y0M7SNM'],true);assert.equal(r.root.location.reloads,1);assert.equal(r.commands().filter(x=>x[0]==='event').length,0);assert.equal(r.document.cookie,'other_cookie=keep');
+});
+test('Settings keep explanations off the homepage and allow closing without choosing, including non-production',()=>{
+  const r=run();r.nodes.privacyMore.onclick();assert.equal(r.nodes.privacyDialog.open,true);assert.equal(r.nodes.analyticsNotice.hidden,true);
+  let cancelled=false;r.nodes.privacyDialog.oncancel({preventDefault(){cancelled=true;}});assert.equal(cancelled,true);assert.equal(r.nodes.privacyDialog.open,false);assert.equal(r.nodes.analyticsNotice.hidden,false);assert.equal(r.scripts.length,0);
+  const local=run('http://localhost:5500/');local.nodes.analyticsSettings.onclick();assert.equal(local.nodes.privacyDialog.open,true);assert.equal(local.nodes.analyticsControls.hidden,true);assert.equal(local.scripts.length,0);assert.equal(local.reads.length,0);
+  const html=fs.readFileSync('index.html','utf8'),footer=html.match(/<footer[^>]*>([\s\S]*?)<\/footer>/)[1];
+  assert.ok(footer.includes('プライバシー・アクセス解析の設定'));assert.ok(!footer.includes('analyticsChoice'));assert.ok(!html.includes('<section id="privacy-notice"'));
+  const dialog=html.match(/<dialog[^>]*>([\s\S]*?)<\/dialog>/)[1];assert.ok(dialog.includes('180日間'));assert.ok(dialog.includes('https://policies.google.com/privacy'));assert.ok(dialog.includes('https://policies.google.com/technologies/partner-sites'));
+  const start=Date.now();r.nodes.analyticsNoticeDecline.onclick();assert.ok(JSON.parse(r.writes.at(-1)[1]).expiresAt>=start+180*86400000);
 });
 test('Load failure does not send page views or interfere with the application; head has one initializer',()=>{
   const r=run();r.nodes.analyticsAccept.onclick();r.scripts[0].onerror();assert.equal(r.commands().filter(x=>x[0]==='event').length,0);assert.ok(r.nodes.analyticsMessage.textContent.includes('温泉の機能'));
-  const html=fs.readFileSync('index.html','utf8');assert.equal((html.match(/src="analytics.js"/g)||[]).length,1);assert.ok(html.slice(0,html.indexOf('</head>')).includes('src="analytics.js" defer'));
+  const html=fs.readFileSync('index.html','utf8');assert.equal((html.match(/src="analytics[.]js[?]v=privacy-dialog-1"/g)||[]).length,1);assert.ok(html.slice(0,html.indexOf('</head>')).includes('src="analytics.js?v=privacy-dialog-1" defer'));
   assert.equal(html.includes('googletagmanager.com/gtag/js'),false);
 });

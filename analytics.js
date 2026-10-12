@@ -11,14 +11,22 @@
   const site=root.location.protocol==='https:'&&config.sites.find(s=>s.hostname===root.location.hostname&&[s.path,s.path+'index.html'].includes(root.location.pathname));
   const canonical=site?root.location.origin+site.path:'';
   const disableKey='ga-disable-'+config.measurementId;
-  let choice=null,started=false,sent=false,loading=false,tagReady=false;
+  let choice=null,started=false,sent=false,loading=false,tagReady=false,settingsOpener=null;
   function savedChoice(){try{const saved=JSON.parse(root.localStorage.getItem(config.consentKey));return saved?.version===1&&['granted','denied'].includes(saved.choice)&&Number.isFinite(saved.expiresAt)&&saved.expiresAt>Date.now()?saved.choice:null;}catch{return null;}}
   function storeChoice(value){try{root.localStorage.setItem(config.consentKey,JSON.stringify({version:1,choice:value,expiresAt:Date.now()+config.consentDays*86400000}));}catch{/* Storage blocked: the explicit choice applies to this document only. */}}
   const $=id=>document.getElementById(id);
+  function closeSettings(){
+    if($('privacyDialog').open)$('privacyDialog').close();
+    ui();(settingsOpener||$('analyticsSettings')).focus();
+  }
+  function openSettings(){
+    settingsOpener=document.activeElement;$('privacyDialog').showModal();ui();
+    $('privacyClose').focus();
+  }
   function ui(){
-    if($('analyticsNotice'))$('analyticsNotice').hidden=!site||choice!==null;
-    if($('analyticsSettings'))$('analyticsSettings').hidden=!site;
-    if($('analyticsChoice'))$('analyticsChoice').textContent=choice==='granted'?'アクセス解析：許可中':choice==='denied'?'アクセス解析：許可しない':'アクセス解析：未選択';
+    if($('analyticsNotice'))$('analyticsNotice').hidden=!site||choice!==null||$('privacyDialog').open;
+    if($('analyticsControls'))$('analyticsControls').hidden=!site;
+    if($('analyticsChoice'))$('analyticsChoice').textContent=!site?'このURLではアクセス解析を行いません。':choice==='granted'?'アクセス解析：許可中':choice==='denied'?'アクセス解析：許可しない':'アクセス解析：未選択';
   }
   function eraseAnalyticsCookies(){
     for(const item of document.cookie.split(';')){
@@ -51,7 +59,7 @@
   }
   function setConsent(value){
     if(!site||!['granted','denied'].includes(value))return;
-    choice=value;storeChoice(value);ui();
+    choice=value;storeChoice(value);if($('privacyDialog').open)closeSettings();else ui();
     if(value==='granted'){start();if(!loading)sendPageView();}
     else{
       root[disableKey]=true;eraseAnalyticsCookies();
@@ -60,10 +68,15 @@
     }
   }
   function init(){
+    $('analyticsSettings').onclick=openSettings;
+    $('privacyMore').onclick=openSettings;
+    $('privacyClose').onclick=closeSettings;
+    $('privacyDialog').oncancel=event=>{event.preventDefault();closeSettings();};
+    $('privacyDialog').onkeydown=event=>{if(event.key==='Escape')event.stopPropagation();};
     if(!site){ui();return;}
     choice=savedChoice();root[disableKey]=choice!=='granted';
     $('analyticsAccept').onclick=()=>setConsent('granted');$('analyticsDecline').onclick=()=>setConsent('denied');
-    $('analyticsSettings').onclick=()=>{$('analyticsNotice').hidden=false;$('analyticsDecline').focus();};
+    $('analyticsNoticeAccept').onclick=()=>setConsent('granted');$('analyticsNoticeDecline').onclick=()=>setConsent('denied');
     ui();if(choice==='granted')start();
   }
   root.OnsenAnalytics=Object.freeze({config,setConsent,getConsent:()=>choice});

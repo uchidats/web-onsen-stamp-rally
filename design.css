@@ -671,11 +671,18 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 #prefectureMap { width: 100%; min-width: 0; }
 #mapHeading { font-size: 1.35rem; }
 
-.privacy-settings { border: 0; background: none; color: var(--moss); padding: 4px; text-decoration: underline; min-height: 44px; }
+.privacy-settings, .privacy-more { border: 0; background: none; color: var(--moss); padding: 4px; text-decoration: underline; font: inherit; }
+.privacy-settings { min-height: 44px; font-size: 12px; }
 .analytics-choice { display: block; }
-.privacy-notice { font-size: 13px; color: var(--muted); line-height: 1.9; margin-bottom: 48px; }
-.privacy-notice h2 { font-size: 18px; }
-.privacy-notice a, .analytics-notice a { text-decoration: underline; }
+.privacy-dialog { position: fixed; width: min(620px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 24px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font-size: 13px; line-height: 1.8; }
+.privacy-dialog::backdrop { background: #16261fb0; }
+.privacy-dialog h2 { margin: 0 48px 16px 0; font-size: 20px; }
+.privacy-dialog p { margin: 12px 0; }
+.privacy-dialog a { color: var(--moss); text-decoration: underline; overflow-wrap: anywhere; }
+.privacy-dialog .analytics-choice { display: block; margin: 16px 0 8px; }
+.privacy-dialog .analytics-actions[hidden] { display: none; }
+.privacy-settings:focus-visible, .privacy-more:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+@media (max-width: 600px) { .privacy-dialog { padding: 20px; } }
 .analytics-notice { position: fixed; bottom: 16px; left: 16px; right: 16px; max-width: 520px; margin-left: auto; padding: 20px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 4px 24px #192e2926; z-index: 1100; font-size: 13px; }
 .analytics-notice h2 { font-size: 18px; margin: 0 0 8px; }
 .analytics-notice p { margin: 8px 0; }
