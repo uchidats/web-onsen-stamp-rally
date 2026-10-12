@@ -42,7 +42,9 @@ test('Local months select the seasonal copy only October through March, every ye
       const pool = candidates(new Date(year, month, 1));
       const winter = month >= 9 || month <= 2;
       assert.equal(pool.includes(seasonal), winter);
-      assert.equal(pool.length, winter ? 7 : 6);
+      const snowy = month === 11 || month <= 1;
+      assert.equal(pool.includes('乳白の湯、湯けむりと雪景色のシンフォニー。'), snowy);
+      assert.equal(pool.length, 6 + Number(winter) + Number(snowy));
       for (const previous of [undefined, 'old copy', seasonal, ...pool]) {
         const selected = new Set(Array.from({ length: 100 }, (_, i) => choose(pool, previous, () => i / 100)));
         assert.equal(selected.has(previous), false);
@@ -66,6 +68,46 @@ test('Rendering uses local date boundaries and avoids repeats across season chan
       get localStorage() { throw Error('Visit storage must not be accessed'); }
     };
     class LocalDate extends Date { constructor() { super(2026, month, 1); } getUTCMonth() { throw Error('UTC must not be used'); } }
+    vm.runInNewContext(code, { window, Date: LocalDate, Math: Object.assign(Object.create(Math), { random: () => .999 }) });
+    assert.equal(target.text, expected);
+    assert.equal(saved, expected);
+  }
+});
+
+test('Winter copy includes local December 1 through February end, including leap years', () => {
+  const context = {};
+  vm.runInNewContext(code, context);
+  const { candidates, choose } = context.OnsenHeroCopy;
+  const copy = '乳白の湯、湯けむりと雪景色のシンフォニー。';
+  for (const year of [2026, 2027, 2028]) {
+    for (const [date, included] of [
+      [new Date(year, 10, 30, 23, 59, 59), false],
+      [new Date(year, 11, 1), true],
+      [new Date(year, 0, 1), true],
+      [new Date(year, 1, 1), true],
+      [new Date(year, 2, 0, 23, 59, 59), true],
+      [new Date(year, 2, 1), false]
+    ]) {
+      const pool = candidates(date);
+      assert.equal(pool.includes(copy), included);
+      const selected = new Set(Array.from({ length: 100 }, (_, i) => choose(pool, undefined, () => i / 100)));
+      assert.equal(selected.has(copy), included);
+      assert.notEqual(choose(pool, copy, () => .999), copy);
+    }
+  }
+  assert.ok(candidates({ getMonth: () => 11, getUTCMonth() { throw Error('UTC must not be used'); } }).includes(copy));
+});
+
+test('Winter copy renders and stores the exact text without changing punctuation', () => {
+  const expected = '乳白の湯、湯けむりと雪景色のシンフォニー。';
+  for (const month of [11, 0, 1]) {
+    let saved;
+    const target = { replaceChildren(...children) { this.text = children.map(x => x.textContent).join(''); } };
+    const window = {
+      document: { getElementById: () => target, createElement: () => ({}) },
+      sessionStorage: { getItem: () => null, setItem: (_key, value) => { saved = value; } }
+    };
+    class LocalDate extends Date { constructor() { super(2028, month, 1); } getUTCMonth() { throw Error('UTC must not be used'); } }
     vm.runInNewContext(code, { window, Date: LocalDate, Math: Object.assign(Object.create(Math), { random: () => .999 }) });
     assert.equal(target.text, expected);
     assert.equal(saved, expected);

@@ -12,12 +12,16 @@
     ]
   };
   const SEASONAL_COPY = '温泉の恋しい季節がやってきました。';
+  const WINTER_COPY = '乳白の湯、湯けむりと雪景色のシンフォニー。';
   const STORAGE_KEY = 'onsen-hero-copy-ja';
 
   function candidates(date = new Date()) {
-    // getMonth uses the browser's local date: October through March, every year.
+    // Browser-local months, every year: October–March and December–February.
     const month = date.getMonth();
-    return month >= 9 || month <= 2 ? [...COPIES.ja, SEASONAL_COPY] : [...COPIES.ja];
+    const pool = [...COPIES.ja];
+    if (month >= 9 || month <= 2) pool.push(SEASONAL_COPY);
+    if (month === 11 || month <= 1) pool.push(WINTER_COPY);
+    return pool;
   }
 
   function choose(copies, previous, random = Math.random) {
