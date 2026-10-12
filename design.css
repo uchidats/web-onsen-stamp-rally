@@ -113,21 +113,21 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .filter input, .filter select { width: 100%; border: 1px solid #cecec1; padding: 11px 12px; border-radius: 4px; background: #fdfbf6; min-height: 46px; color: var(--ink); font-size: 14px; }
 .filter input::placeholder { color: #687167; opacity: 1; }
 .resulthead { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 20px; margin: 26px 0 18px; font-size: 12px; color: var(--muted); }
-.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
 .card-top { height: 3px; background: #637965; }
-.card-content { padding: 26px; flex: 1; }
+.card-content { padding: 16px; }
 .tags { display: flex; gap: 7px; flex-wrap: wrap; }
 .tag { font-size: 11px; color: #4a5d4c; background: #e9ede2; padding: 4px 8px; border-radius: 2px; overflow-wrap: anywhere; }
 .tag.gold { background: #eee8d8; color: #746039; }
-.card h3 { font-size: 21px; font-weight: 550; line-height: 1.55; margin: 20px 0 7px; overflow-wrap: anywhere; }
+.card h3 { font-size: 21px; font-weight: 550; line-height: 1.4; margin: 8px 0 6px; overflow-wrap: anywhere; }
 .facility { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
 .facility-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
-.card .facility { align-items: flex-start; gap: 6px; font-size: 16px; font-weight: 500; line-height: 1.65; color: var(--ink); }
-.card .facility-name { flex: 0 1 auto; padding-block: 8px; }
+.card .facility { display: block; font-size: 16px; font-weight: 500; line-height: 1.45; color: var(--ink); }
+.card .facility-name { display: inline; padding: 0; }
 .card .facility-name-link { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .card .facility-name-link:hover { color: var(--moss); text-decoration-color: currentColor; }
-.card .map-link { flex: none; }
+.card .map-link { flex: none; width: 28px; min-height: 28px; }
 .facility-links { display: inline-flex; align-items: center; flex: none; gap: 2px; }
 .facility-link, .map-link { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; color: var(--moss); border-radius: 4px; }
 .facility-link { font-size: 11px; letter-spacing: .06em; }
@@ -262,8 +262,7 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   h2 { font-size: 24px; }
   .prefgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .pref { padding: 18px 16px; }
-  .cards { grid-template-columns: minmax(0, 1fr); gap: 18px; }
-  .card-content { padding: 24px; }
+  .cards { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .filters { padding: 20px; gap: 16px 12px; }
   .filter { grid-column: 1 / -1; }
   .filter:nth-child(3), .filter:nth-child(4) { grid-column: auto; }
@@ -690,3 +689,17 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .analytics-actions button { flex: 1; min-height: 44px; }
 #analyticsMessage:empty { display: none; }
 @media (max-width: 600px) { .analytics-notice { padding: 16px; bottom: max(12px, env(safe-area-inset-bottom)); } }
+
+/* Compact facility rows remain independent inside display-only groups. */
+.card .tags { gap: 4px; }
+.card .tag { font-size: 10px; line-height: 1.4; padding: 2px 6px; }
+.facility-entry + .facility-entry { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; }
+.card .is-unvisited .facility-name { color: #866329; }
+.card .is-visited .facility-name { color: var(--moss); }
+.card .is-unvisited .facility-status { color: #866329; }
+.card .is-visited .facility-status { color: var(--moss); }
+.facility-meta { display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 4px 10px; margin-top: 5px; }
+.facility-meta > * { flex: none; }
+.card .facility-detail { flex: none; white-space: nowrap; border: 0; background: transparent; min-height: 28px; padding: 4px 0; font-size: 12px; }
+.facility-meta .tag { max-width: 100%; }
+.facility-status { color: var(--muted); font-size: 10px; font-weight: 400; line-height: 1.6; }

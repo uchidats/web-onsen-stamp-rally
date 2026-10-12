@@ -111,11 +111,11 @@ test('E2E: native prefecture progress disclosure and hidden record updates', asy
       assert.equal(await evaluate("document.getElementById('prefProgress').open"),false);
       assert.equal(await evaluate('JSON.stringify(localStorage)'),storageBefore,'Disclosure stores no preference');
       // Records update while cards are hidden; opening reveals current values.
-      await evaluate("document.querySelector('[data-visit=\"onsen-002\"]').click()");
+      await evaluate("document.querySelector('[data-detail=\"onsen-002\"]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click()");
       assert.equal(await evaluate("document.getElementById('prefProgress').open"),false);
       assert.ok(await evaluate("document.querySelector('.pref[data-pref=\"青森県\"] .fraction').textContent.includes('1 / 4')"));
       await activate('#prefProgress summary');
-      await evaluate("document.querySelector('[data-visit=\"onsen-003\"]').click()");
+      await evaluate("document.querySelector('[data-detail=\"onsen-003\"]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click()");
       assert.equal(await evaluate("document.getElementById('prefProgress').open"),true);
       assert.ok(await evaluate("document.querySelector('.pref[data-pref=\"青森県\"] .fraction').textContent.includes('2 / 4')"));
       assert.equal(await evaluate("document.querySelector('.pref[data-pref=\"青森県\"] .mini i').style.width"),'50%');

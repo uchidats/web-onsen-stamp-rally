@@ -109,11 +109,11 @@ test('E2E: Aomori facility positions and marker projection on desktop/mobile', a
       assert.equal(await evaluate("document.documentElement.scrollWidth<=innerWidth"),true);
       const shot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(`scratch/coordinate-audit/screenshots/${pref}.png`,Buffer.from(shot.data,'base64'));
     }
-    await evaluate("document.getElementById('prefSelect').value='青森県';document.getElementById('prefSelect').dispatchEvent(new Event('change'));document.querySelector('[data-visit=\"onsen-002\"]').click();qaMap.setView([40.6506075,140.8504857],17,{animate:false});void 0");
+    await evaluate("document.getElementById('prefSelect').value='青森県';document.getElementById('prefSelect').dispatchEvent(new Event('change'));document.querySelector('[data-detail=\"onsen-002\"]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click();qaMap.setView([40.6506075,140.8504857],17,{animate:false});void 0");
     await waitFor("!!document.querySelector('.onsen-map-marker.is-visited[data-onsen-id=\"onsen-002\"]')");
     await evaluate("document.getElementById('mapStatus').value='visited';document.getElementById('mapStatus').dispatchEvent(new Event('change'))");
     assert.equal(await evaluate("document.querySelectorAll('.onsen-map-marker.is-unvisited').length"),0);
-    assert.equal(await evaluate("document.getElementById('resultCount').textContent"),'1 件の温泉');
+    assert.equal(await evaluate("document.getElementById('resultCount').textContent"),'1 施設 · 1 温泉地');
     await evaluate("document.getElementById('mapReset').click()");
     assert.equal(await evaluate("document.getElementById('japanMap').hidden"),false);
     fs.writeFileSync('scratch/coordinate-audit/browser-results.json',JSON.stringify(results,null,2));ws.close();

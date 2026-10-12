@@ -119,8 +119,8 @@ test('E2E: production consent, GA4 loading, page view deduplication and app isol
     await waitFor("!document.getElementById('privacyDialog').open");
     assert.equal(await evaluate("document.getElementById('modalBg').style.display"),'flex','Closing privacy must preserve the underlying facility detail');
     await evaluate("document.getElementById('modalClose').click()");
-    await evaluate("document.querySelector('[data-visit=\"onsen-002\"]').click();document.getElementById('search').value='青森';document.getElementById('search').dispatchEvent(new Event('input'))");
-    assert.equal(await evaluate("document.getElementById('resultCount').textContent"),'4 件の温泉');
+    await evaluate("document.querySelector('[data-detail=\"onsen-002\"]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click();document.getElementById('search').value='青森';document.getElementById('search').dispatchEvent(new Event('input'))");
+    assert.equal(await evaluate("document.getElementById('resultCount').textContent"),'4 施設 · 4 温泉地');
     const visits=await evaluate("localStorage.getItem('onsen-rally-user-v3')");
     for(const width of [1440,1280,768,390,320]){
       await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<400});

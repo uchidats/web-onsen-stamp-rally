@@ -95,7 +95,7 @@ test('E2E: warm monochrome tiles, comparison screenshots and isolated UI', async
         await evaluate(`document.getElementById('prefSelect').value=${JSON.stringify(pref)};document.getElementById('prefSelect').dispatchEvent(new Event('change'))`);
         await waitFor("!!document.querySelector('#mapCanvas .onsen-map-marker')");
         const id=await evaluate("document.querySelector('#mapCanvas .onsen-map-marker').dataset.onsenId");
-        await evaluate(`if(document.querySelector('.onsen-map-marker[data-onsen-id="${id}"]').classList.contains('is-unvisited'))document.querySelector('[data-visit="${id}"]').click()`);
+        await evaluate(`if(document.querySelector('.onsen-map-marker[data-onsen-id="${id}"]').classList.contains('is-unvisited')){document.querySelector('[data-detail="${id}"]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click()}`);
         await evaluate("document.getElementById('mapCanvas').scrollIntoView()");
         await new Promise(r=>setTimeout(r,400));
         await waitFor("document.querySelectorAll('#mapCanvas img.leaflet-tile').length>0 && [...document.querySelectorAll('#mapCanvas img.leaflet-tile')].every(t=>t.complete&&t.naturalWidth===256)");

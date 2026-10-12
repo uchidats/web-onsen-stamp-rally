@@ -189,7 +189,7 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     assert.ok(tooltip.includes('青森県') && tooltip.includes('0 / 4') && tooltip.includes('0%'));
     await send('Input.dispatchMouseEvent', { type: 'mousePressed', ...point, button: 'left', clickCount: 1 });
     await send('Input.dispatchMouseEvent', { type: 'mouseReleased', ...point, button: 'left', clickCount: 1 });
-    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '4 件の温泉');
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '4 施設 · 4 温泉地');
 
     await send('Emulation.setDeviceMetricsOverride', {
       width: 390, height: 1500, deviceScaleFactor: 1, mobile: true
@@ -202,13 +202,13 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [touchPoint] });
     await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     assert.equal(await evaluate(`document.querySelector('.pref[data-pref="北海道"]').classList.contains('selected')`), true);
-    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '1 件の温泉');
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '1 施設 · 1 温泉地');
 
     await evaluate(`document.getElementById('resetPref').click();document.getElementById('regional-progress').scrollIntoView();document.querySelector('.prefecture[data-code="10"]').focus()`);
     await send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
     await send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
     assert.equal(await evaluate(`document.querySelector('.prefecture[data-code="10"]').getAttribute('aria-pressed')`), 'true');
-    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '8 件の温泉');
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '8 施設 · 6 温泉地');
 
     // Iwate facilities remain individual at the regional zoom on desktop and mobile.
     await evaluate("document.getElementById('resetPref').click();document.getElementById('prefSelect').value='岩手県';document.getElementById('prefSelect').dispatchEvent(new Event('change'))");
@@ -266,7 +266,7 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     assert.equal(await evaluate(`document.querySelectorAll('#mapCanvas .onsen-map-marker.is-visited').length`),1);
     await evaluate(`document.getElementById('mapStatus').value='visited';document.getElementById('mapStatus').dispatchEvent(new Event('change'))`);
     assert.equal(await evaluate(`document.getElementById('statusSelect').value`),'visited');
-    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`),'1 件の温泉');
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`),'1 施設 · 1 温泉地');
     await evaluate(`document.getElementById('clearFilter').click()`);
     for(const pref of await evaluate(`JapanPrefMap.PREFECTURES.map(p=>p.name)`)){
       await evaluate(`document.querySelector('.prefecture[data-pref="${pref}"]').dispatchEvent(new MouseEvent('click',{bubbles:true}))`);
@@ -344,7 +344,7 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     }
     assert.equal(await evaluate('JSON.stringify(localStorage)'), visitStorageBefore, 'Hero must preserve visit storage');
     await evaluate(`document.getElementById('search').value = '青森'; document.getElementById('search').dispatchEvent(new Event('input'))`);
-    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '4 件の温泉');
+    assert.equal(await evaluate(`document.getElementById('resultCount').textContent`), '4 施設 · 4 温泉地');
 
     ws.close();
   } finally {

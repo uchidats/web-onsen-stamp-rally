@@ -5,15 +5,16 @@ const data=ctx.window.ONSEN_DATA,app=fs.readFileSync('app.js','utf8');
 assert.equal(data.length,67);
 assert.deepEqual(Array.from(data,x=>x.id),Array.from({length:67},(_,i)=>'onsen-'+String(i+1).padStart(3,'0')));
 for(const x of data){assert.equal(typeof x.officialUrl,'string');if(x.officialUrl){const u=new URL(x.officialUrl);assert.ok(['http:','https:'].includes(u.protocol));assert.equal(u.username,'');assert.equal(u.password,'')}}
-function render(rows){const elements=new Map(),saved=new Map();const el=id=>{if(!elements.has(id))elements.set(id,{value:'',style:{},innerHTML:'',textContent:'',dataset:{},classList:{toggle(){}},querySelectorAll:()=>[],addEventListener(){}});return elements.get(id)};
+function render(rows,filters={}){const elements=new Map(),saved=new Map();const el=id=>{if(!elements.has(id))elements.set(id,{value:'',style:{},innerHTML:'',textContent:'',dataset:{},classList:{toggle(){}},querySelectorAll:()=>[],addEventListener(){}});return elements.get(id)};
   vm.runInNewContext(app,{URL,window:{ONSEN_DATA:rows,OnsenRecords:globalThis.OnsenRecords},document:{getElementById:el,querySelectorAll:()=>[],addEventListener(){}},localStorage:{getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)},setTimeout:()=>0,clearTimeout(){}});
+  for(const [id,value] of Object.entries(filters))el(id).value=value;
   for(let i=0;i<4;i++)el('showMore').onclick();return el('cards').innerHTML;
 }
 const html=render(data);
 assert.equal((html.match(/class="facility-name facility-name-link"/g)||[]).length,data.filter(x=>x.officialUrl).length);
 assert.equal((html.match(/data-detail=/g)||[]).length,67);
-assert.equal((html.match(/data-visit=/g)||[]).length,67);
-assert.equal((html.match(/<h3>/g)||[]).length,67);
+assert.equal((html.match(/data-visit=/g)||[]).length,0);
+assert.equal((html.match(/<h3>/g)||[]).length,62);
 assert.ok(!/<h3>\s*<a/.test(html));
 for(const x of data){if(x.officialUrl){assert.ok(html.includes('href="'+x.officialUrl+'" target="_blank" rel="noopener noreferrer"'));}else{assert.ok(html.includes('<span class="facility-name">'+x.facility+'</span>'))}}
 assert.equal((html.match(/class="map-link"/g)||[]).length,67);
@@ -37,3 +38,18 @@ const escaped=render([{...data[0],facility:'宿"<&>',officialUrl:'https://exampl
 assert.ok(escaped.includes('宿&quot;&lt;&amp;&gt;'));
 assert.ok(escaped.includes('href="https://example.com/?q=%22&amp;x=1"'));
 console.log('PASS: all 67 IDs, official/empty links, http(s) allowlist, malformed/unsafe URLs, escaping, external-tab attributes, unchanged names/detail/visit controls');
+
+const ids=[...html.matchAll(/data-facility-id="([^"]+)"/g)].map(m=>m[1]);
+assert.equal(new Set(ids).size,67);assert.deepEqual(ids,Array.from(data,x=>x.id));
+for(const [group,a,b] of [['nyuto','onsen-015','onsen-016'],['takayu','onsen-034','onsen-035'],['okukinu','onsen-041','onsen-042'],['shima','onsen-048','onsen-049'],['kusatsu','onsen-050','onsen-051']]){
+ const card=html.split('data-group="'+group+'"')[1].split('</article>')[0];assert.ok(card.includes(a)&&card.includes(b));
+}
+assert.ok(!html.includes('最寄り'));assert.ok(!html.includes('card-foot'));
+assert.equal((render(data,{search:data[15].facility}).match(/data-facility-id=/g)||[]).length,1);
+assert.equal((render(data,{search:data[14].onsen}).match(/data-facility-id=/g)||[]).length,2);
+assert.equal((render(data,{prefSelect:data[14].prefecture}).match(/data-facility-id=/g)||[]).length,11);
+assert.equal((render(data,{statusSelect:'visited'}).match(/data-facility-id=/g)||[]).length,0);
+assert.equal((render(data,{statusSelect:'unvisited'}).match(/data-facility-id=/g)||[]).length,67);
+assert.equal((render(data,{search:data[14].onsen,categorySelect:data[15].category}).match(/data-facility-id=/g)||[]).length,1);
+assert.equal((render([{...data[0],onsen:data[14].onsen},data[14],data[15]]).match(/<h3>/g)||[]).length,2);
+console.log('PASS: explicit five groups, 62 cards, all 67 unique facilities, facility-level search/prefecture/status/category and singleton fallback');

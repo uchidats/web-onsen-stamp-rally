@@ -109,7 +109,7 @@ test('E2E: compact progress summary states and backup restore', async (t) => {
         const screenshot=await send('Page.captureScreenshot',{format:'png'});
         fs.writeFileSync(`scratch/progress-summary-qa/${width}-${count}.png`,Buffer.from(screenshot.data,'base64'));
         // Exercise the existing visit button, then the actual backup and restore handlers.
-        await evaluate(`document.querySelector('[data-visit="${count===67?'onsen-001':'onsen-'+String(count+1).padStart(3,'0')}"]').click()`);
+        await evaluate(`document.querySelector('[data-detail="${count===67?'onsen-001':'onsen-'+String(count+1).padStart(3,'0')}"]').click();if(${count}===67){document.querySelector('[data-delete-visit]').click()}else{document.getElementById('detailStamp').click()}document.getElementById('modalClose').click()`);
         const updated=count===67?66:count+1;
         await waitFor(`document.getElementById('totalText').textContent.startsWith('${updated} / 67')`);
         await evaluate("(()=>{const original=URL.createObjectURL;URL.createObjectURL=blob=>{window.qaBackup=blob.text();return original.call(URL,blob)};document.getElementById('exportBtn').click();})()");

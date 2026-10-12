@@ -27,5 +27,5 @@ const uiStorage=memory();const window={ONSEN_DATA:data,OnsenRecords:R};const doc
 const ui={window,document,localStorage:uiStorage,setTimeout:()=>0,clearTimeout(){},console};
 const app=fs.readFileSync('app.js','utf8');vm.runInNewContext(app,ui);assert.equal(el('totalText').textContent,'0 / 67 施設を訪問済み');assert.equal(el('nextCount').textContent,'未訪問 67 施設');
 let us=R.create(uiStorage);us.setVisited(us.load(),'onsen-001',true);vm.runInNewContext(app,ui);assert.equal(el('totalText').textContent,'1 / 67 施設を訪問済み');assert.match(el('prefgrid').innerHTML,/北海道<\/strong><span class="fraction">1 \/ 1 施設 · 100%/);
-el('statusSelect').value='visited';vm.runInNewContext(app,ui);assert.equal(el('resultCount').textContent,'1 件の温泉');
+el('statusSelect').value='visited';vm.runInNewContext(app,ui);assert.equal(el('resultCount').textContent,'1 施設 · 1 温泉地');
 console.log('PASS: public data, IDs, fresh start, persistence, reload, prefectures, filters, v2 roundtrip, 45 legacy visits, overrides, invalid files, safety copy, storage failure');
