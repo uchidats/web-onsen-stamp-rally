@@ -40,7 +40,7 @@ function groupedCards(list){
 }
 function facilityRow(x){
   const info=visitInfo(x.id);
-  return `<div class="facility-entry ${info.visited?'is-visited':'is-unvisited'}" data-facility-id="${esc(x.id)}"><div class="facility">${facilityName(x)}</div><div class="facility-meta">${facilityMap(x)}<button type="button" class="link facility-detail" data-detail="${esc(x.id)}" aria-label="${esc(x.facility)}の詳細を見る">詳細 →</button><span class="facility-status">${info.visited?'訪問済み':'未訪問'}${info.visitCount>1?' · 訪問'+info.visitCount+'回':''}</span>${x.category?'<span class="tag gold">'+esc(x.category)+'</span>':''}${x.springType?'<span class="tag">'+esc(x.springType)+'</span>':''}</div></div>`;
+  return `<div class="facility-entry ${info.visited?'is-visited':'is-unvisited'}" data-facility-id="${esc(x.id)}"><div class="facility">${facilityName(x)}${info.visited?'<span class="conquered-badge">制覇</span>':''}</div><div class="facility-meta">${facilityMap(x)}<button type="button" class="link facility-detail" data-detail="${esc(x.id)}" aria-label="${esc(x.facility)}の詳細を見る">詳細 →</button>${x.category?'<span class="tag gold">'+esc(x.category)+'</span>':''}${x.springType?'<span class="tag">'+esc(x.springType)+'</span>':''}</div></div>`;
 }
 function renderCards(){
   const list=filtered(),groups=groupedCards(list);

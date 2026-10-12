@@ -131,12 +131,23 @@ test('E2E: compact Grid cards, natural heights, ordering, filters and independen
       const visited=await measure();verify(visited,width);
       assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-015]').classList.contains('is-visited')"),true);
       assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-016]').classList.contains('is-unvisited')"),true);
+      assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-015] .facility .conquered-badge').textContent"),'制覇');
+      assert.equal(await evaluate("!!document.querySelector('[data-facility-id=onsen-016] .conquered-badge')"),false);
+      assert.equal(await evaluate("/訪問済み|未訪問/.test(document.getElementById('cards').textContent)"),false);
       await evaluate("document.getElementById('toast').style.display='none'");
       const visitedBounds=await evaluate("(()=>{const r=document.querySelector('[data-group=nyuto]').getBoundingClientRect();return {x:r.left+scrollX,y:r.top+scrollY,width:r.width,height:r.height,scale:1}})()");
       const visitedShot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:visitedBounds});
       fs.writeFileSync(`scratch/card-compact-qa/${phase}-visited-${width}.png`,Buffer.from(visitedShot.data,'base64'));
       await evaluate("document.getElementById('statusSelect').value='visited';document.getElementById('statusSelect').dispatchEvent(new Event('change'))");await settle();
       const filtered=await measure();verify(filtered,width);assert.deepEqual(filtered.facilities,['onsen-015']);
+      await evaluate("document.getElementById('clearFilter').click();document.querySelector('[data-detail=onsen-001]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click()");await settle();
+      assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-001] .facility .conquered-badge').textContent"),'制覇');
+      verify(await measure(),width);
+      const singleBounds=await evaluate("(()=>{const r=document.querySelector('[data-group=onsen-001]').getBoundingClientRect();return {x:r.left+scrollX,y:r.top+scrollY,width:r.width,height:r.height,scale:1}})()");
+      const singleShot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:singleBounds});
+      fs.writeFileSync(`scratch/card-compact-qa/conquered-single-${width}.png`,Buffer.from(singleShot.data,'base64'));
+      await evaluate("document.querySelector('[data-detail=onsen-001]').click();document.querySelector('[data-delete-visit]').click();document.getElementById('modalClose').click()");await settle();
+      assert.equal(await evaluate("!!document.querySelector('[data-facility-id=onsen-001] .conquered-badge')"),false);
       await evaluate("document.getElementById('clearFilter').click();document.querySelector('[data-detail=onsen-015]').click();document.querySelector('[data-delete-visit]').click();document.getElementById('modalClose').click()");await settle();verify(await measure(),width);
       results.push({width,initial,all,scenarios,visited,filtered});
     }

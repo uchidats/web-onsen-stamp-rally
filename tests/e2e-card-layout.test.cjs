@@ -90,6 +90,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
     async function waitFor(expr){for(let i=0;i<100;i++){if(await evaluate(expr))return;await new Promise(r=>setTimeout(r,100));}assert.fail('Timed out: '+expr);}
     const results=[];
     fs.mkdirSync('scratch/card-layout-qa',{recursive:true});
+    for(const id of ['onsen-015','onsen-005'])await evaluate(`document.querySelector('[data-detail="${id}"]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click()`);
     for(const width of [1440,1280,768,390,320]){
       await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<400});
       await evaluate("document.getElementById('onsens').scrollIntoView()");
@@ -101,14 +102,15 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
           const r=row.getBoundingClientRect(),m=meta.getBoundingClientRect(),n=name.getBoundingClientRect(),p=pin?.getBoundingClientRect();
           return {id:row.parentElement.dataset.facilityId,official:name.tagName==='A',map:!!pin,name:name.textContent,
             officialUrl:name.href,mapLabel:pin?.getAttribute('aria-label'),safe:!pin||(pin.target==='_blank'&&pin.rel.includes('noopener')),
-            font:parseFloat(getComputedStyle(name).fontSize),headingFont:parseFloat(getComputedStyle(card.querySelector('h3')).fontSize),descriptionFont:parseFloat(getComputedStyle(card.querySelector('.facility-status')).fontSize),
+            font:parseFloat(getComputedStyle(name).fontSize),headingFont:parseFloat(getComputedStyle(card.querySelector('h3')).fontSize),descriptionFont:parseFloat(getComputedStyle(card.querySelector('.tag')).fontSize),
             contained:n.left>=r.left-1&&n.right<=r.right+1&&(!p||p.right<=r.right+1),
             grouped:Math.abs(m.left-r.left)<1&&Math.abs(m.top-r.bottom-5)<1&&(!p||Math.abs(p.left-m.left)<1),
             noSeparateOfficial:!row.querySelector('.facility-link'),direct:!pin||pin.parentElement===meta,
             leftAligned:getComputedStyle(meta).justifyContent==='flex-start',
-            order:[...meta.children].map(e=>e.classList.contains('map-link')?'map':e.classList.contains('facility-detail')?'detail':e.classList.contains('facility-status')?'status':'tag'),
+            order:[...meta.children].map(e=>e.classList.contains('map-link')?'map':e.classList.contains('facility-detail')?'detail':'tag'),
             metadataContained:[...meta.children].every(e=>{const b=e.getBoundingClientRect();return b.left>=m.left-1&&b.right<=m.right+1}),
-            colorSync:getComputedStyle(name).color===getComputedStyle(meta.querySelector('.facility-status')).color};
+            badge:!!row.querySelector('.conquered-badge'),badgeFits:!row.querySelector('.conquered-badge')||row.querySelector('.conquered-badge').getBoundingClientRect().right<=r.right+1,
+            badgeOutsideLink:!row.querySelector('a .conquered-badge'),noOldStatus:!card.querySelector('.facility-status')&&!/訪問済み|未訪問/.test(card.textContent)};
         })};
       })()`);
       assert.equal(layout.overflow,false,`${width}px: no page overflow`);
@@ -118,11 +120,12 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
         assert.equal(c.official,!!fixtures[i].officialUrl);
         assert.equal(c.map,!!fixtures[i].mapUrl);
         assert.equal(c.name,fixtures[i].facility);
-        assert.deepEqual(c.order,[...(c.map?['map']:[]),'detail','status','tag',...(fixtures[i].springType?['tag']:[])]);
+        assert.deepEqual(c.order,[...(c.map?['map']:[]),'detail','tag',...(fixtures[i].springType?['tag']:[])]);
+        assert.equal(c.badge,['onsen-015','onsen-005'].includes(c.id));
         if(c.official)assert.equal(c.officialUrl,fixtures[i].officialUrl);
         if(c.map)assert.ok(c.mapLabel.includes('Google Maps')&&c.mapLabel.includes(fixtures[i].facility));
         assert.ok(c.font>c.descriptionFont&&c.font<c.headingFont);
-        assert.ok(c.contained&&c.grouped&&c.safe&&c.direct&&c.noSeparateOfficial&&c.leftAligned&&c.metadataContained&&c.colorSync,JSON.stringify({width,...c}));
+        assert.ok(c.contained&&c.grouped&&c.safe&&c.direct&&c.noSeparateOfficial&&c.leftAligned&&c.metadataContained&&c.badgeFits&&c.badgeOutsideLink&&c.noOldStatus,JSON.stringify({width,...c}));
         await evaluate(`document.querySelector('[data-detail="${c.id}"]').click()`);
         assert.equal(await evaluate("document.getElementById('modalTitle').textContent"),fixtures[i].onsen);
         assert.equal(await evaluate("document.querySelector('#modalSubtitle .facility-name').textContent"),fixtures[i].facility);
@@ -135,10 +138,8 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
     }
     assert.equal(await evaluate("document.querySelectorAll('[data-group=nyuto] .facility-entry').length"),2);
     await evaluate("document.querySelector('[data-detail=onsen-015]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click()");
-    assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-015] .facility-status').textContent"),'訪問済み');
-    assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-016] .facility-status').textContent"),'未訪問');
-    assert.equal(await evaluate("getComputedStyle(document.querySelector('[data-facility-id=onsen-015] .facility-status')).color"),'rgb(52, 79, 67)');
-    assert.equal(await evaluate("getComputedStyle(document.querySelector('[data-facility-id=onsen-016] .facility-status')).color"),'rgb(134, 99, 41)');
+    assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-015] .conquered-badge').textContent"),'制覇');
+    assert.equal(await evaluate("!!document.querySelector('[data-facility-id=onsen-016] .conquered-badge')"),false);
     for(const status of ['visited','unvisited']){
       await evaluate(`document.getElementById('statusSelect').value='${status}';document.getElementById('statusSelect').dispatchEvent(new Event('change'))`);
       assert.equal(await evaluate("document.querySelectorAll('[data-group=nyuto] .facility-entry').length"),1);
@@ -177,7 +178,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
     assert.equal(await evaluate("document.querySelector('#modalSubtitle .facility-name').textContent"),'鶴の湯温泉');
     assert.ok(await evaluate("document.getElementById('detailList').textContent.includes('最寄り駅')"));
     await evaluate("document.getElementById('detailStamp').click();document.querySelector('[data-delete-visit]').click();document.getElementById('modalClose').click()");
-    assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-015] .facility-status').textContent"),'未訪問');
+    assert.equal(await evaluate("!!document.querySelector('[data-facility-id=onsen-015] .conquered-badge')"),false);
     await evaluate("document.querySelector('[data-detail=onsen-016]').click()");
     assert.equal(await evaluate("document.querySelector('#modalSubtitle .facility-name').textContent"),'妙乃湯');
     fs.writeFileSync('scratch/card-layout-qa/results.json',JSON.stringify(results,null,2));

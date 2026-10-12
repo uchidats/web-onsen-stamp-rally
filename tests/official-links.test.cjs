@@ -5,7 +5,8 @@ const data=ctx.window.ONSEN_DATA,app=fs.readFileSync('app.js','utf8');
 assert.equal(data.length,67);
 assert.deepEqual(Array.from(data,x=>x.id),Array.from({length:67},(_,i)=>'onsen-'+String(i+1).padStart(3,'0')));
 for(const x of data){assert.equal(typeof x.officialUrl,'string');if(x.officialUrl){const u=new URL(x.officialUrl);assert.ok(['http:','https:'].includes(u.protocol));assert.equal(u.username,'');assert.equal(u.password,'')}}
-function render(rows,filters={}){const elements=new Map(),saved=new Map();const el=id=>{if(!elements.has(id))elements.set(id,{value:'',style:{},innerHTML:'',textContent:'',dataset:{},classList:{toggle(){}},querySelectorAll:()=>[],addEventListener(){}});return elements.get(id)};
+function render(rows,filters={},visitedIds=[]){const elements=new Map(),saved=new Map();const el=id=>{if(!elements.has(id))elements.set(id,{value:'',style:{},innerHTML:'',textContent:'',dataset:{},classList:{toggle(){}},querySelectorAll:()=>[],addEventListener(){}});return elements.get(id)};
+  const storage={getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)},repo=globalThis.OnsenRecords.create(storage);let state=repo.load();for(const id of visitedIds)state=repo.setVisited(state,id,true);
   vm.runInNewContext(app,{URL,window:{ONSEN_DATA:rows,OnsenRecords:globalThis.OnsenRecords},document:{getElementById:el,querySelectorAll:()=>[],addEventListener(){}},localStorage:{getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)},setTimeout:()=>0,clearTimeout(){}});
   for(const [id,value] of Object.entries(filters))el(id).value=value;
   for(let i=0;i<4;i++)el('showMore').onclick();return el('cards').innerHTML;
@@ -53,3 +54,11 @@ assert.equal((render(data,{statusSelect:'unvisited'}).match(/data-facility-id=/g
 assert.equal((render(data,{search:data[14].onsen,categorySelect:data[15].category}).match(/data-facility-id=/g)||[]).length,1);
 assert.equal((render([{...data[0],onsen:data[14].onsen},data[14],data[15]]).match(/<h3>/g)||[]).length,2);
 console.log('PASS: explicit five groups, 62 cards, all 67 unique facilities, facility-level search/prefecture/status/category and singleton fallback');
+assert.equal(html.includes('conquered-badge'),false);
+assert.equal(html.includes('facility-status'),false);
+const conquered=render(data,{},['onsen-001','onsen-015']);
+assert.equal((conquered.match(/class="conquered-badge"/g)||[]).length,2);
+assert.ok(conquered.includes('<span class="conquered-badge">制覇</span>'));
+assert.equal((render(data,{statusSelect:'visited'},['onsen-001','onsen-015']).match(/data-facility-id=/g)||[]).length,2);
+assert.equal((render(data,{statusSelect:'unvisited'},['onsen-001','onsen-015']).match(/data-facility-id=/g)||[]).length,65);
+console.log('PASS: conquered badges only on visited facilities, no old status text, independent visited/unvisited filters');
