@@ -12,6 +12,14 @@ function render(rows,filters={},visitedIds=[]){const elements=new Map(),saved=ne
   for(let i=0;i<4;i++)el('showMore').onclick();return el('cards').innerHTML;
 }
 const html=render(data);
+assert.ok(!html.includes('現・旧')&&!html.includes('現（新規）')&&!html.includes('旧（掲載終了）'));
+assert.equal((html.match(/>地温泉<\/span>/g)||[]).length,34);
+assert.equal((html.match(/>地温泉（掲載終了）<\/span>/g)||[]).length,9);
+for(const filter of ['search','categorySelect']){
+  assert.equal((render(data,{[filter]:'地温泉'}).match(/data-facility-id=/g)||[]).length,filter==='search'?43:34);
+  assert.equal((render(data,{[filter]:'地温泉（掲載終了）'}).match(/data-facility-id=/g)||[]).length,9);
+}
+for(const [category,count] of [['現・旧',26],['現（新規）',8],['旧（掲載終了）',9]])assert.equal((render(data,{categorySelect:category}).match(/data-facility-id=/g)||[]).length,count);
 assert.equal((html.match(/class="facility-name facility-name-link"/g)||[]).length,data.filter(x=>x.officialUrl).length);
 assert.equal((html.match(/data-detail=/g)||[]).length,67);
 assert.equal((html.match(/data-visit=/g)||[]).length,0);
