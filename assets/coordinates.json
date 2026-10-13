@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors",
   "license": "ODbL-1.0",
   "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
-  "verifiedOn": "2026-10-11",
-  "method": "Known-ID Nominatim lookup with geometry, official/municipal address cross-check. 40 coordinate rows unchanged; 19 Point POIs and 21 Polygon interior checks. Google Maps coordinates were not extracted.",
+  "verifiedOn": "2026-10-13",
+  "method": "49 verified facilities: original 40 coordinates unchanged (2026-10-11); 9 OSM facility representatives added (2026-10-13), cross-checked with official/public facility identity and current location. 18 facilities remain excluded. No Google Maps coordinates extracted.",
   "rows": [
     {
       "id": "onsen-001",
@@ -221,21 +221,28 @@
       "id": "onsen-006",
       "facility": "峡雲荘",
       "prefecture": "岩手県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://kyounso.jp/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 39.8727646,
+      "longitude": 140.9247795,
+      "coordinateSource": "https://www.openstreetmap.org/node/6453100785",
+      "coordinateVerified": true,
+      "osmName": "Kyuonso",
+      "osmAddress": "岩手県八幡平市松尾寄木松川温泉",
+      "osmFeatureType": "facility POI",
+      "addressReference": "https://www.city.hachimantai.lg.jp/soshiki/shokanka/24000.html",
+      "note": "OSMの宿泊施設POI Kyuonso は松川温泉の峡雲荘のローマ字表記。公式の日本語名・八幡平市松尾寄木松川温泉と対応し、公式Hotel構造化データの位置とも同じ建物群付近。発電所・松川の別宿の点ではなく宿の固有POIを採用。",
+      "coordinateCheckedAt": "2026-10-13",
       "onsen": "松川温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "岩手県八幡平市松尾寄木松川温泉",
+      "auditResult": "新規追加・施設敷地の代表点として照合済み",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.9247795,
+          39.8727646
+        ]
+      }
     },
     {
       "id": "onsen-007",
@@ -1197,21 +1204,76 @@
       "id": "onsen-018",
       "facility": "後生掛温泉旅館",
       "prefecture": "秋田県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 39.9720906,
+      "longitude": 140.8003011,
+      "coordinateSource": "https://www.openstreetmap.org/way/731077984",
+      "coordinateVerified": true,
+      "osmName": "後生掛温泉 旅館部",
+      "osmAddress": "秋田県鹿角市八幡平字熊沢国有林内",
+      "osmFeatureType": "tourism/hotel (facility polygon)",
       "addressReference": "https://www.goshougake.com/",
-      "note": "バス停しか名称を確認できず、旅館・浴場の座標としては採用しない。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "後生掛温泉 旅館部の名前付き敷地と施設電話が公式の旅館に一致。敷地内に検証済みの代表点なので、旅館部・浴場の厳密な位置を選び直す必要はない。湯治部・バス停の取り違えも回避。",
+      "coordinateCheckedAt": "2026-10-13",
       "onsen": "後生掛温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "秋田県鹿角市八幡平字熊沢国有林内",
+      "auditResult": "新規追加・施設敷地の代表点として照合済み",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              140.8000021,
+              39.9719044
+            ],
+            [
+              140.8000336,
+              39.9722441
+            ],
+            [
+              140.8000459,
+              39.9722591
+            ],
+            [
+              140.8000785,
+              39.9722778
+            ],
+            [
+              140.8001139,
+              39.972283
+            ],
+            [
+              140.8002743,
+              39.9722723
+            ],
+            [
+              140.8006002,
+              39.9722471
+            ],
+            [
+              140.8005667,
+              39.9719702
+            ],
+            [
+              140.8002488,
+              39.9719876
+            ],
+            [
+              140.8002461,
+              39.9719465
+            ],
+            [
+              140.8001228,
+              39.9718982
+            ],
+            [
+              140.8000021,
+              39.9719044
+            ]
+          ]
+        ]
+      }
     },
     {
       "id": "onsen-019",
@@ -1625,21 +1687,28 @@
       "id": "onsen-026",
       "facility": "時音の宿 湯主一條",
       "prefecture": "宮城県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://www.ichijoh.co.jp/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 38.024627,
+      "longitude": 140.574897,
+      "coordinateSource": "https://www.openstreetmap.org/node/2285345560",
+      "coordinateVerified": true,
+      "osmName": "湯主 一條",
+      "osmAddress": "宮城県白石市福岡蔵本字鎌先1-48",
+      "osmFeatureType": "facility POI",
+      "addressReference": "https://www.ichijoh.co.jp/about/",
+      "note": "OSMのhotel POI 湯主 一條を鎌先1-48の公式施設名・所在地に照合。既存の時音の宿であり、新築のTHE YUKAWAや専用駐車場を指す別POIを採用していない。同じ宿の棟・浴場の選択は不要。",
+      "coordinateCheckedAt": "2026-10-13",
       "onsen": "鎌先温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "宮城県白石市福岡蔵本字鎌先1-48",
+      "auditResult": "新規追加・施設敷地の代表点として照合済み",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.574897,
+          38.024627
+        ]
+      }
     },
     {
       "id": "onsen-027",
@@ -2013,41 +2082,55 @@
       "id": "onsen-034",
       "facility": "旅館玉子湯",
       "prefecture": "福島県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 37.7525452,
+      "longitude": 140.3096465,
+      "coordinateSource": "https://www.openstreetmap.org/node/3922890365",
+      "coordinateVerified": true,
+      "osmName": "旅館玉子湯",
+      "osmAddress": "福島県福島市町庭坂字高湯7",
+      "osmFeatureType": "facility POI",
       "addressReference": "https://tamagoyu.jp/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "OSMの旅館玉子湯の所在地タグ「町庭坂字高湯7」が公式の住所・宿名と一致する個別施設POI。同じ旅館敷地内で十分なので、茅葺湯小屋・庭園・宿泊棟の使い分けを採用条件から除外。",
+      "coordinateCheckedAt": "2026-10-13",
       "onsen": "高湯温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "福島県福島市町庭坂字高湯7",
+      "auditResult": "新規追加・施設敷地の代表点として照合済み",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.3096465,
+          37.7525452
+        ]
+      }
     },
     {
       "id": "onsen-035",
       "facility": "安達屋旅館",
       "prefecture": "福島県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 37.7525827,
+      "longitude": 140.3043635,
+      "coordinateSource": "https://www.openstreetmap.org/node/3922873053",
+      "coordinateVerified": true,
+      "osmName": "安達屋旅館",
+      "osmAddress": "福島県福島市町庭坂字高湯21",
+      "osmFeatureType": "facility POI",
       "addressReference": "https://www.adachiya.jp/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "OSMの安達屋旅館の所在地タグ「町庭坂字高湯21」が公式・旅館協会と一致。近傍の二重POIを平均化せず、住所タグを持つ既存候補を採用。",
+      "coordinateCheckedAt": "2026-10-13",
       "onsen": "高湯温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "福島県福島市町庭坂字高湯21",
+      "auditResult": "新規追加・施設敷地の代表点として照合済み",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.3043635,
+          37.7525827
+        ]
+      }
     },
     {
       "id": "onsen-036",
@@ -2205,21 +2288,28 @@
       "id": "onsen-042",
       "facility": "八丁の湯",
       "prefecture": "栃木県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 36.8722605,
+      "longitude": 139.3983249,
+      "coordinateSource": "https://www.openstreetmap.org/node/6369602785",
+      "coordinateVerified": true,
+      "osmName": "八丁之湯",
+      "osmAddress": "栃木県日光市川俣876",
+      "osmFeatureType": "facility POI",
       "addressReference": "https://www.8tyo-no-yu.co.jp/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "OSMの八丁之湯/Hatcho-no-Yu と登録宿は表記違いだけで同じ施設。OSMと公式の施設電話0288-96-0306が一致し、Google Mapsでも対象宿名・日光市川俣・公式ドメインを確認でき、、加仁湯・日光沢・手白澤を別POIとして区別。OSM番地875と公式・Googleの876はタグの表記差として明記し、住所は公式876を参照する。個別宿のPOIのため採用可能と判断。",
+      "coordinateCheckedAt": "2026-10-13",
       "onsen": "奥鬼怒温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "栃木県日光市川俣876",
+      "auditResult": "新規追加・施設敷地の代表点として照合済み",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.3983249,
+          36.8722605
+        ]
+      }
     },
     {
       "id": "onsen-043",
@@ -2861,21 +2951,28 @@
       "id": "onsen-054",
       "facility": "ランプの宿高峰温泉",
       "prefecture": "長野県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 36.410002,
+      "longitude": 138.459569,
+      "coordinateSource": "https://www.openstreetmap.org/node/2149152006",
+      "coordinateVerified": true,
+      "osmName": "高峰温泉",
+      "osmAddress": "長野県小諸市高峰高原（現公式表記、番地記載なし）",
+      "osmFeatureType": "facility POI",
       "addressReference": "https://www.takamine.co.jp/",
-      "note": "施設の公式URL・電話は一致するが、逆引き住所の県がマスター・公式住所と不一致。建物・浴場位置の追加確認が必要。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "OSMの現宿のhotel POIにある公式URL・施設電話・郵便番号が高峰温泉公式と一致。現在の高原の宿を指し、旧所在地・引湯元や季節の送迎集合場所ではない。古いNominatim行政区名は採用根拠に使わず、現公式の長野県小諸市を参照。同じ施設の野天風呂との使い分けは不要。",
+      "coordinateCheckedAt": "2026-10-13",
       "onsen": "高峰温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "長野県小諸市高峰高原（現公式表記、番地記載なし）",
+      "auditResult": "新規追加・施設敷地の代表点として照合済み",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.459569,
+          36.410002
+        ]
+      }
     },
     {
       "id": "onsen-055",
@@ -2929,21 +3026,28 @@
       "id": "onsen-057",
       "facility": "湯元齋藤旅館",
       "prefecture": "長野県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "http://www.shirahone.net/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 36.155515,
+      "longitude": 137.625026,
+      "coordinateSource": "https://www.openstreetmap.org/node/2292014753",
+      "coordinateVerified": true,
+      "osmName": "湯元斎藤本館",
+      "osmAddress": "長野県松本市安曇白骨温泉4195",
+      "osmFeatureType": "facility POI",
+      "addressReference": "https://www.spa.or.jp/search_f/detail_f/?F_ID=808",
+      "note": "OSMの湯元斎藤本館は白骨温泉の湯元齋藤旅館に対応する固有の宿泊POI。現公式タイトルと温泉協会の松本市安曇白骨温泉4195を照合。4200の湯元齋藤別館、煤香庵、山形の斎藤旅館と区別。本館敷地の代表地点として採用。",
+      "coordinateCheckedAt": "2026-10-13",
       "onsen": "白骨温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "長野県松本市安曇白骨温泉4195",
+      "auditResult": "新規追加・施設敷地の代表点として照合済み",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.625026,
+          36.155515
+        ]
+      }
     },
     {
       "id": "onsen-058",
@@ -3157,21 +3261,28 @@
       "id": "onsen-065",
       "facility": "大牧温泉観光旅館",
       "prefecture": "富山県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://www.oomaki.jp/",
-      "note": "温泉POIは見つかったが、源泉や温泉地の位置と旅館入浴施設の位置を区別する資料が不足。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 36.5004964,
+      "longitude": 136.9941115,
+      "coordinateSource": "https://www.openstreetmap.org/node/4350399284",
+      "coordinateVerified": true,
+      "osmName": "大牧温泉",
+      "osmAddress": "富山県南砺市利賀村大牧44（県観光特集）／富山県南砺市利賀村大牧（県観光スポット）",
+      "osmFeatureType": "facility POI",
+      "addressReference": "https://www.info-toyama.com/stories/onsen",
+      "note": "大牧温泉のOSM POIは建物way/553461813の内側にあることを既存取得データで確認。公式が直接案内するGoogle共有リンクで「船で行く秘湯 大牧温泉」、利賀村大牧44、公式ドメインoomaki.jpの一致を確認した。小牧港や対岸道路の点ではなく、同じ旅館建物の代表地点として採用。Google由来の座標は使用せず、保存候補はOSMノード値。",
+      "coordinateCheckedAt": "2026-10-13",
       "onsen": "大牧温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "富山県南砺市利賀村大牧44（県観光特集）／富山県南砺市利賀村大牧（県観光スポット）",
+      "auditResult": "新規追加・施設敷地の代表点として照合済み",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          136.9941115,
+          36.5004964
+        ]
+      }
     },
     {
       "id": "onsen-066",

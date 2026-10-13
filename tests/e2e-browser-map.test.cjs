@@ -213,7 +213,7 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     // Iwate facilities remain individual at the regional zoom on desktop and mobile.
     await evaluate("document.getElementById('resetPref').click();document.getElementById('prefSelect').value='岩手県';document.getElementById('prefSelect').dispatchEvent(new Event('change'))");
     for (let attempt = 0; attempt < 50; attempt++) {
-      if (await evaluate("document.querySelectorAll('#mapCanvas .onsen-map-marker').length === 3")) break;
+      if (await evaluate("document.querySelectorAll('#mapCanvas .onsen-map-marker').length === 4")) break;
       await new Promise(r => setTimeout(r, 100));
     }
     for (const width of [1280, 390]) {

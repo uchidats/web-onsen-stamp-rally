@@ -308,7 +308,7 @@ test('Embedded map preserves every source coordinate transform and boundary shap
   assert.deepEqual(SVG_MARKUP.match(/<(?:path|polygon)\b[^>]*>/g), source.match(/<(?:path|polygon)\b[^>]*>/g));
 });
 
-test('JapanPrefMap: displays exactly 40 verified onsen markers and 0 unverified markers', () => {
+test('JapanPrefMap: displays exactly 49 verified onsen markers and 0 unverified markers', () => {
   const MapModule = loadJapanMap();
   const dataCode = fs.readFileSync('data.js', 'utf8');
   const win = {};
@@ -328,22 +328,22 @@ test('JapanPrefMap: displays exactly 40 verified onsen markers and 0 unverified 
   });
 
   assert.ok(instance, 'Map instance should be created');
-  assert.equal(instance.getMarkerCount(), 40, 'Must render exactly 40 verified markers');
+  assert.equal(instance.getMarkerCount(), 49, 'Must render exactly 49 verified markers');
 
   const markers = container.querySelectorAll('.japan-map-marker');
-  assert.equal(markers.length, 40, 'DOM should contain 40 marker elements');
+  assert.equal(markers.length, 49, 'DOM should contain 49 marker elements');
 
-  // Verify none of the 27 unverified onsens have a marker
+  // Verify none of the 18 unverified onsens have a marker
   const unverified = DATA.filter(x => !x.coordinateVerified);
-  assert.equal(unverified.length, 27, 'Should have 27 unverified onsens');
+  assert.equal(unverified.length, 18, 'Should have 18 unverified onsens');
   for (const u of unverified) {
     const found = markers.find(m => m.getAttribute('data-onsen-id') === u.id);
     assert.equal(found, undefined, `Unverified facility ${u.id} (${u.facility}) must NOT have a marker on the map`);
   }
 
-  // Verify all 40 verified facilities have a marker
+  // Verify all 49 verified facilities have a marker
   const verified = DATA.filter(x => x.coordinateVerified);
-  assert.equal(verified.length, 40, 'Should have 40 verified onsens');
+  assert.equal(verified.length, 49, 'Should have 49 verified onsens');
   for (const v of verified) {
     const found = markers.find(m => m.getAttribute('data-onsen-id') === v.id);
     assert.ok(found, `Verified facility ${v.id} (${v.facility}) must have a marker`);

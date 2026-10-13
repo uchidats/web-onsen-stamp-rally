@@ -111,10 +111,10 @@ window.ONSEN_DATA = [
     "prefecture": "岩手県",
     "onsen": "松川温泉",
     "facility": "峡雲荘",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 39.8727646,
+    "longitude": 140.9247795,
+    "coordinateSource": "https://www.openstreetmap.org/node/6453100785",
+    "coordinateVerified": true,
     "officialUrl": "https://kyounso.jp/",
     "category": "現・旧",
     "bathing": "",
@@ -123,7 +123,7 @@ window.ONSEN_DATA = [
     "elevationM": 700,
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B3%A1%E9%9B%B2%E8%8D%98%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
-    "coordinateCheckedAt": "2026-10-11"
+    "coordinateCheckedAt": "2026-10-13"
   },
   {
     "id": "onsen-007",
@@ -363,10 +363,10 @@ window.ONSEN_DATA = [
     "prefecture": "秋田県",
     "onsen": "後生掛温泉",
     "facility": "後生掛温泉旅館",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 39.9720906,
+    "longitude": 140.8003011,
+    "coordinateSource": "https://www.openstreetmap.org/way/731077984",
+    "coordinateVerified": true,
     "officialUrl": "https://www.goshougake.com/",
     "category": "現・旧",
     "bathing": "",
@@ -375,7 +375,7 @@ window.ONSEN_DATA = [
     "elevationM": 780,
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%BE%8C%E7%94%9F%E6%8E%9B%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
-    "coordinateCheckedAt": "2026-10-11"
+    "coordinateCheckedAt": "2026-10-13"
   },
   {
     "id": "onsen-019",
@@ -531,10 +531,10 @@ window.ONSEN_DATA = [
     "prefecture": "宮城県",
     "onsen": "鎌先温泉",
     "facility": "時音の宿 湯主一條",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 38.024627,
+    "longitude": 140.574897,
+    "coordinateSource": "https://www.openstreetmap.org/node/2285345560",
+    "coordinateVerified": true,
     "officialUrl": "https://www.ichijoh.co.jp/",
     "category": "厳選実力派",
     "bathing": "宿泊のみ",
@@ -543,7 +543,7 @@ window.ONSEN_DATA = [
     "elevationM": 120,
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%99%82%E9%9F%B3%E3%81%AE%E5%AE%BF%20%E6%B9%AF%E4%B8%BB%E4%B8%80%E6%A2%9D%20%E5%AE%AE%E5%9F%8E%E7%9C%8C",
-    "coordinateCheckedAt": "2026-10-11"
+    "coordinateCheckedAt": "2026-10-13"
   },
   {
     "id": "onsen-027",
@@ -699,10 +699,10 @@ window.ONSEN_DATA = [
     "prefecture": "福島県",
     "onsen": "高湯温泉",
     "facility": "旅館玉子湯",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 37.7525452,
+    "longitude": 140.3096465,
+    "coordinateSource": "https://www.openstreetmap.org/node/3922890365",
+    "coordinateVerified": true,
     "officialUrl": "https://tamagoyu.jp/",
     "category": "現・旧",
     "bathing": "",
@@ -711,7 +711,7 @@ window.ONSEN_DATA = [
     "elevationM": 730,
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%97%85%E9%A4%A8%E7%8E%89%E5%AD%90%E6%B9%AF%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
-    "coordinateCheckedAt": "2026-10-11"
+    "coordinateCheckedAt": "2026-10-13"
   },
   {
     "id": "onsen-035",
@@ -720,10 +720,10 @@ window.ONSEN_DATA = [
     "prefecture": "福島県",
     "onsen": "高湯温泉",
     "facility": "安達屋旅館",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 37.7525827,
+    "longitude": 140.3043635,
+    "coordinateSource": "https://www.openstreetmap.org/node/3922873053",
+    "coordinateVerified": true,
     "officialUrl": "https://www.adachiya.jp/",
     "category": "厳選実力派",
     "bathing": "10:30-13:00",
@@ -732,7 +732,7 @@ window.ONSEN_DATA = [
     "elevationM": 730,
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%AE%89%E9%81%94%E5%B1%8B%E6%97%85%E9%A4%A8%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
-    "coordinateCheckedAt": "2026-10-11"
+    "coordinateCheckedAt": "2026-10-13"
   },
   {
     "id": "onsen-036",
@@ -867,10 +867,10 @@ window.ONSEN_DATA = [
     "prefecture": "栃木県",
     "onsen": "奥鬼怒温泉",
     "facility": "八丁の湯",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 36.8722605,
+    "longitude": 139.3983249,
+    "coordinateSource": "https://www.openstreetmap.org/node/6369602785",
+    "coordinateVerified": true,
     "officialUrl": "https://www.8tyo-no-yu.co.jp/",
     "category": "厳選実力派",
     "bathing": "宿泊のみ",
@@ -879,7 +879,7 @@ window.ONSEN_DATA = [
     "elevationM": 950,
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%85%AB%E4%B8%81%E3%81%AE%E6%B9%AF%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
-    "coordinateCheckedAt": "2026-10-11"
+    "coordinateCheckedAt": "2026-10-13"
   },
   {
     "id": "onsen-043",
@@ -1119,10 +1119,10 @@ window.ONSEN_DATA = [
     "prefecture": "長野県",
     "onsen": "高峰温泉",
     "facility": "ランプの宿高峰温泉",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 36.410002,
+    "longitude": 138.459569,
+    "coordinateSource": "https://www.openstreetmap.org/node/2149152006",
+    "coordinateVerified": true,
     "officialUrl": "https://www.takamine.co.jp/",
     "category": "現・旧",
     "bathing": "",
@@ -1131,7 +1131,7 @@ window.ONSEN_DATA = [
     "elevationM": 1300,
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%A9%E3%83%B3%E3%83%97%E3%81%AE%E5%AE%BF%E9%AB%98%E5%B3%B0%E6%B8%A9%E6%B3%89%20%E9%95%B7%E9%87%8E%E7%9C%8C",
-    "coordinateCheckedAt": "2026-10-11"
+    "coordinateCheckedAt": "2026-10-13"
   },
   {
     "id": "onsen-055",
@@ -1182,10 +1182,10 @@ window.ONSEN_DATA = [
     "prefecture": "長野県",
     "onsen": "白骨温泉",
     "facility": "湯元齋藤旅館",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 36.155515,
+    "longitude": 137.625026,
+    "coordinateSource": "https://www.openstreetmap.org/node/2292014753",
+    "coordinateVerified": true,
     "officialUrl": "https://www.shirahone.net/",
     "category": "現（新規）",
     "bathing": "宿泊のみ",
@@ -1194,7 +1194,7 @@ window.ONSEN_DATA = [
     "elevationM": 800,
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%85%83%E9%BD%8B%E8%97%A4%E6%97%85%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C",
-    "coordinateCheckedAt": "2026-10-11"
+    "coordinateCheckedAt": "2026-10-13"
   },
   {
     "id": "onsen-058",
@@ -1350,10 +1350,10 @@ window.ONSEN_DATA = [
     "prefecture": "富山県",
     "onsen": "大牧温泉",
     "facility": "大牧温泉観光旅館",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 36.5004964,
+    "longitude": 136.9941115,
+    "coordinateSource": "https://www.openstreetmap.org/node/4350399284",
+    "coordinateVerified": true,
     "officialUrl": "https://www.oomaki.jp/",
     "category": "現（新規）",
     "bathing": "宿泊のみ、ふるさと納税可",
@@ -1362,7 +1362,7 @@ window.ONSEN_DATA = [
     "elevationM": 100,
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E7%89%A7%E6%B8%A9%E6%B3%89%E8%A6%B3%E5%85%89%E6%97%85%E9%A4%A8%20%E5%AF%8C%E5%B1%B1%E7%9C%8C",
-    "coordinateCheckedAt": "2026-10-11"
+    "coordinateCheckedAt": "2026-10-13"
   },
   {
     "id": "onsen-066",
