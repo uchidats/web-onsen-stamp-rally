@@ -100,6 +100,22 @@
     };
   }
 
+  function createViewport() {
+    let zoom=1,x=0,y=0;
+    const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+    function set(nextZoom,nextX,nextY) {
+      zoom=clamp(nextZoom,1,8);const size=1000/zoom;
+      x=clamp(nextX,0,1000-size);y=clamp(nextY,0,1000-size);
+      return get();
+    }
+    function get(){return {zoom:zoom,x:x,y:y,size:1000/zoom};}
+    return {get:get,set:set,reset:()=>set(1,0,0),
+      zoomAt:function(next,rx=.5,ry=.5){const old=get(),z=clamp(next,1,8),size=1000/z;return set(z,old.x+rx*old.size-rx*size,old.y+ry*old.size-ry*size);},
+      pan:function(dx,dy){return set(zoom,x+dx,y+dy);},
+      region:function(){const nw=project(137.7,41.8),se=project(143.1,35);const size=Math.max(se[0]-nw[0],se[1]-nw[1])+40,z=clamp(1000/size,1,8);return set(z,(nw[0]+se[0])/2-500/z,(nw[1]+se[1])/2-500/z);}
+    };
+  }
+
   function create(options) {
     const container = options.container;
     const data = options.data || [];
@@ -114,10 +130,17 @@
     container.innerHTML =
       '<div class="japan-map-wrapper">' +
         '<div class="japan-map-svg-frame" role="region" aria-label="47都道府県の達成度地図">' +
+          '<div class="japan-map-zoom-controls" role="group" aria-label="全国地図の表示範囲">' +
+            '<button type="button" class="stamp" id="japanMapZoomIn" aria-label="全国地図を拡大">＋</button>' +
+            '<button type="button" class="stamp" id="japanMapZoomOut" aria-label="全国地図を縮小">－</button>' +
+            '<button type="button" class="stamp" id="japanMapResetView">全体表示</button>' +
+            '<button type="button" class="stamp" id="japanMapRegionView">関東・東北</button>' +
+          '</div>' +
           SVG_MARKUP +
           '<div id="japanMapTooltip" class="japan-map-tooltip" role="tooltip" aria-hidden="true" hidden></div>' +
         '</div>' +
         '<div class="japan-map-controls">' +
+          '<p class="japan-map-gesture-hint">ドラッグ・1本指で移動、2本指で拡大・縮小。<span class="japan-map-wheel-hint">ホイール拡大はCtrl／⌘を押しながら。</span>ページのスクロールは地図の外側で行えます。</p>' +
           '<p class="japan-map-inset-note">輪郭と温泉位置は、同じ地理座標変換で表示しています。地図上の丸は位置確認済みの温泉を示します。</p>' +
           '<div class="japan-map-legend" aria-label="地図の凡例">' +
             '<div class="legend-group pref-legend" aria-label="都道府県の達成率">' +
@@ -178,29 +201,68 @@
 
     }
 
-    if (svgElem) {
-      let gesture = null;
-      svgElem.addEventListener('touchstart', function(e) {
-        gesture = null;
-        if (e.touches.length !== 1) return;
-        const t=e.touches[0];
-        const hit=document.elementFromPoint(t.clientX,t.clientY);
-        gesture={x:t.clientX,y:t.clientY,hit:hit};
-      }, {capture:true,passive:true});
-      svgElem.addEventListener('touchcancel',function() {gesture=null;}, {passive:true});
-      svgElem.addEventListener('touchend',function(e) {
-        const start=gesture;gesture=null;
-        if (!start || e.changedTouches.length!==1) return;
-        const t=e.changedTouches[0];
-        if (Math.hypot(t.clientX-start.x,t.clientY-start.y)>8) return;
-        const marker=start.hit && start.hit.closest('.japan-map-marker');
-        const pref=start.hit && start.hit.closest('.prefecture[data-pref]');
-        if (!marker && !pref) return;
-        e.preventDefault();e.stopImmediatePropagation();hideTooltip();
-        if (marker) activateAt(start.x,start.y,marker.getAttribute('data-onsen-id'));
-        else {const name=pref.getAttribute('data-pref');onSelect(getSelectedPref()===name?'':name);}
-      }, {capture:true,passive:false});
+    const viewport=createViewport();
+    const zoomIn=container.querySelector('#japanMapZoomIn'),zoomOut=container.querySelector('#japanMapZoomOut');
+    function updateView() {
+      const v=viewport.get();
+      if(svgElem)svgElem.setAttribute('viewBox',[v.x,v.y,v.size,v.size].join(' '));
+      const r=svgElem && svgElem.getBoundingClientRect();
+      if(r && r.width){const radius=(4+Math.log2(v.zoom)*.5)*v.size/r.width;markerNodes.forEach(n=>n.setAttribute('r',radius));}
+      if(zoomIn)zoomIn.disabled=v.zoom>=8;if(zoomOut)zoomOut.disabled=v.zoom<=1;
+      hideTooltip();
     }
+    if(zoomIn)zoomIn.onclick=()=>{viewport.zoomAt(viewport.get().zoom*1.5);updateView();};
+    if(zoomOut)zoomOut.onclick=()=>{viewport.zoomAt(viewport.get().zoom/1.5);updateView();};
+    const resetView=container.querySelector('#japanMapResetView'),regionView=container.querySelector('#japanMapRegionView');
+    if(resetView)resetView.onclick=()=>{viewport.reset();updateView();};
+    if(regionView)regionView.onclick=()=>{viewport.region();updateView();};
+    if(svgElem){
+      const pointers=new Map();let first=null,last=null,pinch=null,moved=false,suppressUntil=0,touchGesture=null;
+      const point=e=>({x:e.clientX,y:e.clientY});
+      function beginPinch(){const p=Array.from(pointers.values()),r=svgElem.getBoundingClientRect(),v=viewport.get();const mid={x:(p[0].x+p[1].x)/2,y:(p[0].y+p[1].y)/2};pinch={distance:Math.max(1,Math.hypot(p[1].x-p[0].x,p[1].y-p[0].y)),zoom:v.zoom,worldX:v.x+(mid.x-r.left)/r.width*v.size,worldY:v.y+(mid.y-r.top)/r.height*v.size};moved=true;}
+      svgElem.addEventListener('pointerdown',function(e){
+        if(e.pointerType==='mouse'&&e.button!==0)return;
+        const p=point(e);pointers.set(e.pointerId,p);
+        if(pointers.size===1){first={...p,hit:document.elementFromPoint(p.x,p.y)};last=p;moved=false;pinch=null;}
+        else if(pointers.size===2)beginPinch();
+        svgElem.setPointerCapture(e.pointerId);
+      });
+      // Chrome may snap a coarse pointer to a neighbouring SVG target.
+      // Touch coordinates retain the actual finger position for hit testing.
+      svgElem.addEventListener('touchstart',function(e){
+        touchGesture=null;
+        if(e.touches.length===1){const t=e.touches[0];touchGesture={x:t.clientX,y:t.clientY,hit:document.elementFromPoint(t.clientX,t.clientY),moved:false};}
+      },{capture:true,passive:true});
+      svgElem.addEventListener('touchcancel',()=>{touchGesture=null;},{passive:true});
+      svgElem.addEventListener('touchend',function(e){
+        const start=touchGesture;touchGesture=null;
+        if(!start||start.moved||e.changedTouches.length!==1)return;
+        const t=e.changedTouches[0];if(Math.hypot(t.clientX-start.x,t.clientY-start.y)>8)return;
+        e.preventDefault();e.stopImmediatePropagation();activateHit(start);
+      },{capture:true,passive:false});
+      function activateHit(start){const marker=start.hit&&start.hit.closest('.japan-map-marker'),pref=start.hit&&start.hit.closest('.prefecture[data-pref]');if(marker)activateAt(start.x,start.y,marker.getAttribute('data-onsen-id'));else if(pref){const name=pref.getAttribute('data-pref');onSelect(getSelectedPref()===name?'':name);}}
+      svgElem.addEventListener('pointermove',function(e){
+        if(!pointers.has(e.pointerId))return;
+        const p=point(e);pointers.set(e.pointerId,p);const r=svgElem.getBoundingClientRect();
+        if(pointers.size>=2){const a=Array.from(pointers.values());if(!pinch)beginPinch();const mid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2},distance=Math.hypot(a[1].x-a[0].x,a[1].y-a[0].y),z=Math.max(1,Math.min(8,pinch.zoom*distance/pinch.distance)),size=1000/z;viewport.set(z,pinch.worldX-(mid.x-r.left)/r.width*size,pinch.worldY-(mid.y-r.top)/r.height*size);updateView();}
+        else if(first){if(Math.hypot(p.x-first.x,p.y-first.y)>8)moved=true;if(moved){const v=viewport.get();viewport.pan((last.x-p.x)/r.width*v.size,(last.y-p.y)/r.height*v.size);updateView();}last=p;}
+        if(moved){if(touchGesture)touchGesture.moved=true;e.preventDefault();hideTooltip();}
+      });
+      function endPointer(e,cancel){
+        if(!pointers.has(e.pointerId))return;
+        const start=first,tap=!cancel&&!moved&&pointers.size===1&&first&&Math.hypot(e.clientX-first.x,e.clientY-first.y)<=8;
+        pointers.delete(e.pointerId);suppressUntil=Date.now()+600;
+        if(svgElem.hasPointerCapture(e.pointerId))svgElem.releasePointerCapture(e.pointerId);
+        if(pointers.size){last=Array.from(pointers.values())[0];first={...last,hit:null};moved=true;pinch=null;}else{first=null;last=null;pinch=null;}
+        if(tap&&e.pointerType!=='touch'){e.preventDefault();activateHit(start);}
+      }
+      svgElem.addEventListener('pointerup',e=>endPointer(e,false));
+      svgElem.addEventListener('pointercancel',e=>endPointer(e,true));
+      svgElem.addEventListener('click',function(e){if(e.detail>0&&Date.now()<suppressUntil){e.preventDefault();e.stopImmediatePropagation();}},true);
+      svgElem.addEventListener('wheel',function(e){if(!e.ctrlKey&&!e.metaKey)return;e.preventDefault();const r=svgElem.getBoundingClientRect();viewport.zoomAt(viewport.get().zoom*Math.exp(-Math.max(-120,Math.min(120,e.deltaY))*.003),(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height);updateView();},{passive:false});
+      if(typeof ResizeObserver!=='undefined')new ResizeObserver(updateView).observe(svgElem);
+    }
+    updateView();
 
     // Keep the centers geographically exact. Resolve overlapping screen dots
     // through a facility chooser instead of moving their geographic positions.
@@ -459,6 +521,7 @@
       refresh: refresh,
       getPrefStats: function(name) { return getPrefStats(name, data, isVisited); },
       getMarkerCount: function() { return markerNodes.length; },
+      getViewState: viewport.get,
       VERIFIED_POSITIONS: VERIFIED_ONSEN_POSITIONS
     };
   }
@@ -470,6 +533,7 @@
     PREFECTURES: PREFECTURES,
     SVG_MARKUP: SVG_MARKUP,
     project: project,
+    createViewport: createViewport,
     PROJECTION: PROJECTION,
     VERIFIED_POSITIONS: VERIFIED_ONSEN_POSITIONS
   };

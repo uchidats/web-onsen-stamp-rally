@@ -158,6 +158,16 @@ function loadJapanMap() {
   return context.globalThis.JapanPrefMap;
 }
 
+test('Viewport: zoom anchor, bounded pan, preset and reset preserve shared coordinates', () => {
+  const {createViewport,project}=loadJapanMap(),v=createViewport();
+  assert.equal(v.get().zoom,1);assert.equal(v.get().x,0);
+  v.zoomAt(2,.4,.3);assert.equal(v.get().x+.4*v.get().size,400);assert.equal(v.get().y+.3*v.get().size,300);
+  v.pan(9999,-9999);assert.equal(v.get().x,500);assert.equal(v.get().y,0);
+  v.zoomAt(999);assert.equal(v.get().zoom,8);v.zoomAt(.01);assert.equal(v.get().zoom,1);assert.equal(v.get().x,0);assert.equal(v.get().y,0);
+  v.region();const p=project(139.8625913,40.6149829),s=v.get();assert.ok(s.zoom>2&&s.zoom<8);assert.ok(p[0]>s.x&&p[0]<s.x+s.size&&p[1]>s.y&&p[1]<s.y+s.size);
+  v.reset();assert.equal(v.get().zoom,1);assert.equal(v.get().size,1000);
+});
+
 test('JapanPrefMap: 47 prefectures defined and master data valid', () => {
   const MapModule = loadJapanMap();
   assert.ok(MapModule, 'JapanPrefMap should be defined');
