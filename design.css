@@ -75,7 +75,14 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .dashboard { margin-top: -30px; position: relative; scroll-margin-top: 28px; }
 .progress-summary { display: grid; grid-template-columns: minmax(240px, .85fr) minmax(0, 1fr) auto; align-items: center; gap: 24px; padding: 20px 24px; }
 .progress-total, .progress-counts, .progress-actions { min-width: 0; }
-.progress-summary .big { font-size: 48px; margin: 6px 0 0; }
+.progress-summary .progress-total { display: contents; }
+.progress-summary { row-gap: 4px; }
+.progress-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.progress-head .stathead { min-width: 0; }
+#progressScope { width: 170px; flex: none; min-height: 32px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--moss); font: inherit; font-size: 12px; }
+#progressScope:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+@media (max-width: 600px) { .progress-head { gap: 8px; } .progress-head .stathead { flex: 1; font-size: 10px; letter-spacing: .04em; } #progressScope { width: 140px; } }
+.progress-summary .big { font-size: 48px; margin: 0; }
 .progress-counts strong { display: block; color: var(--moss); font-size: 18px; font-weight: 500; line-height: 1.6; }
 .progress-counts .sub { margin-top: 4px; line-height: 1.7; }
 .progress-summary .bar { height: 4px; margin: 10px 0 0; }
