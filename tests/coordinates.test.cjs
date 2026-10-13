@@ -14,15 +14,24 @@ const additions={
   'onsen-065':['大牧温泉観光旅館',36.5004964,136.9941115]
 };
 const original40=JSON.parse(fs.readFileSync('tests/fixtures/verified-coordinates-2026-10-11.json','utf8'));
+const original49=JSON.parse(fs.readFileSync('tests/fixtures/verified-coordinates-2026-10-13.json','utf8'));
+const currentAdditions=JSON.parse(fs.readFileSync('tests/fixtures/verified-coordinates-2026-10-14.json','utf8'));
+assert.equal(original49.length,49);assert.equal(currentAdditions.length,18);
+const beforeFinal=JSON.parse(fs.readFileSync('tests/fixtures/verified-coordinates-before-ishizuka-2026-10-14.json','utf8'));
+assert.equal(beforeFinal.length,66);
+for(const original of beforeFinal){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],original[key],original.id+' remains unchanged by final addition');}
+for(const original of original49){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],original[key],original.id+' preserves '+key);}
+for(const expected of currentAdditions){const x=data.find(x=>x.id===expected.id);for(const key of ['id','facility','latitude','longitude','coordinateSource','coordinateVerified','coordinateCheckedAt','coordinateLicense'])assert.equal(x[key],expected[key]);if(expected.sourceId)assert.equal(x.coordinateSourceId,expected.sourceId);if(expected.sourceRelease)assert.equal(x.coordinateSourceRelease,expected.sourceRelease);}
 assert.equal(original40.length,40);
 for(const original of original40){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],original[key],original.id+' preserves '+key);assert.equal(x.coordinateVerified,true);}
 for(const [id,[name,lat,lon]] of Object.entries(additions)){const x=data.find(x=>x.id===id);assert.equal(x.facility,name);assert.equal(x.latitude,lat);assert.equal(x.longitude,lon);assert.equal(x.coordinateVerified,true);assert.match(x.coordinateSource,/^https:\/\/www\.openstreetmap\.org\/(node|way)\/\d+$/);}
 function inside(p,ring){let result=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])result=!result;}return result;}
 for(const [i,x] of data.entries()){
-  assert.equal(x.id,'onsen-'+String(i+1).padStart(3,'0'));assert.equal(x.coordinateCheckedAt,additions[x.id]?'2026-10-13':'2026-10-11');
+  const current=currentAdditions.some(a=>a.id===x.id);
+  assert.equal(x.id,'onsen-'+String(i+1).padStart(3,'0'));assert.equal(x.coordinateCheckedAt,current?'2026-10-14':additions[x.id]?'2026-10-13':'2026-10-11');
   const r=audit.rows.find(r=>r.id===x.id);assert.equal(r.coordinateCheckedAt,x.coordinateCheckedAt);
   assert.equal(r.latitude,x.latitude);assert.equal(r.longitude,x.longitude);assert.equal(r.coordinateSource,x.coordinateSource);
-  assert.equal(r.previousLatitude,additions[x.id]?null:x.latitude);assert.equal(r.previousLongitude,additions[x.id]?null:x.longitude);
+  assert.equal(r.previousLatitude,current||additions[x.id]?null:x.latitude);assert.equal(r.previousLongitude,current||additions[x.id]?null:x.longitude);
   assert.equal(r.coordinateVerified,x.coordinateVerified);
   assert.equal(M.verified(x),x.coordinateVerified);
   if(x.coordinateVerified){
@@ -33,8 +42,10 @@ for(const [i,x] of data.entries()){
   }else{assert.equal(x.latitude,null);assert.equal(x.longitude,null);assert.equal(x.coordinateSource,'');}
   for(const key of ['visits','visitCount','lastVisit','notes'])assert.equal(Object.hasOwn(x,key),false);
 }
-assert.equal(data.filter(M.verified).length,49);assert.equal(data.filter(x=>!M.verified(x)).length,18);
-assert.equal(audit.attribution,'© OpenStreetMap contributors');assert.equal(audit.license,'ODbL-1.0');
+assert.equal(data.filter(M.verified).length,67);assert.equal(data.filter(x=>!M.verified(x)).length,0);
+assert.match(audit.attribution,/OpenStreetMap contributors/);assert.match(audit.license,/ODbL-1.0.*CDLA-Permissive-2.0.*Apache-2.0/);
+for(const a of currentAdditions){const r=audit.rows.find(r=>r.id===a.id);assert.equal(r.coordinateLicense,a.coordinateLicense);assert.equal(r.googleCoordinatesStored,false);if(a.coordinateLicense!=='ODbL-1.0'){assert.match(r.coordinateSource,/stac\.overturemaps\.org/);assert.match(r.sourceId,/^[a-f0-9-]{36}$/);assert.equal(Object.hasOwn(r,'osmName'),false);}}
+for(const file of ['CDLA-Permissive-2.0.txt','Apache-2.0.txt','Foursquare-NOTICE.txt'])assert.ok(fs.readFileSync('assets/licenses/'+file,'utf8').length>1000);
 const ids=['onsen-002','onsen-003','onsen-004','onsen-005'];assert.deepEqual(Array.from(M.selection(data,'','青森県',()=>false),x=>x.id),ids);
 for(const id of ids){const x=data.find(x=>x.id===id);assert.equal(M.selection(data,'visited','青森県',r=>r.id===id)[0].id,id);}
-console.log('PASS: 67 fixed IDs, original 40 coordinates unchanged, exactly 9 additions, 49 OSM matches/footprints, 18 excluded unknowns, dates, WGS84 order, selection and no personal data');
+console.log('PASS: 67 fixed IDs, existing 66 unchanged by final addition, 67 verified / 0 excluded, dates, footprint membership, attribution, WGS84 order and no personal data');

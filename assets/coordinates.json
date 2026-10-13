@@ -1,9 +1,9 @@
 {
-  "attribution": "© OpenStreetMap contributors",
-  "license": "ODbL-1.0",
-  "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
-  "verifiedOn": "2026-10-13",
-  "method": "49 verified facilities: original 40 coordinates unchanged (2026-10-11); 9 OSM facility representatives added (2026-10-13), cross-checked with official/public facility identity and current location. 18 facilities remain excluded. No Google Maps coordinates extracted.",
+  "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
+  "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
+  "licenseUrl": "assets/coordinate-credits.html",
+  "verifiedOn": "2026-10-14",
+  "method": "67 verified facilities. Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -412,41 +412,202 @@
       "id": "onsen-009",
       "facility": "元湯夏油",
       "prefecture": "岩手県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 39.212493896484375,
+      "longitude": 140.88693237304688,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
       "addressReference": "https://www.motoyugeto.com/",
-      "note": "温泉名の建物は見つかったが、元湯夏油の個別入浴施設としての同定が不足。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "夏油温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "岩手県北上市和賀町岩崎新田1-22",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "f41a72bc-bf93-46fc-ad69-b02b7cdda3c8",
+      "sourceRecordId": "1891763244388383",
+      "sourceFacilityName": "Geto Onsen Motoyugeto",
+      "sourceAddress": [
+        {
+          "freeform": "Wagacho Iwasakishinden 1-22",
+          "locality": "北上市",
+          "postcode": "",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://mizuki.sakura.ne.jp/~geto/"
+      ],
+      "sourcePhones": null,
+      "identityReferences": [
+        "https://www.motoyugeto.com/",
+        "https://www.jreast.co.jp/the-onsen/geto.html",
+        "https://www.motoyugeto.com/%E6%B8%A9%E6%B3%89/",
+        "https://www.openstreetmap.org/way/268246474"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%85%83%E6%B9%AF%E5%A4%8F%E6%B2%B9%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.88693237304688,
+          39.212493896484375
+        ]
+      }
     },
     {
       "id": "onsen-010",
       "facility": "石塚旅館",
       "prefecture": "岩手県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
+      "latitude": 39.7272952,
+      "longitude": 140.7932539,
+      "coordinateSource": "https://www.openstreetmap.org/way/292873196",
+      "coordinateVerified": true,
+      "osmName": "名称未登録の建物",
       "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "http://www5.famille.ne.jp/~kunimihp/",
-      "note": "国見温泉の浴場POIは見つかったが、石塚旅館と森山荘の区別を確認できず。",
-      "coordinateCheckedAt": "2026-10-11",
+      "osmFeatureType": "building",
+      "addressReference": "https://www.shizukuishi-kanko.gr.jp/news/article.php?p=1772",
+      "note": "利用者が確認した現地施設の位置と、国見温泉東側のOSM建物way/292873196・地理院標準地図の建物/道路を対応付け。公式は電話検索で事務所へ誘導される場合があると注意。公開座標はOSM頂点のみから建物内部の最大内接余裕点を計算（200分割格子）。Google参考座標の転載・丸め・補正はしていない。OSM建物名は未登録で、名称タグ一致と偽らない。8km離れたOvertureレコードは引き続き不採用。地理院は閲覧照合のみで座標取得なし。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "国見温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "岩手県岩手郡雫石町橋場字竜川山1-5",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/292873196",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "国見温泉 石塚旅館（施設同定は公式・観光協会・利用者確認、OSM建物名タグ未登録）",
+      "identityReferences": [
+        "http://www5.famille.ne.jp/~kunimihp/",
+        "https://www.shizukuishi-kanko.gr.jp/news/article.php?p=1772",
+        "https://maps.gsi.go.jp/help/termsofuse.html",
+        "https://cyberjapandata.gsi.go.jp/xyz/std/17/116797/49750.png"
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              140.7930947,
+              39.727291
+            ],
+            [
+              140.7937233,
+              39.7270863
+            ],
+            [
+              140.7937628,
+              39.7271594
+            ],
+            [
+              140.7936499,
+              39.7271953
+            ],
+            [
+              140.7936428,
+              39.7271821
+            ],
+            [
+              140.7934572,
+              39.7272413
+            ],
+            [
+              140.7934862,
+              39.7272952
+            ],
+            [
+              140.7935154,
+              39.7272859
+            ],
+            [
+              140.793551,
+              39.7273519
+            ],
+            [
+              140.7934674,
+              39.7273786
+            ],
+            [
+              140.7934308,
+              39.7273108
+            ],
+            [
+              140.7934532,
+              39.7273036
+            ],
+            [
+              140.7934272,
+              39.7272556
+            ],
+            [
+              140.7933208,
+              39.7272897
+            ],
+            [
+              140.7933306,
+              39.7273077
+            ],
+            [
+              140.7933893,
+              39.7272888
+            ],
+            [
+              140.7934552,
+              39.72741
+            ],
+            [
+              140.7933322,
+              39.7274496
+            ],
+            [
+              140.7932826,
+              39.7273583
+            ],
+            [
+              140.7932552,
+              39.7273672
+            ],
+            [
+              140.7932446,
+              39.7273477
+            ],
+            [
+              140.7931393,
+              39.7273818
+            ],
+            [
+              140.7931332,
+              39.7273706
+            ],
+            [
+              140.7931019,
+              39.7273808
+            ],
+            [
+              140.7930887,
+              39.727357
+            ],
+            [
+              140.7931247,
+              39.7273452
+            ],
+            [
+              140.7930947,
+              39.727291
+            ]
+          ]
+        ]
+      },
+      "confidence": "高（利用者の現施設同定と公開建物形状の対応）",
+      "googleCoordinatesStored": false,
+      "coordinateMethod": "Interior point maximizing distance from OSM polygon boundary over a 200 x 200 local grid; longitude scaled by cos(latitude), rounded to 7 decimals and interior-tested.",
+      "osmRetrievedAt": "2026-10-13T18:41:19.718Z"
     },
     {
       "id": "onsen-011",
@@ -480,21 +641,56 @@
       "id": "onsen-012",
       "facility": "彩雲荘",
       "prefecture": "岩手県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://toushichi.com/",
-      "note": "同名の事務所（秋田県）は入浴施設ではないため除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 39.941837310791016,
+      "longitude": 140.861083984375,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://www.hachimantai.or.jp/smartnavi/shisetu/saiunso.html",
+      "note": "Overtureの施設名付きレコード「藤七温泉彩雲荘」・八幡平市松尾寄木北の又国有林の所在地が観光協会・公式施設と一致。OSM建物way/1393143105と同じ宿の地点。Wikidataの一般温泉地の点は西に約170m離れており不採用。Overture GeoParquetの施設Point bboxを取得（float32）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "藤七温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "岩手県八幡平市松尾寄木北の又国有林",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceId": "4a6cd1d2-c4e6-4a5c-81b1-7f0ce503b551",
+      "sourceFacilityName": "藤七温泉彩雲荘",
+      "identityReferences": [
+        "https://www.hachimantai.or.jp/smartnavi/shisetu/saiunso.html",
+        "https://toushichi.com/",
+        "https://www.iwate-navi.jp/1105",
+        "https://www.morioka-hachimantai.jp/spot/998/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%BD%A9%E9%9B%B2%E8%8D%98%20%E5%B2%A9%E6%89%8B%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.861083984375,
+          39.941837310791016
+        ]
+      },
+      "sourceRelease": "2026-09-23.1",
+      "sourceRecordId": "855688714501760",
+      "sourceAddress": [
+        {
+          "freeform": "松尾寄木下北の又山国有林1564林班へ小班",
+          "locality": "八幡平市",
+          "postcode": "028-7302",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "https://www.toshichi.com/"
+      ],
+      "sourcePhones": [
+        "+819014950950"
+      ],
+      "sourceAsset": "https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=places/type=place/part-00015-b21e3943-1706-5729-88ab-f4f5777eaae4-c000.zstd.parquet"
     },
     {
       "id": "onsen-013",
@@ -1184,21 +1380,54 @@
       "id": "onsen-017",
       "facility": "元湯雄山閣",
       "prefecture": "秋田県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://yuuzankaku.co.jp/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 39.971275329589844,
+      "longitude": 139.74209594726562,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://yuuzankaku.co.jp/contact/",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "男鹿温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "秋田県男鹿市北浦湯本字草木原52",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "Apache-2.0",
+      "sourceName": "Overture Places / Foursquare",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "32a2a0c3-7bd2-49fa-92f5-01db452e12b4",
+      "sourceRecordId": "4f2394bfe4b0617643728d14",
+      "sourceFacilityName": "元湯雄山閣",
+      "sourceAddress": [
+        {
+          "freeform": "北浦湯本字草木原52",
+          "locality": "男鹿市",
+          "postcode": "010-0687",
+          "region": "秋田県",
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.namahage.ne.jp/yuuzan"
+      ],
+      "sourcePhones": [
+        "0185-33-3121"
+      ],
+      "identityReferences": [
+        "https://yuuzankaku.co.jp/contact/",
+        "https://www.jreast.co.jp/the-onsen/oga.html"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%85%83%E6%B9%AF%E9%9B%84%E5%B1%B1%E9%96%A3%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.74209594726562,
+          39.971275329589844
+        ]
+      },
+      "sourceAsset": "https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=places/type=place/part-00015-b21e3943-1706-5729-88ab-f4f5777eaae4-c000.zstd.parquet"
     },
     {
       "id": "onsen-018",
@@ -1279,21 +1508,53 @@
       "id": "onsen-019",
       "facility": "鷹の湯温泉",
       "prefecture": "秋田県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 38.955535888671875,
+      "longitude": 140.53872680664062,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
       "addressReference": "https://takanoyuonsen.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "秋の宮温泉郷",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "秋田県湯沢市秋の宮字殿上1",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "845f0646-6bc0-4276-bd43-37916f43b15c",
+      "sourceRecordId": "109261178220347",
+      "sourceFacilityName": "鷹の湯温泉",
+      "sourceAddress": [
+        {
+          "freeform": "秋ノ宮字殿上1",
+          "locality": "湯沢市",
+          "postcode": "019-0321",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "https://takanoyuonsen.com/"
+      ],
+      "sourcePhones": [
+        "+81183562141"
+      ],
+      "identityReferences": [
+        "https://takanoyuonsen.com/",
+        "https://www.spa.or.jp/shisetu/takanoyu/address.htm"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E9%B7%B9%E3%81%AE%E6%B9%AF%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.53872680664062,
+          38.955535888671875
+        ]
+      }
     },
     {
       "id": "onsen-020",
@@ -1826,21 +2087,51 @@
       "id": "onsen-029",
       "facility": "湯守の宿三之亟",
       "prefecture": "山形県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 38.71156311035156,
+      "longitude": 140.5513153076172,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
       "addressReference": "https://3nojo.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "赤倉温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "山形県最上郡最上町大字富沢884",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "162a84ab-a460-4c2b-a13c-701a7c51def4",
+      "sourceRecordId": "455109321179003",
+      "sourceFacilityName": "三之亟",
+      "sourceAddress": [
+        {
+          "freeform": "富沢884",
+          "locality": "最上郡最上町",
+          "postcode": "999-6105",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": null,
+      "sourcePhones": [
+        "+81233452301"
+      ],
+      "identityReferences": [
+        "https://3nojo.com/",
+        "https://yamagata-sc.jp/accommodations/mogami/3nojo-hot-spring/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%AE%88%E3%81%AE%E5%AE%BF%E4%B8%89%E4%B9%8B%E4%BA%9F%20%E5%B1%B1%E5%BD%A2%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.5513153076172,
+          38.71156311035156
+        ]
+      }
     },
     {
       "id": "onsen-030",
@@ -2062,21 +2353,83 @@
       "id": "onsen-033",
       "facility": "吾妻屋",
       "prefecture": "山形県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
+      "latitude": 37.7714706,
+      "longitude": 140.13246795,
+      "coordinateSource": "https://www.openstreetmap.org/way/526613445",
+      "coordinateVerified": true,
+      "osmName": "新高湯温泉 吾妻屋旅館",
       "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://on1000.jp/",
-      "note": "候補施設と所在地の照合が不足。公式サイトと地域資料にも所在地不一致がある。",
-      "coordinateCheckedAt": "2026-10-11",
+      "osmFeatureType": "building",
+      "addressReference": "https://yamagatakanko.com/attractions/detail_10079.html",
+      "note": "施設名付きホテル建物内の代表点。県観光掲載・利用者確認済みGoogle施設・新高湯一軒宿と対応。公式サイトの連絡先住所差は記録し、山中の実施設を採用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "新高湯温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "山形県米沢市大字関湯の入沢3934",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "新高湯温泉 吾妻屋旅館",
+      "identityReferences": [
+        "https://on1000.jp/",
+        "https://yamagatakanko.com/attractions/detail_10079.html",
+        "https://www.spa.or.jp/search_f/detail_f/?F_ID=132&F_PREFS=%E5%B1%B1%E5%BD%A2%E7%9C%8C&pg=2"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E9%AB%98%E6%B9%AF%E6%B8%A9%E6%B3%89%20%E5%90%BE%E5%A6%BB%E5%B1%8B%20%E5%B1%B1%E5%BD%A2%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              140.1323822,
+              37.7715904
+            ],
+            [
+              140.1324438,
+              37.7716476
+            ],
+            [
+              140.1326805,
+              37.7714796
+            ],
+            [
+              140.1325203,
+              37.7713389
+            ],
+            [
+              140.132472,
+              37.7713752
+            ],
+            [
+              140.1323734,
+              37.7712936
+            ],
+            [
+              140.1323168,
+              37.7713368
+            ],
+            [
+              140.1323496,
+              37.7713664
+            ],
+            [
+              140.1322554,
+              37.7714293
+            ],
+            [
+              140.1324156,
+              37.7715692
+            ],
+            [
+              140.1323822,
+              37.7715904
+            ]
+          ]
+        ]
+      }
     },
     {
       "id": "onsen-034",
@@ -2164,21 +2517,54 @@
       "id": "onsen-037",
       "facility": "柏屋旅館",
       "prefecture": "福島県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://kashiwayaryokan.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 37.24101257324219,
+      "longitude": 139.98785400390625,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://kashiwayaryokan.com/facilities/",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "二岐温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "福島県岩瀬郡天栄村湯本下二俣22-6（公式表記）",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "7f56e81c-fcf3-4b45-9965-330658516084",
+      "sourceRecordId": "226625920863201",
+      "sourceFacilityName": "二岐温泉柏屋旅館",
+      "sourceAddress": [
+        {
+          "freeform": "天栄村湯本下二俣22-6",
+          "locality": "岩瀬郡天栄村",
+          "postcode": "962-0621",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.kashiwayaryokan.com/"
+      ],
+      "sourcePhones": [
+        "+81248842316"
+      ],
+      "identityReferences": [
+        "https://kashiwayaryokan.com/facilities/",
+        "https://kashiwayaryokan.com/",
+        "https://mata-kitewari.jp/images/hotellist2026.pdf?5="
+      ],
+      "googleReference": "https://maps.google.com/?cid=5000489676854873647",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.98785400390625,
+          37.24101257324219
+        ]
+      }
     },
     {
       "id": "onsen-038",
@@ -2240,21 +2626,53 @@
       "id": "onsen-040",
       "facility": "明賀屋本館",
       "prefecture": "栃木県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "http://myogaya.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 36.95574951171875,
+      "longitude": 139.82876586914062,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://shiobara.shokokai-tochigi.or.jp/kigyo/data/037-myogaya.hn/037.htm",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "塩原温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "栃木県那須塩原市塩原353",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "79652e5c-df50-47ed-a405-5951f9f7eb73",
+      "sourceRecordId": "242666925746395",
+      "sourceFacilityName": "明賀屋本館",
+      "sourceAddress": [
+        {
+          "freeform": "塩原353",
+          "locality": "那須塩原市",
+          "postcode": "329-2921",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.myogaya.com/"
+      ],
+      "sourcePhones": [
+        "+81287322831"
+      ],
+      "identityReferences": [
+        "https://shiobara.shokokai-tochigi.or.jp/kigyo/data/037-myogaya.hn/037.htm",
+        "https://www.tv-asahi.co.jp/hitou/backnumber/0034/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%98%8E%E8%B3%80%E5%B1%8B%E6%9C%AC%E9%A4%A8%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.82876586914062,
+          36.95574951171875
+        ]
+      }
     },
     {
       "id": "onsen-041",
@@ -2315,21 +2733,53 @@
       "id": "onsen-043",
       "facility": "秘湯の宿 元泉館",
       "prefecture": "栃木県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 36.96773910522461,
+      "longitude": 139.7591552734375,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
       "addressReference": "https://gensenkan.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "塩原・元湯温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "栃木県那須塩原市湯本塩原101番地",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "29132602-27b5-4faf-aee4-1a0c77b80b15",
+      "sourceRecordId": "158561704244007",
+      "sourceFacilityName": "元泉館",
+      "sourceAddress": [
+        {
+          "freeform": "湯本塩原101",
+          "locality": "那須塩原市",
+          "postcode": "329-2922",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.gensenkan.com/"
+      ],
+      "sourcePhones": [
+        "+81287323155"
+      ],
+      "identityReferences": [
+        "https://gensenkan.com/",
+        "https://www.spa.or.jp/shisetu/gensenkan%28shiobara%29/address.htm"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E7%A7%98%E6%B9%AF%E3%81%AE%E5%AE%BF%20%E5%85%83%E6%B3%89%E9%A4%A8%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7591552734375,
+          36.96773910522461
+        ]
+      }
     },
     {
       "id": "onsen-044",
@@ -2407,21 +2857,55 @@
       "id": "onsen-045",
       "facility": "大黒屋",
       "prefecture": "栃木県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://www.itamuro-daikokuya.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 37.06663131713867,
+      "longitude": 139.92239379882812,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://www.itamuro-daikokuya.com/place/",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "板室温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "栃木県那須塩原市板室856番地",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "ec3a8867-3ccc-4f60-af8b-7e37db9fdd75",
+      "sourceRecordId": "669470056428853",
+      "sourceFacilityName": "大黒屋 （板室温泉）",
+      "sourceAddress": [
+        {
+          "freeform": "栃木県那須塩原市板室８５６",
+          "locality": "那須塩原市",
+          "postcode": "325-0111",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.itamuro-daikokuya.com/"
+      ],
+      "sourcePhones": [
+        "+81287690226"
+      ],
+      "identityReferences": [
+        "https://www.itamuro-daikokuya.com/place/",
+        "https://nasushiobara-kanko.jp/accommodations/1661/",
+        "https://www.itamuro-daikokuya.com/%E6%96%BD%E8%A8%AD/",
+        "https://sandogoya-onsen.com/"
+      ],
+      "googleReference": "https://maps.google.com/?cid=1331063142897528030",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.92239379882812,
+          37.06663131713867
+        ]
+      }
     },
     {
       "id": "onsen-046",
@@ -2483,21 +2967,53 @@
       "id": "onsen-048",
       "facility": "鍾寿館",
       "prefecture": "群馬県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "http://www.naf.co.jp/shojukan/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 36.680747985839844,
+      "longitude": 138.7815399169922,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://nakanojo-kanko.jp/shima/hotsprings/%E9%8D%BE%E5%AF%BF%E9%A4%A8/",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "四万温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "群馬県吾妻郡中之条町四万3895",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "b6ae54b3-23d9-4285-bb9d-be786d36c813",
+      "sourceRecordId": "239529649494547",
+      "sourceFacilityName": "四万温泉貸切風呂の宿鍾寿館",
+      "sourceAddress": [
+        {
+          "freeform": "中之条町四万3895",
+          "locality": "吾妻郡中之条町",
+          "postcode": "377-0601",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.naf.co.jp/shojukan/"
+      ],
+      "sourcePhones": [
+        "+815020178998"
+      ],
+      "identityReferences": [
+        "https://nakanojo-kanko.jp/shima/hotsprings/%E9%8D%BE%E5%AF%BF%E9%A4%A8/",
+        "https://www.ryokan.or.jp/inn/19920"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E9%8D%BE%E5%AF%BF%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.7815399169922,
+          36.680747985839844
+        ]
+      }
     },
     {
       "id": "onsen-049",
@@ -2931,21 +3447,54 @@
       "id": "onsen-053",
       "facility": "湯宿 三河屋",
       "prefecture": "群馬県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://www.yado-mikawaya.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 36.72589874267578,
+      "longitude": 138.88795471191406,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://www.sarugakyo-ryokan.com/onsen/detail.php?code=101",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "猿ヶ京温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "群馬県利根郡みなかみ町猿ヶ京温泉155",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "da83b696-e654-4c58-95a6-4bfd806e5396",
+      "sourceRecordId": "182302498513164",
+      "sourceFacilityName": "猿ヶ京温泉温宿三河屋",
+      "sourceAddress": [
+        {
+          "freeform": "みなかみ町猿ヶ京温泉155",
+          "locality": "利根郡みなかみ町",
+          "postcode": "379-1403",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.yado-mikawaya.com/"
+      ],
+      "sourcePhones": [
+        "+81278660172"
+      ],
+      "identityReferences": [
+        "https://www.sarugakyo-ryokan.com/onsen/detail.php?code=101",
+        "https://www.yado-mikawaya.com/",
+        "https://gunma-kanko.jp/spots/1829"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%AE%BF%20%E4%B8%89%E6%B2%B3%E5%B1%8B%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.88795471191406,
+          36.72589874267578
+        ]
+      }
     },
     {
       "id": "onsen-054",
@@ -2978,21 +3527,55 @@
       "id": "onsen-055",
       "facility": "中棚荘",
       "prefecture": "長野県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://nakadanasou.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 36.32266616821289,
+      "longitude": 138.41729736328125,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://nakadanasou.com/about/",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "中棚温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "長野県小諸市乙1210番地（公式）／長野県小諸市古城乙1210（観光局）",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "0047dce2-e6cc-472e-98b6-59cf08570589",
+      "sourceRecordId": "336298546871847",
+      "sourceFacilityName": "Nakadanaso",
+      "sourceAddress": [
+        {
+          "freeform": "1210 Otsu",
+          "locality": "小諸市",
+          "postcode": "384-0802",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.nakadanasou.com"
+      ],
+      "sourcePhones": [
+        "+81267221511"
+      ],
+      "identityReferences": [
+        "https://nakadanasou.com/about/",
+        "https://nakadanasou.com/spa/",
+        "https://www.komoro-tour.jp/stay/",
+        "https://maps.app.goo.gl/2jDMmYvGMD2Szkzs8"
+      ],
+      "googleReference": "https://maps.app.goo.gl/2jDMmYvGMD2Szkzs8",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.41729736328125,
+          36.32266616821289
+        ]
+      }
     },
     {
       "id": "onsen-056",
@@ -3053,41 +3636,106 @@
       "id": "onsen-058",
       "facility": "七草の湯",
       "prefecture": "長野県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
-      "addressReference": "https://nanakusanoyu.net/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "latitude": 36.35102462768555,
+      "longitude": 138.15536499023438,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://www.nanakusanoyu.net/",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "別所温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "長野県上田市別所温泉1621",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "76c439f3-58e3-44fb-a615-b76024242376",
+      "sourceRecordId": "2065655256872112",
+      "sourceFacilityName": "七草の湯",
+      "sourceAddress": [
+        {
+          "freeform": "別所温泉1621",
+          "locality": "上田市",
+          "postcode": "386-1431",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.nanakusanoyu.com"
+      ],
+      "sourcePhones": [
+        "+81268382323"
+      ],
+      "identityReferences": [
+        "https://www.nanakusanoyu.net/",
+        "https://ueda-kanko.or.jp/spot/spot-14714/",
+        "https://www.bessho-onsen.com/blog/stay/nanakusa.html"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E8%8D%89%E3%81%AE%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.15536499023438,
+          36.35102462768555
+        ]
+      }
     },
     {
       "id": "onsen-059",
       "facility": "神乃湯",
       "prefecture": "長野県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 36.09502410888672,
+      "longitude": 138.0823974609375,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
       "addressReference": "https://kaminoyu.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "毒沢鉱泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "長野県諏訪郡下諏訪町社7083",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "6addabf7-586f-4038-bd43-7f0efda945c6",
+      "sourceRecordId": "101694498800167",
+      "sourceFacilityName": "毒沢鉱泉神乃湯",
+      "sourceAddress": [
+        {
+          "freeform": "下諏訪町社7083",
+          "locality": "諏訪郡下諏訪町",
+          "postcode": "393-0091",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.kaminoyu.com/index.html"
+      ],
+      "sourcePhones": [
+        "+81266275526"
+      ],
+      "identityReferences": [
+        "https://kaminoyu.com/",
+        "https://shimosuwa.com/hotel-detail/%E7%A5%9E%E4%B9%83%E6%B9%AF/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E7%A5%9E%E4%B9%83%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.0823974609375,
+          36.09502410888672
+        ]
+      }
     },
     {
       "id": "onsen-060",
@@ -3121,21 +3769,54 @@
       "id": "onsen-061",
       "facility": "自在館",
       "prefecture": "新潟県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 37.185150146484375,
+      "longitude": 139.0860595703125,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
       "addressReference": "https://www.jizaikan.jp/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "栃尾又温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "新潟県魚沼市栃尾又温泉（公式表記、番地記載なし）",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "ee612aaf-f79e-4081-bd18-c439ae52af30",
+      "sourceRecordId": "101260987923982",
+      "sourceFacilityName": "自在館",
+      "sourceAddress": [
+        {
+          "freeform": "",
+          "locality": "魚沼市",
+          "postcode": "946-0087",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.jizaikan.jp"
+      ],
+      "sourcePhones": [
+        "+81257952211"
+      ],
+      "identityReferences": [
+        "https://www.jizaikan.jp/",
+        "https://www.jizaikan.jp/furo.html",
+        "https://www.jizaikan.jp/onsen_policy.html"
+      ],
+      "googleReference": "https://maps.google.com/?cid=2558033971530535862",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.0860595703125,
+          37.185150146484375
+        ]
+      }
     },
     {
       "id": "onsen-062",
@@ -3241,21 +3922,52 @@
       "id": "onsen-064",
       "facility": "嵐渓荘",
       "prefecture": "新潟県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
-      "osmName": "",
-      "osmAddress": "",
-      "osmFeatureType": "",
+      "latitude": 37.52699279785156,
+      "longitude": 139.11807250976562,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
       "addressReference": "https://www.rankei.com/",
-      "note": "個別施設の名称・住所・入浴施設位置を十分に照合できる座標を確認できず。類似名・他県施設は除外。",
-      "coordinateCheckedAt": "2026-10-11",
+      "note": "施設名・地域・住所、および公式URLまたは施設電話を照合。Overture GeoParquetの施設Pointのbbox座標を取得（float32、数m精度）。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-10-14",
       "onsen": "越後長野温泉",
       "previousLatitude": null,
       "previousLongitude": null,
-      "address": "未確認（座標未登録・今回の座標再検証対象外）",
-      "auditResult": "未確認継続"
+      "address": "新潟県三条市長野1450",
+      "auditResult": "未確認継続",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceRelease": "2026-09-23.1",
+      "sourceId": "f9d1d1f2-49ca-4b9e-8e77-541634499244",
+      "sourceRecordId": "148794448508326",
+      "sourceFacilityName": "Echigo Nagano Onsen Rankeisou",
+      "sourceAddress": [
+        {
+          "freeform": "1450 Nagano",
+          "locality": "三条市",
+          "postcode": "955-0132",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.rankei.com/"
+      ],
+      "sourcePhones": [
+        "+81256472211"
+      ],
+      "identityReferences": [
+        "https://www.rankei.com/"
+      ],
+      "googleReference": "https://maps.google.com/?cid=375627754271345115",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.11807250976562,
+          37.52699279785156
+        ]
+      }
     },
     {
       "id": "onsen-065",

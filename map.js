@@ -1,7 +1,7 @@
 /* Leaflet adapter; personal state stays in records.js. No geolocation requests. */
 (function(root){'use strict';
 const JAPAN=[[24,122],[46,146]];
-const config={tileUrl:'https://tile.openstreetmap.org/{z}/{x}/{y}.png',attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'};
+const config={tileUrl:'https://tile.openstreetmap.org/{z}/{x}/{y}.png',attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | 温泉位置: <a href="assets/coordinate-credits.html" target="_blank" rel="noopener noreferrer">Overture / Meta / Foursquare・利用条件</a>'};
 const checkedDate=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value))&&new Date(value).toISOString().slice(0,10)===value;
 const verified=x=>x.coordinateVerified===true&&Number.isFinite(x.latitude)&&Number.isFinite(x.longitude)&&x.latitude>=-90&&x.latitude<=90&&x.longitude>=-180&&x.longitude<=180&&typeof x.coordinateSource==='string'&&/^https?:\/\//.test(x.coordinateSource)&&checkedDate(x.coordinateCheckedAt);
 function selection(data,status,pref,isVisited){return data.filter(x=>verified(x)&&(!pref||x.prefecture===pref)&&(!status||(status==='visited'?isVisited(x):!isVisited(x))))}

@@ -1,0 +1,443 @@
+[
+  {
+    "id": "onsen-001",
+    "facility": "知内温泉旅館",
+    "latitude": 41.5956904,
+    "longitude": 140.2947278,
+    "coordinateSource": "https://www.openstreetmap.org/way/685415145",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-002",
+    "facility": "酸ヶ湯温泉旅館",
+    "latitude": 40.6506075,
+    "longitude": 140.8504857,
+    "coordinateSource": "https://www.openstreetmap.org/node/4272600933",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-003",
+    "facility": "蔦温泉旅館",
+    "latitude": 40.5968847,
+    "longitude": 140.953423,
+    "coordinateSource": "https://www.openstreetmap.org/node/2417845548",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-004",
+    "facility": "黄金崎不老ふ死温泉",
+    "latitude": 40.6149829,
+    "longitude": 139.8625913,
+    "coordinateSource": "https://www.openstreetmap.org/node/12730533201",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-005",
+    "facility": "姉戸川温泉",
+    "latitude": 40.7107893,
+    "longitude": 141.2991867,
+    "coordinateSource": "https://www.openstreetmap.org/way/695777921",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-006",
+    "facility": "峡雲荘",
+    "latitude": 39.8727646,
+    "longitude": 140.9247795,
+    "coordinateSource": "https://www.openstreetmap.org/node/6453100785",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-13"
+  },
+  {
+    "id": "onsen-007",
+    "facility": "藤三旅館",
+    "latitude": 39.465472,
+    "longitude": 140.9920731,
+    "coordinateSource": "https://www.openstreetmap.org/way/550032982",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-008",
+    "facility": "山水閣",
+    "latitude": 39.4358558,
+    "longitude": 141.016067,
+    "coordinateSource": "https://www.openstreetmap.org/node/3343646946",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-011",
+    "facility": "ほっとゆだ",
+    "latitude": 39.3146203,
+    "longitude": 140.776094,
+    "coordinateSource": "https://www.openstreetmap.org/node/6632803574",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-013",
+    "facility": "新玉川温泉",
+    "latitude": 39.9602623,
+    "longitude": 140.7186488,
+    "coordinateSource": "https://www.openstreetmap.org/way/550143993",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-014",
+    "facility": "玉川温泉",
+    "latitude": 39.9631538,
+    "longitude": 140.7244603,
+    "coordinateSource": "https://www.openstreetmap.org/way/550244706",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-015",
+    "facility": "鶴の湯温泉",
+    "latitude": 39.8048464,
+    "longitude": 140.7794504,
+    "coordinateSource": "https://www.openstreetmap.org/way/1205203068",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-016",
+    "facility": "妙乃湯",
+    "latitude": 39.8033277,
+    "longitude": 140.797691,
+    "coordinateSource": "https://www.openstreetmap.org/way/413533206",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-018",
+    "facility": "後生掛温泉旅館",
+    "latitude": 39.9720906,
+    "longitude": 140.8003011,
+    "coordinateSource": "https://www.openstreetmap.org/way/731077984",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-13"
+  },
+  {
+    "id": "onsen-020",
+    "facility": "蒸ノ湯温泉",
+    "latitude": 39.9775021,
+    "longitude": 140.8180704,
+    "coordinateSource": "https://www.openstreetmap.org/way/438254247",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-021",
+    "facility": "奥山旅館",
+    "latitude": 38.9905557,
+    "longitude": 140.6115312,
+    "coordinateSource": "https://www.openstreetmap.org/way/762771496",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-022",
+    "facility": "川原毛大湯滝",
+    "latitude": 38.9961335,
+    "longitude": 140.5929577,
+    "coordinateSource": "https://www.openstreetmap.org/node/755748819",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-023",
+    "facility": "湯瀬ホテル",
+    "latitude": 40.1232346,
+    "longitude": 140.8356605,
+    "coordinateSource": "https://www.openstreetmap.org/way/437093276",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-024",
+    "facility": "峩々温泉",
+    "latitude": 38.1440972,
+    "longitude": 140.5007254,
+    "coordinateSource": "https://www.openstreetmap.org/node/10074098044",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-025",
+    "facility": "岡崎旅館",
+    "latitude": 38.1459713,
+    "longitude": 140.5344906,
+    "coordinateSource": "https://www.openstreetmap.org/node/8204491819",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-026",
+    "facility": "時音の宿 湯主一條",
+    "latitude": 38.024627,
+    "longitude": 140.574897,
+    "coordinateSource": "https://www.openstreetmap.org/node/2285345560",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-13"
+  },
+  {
+    "id": "onsen-027",
+    "facility": "旅館大沼",
+    "latitude": 38.747272,
+    "longitude": 140.734895,
+    "coordinateSource": "https://www.openstreetmap.org/node/2289975820",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-028",
+    "facility": "東屋",
+    "latitude": 37.7801051,
+    "longitude": 140.1200292,
+    "coordinateSource": "https://www.openstreetmap.org/way/1436307168",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-030",
+    "facility": "湯宿元河原湯",
+    "latitude": 38.6091111,
+    "longitude": 140.1673802,
+    "coordinateSource": "https://www.openstreetmap.org/way/1112305076",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-031",
+    "facility": "福島屋",
+    "latitude": 37.7822687,
+    "longitude": 140.2271485,
+    "coordinateSource": "https://www.openstreetmap.org/way/526611528",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-032",
+    "facility": "桝形屋",
+    "latitude": 37.7608075,
+    "longitude": 140.2223675,
+    "coordinateSource": "https://www.openstreetmap.org/way/526611527",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-034",
+    "facility": "旅館玉子湯",
+    "latitude": 37.7525452,
+    "longitude": 140.3096465,
+    "coordinateSource": "https://www.openstreetmap.org/node/3922890365",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-13"
+  },
+  {
+    "id": "onsen-035",
+    "facility": "安達屋旅館",
+    "latitude": 37.7525827,
+    "longitude": 140.3043635,
+    "coordinateSource": "https://www.openstreetmap.org/node/3922873053",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-13"
+  },
+  {
+    "id": "onsen-036",
+    "facility": "野地温泉ホテル",
+    "latitude": 37.6685088,
+    "longitude": 140.269595,
+    "coordinateSource": "https://www.openstreetmap.org/node/286906542",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-038",
+    "facility": "旅館二階堂",
+    "latitude": 37.7289843,
+    "longitude": 140.2929004,
+    "coordinateSource": "https://www.openstreetmap.org/node/13201180472",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-039",
+    "facility": "御宿 万葉亭",
+    "latitude": 37.6131308,
+    "longitude": 140.2071511,
+    "coordinateSource": "https://www.openstreetmap.org/node/5537182023",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-041",
+    "facility": "加仁湯",
+    "latitude": 36.8685504,
+    "longitude": 139.3945389,
+    "coordinateSource": "https://www.openstreetmap.org/node/6369602685",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-042",
+    "facility": "八丁の湯",
+    "latitude": 36.8722605,
+    "longitude": 139.3983249,
+    "coordinateSource": "https://www.openstreetmap.org/node/6369602785",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-13"
+  },
+  {
+    "id": "onsen-044",
+    "facility": "那須 鹿の湯",
+    "latitude": 37.0982619,
+    "longitude": 140.001112,
+    "coordinateSource": "https://www.openstreetmap.org/way/625505798",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-046",
+    "facility": "汪泉閣",
+    "latitude": 36.8479555,
+    "longitude": 139.0468165,
+    "coordinateSource": "https://www.openstreetmap.org/node/11627722880",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-047",
+    "facility": "長寿館",
+    "latitude": 36.7436583,
+    "longitude": 138.8300289,
+    "coordinateSource": "https://www.openstreetmap.org/node/4987541304",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-049",
+    "facility": "積善館",
+    "latitude": 36.6863058,
+    "longitude": 138.773405,
+    "coordinateSource": "https://www.openstreetmap.org/way/764563075",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-050",
+    "facility": "大阪屋旅館",
+    "latitude": 36.6237227,
+    "longitude": 138.5979226,
+    "coordinateSource": "https://www.openstreetmap.org/way/912422974",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-051",
+    "facility": "大滝乃湯",
+    "latitude": 36.622958,
+    "longitude": 138.6018763,
+    "coordinateSource": "https://www.openstreetmap.org/way/954651338",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-052",
+    "facility": "日進館",
+    "latitude": 36.6401736,
+    "longitude": 138.5085062,
+    "coordinateSource": "https://www.openstreetmap.org/node/7202918024",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-054",
+    "facility": "ランプの宿高峰温泉",
+    "latitude": 36.410002,
+    "longitude": 138.459569,
+    "coordinateSource": "https://www.openstreetmap.org/node/2149152006",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-13"
+  },
+  {
+    "id": "onsen-056",
+    "facility": "奈良屋旅館",
+    "latitude": 36.9244219,
+    "longitude": 138.4474094,
+    "coordinateSource": "https://www.openstreetmap.org/node/1095260864",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-057",
+    "facility": "湯元齋藤旅館",
+    "latitude": 36.155515,
+    "longitude": 137.625026,
+    "coordinateSource": "https://www.openstreetmap.org/node/2292014753",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-13"
+  },
+  {
+    "id": "onsen-060",
+    "facility": "ひなの宿ちとせ",
+    "latitude": 37.0647845,
+    "longitude": 138.5992194,
+    "coordinateSource": "https://www.openstreetmap.org/node/11045596080",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-062",
+    "facility": "貝掛温泉",
+    "latitude": 36.8722767,
+    "longitude": 138.7700728,
+    "coordinateSource": "https://www.openstreetmap.org/node/4032218667",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-063",
+    "facility": "瀬波グランドホテルはぎのや",
+    "latitude": 38.2143806,
+    "longitude": 139.4439032,
+    "coordinateSource": "https://www.openstreetmap.org/way/552141519",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-065",
+    "facility": "大牧温泉観光旅館",
+    "latitude": 36.5004964,
+    "longitude": 136.9941115,
+    "coordinateSource": "https://www.openstreetmap.org/node/4350399284",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-13"
+  },
+  {
+    "id": "onsen-066",
+    "facility": "みくりが池温泉",
+    "latitude": 36.5820503,
+    "longitude": 137.5962196,
+    "coordinateSource": "https://www.openstreetmap.org/way/199362780",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-067",
+    "facility": "ホテルおがわ",
+    "latitude": 36.8787969,
+    "longitude": 137.6299442,
+    "coordinateSource": "https://www.openstreetmap.org/way/543773214",
+    "coordinateVerified": true,
+    "coordinateCheckedAt": "2026-10-11"
+  }
+]

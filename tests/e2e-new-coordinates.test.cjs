@@ -3,9 +3,9 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),http=require('node:http');
 const {spawn}=require('node:child_process');
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
-const added=['006','018','026','034','035','042','054','057','065'].map(n=>'onsen-'+n);
+const added=['006','018','026','034','035','042','054','057','065'].map(n=>'onsen-'+n).concat(JSON.parse(fs.readFileSync('tests/fixtures/verified-coordinates-2026-10-14.json','utf8')).map(x=>x.id));
 
-test('E2E: 49 national markers, nine regional additions, close-marker selection and preserved visit storage',async t=>{
+test('E2E: 67 national markers, 27 regional additions, close-marker selection and preserved visit storage',async t=>{
  const browser=['C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe','C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'].find(fs.existsSync);
  if(!browser){t.skip('Chrome/Edge not installed');return;}
  const server=http.createServer((req,res)=>{
@@ -33,16 +33,16 @@ test('E2E: 49 national markers, nine regional additions, close-marker selection 
   const evaluate=async expression=>{const r=await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result?.value;};
   const waitFor=async expression=>{for(let i=0;i<100;i++){if(await evaluate(expression))return;await delay(100);}assert.fail('Timed out: '+expression);};
   const click=async(point,mobile)=>{if(mobile){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...point,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...point,button:'left',clickCount:1});}};
-  await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===49");
+  await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===67");
   await evaluate("(()=>{const repo=OnsenRecords.create(localStorage);let state=repo.load();for(const id of ['onsen-001','onsen-006','onsen-026'])state=repo.setVisited(state,id,true);})()");
-  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===49 && document.getElementById('totalText').textContent.startsWith('3 / 67')");
+  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===67 && document.getElementById('totalText').textContent.startsWith('3 / 67')");
   const stored=await evaluate('JSON.stringify(localStorage)');
-  assert.equal(await evaluate("ONSEN_DATA.filter(OnsenMap.verified).length"),49);
-  assert.equal(await evaluate("ONSEN_DATA.filter(x=>!OnsenMap.verified(x)).length"),18);
-  assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 18施設')"),true);
+  assert.equal(await evaluate("ONSEN_DATA.filter(OnsenMap.verified).length"),67);
+  assert.equal(await evaluate("ONSEN_DATA.filter(x=>!OnsenMap.verified(x)).length"),0);
+  assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 0施設')"),true);
   assert.equal(await evaluate("!!document.querySelector('.japan-map-attribution a[href=\"https://www.openstreetmap.org/copyright\"]')"),true);
   assert.equal(await evaluate("ONSEN_DATA.filter(x=>!x.coordinateVerified).some(x=>document.querySelector('.japan-map-marker[data-onsen-id=\"'+x.id+'\"]'))"),false);
-  const output='scratch/nine-coordinate-qa';fs.mkdirSync(output,{recursive:true});const results=[];
+  const output='scratch/ishizuka-coordinate-qa';fs.mkdirSync(output,{recursive:true});const results=[];
   const expectDetail=async(id,context='')=>{
    await waitFor("document.getElementById('modalBg').style.display==='flex'");
    assert.equal(await evaluate("document.getElementById('modalTitle').textContent"),await evaluate(`ONSEN_DATA.find(x=>x.id===${JSON.stringify(id)}).onsen`),context+' '+id);
@@ -84,7 +84,7 @@ test('E2E: 49 national markers, nine regional additions, close-marker selection 
     await click(point,mobile);await waitFor("!!document.querySelector('.onsen-popup')");
     assert.equal(await evaluate("document.querySelector('.onsen-popup > div').textContent"),await evaluate(`ONSEN_DATA.find(x=>x.id==='${id}').facility`));
     await evaluate("document.querySelector('.onsen-popup button').click()");await expectDetail(id);
-    assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 18施設')"),true);
+    assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 0施設')"),true);
     assert.equal(await evaluate("document.querySelector('.leaflet-control-attribution').textContent.includes('OpenStreetMap')"),true);
     results.push({width,id,view:'regional',count:expected.length,selected:true});
    }
@@ -94,6 +94,6 @@ test('E2E: 49 national markers, nine regional additions, close-marker selection 
   assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'Map selection must preserve every stored visit byte');
   assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設を訪問済み');
   fs.writeFileSync(output+'/results.json',JSON.stringify(results,null,2));
-  t.diagnostic('PASS: 18 national and 34 regional mouse/touch selections; 49 verified, 18 excluded; synthetic 3/67 progress and storage preserved');
+  t.diagnostic('PASS: 54 national and 70 regional mouse/touch selections; 67 verified, 0 excluded; synthetic 3/67 progress and storage preserved');
  }finally{ws?.close();child.kill();server.closeAllConnections();server.close();}
 });

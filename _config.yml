@@ -1,6 +1,10 @@
 exclude:
   - README.md
   - tests
+  - scratch
+  - scripts
+  - .cache
+  - "*.cjs"
   - private-data
   - personal-data
   - backups
