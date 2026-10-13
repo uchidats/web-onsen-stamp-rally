@@ -410,6 +410,10 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   cursor: pointer;
 }
 
+.japan-map-detail-bar:has(.japan-map-choices) { display: block; }
+.japan-map-choices { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); gap: 8px; margin-top: 10px; }
+.japan-map-choices .stamp { white-space: normal; min-height: 44px; text-align: left; }
+
 .japan-map-marker {
   cursor: pointer;
   transition: transform 0.15s ease, stroke-width 0.15s ease, filter 0.15s ease;

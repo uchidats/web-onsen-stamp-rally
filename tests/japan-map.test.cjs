@@ -296,16 +296,21 @@ test('Integration with actual data.js: verifies 67 onsens across prefectures', (
   }
 });
 
-test('Embedded map preserves every source coordinate transform and boundary shape', () => {
-  const source = fs.readFileSync('assets/japan-map-geolonia.svg', 'utf8');
+test('Embedded geographic map preserves the generated outlines without extra transforms', () => {
+  const source = fs.readFileSync('assets/japan-map-geographic.svg', 'utf8').trim();
   const { SVG_MARKUP } = loadJapanMap();
-  for (const tag of source.match(/<g\b[^>]*data-code="\d+"[^>]*>/g)) {
-    const code = tag.match(/data-code="(\d+)"/)[1];
-    const transform = tag.match(/transform="([^"]+)"/)[1];
-    const embedded = SVG_MARKUP.match(new RegExp(`<g\\b[^>]*data-code="${code}"[^>]*>`))[0];
-    assert.ok(embedded.includes(`transform="${transform}"`), `Preserve position of prefecture ${code}`);
-  }
-  assert.deepEqual(SVG_MARKUP.match(/<(?:path|polygon)\b[^>]*>/g), source.match(/<(?:path|polygon)\b[^>]*>/g));
+  assert.equal(SVG_MARKUP,source);
+  assert.equal(/transform=/.test(SVG_MARKUP),false);
+  assert.equal(source.match(/data-code=/g).length,47);
+});
+
+test('Geographic projection matches standard Mercator, preserves aspect and does not depend on facility IDs', () => {
+  const {project,PROJECTION}=loadJapanMap();
+  assert.equal(project(NaN,40),null);
+  assert.equal(project(140,90),null);
+  assert.ok(Math.abs(project(140,40)[0]-project(139,40)[0]-PROJECTION.scale)<1e-8);
+  const merc=latitude=>Math.log(Math.tan(Math.PI/4+latitude*Math.PI/360))*180/Math.PI;
+  assert.ok(Math.abs(project(140,40)[1]-project(140,41)[1]-(merc(41)-merc(40))*PROJECTION.scale)<1e-8);
 });
 
 test('JapanPrefMap: displays exactly 67 verified onsen markers and 0 unverified markers', () => {

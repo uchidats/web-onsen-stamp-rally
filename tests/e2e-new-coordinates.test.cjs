@@ -3,9 +3,9 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),http=require('node:http');
 const {spawn}=require('node:child_process');
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
-const added=['006','018','026','034','035','042','054','057','065'].map(n=>'onsen-'+n).concat(JSON.parse(fs.readFileSync('tests/fixtures/verified-coordinates-2026-10-14.json','utf8')).map(x=>x.id));
+const added=Array.from({length:67},(_,i)=>'onsen-'+String(i+1).padStart(3,'0'));
 
-test('E2E: 67 national markers, 27 regional additions, close-marker selection and preserved visit storage',async t=>{
+test('E2E: 67 exact projected national markers, overlap choices, regional selection and preserved visit storage',async t=>{
  const browser=['C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe','C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'].find(fs.existsSync);
  if(!browser){t.skip('Chrome/Edge not installed');return;}
  const server=http.createServer((req,res)=>{
@@ -42,7 +42,7 @@ test('E2E: 67 national markers, 27 regional additions, close-marker selection an
   assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 0施設')"),true);
   assert.equal(await evaluate("!!document.querySelector('.japan-map-attribution a[href=\"https://www.openstreetmap.org/copyright\"]')"),true);
   assert.equal(await evaluate("ONSEN_DATA.filter(x=>!x.coordinateVerified).some(x=>document.querySelector('.japan-map-marker[data-onsen-id=\"'+x.id+'\"]'))"),false);
-  const output='scratch/ishizuka-coordinate-qa';fs.mkdirSync(output,{recursive:true});const results=[];
+  const output='scratch/national-projection-qa';fs.mkdirSync(output,{recursive:true});const results=[];
   const expectDetail=async(id,context='')=>{
    await waitFor("document.getElementById('modalBg').style.display==='flex'");
    assert.equal(await evaluate("document.getElementById('modalTitle').textContent"),await evaluate(`ONSEN_DATA.find(x=>x.id===${JSON.stringify(id)}).onsen`),context+' '+id);
@@ -56,11 +56,29 @@ test('E2E: 67 national markers, 27 regional additions, close-marker selection an
    await send('Emulation.setTouchEmulationEnabled',{enabled:mobile});
    await evaluate("document.getElementById('resetPref').click();document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'center'})");await delay(200);
    for(const id of added){
+    await evaluate("document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'center'})");
     const point=await evaluate(`(()=>{const m=document.querySelector('.japan-map-marker[data-onsen-id="${id}"]'),r=m.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;return {x,y,hit:document.elementFromPoint(x,y)?.closest('.japan-map-marker')?.getAttribute('data-onsen-id'),width:r.width}})()`);
-    assert.ok(point.width>0);assert.equal(point.hit,id,width+'px national marker must receive pointer '+id);
-    await click({x:point.x,y:point.y},mobile);await expectDetail(id,width+'px national');results.push({width,id,view:'national',selected:true});
+    assert.ok(point.width>0);assert.ok(point.hit,width+'px national marker must receive a marker pointer '+id);
+    const error=await evaluate(`(()=>{const m=document.querySelector('.japan-map-marker[data-onsen-id="${id}"]'),r=m.getBoundingClientRect(),x=ONSEN_DATA.find(x=>x.id==='${id}'),p=JapanPrefMap.project(x.longitude,x.latitude),q=new DOMPoint(...p).matrixTransform(document.querySelector('.geolonia-svg-map').getScreenCTM());return Math.hypot(q.x-r.left-r.width/2,q.y-r.top-r.height/2)})()`);
+    assert.ok(error<.1,'Marker and outline use the same SVG matrix '+id);
+    await click({x:point.x,y:point.y},mobile);
+    if(await evaluate("document.getElementById('modalBg').style.display!=='flex'")){
+      await waitFor(`!!document.querySelector('[data-map-candidate="${id}"]')`);
+      const choice=await evaluate(`(()=>{const b=document.querySelector('[data-map-candidate="${id}"]');b.scrollIntoView({block:'center'});const r=b.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}})()`);
+      await click(choice,mobile);
+    }
+    await expectDetail(id,width+'px national');results.push({width,id,view:'national',selected:true,pixelError:error});
    }
    assert.equal(await evaluate('document.documentElement.scrollWidth>innerWidth'),false);
+   if(mobile){
+    await evaluate("document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'center'})");
+    const p=await evaluate("(()=>{const r=document.querySelector('.japan-map-marker[data-onsen-id=\"onsen-004\"]').getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}})()");
+    await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[p]});
+    await send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:p.x,y:p.y-48}]});
+    await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await delay(150);
+    assert.equal(await evaluate("document.getElementById('modalBg').style.display==='flex'"),false,'Scrolling over a marker must not open a facility');
+    assert.equal(await evaluate("document.getElementById('prefSelect').value"),'','Scrolling must not select a prefecture');
+   }
    const shot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(`${output}/national-${width}.png`,Buffer.from(shot.data,'base64'));
   }
   await evaluate("new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='vendor/leaflet/leaflet.js';s.onload=resolve;s.onerror=reject;document.head.append(s)})");
@@ -94,6 +112,6 @@ test('E2E: 67 national markers, 27 regional additions, close-marker selection an
   assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'Map selection must preserve every stored visit byte');
   assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設を訪問済み');
   fs.writeFileSync(output+'/results.json',JSON.stringify(results,null,2));
-  t.diagnostic('PASS: 54 national and 70 regional mouse/touch selections; 67 verified, 0 excluded; synthetic 3/67 progress and storage preserved');
+  t.diagnostic('PASS: 134 national and 150 regional mouse/touch selections; exact shared projection, overlap chooser, 67 verified; synthetic 3/67 progress and storage preserved');
  }finally{ws?.close();child.kill();server.closeAllConnections();server.close();}
 });

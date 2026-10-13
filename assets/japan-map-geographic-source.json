@@ -1,0 +1,17 @@
+{
+  "dataset": "Natural Earth 10m admin-1 states/provinces",
+  "version": "5.1.1",
+  "source": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_admin_1_states_provinces.geojson",
+  "license": "Public domain",
+  "terms": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "inputCRS": "EPSG:4326",
+  "projection": "Spherical Mercator (same formula as EPSG:3857), expressed in angular units, uniform SVG scale",
+  "parameters": {
+    "scale": 29.632068907186063,
+    "xOrigin": 12.20031896989633,
+    "yOrigin": 1629.0557505770232,
+    "longitudeOrigin": 122
+  },
+  "simplificationToleranceSVG": 0.08,
+  "facilityOffsets": false
+}
