@@ -42,8 +42,12 @@ test('E2E: national SVG zoom, pan, pinch and selection',async t=>{
   const button=async(id,mobile)=>{const p=await evaluate("(()=>{const b=document.getElementById("+JSON.stringify(id)+");b.scrollIntoView({block:'nearest'});const r=b.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}})()");await click(p,mobile);await delay(60);};
   const centerError=async()=>evaluate("(()=>{const svg=document.querySelector('.geolonia-svg-map'),matrix=svg.getScreenCTM();return Math.max(...[...document.querySelectorAll('.japan-map-marker')].map(m=>{const x=ONSEN_DATA.find(x=>x.id===m.dataset.onsenId),p=new DOMPoint(...JapanPrefMap.project(x.longitude,x.latitude)).matrixTransform(matrix),r=m.getBoundingClientRect();return Math.hypot(p.x-r.left-r.width/2,p.y-r.top-r.height/2)}))})()");
   const outcome=()=>evaluate("({pref:document.getElementById('prefSelect').value,modal:document.getElementById('modalBg').style.display==='flex'})");
+  const regionView=()=>evaluate("(()=>{const v=JapanPrefMap.createViewport().region();return[v.x,v.y,v.size,v.size]})()");
   for(const width of [1280,390]){
    const mobile=width===390;await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile});await send('Emulation.setTouchEmulationEnabled',{enabled:mobile});
+   await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===67");
+   assert.deepEqual(await view(),await regionView(),'each reload starts at the unchanged Kanto/Tohoku preset');
+   await button('japanMapResetView',mobile);assert.deepEqual(await view(),[0,0,1000,1000],'whole Japan button remains available from initial region');
    await evaluate("document.getElementById('resetPref').click();document.getElementById('japanMapResetView').click();document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'center',behavior:'instant'})");await delay(100);
    assert.deepEqual(await view(),[0,0,1000,1000]);
    await button('japanMapZoomIn',mobile);assert.ok((await view())[2]<1000);await button('japanMapZoomOut',mobile);assert.deepEqual(await view(),[0,0,1000,1000]);
@@ -85,6 +89,6 @@ test('E2E: national SVG zoom, pan, pinch and selection',async t=>{
    await button('japanMapRegionView',mobile);fs.mkdirSync('scratch/national-navigation-qa',{recursive:true});const shot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync('scratch/national-navigation-qa/preset-'+width+'.png',Buffer.from(shot.data,'base64'));
    await button('japanMapResetView',mobile);assert.deepEqual(await view(),[0,0,1000,1000]);
   }
-  assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'view never saves or alters visits');await send('Page.reload');await waitFor("document.readyState==='complete'&&!!document.getElementById('japanMapResetView')");assert.deepEqual(await view(),[0,0,1000,1000]);assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設を訪問済み');t.diagnostic('PASS: desktop/mobile buttons, preset, bounded zoom, drag, pinch, wheel policy, exact centers, coast selection, Leaflet, unchanged storage and reload reset');
+  assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'view never saves or alters visits');await send('Page.reload');await waitFor("document.readyState==='complete'&&!!document.getElementById('japanMapResetView')");assert.deepEqual(await view(),await regionView());assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設を訪問済み');t.diagnostic('PASS: desktop/mobile initial region, whole Japan, buttons, preset, bounded zoom, drag, pinch, wheel policy, exact centers, coast selection, Leaflet, unchanged storage and reload region');
  }finally{ws?.close();child.kill();server.closeAllConnections();server.close();}
 });

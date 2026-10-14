@@ -54,7 +54,7 @@ test('E2E: 67 exact projected national markers, overlap choices, regional select
    const mobile=width===390;
    await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile});
    await send('Emulation.setTouchEmulationEnabled',{enabled:mobile});
-   await evaluate("document.getElementById('resetPref').click();document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'center'})");await delay(200);
+   await evaluate("document.getElementById('resetPref').click();document.getElementById('japanMapResetView').click();document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'center'})");await delay(200);
    for(const id of added){
     await evaluate("document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'center'})");
     const point=await evaluate(`(()=>{const m=document.querySelector('.japan-map-marker[data-onsen-id="${id}"]'),r=m.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;return {x,y,hit:document.elementFromPoint(x,y)?.closest('.japan-map-marker')?.getAttribute('data-onsen-id'),width:r.width}})()`);

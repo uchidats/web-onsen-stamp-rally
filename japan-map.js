@@ -202,6 +202,7 @@
     }
 
     const viewport=createViewport();
+    viewport.region();
     const zoomIn=container.querySelector('#japanMapZoomIn'),zoomOut=container.querySelector('#japanMapZoomOut');
     function updateView() {
       const v=viewport.get();
