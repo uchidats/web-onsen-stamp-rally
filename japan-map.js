@@ -137,6 +137,10 @@
             '<button type="button" class="stamp" id="japanMapRegionView">関東・東北</button>' +
           '</div>' +
           SVG_MARKUP +
+          '<div class="japan-map-attribution">' +
+            '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a>' +
+            '<a class="japan-map-credit-info" href="assets/coordinate-credits.html" aria-label="地理データの出典・ライセンスを見る" title="地理データの出典・ライセンス">ⓘ</a>' +
+          '</div>' +
           '<div id="japanMapTooltip" class="japan-map-tooltip" role="tooltip" aria-hidden="true" hidden></div>' +
         '</div>' +
         '<div class="japan-map-controls">' +
@@ -156,10 +160,6 @@
             '</div>' +
           '</div>' +
           '<div id="japanMapDetailBar" class="japan-map-detail-bar" aria-live="polite"></div>' +
-          '<div class="japan-map-attribution">' +
-            '地図形状: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener noreferrer">Natural Earth (Public domain)</a> / ' +
-            ' 温泉位置: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors (ODbL)</a> / <a href="assets/coordinate-credits.html" target="_blank" rel="noopener noreferrer">Overture / Meta / Foursquare・利用条件</a>' +
-          '</div>' +
         '</div>' +
       '</div>';
 

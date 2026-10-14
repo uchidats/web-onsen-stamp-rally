@@ -125,7 +125,13 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .pref .mini { height: 3px; background: #e3e4d9; overflow: hidden; border-radius: 1px; margin-top: 16px; }
 .mini i { display: block; background: #597461; height: 100%; }
 .pref.selected { border-color: #748774; background: #e9eee3; }
-.filters { padding: 24px; display: grid; grid-template-columns: minmax(200px, 2fr) repeat(3, minmax(0, 1fr)) auto; gap: 16px; align-items: end; }
+.filters { padding: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 16px; align-items: end; }
+.filters > .filter:first-child { grid-column: 1 / -1; }
+@media (min-width: 601px) {
+  .filters { padding: 18px; gap: 12px; }
+  .filters .filter label { margin-bottom: 4px; }
+  .filters input, .filters select, .filters .btn { height: 46px; }
+}
 .filter { min-width: 0; }
 .filter label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 8px; font-weight: 500; line-height: 1.5; }
 .filter input, .filter select { width: 100%; border: 1px solid #cecec1; padding: 11px 12px; border-radius: 4px; background: #fdfbf6; min-height: 46px; color: var(--ink); font-size: 14px; }
@@ -241,7 +247,7 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   .card:hover { border-color: #bfc7b8; box-shadow: 0 4px 14px #30383208; }
   .btn:hover, .stamp:hover, .tools button:hover { filter: brightness(.96); }
 }
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
   .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filter:first-child { grid-column: 1 / -1; }
 }
@@ -643,8 +649,12 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 }
 
 .japan-map-attribution {
-  font-size: 10.5px;
-  color: #8b958c;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
   line-height: 1.5;
   text-align: right;
 }
@@ -653,6 +663,7 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   text-decoration: underline;
   color: var(--muted);
 }
+.japan-map-attribution .japan-map-credit-info { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; font-size: 20px; text-decoration: none; }
 
 @media (max-width: 1050px) {
   .pref-section-body {
@@ -684,9 +695,6 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
   }
   .japan-map-detail-bar {
     padding: 8px 12px;
-  }
-  .japan-map-attribution {
-    text-align: left;
   }
 }
 
