@@ -20,13 +20,13 @@ function facilityName(x,context='card'){
 // Extend this registry with an ID, label and facility predicate for future scopes.
 const PROGRESS_SCOPES = [
   {id:'all',label:'全施設',includes:()=>true},
-  {id:'chi',label:'地温泉',includes:x=>['現・旧','現（新規）','旧（掲載終了）'].includes(x.category)}
+  {id:'chi',label:'地・温泉',includes:x=>['現・旧','現（新規）','旧（掲載終了）'].includes(x.category)}
 ];
 function renderDashboard(){const scope=PROGRESS_SCOPES.find(s=>s.id===$('progressScope').value)||PROGRESS_SCOPES[0],facilities=DATA.filter(scope.includes),done=facilities.filter(visited).length,tot=facilities.length,p=tot?Math.round(done/tot*1000)/10:0;$('totalPercent').innerHTML=p+'<small>%</small>';$('totalText').textContent=`${done} / ${tot} 施設を訪問済み`;$('totalBar').style.width=p+'%';$('nextCount').textContent=`未訪問 ${tot-done} 施設`}
 
 function renderPrefs(){const prefs=[...new Set(DATA.map(x=>x.prefecture))];$('prefProgressMeta').textContent=prefs.length+'都道府県・'+DATA.length+'施設の訪問進捗';$('prefgrid').innerHTML=prefs.map(p=>{const a=DATA.filter(x=>x.prefecture===p),n=a.filter(visited).length,pct=Math.round(100*n/a.length);return `<button class="pref ${prefFilter===p?'selected':''}" data-pref="${esc(p)}"><strong>${esc(p)}</strong><span class="fraction">${n} / ${a.length} 施設 · ${pct}%</span><div class="mini"><i style="width:${pct}%"></i></div></button>`}).join('');$('prefgrid').querySelectorAll('[data-pref]').forEach(b=>b.onclick=()=>{prefFilter=prefFilter===b.dataset.pref?'':b.dataset.pref;$('prefSelect').value=prefFilter;visible=18;render();$('regional-progress').scrollIntoView({behavior:'smooth'})})}
 // Display labels only; retain category values in the public master and saved data.
-const categoryLabel=value=>({'現・旧':'地温泉','現（新規）':'地温泉','旧（掲載終了）':'地温泉（掲載終了）'}[value]||value);
+const categoryLabel=value=>({'現・旧':'地・温泉','現（新規）':'地・温泉','旧（掲載終了）':'地・温泉（掲載終了）'}[value]||value);
 function filtered(){const q=$('search').value.trim().toLowerCase(),pr=prefFilter||$('prefSelect').value,st=$('statusSelect').value,cat=$('categorySelect').value;return DATA.filter(x=>(!q||[x.onsen,x.facility,x.springType,state.userData.visits[x.id]?.notes,x.category,categoryLabel(x.category),x.prefecture].join(' ').toLowerCase().includes(q))&&(!pr||x.prefecture===pr)&&(!cat||x.category===cat||categoryLabel(x.category)===cat)&&(!st||(st==='visited'?visited(x):!visited(x))))}
 // Display-only groups, explicitly audited against the master. Never infer from name fragments.
 const CARD_GROUPS = [
