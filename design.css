@@ -65,6 +65,8 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .hero h1 span { display: inline-block; max-width: 100%; }
 .hero p { line-height: 2; color: #d4dbce; font-size: 15px; max-width: 620px; }
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+.btn.icon-text-link, .icon-text-link { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.external-link-icon { width: 14px; height: 14px; flex: none; }
 .btn { display: inline-flex; justify-content: center; align-items: center; text-align: center; min-height: 46px; border-radius: 4px; padding: 12px 22px; border: 1px solid var(--line); background: var(--surface); color: var(--moss); font-size: 14px; font-weight: 600; line-height: 1.5; white-space: normal; }
 .btn.primary { background: var(--gold); border-color: var(--gold); color: #27352a; }
 .btn.dark { background: var(--moss); border-color: var(--moss); color: var(--surface); }

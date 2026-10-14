@@ -163,6 +163,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
           nyuto:nyuto.map(r=>({id:r.dataset.facilityId,official:r.querySelector('.facility-name').href,map:r.querySelector('.map-link').href,detail:r.querySelector('[data-detail]').dataset.detail}))};
       })()`);
       assert.equal(layout.overflow,false);assert.equal(layout.contained,true);assert.equal(layout.columns,width>600?2:1);
+      assert.ok(await evaluate(`(()=>{const links=[document.querySelector('.hero-actions .primary'),...document.querySelectorAll('.facility-detail')];return links.filter(link=>link.getClientRects().length).every(link=>{const icon=link.querySelector('.external-link-icon'),style=getComputedStyle(link);return icon&&icon.getAttribute('aria-hidden')==='true'&&Math.abs(icon.getBoundingClientRect().width-14)<0.1&&Math.abs(icon.getBoundingClientRect().height-14)<0.1&&['flex','inline-flex'].includes(style.display)&&style.alignItems==='center'&&style.whiteSpace==='nowrap'&&style.gap==='6px';})&&links[0].getAttribute('href')==='#onsens'&&links[0].querySelector('svg').innerHTML===links[1].querySelector('svg').innerHTML;})()`),'matching SVG icons and aligned unbroken labels');
       assert.deepEqual(layout.nyuto.map(r=>r.id),['onsen-015','onsen-016']);
       assert.notEqual(layout.nyuto[0].official,layout.nyuto[1].official);assert.notEqual(layout.nyuto[0].map,layout.nyuto[1].map);
       assert.ok(new Set(layout.heights).size>1);
