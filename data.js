@@ -401,7 +401,7 @@ window.ONSEN_DATA = [
     "coordinateVerified": true,
     "officialUrl": "https://takanoyuonsen.com/",
     "category": "現・旧",
-    "bathing": "10:30-13:30",
+    "bathing": "10:30〜14:30（最終受付13:30）",
     "station": "湯沢駅",
     "distanceKm": 30,
     "elevationM": 250,

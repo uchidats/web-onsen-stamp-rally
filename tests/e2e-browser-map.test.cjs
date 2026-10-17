@@ -82,6 +82,8 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
     await evaluate("document.querySelector('#prefProgress summary').click()");
     // Measure actual painted geometry, not just the presence of SVG nodes.
     fs.mkdirSync('scratch/map-screenshots', { recursive: true });
+    const initialViewBox = await evaluate("document.querySelector('.geolonia-svg-map').getAttribute('viewBox')");
+    assert.notEqual(initialViewBox, '0 0 1000 1000', 'initial view stays the zoomed Kanto/Tohoku region (the map is not shrunk to fit all of Japan)');
     for (const width of [1440, 1280, 768, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', {
         width, height: 1500, deviceScaleFactor: 1, mobile: width <= 390
@@ -98,23 +100,41 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
           overflow: document.documentElement.scrollWidth > innerWidth,
           stacked: cards.top >= panel.bottom,
           columns: getComputedStyle(document.getElementById('prefgrid')).gridTemplateColumns.split(' ').length,
-          contained: prefs.every(p => {
-            const r = p.getBoundingClientRect();
-            return r.width > 0 && r.height > 0 && r.left >= frame.left - 1 &&
-              r.right <= frame.right + 1 && r.top >= frame.top - 1 && r.bottom <= frame.bottom + 1;
-          }),
+          // The initial view is the Kanto/Tohoku region; outlines (islands, far regions) may extend past the frame.
+          rendered: prefs.length === 47 && prefs.every(p => { const r = p.getBoundingClientRect(); return r.width > 0 && r.height > 0; }),
+          markers: (() => {
+            const data = window.ONSEN_DATA.filter(x => x.coordinateVerified);
+            const nodes = [...svg.querySelectorAll('.japan-map-marker')];
+            const byId = id => svg.querySelector('.japan-map-marker[data-onsen-id="' + id + '"]');
+            return {
+              count: nodes.length === data.length && data.length === 67,
+              projected: data.every(x => { const m = byId(x.id), p = window.JapanPrefMap.project(x.longitude, x.latitude); return m && Math.abs(m.getAttribute('cx') - p[0]) < 0.01 && Math.abs(m.getAttribute('cy') - p[1]) < 0.01; }),
+              reachable: nodes.every(m => m.getAttribute('cx') >= 0 && m.getAttribute('cx') <= 1000 && m.getAttribute('cy') >= 0 && m.getAttribute('cy') <= 1000),
+              nearPref: nodes.every(m => { const b = svg.querySelector('.prefecture[data-pref="' + m.dataset.pref + '"]').getBBox(), k = 40, x = +m.getAttribute('cx'), y = +m.getAttribute('cy'); return x >= b.x - k && x <= b.x + b.width + k && y >= b.y - k && y <= b.y + b.height + k; })
+            };
+          })(),
           separated: prefs.find(p => p.dataset.code === '1').getBoundingClientRect().left >
             prefs.find(p => p.dataset.code === '40').getBoundingClientRect().right
         };
       })()`);
       assert.equal(layout.overflow, false, `${width}px: no horizontal overflow`);
       assert.equal(layout.stacked, true, `${width}px: cards below map`);
-      assert.equal(layout.contained, true, `${width}px: all 47 shapes visible within SVG`);
+      assert.equal(layout.rendered, true, `${width}px: all 47 prefecture shapes are rendered (they may extend beyond the initial view)`);
+      assert.deepEqual(layout.markers, { count: true, projected: true, reachable: true, nearPref: true }, `${width}px: 67 markers use the shared projection, lie in the pannable area and near their own prefecture`);
       assert.equal(layout.separated, true, `${width}px: Hokkaido and Kyushu must not overlap`);
       assert.equal(layout.columns, width === 320 ? 1 : width === 390 ? 2 : width === 768 ? 3 : 4);
       const screenshot = await send('Page.captureScreenshot', { format: 'png' });
       fs.writeFileSync(`scratch/map-screenshots/map-${width}.png`, Buffer.from(screenshot.data, 'base64'));
     }
+
+    // Markers outside the initial region stay reachable: the whole-Japan view contains every marker, and the region view is unchanged.
+    await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 1500, deviceScaleFactor: 1, mobile: false });
+    await evaluate("document.getElementById('japanMapResetView').click()");
+    assert.equal(await evaluate("document.querySelector('.geolonia-svg-map').getAttribute('viewBox')"), '0 0 1000 1000');
+    assert.equal(await evaluate(`(() => { const f = document.querySelector('.geolonia-svg-map').getBoundingClientRect(); return [...document.querySelectorAll('.japan-map-marker')].every(m => { const r = m.getBoundingClientRect(); return r.left >= f.left - 1 && r.right <= f.right + 1 && r.top >= f.top - 1 && r.bottom <= f.bottom + 1; }); })()`), true, 'every marker is visible in the whole-Japan view');
+    await evaluate("document.getElementById('japanMapRegionView').click()");
+    assert.equal(await evaluate("document.querySelector('.geolonia-svg-map').getAttribute('viewBox')"), initialViewBox, 'region view equals the initial view');
+    await evaluate("document.getElementById('japanMapResetView').click();document.getElementById('japanMapRegionView').click()");
 
     // 1. Initial 47 prefectures and empty states
     const initStats = await evaluate(`
