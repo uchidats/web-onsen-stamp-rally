@@ -47,6 +47,10 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
     fs.mkdirSync('scratch/feature-bath-qa', { recursive: true });
 
     const expected = {
+      'onsen-002': { facility: '酸ヶ湯温泉旅館', names: ['ヒバ千人風呂', '玉の湯'], colors: ['湯の色 白濁(乳白色)'], note: false },
+      'onsen-003': { facility: '蔦温泉旅館', names: ['久安の湯', '泉響の湯', '貸切風呂'], colors: [], note: true },
+      'onsen-004': { facility: '黄金崎不老ふ死温泉', names: ['海辺の露天風呂', '不老ふ死の湯', '黄金の湯'], colors: [], note: true },
+      'onsen-005': { facility: '姉戸川温泉', names: ['大浴場'], colors: [], note: false },
       'onsen-006': { facility: '峡雲荘', names: ['混浴露天風呂', '女性専用露天風呂', '内湯'], colors: ['湯の色 乳白色(わずかに緑をふくむ)'], note: false },
       'onsen-007': { facility: '藤三旅館', names: ['白猿の湯', '桂の湯', '白糸の湯'], colors: [], note: true },
       'onsen-008': { facility: '山水閣', names: ['大沢の湯', '豊沢の湯', '山水の湯'], colors: [], note: false },
@@ -117,7 +121,7 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       const nyuto = await evaluate("[...document.querySelectorAll('[data-facility-id=\"onsen-015\"],[data-facility-id=\"onsen-016\"]')].map(e=>e.closest('.card')?.dataset?.groupId||e.closest('.card')?.querySelector('h3')?.textContent)");
       assert.equal(nyuto[0], nyuto[1]);
       // other facilities have no data → section hidden
-      for (const id of ['onsen-001', 'onsen-005', 'onsen-024', 'onsen-067']) {
+      for (const id of ['onsen-001', 'onsen-024', 'onsen-040', 'onsen-067']) {
         if (!await evaluate(`!!document.querySelector('[data-detail="${id}"]')`)) continue;
         await evaluate(`document.querySelector('[data-detail="${id}"]').click()`);
         const s = await evaluate(readSection);

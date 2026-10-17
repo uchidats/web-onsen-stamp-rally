@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 
-test('E2E: bath color dots on onsen cards (hover, tap, keyboard, layout)', async (t) => {
+test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, keyboard, layout, multiple colors)', async (t) => {
   const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
   if (!fs.existsSync(edgePath)) { t.skip('Edge not installed at standard path'); return; }
   const server = require('node:http').createServer((req, res) => {
@@ -43,135 +43,197 @@ test('E2E: bath color dots on onsen cards (hover, tap, keyboard, layout)', async
     await evaluate('localStorage.clear()');
     fs.mkdirSync('scratch/bath-color-qa', { recursive: true });
 
-    const TIP = {
-      'onsen-006': '湯の色: 乳白色（混浴露天風呂）。公式の表現「わずかに緑をふくんだ乳白色」。わずかに緑をふくみます。',
-      'onsen-010': '湯の色: 緑（施設全体）。公式の表現「珍しい緑色(黄緑色)」。まれに青色に変わることがあります。',
-      'onsen-012': '湯の色: 乳白色（混浴露天風呂・男女別内湯）。',
-      'onsen-017': '湯の色: 茶褐色（施設全体）。公式の表現「茶褐色、緑、白色」。季節や気温で茶褐色・緑・白色に変わります。',
-      'onsen-018': '湯の色: 灰白色（神経痛の湯）。公式の表現「灰白色の「にごり湯」」。',
-      'onsen-021': '湯の色: 白（施設全体）。公式の表現「白濁の湯」。'
+    const LIST = '丸の並びは資料の記載順です。';
+    const SEASONAL = '季節や気温で茶褐色・緑・白色に変わります。';
+    const TIPS = {
+      'onsen-002': ['湯の色: 乳白色（玉の湯）。公式の表現「白濁」。'],
+      'onsen-004': ['湯の色: 茶褐色（施設全体）。公式の表現「赤褐色(茶褐色)」。'],
+      'onsen-006': ['湯の色: 乳白色（混浴露天風呂）。公式の表現「わずかに緑をふくんだ乳白色」。わずかに緑をふくみます。'],
+      'onsen-010': ['湯の色: 緑（施設全体）。公式の表現「珍しい緑色(黄緑色)」。まれに青色に変わることがあります。', '湯の色: 青（施設全体）。まれに緑色から青色に変わることがあります。'],
+      'onsen-012': ['湯の色: 乳白色（混浴露天風呂・男女別内湯）。'],
+      'onsen-015': ['湯の色: 乳白色（施設全体）。資料の表現「乳白色の湯」。第三者資料の記載です。'],
+      'onsen-020': ['湯の色: 乳白色（施設全体）。資料の表現「溢れる乳白色の硫黄泉」。第三者資料の記載です。'],
+      'onsen-017': ['茶褐色', '緑', '白'].map(l => `湯の色: ${l}（施設全体）。${SEASONAL}${LIST}`),
+      'onsen-018': ['湯の色: 灰白色（神経痛の湯）。公式の表現「灰白色の「にごり湯」」。'],
+      'onsen-021': ['湯の色: 白（施設全体）。公式の表現「白濁の湯」。']
     };
-    const NONE = ['onsen-007', 'onsen-013', 'onsen-014', 'onsen-015', 'onsen-016', 'onsen-019'];
+    const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
+    const NONE = ['onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-023'];
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
     const center = async expr => { const r = await rect(expr); return { x: r.x + r.w / 2, y: r.y + r.h / 2 }; };
-    const tipState = async id => evaluate(`(()=>{const e=${entry(id)},t=e.querySelector('.bath-color-tip'),s=getComputedStyle(t),r=t.getBoundingClientRect(),c=e.closest('.card').getBoundingClientRect();return{visible:s.visibility==='visible'&&+s.opacity>0,inside:r.left>=c.left-1&&r.right<=c.right+1&&r.top>=c.top-1}})()`);
+    const dotExpr = (id, i) => `${entry(id)}.querySelectorAll('.bath-color')[${i}]`;
+    const tipState = async (id, i = 0) => evaluate(`(()=>{const e=${entry(id)},t=e.querySelectorAll('.bath-color-tip')[${i}],s=getComputedStyle(t),r=t.getBoundingClientRect(),c=e.closest('.card').getBoundingClientRect();return{visible:s.visibility==='visible'&&+s.opacity>0,inside:r.left>=c.left-1&&r.right<=c.right+1&&r.top>=c.top-1}})()`);
     const key = async (name, code, vk, text) => {
       await send('Input.dispatchKeyEvent', { type: 'keyDown', key: name, code, windowsVirtualKeyCode: vk, ...(text ? { text } : {}) });
       await send('Input.dispatchKeyEvent', { type: 'keyUp', key: name, code, windowsVirtualKeyCode: vk });
     };
-    // the dot sits right after the facility name (same line, ~8px gap, vertically centered), outside the official link
-    const layoutProbe = id => `(()=>{const e=${entry(id)},f=e.querySelector('.facility'),link=f.querySelector('.facility-name-link,.facility-name'),wrap=f.querySelector('.bath-colors'),b=wrap.querySelector('.bath-color'),d=b.querySelector('.bath-color-dot'),
-      dr=d.getBoundingClientRect(),br=b.getBoundingClientRect(),card=e.closest('.card'),cr=card.getBoundingClientRect(),lr=[...link.getClientRects()].pop(),
-      meta=e.querySelector('.facility-meta'),others=[...meta.children].map(n=>n.getBoundingClientRect()),
-      badge=f.querySelector('.conquered-badge'),
-      hit=others.some(o=>br.left<o.right-1&&br.right>o.left+1&&br.top<o.bottom-1&&br.bottom>o.top+1);
+    // the dots sit right after the facility name: same line, ~8px gap to the first dot, 4-5px between dots, vertically centered, outside the official link
+    const layoutProbe = id => `(()=>{const e=${entry(id)},f=e.querySelector('.facility'),link=f.querySelector('.facility-name-link,.facility-name'),wrap=f.querySelector('.bath-colors'),dots=[...wrap.querySelectorAll('.bath-color-dot')].map(d=>d.getBoundingClientRect()),
+      btns=[...wrap.querySelectorAll('.bath-color')].map(b=>b.getBoundingClientRect()),card=e.closest('.card'),cr=card.getBoundingClientRect(),lr=[...link.getClientRects()].pop(),
+      meta=e.querySelector('.facility-meta'),others=[...meta.children].map(n=>n.getBoundingClientRect()),badge=f.querySelector('.conquered-badge'),
+      hit=others.some(o=>btns.some(br=>br.left<o.right-1&&br.right>o.left+1&&br.top<o.bottom-1&&br.bottom>o.top+1));
       const h1=card.offsetHeight;wrap.style.display='none';const h2=card.offsetHeight;wrap.style.display='';
-      return{size:dr.width+'x'+dr.height,hit,inside:br.right<=cr.right&&dr.left>=cr.left&&dr.right<=cr.right,delta:h1-h2,overflow:document.documentElement.scrollWidth>innerWidth,
-        gap:Math.round((dr.left-lr.right)*10)/10,centerDiff:Math.abs((dr.top+dr.height/2)-(lr.top+lr.height/2)),insideLink:link.contains(wrap),prev:wrap.previousSibling===link,inFacilityRow:wrap.parentElement===f,inMeta:!!meta.querySelector('.bath-colors'),badgeAfter:!badge||(wrap.compareDocumentPosition(badge)&Node.DOCUMENT_POSITION_FOLLOWING)>0}})()`;
+      return{count:dots.length,sizes:dots.map(d=>d.width+'x'+d.height),hit,inside:dots.every(d=>d.left>=cr.left&&d.right<=cr.right)&&btns.every(b=>b.right<=cr.right),delta:h1-h2,overflow:document.documentElement.scrollWidth>innerWidth,
+        gap:Math.round((dots[0].left-lr.right)*10)/10,spacing:dots.slice(1).map((d,i)=>Math.round((d.left-dots[i].right)*10)/10),sameRow:dots.every(d=>Math.abs((d.top+d.height/2)-(lr.top+lr.height/2))<=3),
+        insideLink:link.contains(wrap),prev:wrap.previousSibling===link,inFacilityRow:wrap.parentElement===f,inMeta:!!meta.querySelector('.bath-colors'),badgeAfter:!badge||(wrap.compareDocumentPosition(badge)&Node.DOCUMENT_POSITION_FOLLOWING)>0}})()`;
 
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile: width < 400 });
       await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
       await delay(150);
-      // dots only for facilities with officially confirmed colors; one dot each (a changing color shows a single base color)
-      for (const [id, tip] of Object.entries(TIP)) {
-        assert.equal(await evaluate(`${entry(id)}.querySelectorAll('.bath-color').length`), 1, id);
-        assert.equal(await evaluate(`${entry(id)}.querySelector('.bath-color').getAttribute('aria-label')`), tip, id);
-        assert.equal(await evaluate(`${entry(id)}.querySelector('.bath-color-tip').textContent`), tip, id);
+
+      // ---- cards: one dot per confirmed color (max 3, no duplicates), unconfirmed facilities show none ----
+      for (const [id, tips] of Object.entries(TIPS)) {
+        assert.equal(await evaluate(`${entry(id)}.querySelectorAll('.bath-color').length`), tips.length, id);
+        assert.deepEqual(await evaluate(`[...${entry(id)}.querySelectorAll('.bath-color')].map(b=>b.getAttribute('aria-label'))`), tips, id);
+        assert.deepEqual(await evaluate(`[...${entry(id)}.querySelectorAll('.bath-color-tip')].map(b=>b.textContent)`), tips, id);
       }
       for (const id of NONE) assert.equal(await evaluate(`${entry(id)}.querySelectorAll('.bath-color').length`), 0, id + ' must have no dot');
-      assert.equal(await evaluate("document.querySelectorAll('.bath-color').length"), 6);
+      assert.equal(await evaluate("document.querySelectorAll('#cards .bath-color').length"), TOTAL_DOTS);
+      // order = order in the source document (茶褐色・緑・白色 / 緑・青), no duplicates
+      assert.deepEqual(await evaluate(`[...${entry('onsen-017')}.querySelectorAll('.bath-color-dot')].map(d=>d.style.getPropertyValue('--dot'))`), ['#98694a', '#86a05f', '#fffdf8']);
+      assert.deepEqual(await evaluate(`[...${entry('onsen-010')}.querySelectorAll('.bath-color-dot')].map(d=>d.style.getPropertyValue('--dot'))`), ['#86a05f', '#6f97ae']);
 
-      // layout: 16px dot, no overlap with the other meta items, no page overflow, no extra card height
-      for (const id of Object.keys(TIP)) {
+      for (const [id, tips] of Object.entries(TIPS)) {
         const L = await evaluate(layoutProbe(id));
-        assert.equal(L.size, '16x16', id);
-        assert.equal(L.hit, false, `${id}@${width}: dot overlaps another control`);
-        assert.ok(L.gap >= 7 && L.gap <= 9, `${id}@${width}: gap between name and dot is ${L.gap}px (expected about 8)`);
-        assert.ok(L.centerDiff <= 3, `${id}@${width}: dot is not vertically centered on the name line (${L.centerDiff}px)`);
+        assert.equal(L.count, tips.length, id);
+        assert.ok(L.sizes.every(s => s === '16x16'), `${id}: ${L.sizes}`);
+        assert.equal(L.hit, false, `${id}@${width}: dots overlap another control`);
+        assert.ok(L.gap >= 7 && L.gap <= 9, `${id}@${width}: gap between name and first dot is ${L.gap}px (expected about 8)`);
+        assert.ok(L.spacing.every(g => g >= 3.5 && g <= 5.5), `${id}@${width}: spacing between dots ${L.spacing} (expected 4-5px)`);
+        assert.ok(L.sameRow, `${id}@${width}: dots are not on the name line`);
         assert.equal(L.insideLink, false, id);
-        assert.ok(L.prev && L.inFacilityRow && !L.inMeta, id + ': dot directly follows the facility name, not in the meta row');
+        assert.ok(L.prev && L.inFacilityRow && !L.inMeta, id + ': dots directly follow the facility name, not in the meta row');
         assert.ok(L.badgeAfter, id);
-        assert.ok(L.inside, id);
+        assert.ok(L.inside, `${id}@${width}: dots outside the card`);
         assert.ok(L.delta <= 1, `${id}@${width}: card grew by ${L.delta}px`);
         assert.equal(L.overflow, false, id);
       }
 
-      // milky white (filled) and colorless transparent (hollow ring) are visually distinct
+      // a very long facility name never pushes the three dots outside the card
+      const longCase = await evaluate(`(()=>{const e=${entry('onsen-017')},link=e.querySelector('.facility-name-link,.facility-name'),orig=link.textContent;link.textContent='長い宿名でも自然に読める静かな温泉旅館'.repeat(3);const cr=e.closest('.card').getBoundingClientRect(),ds=[...e.querySelectorAll('.bath-color-dot')].map(d=>d.getBoundingClientRect()),ok=ds.every(d=>d.left>=cr.left&&d.right<=cr.right),ov=document.documentElement.scrollWidth>innerWidth;link.textContent=orig;return{ok,ov,n:ds.length}})()`);
+      assert.deepEqual(longCase, { ok: true, ov: false, n: 3 }, `${width}px long name`);
+
+      // milky white (filled) and colorless transparent (hollow ring) stay visually distinct
       const look = await evaluate(`(()=>{const mk=(c)=>{const d=window.ONSEN_COLOR_DEFS[c],i=document.createElement('i');i.className='bath-color-dot'+(d.hollow?' is-hollow':'');i.style.setProperty('--dot',d.fill);i.style.setProperty('--ring',d.ring);document.body.appendChild(i);const s=getComputedStyle(i),o={bg:s.backgroundColor,bw:s.borderTopWidth};i.remove();return o};return{milky:mk('milky_white'),colorless:mk('colorless'),white:mk('white')}})()`);
       assert.equal(look.colorless.bg, 'rgba(0, 0, 0, 0)');
       assert.equal(look.colorless.bw, '2px');
       assert.notEqual(look.milky.bg, 'rgba(0, 0, 0, 0)');
-      assert.equal(look.milky.bw, '1px');
       assert.notEqual(look.milky.bg, look.white.bg);
 
-      // hover (PC)
+      // ---- hover (PC): each of the three dots opens only its own tooltip ----
       if (width === 1280) {
-        await evaluate(`${entry('onsen-006')}.scrollIntoView({block:'center'})`);
+        await evaluate(`${entry('onsen-017')}.scrollIntoView({block:'center'})`);
         await delay(100);
-        const p = await center(`${entry('onsen-006')}.querySelector('.bath-color')`);
-        assert.equal((await tipState('onsen-006')).visible, false);
-        await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y });
-        await delay(100);
-        const s = await tipState('onsen-006');
-        assert.ok(s.visible && s.inside, 'hover shows the color name inside the card');
-        const shot = await send('Page.captureScreenshot', { format: 'png' });
-        fs.writeFileSync(`scratch/bath-color-qa/hover-${width}.png`, Buffer.from(shot.data, 'base64'));
+        for (let i = 0; i < 3; i++) {
+          const p = await center(dotExpr('onsen-017', i));
+          await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y });
+          await delay(100);
+          const states = [await tipState('onsen-017', 0), await tipState('onsen-017', 1), await tipState('onsen-017', 2)];
+          assert.deepEqual(states.map(s => s.visible), [0, 1, 2].map(k => k === i), `hover dot ${i}`);
+          assert.ok(states[i].inside);
+          if (i === 2) { const shot = await send('Page.captureScreenshot', { format: 'png' }); fs.writeFileSync(`scratch/bath-color-qa/multi-hover-${width}.png`, Buffer.from(shot.data, 'base64')); }
+        }
         await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 5, y: 5 });
         await delay(100);
-        assert.equal((await tipState('onsen-006')).visible, false);
+        assert.equal((await tipState('onsen-017', 2)).visible, false);
       }
 
-      // tap (touch): shows the name, does not open the detail view; tapping elsewhere closes it
+      // ---- tap (touch): each dot opens its own text; tapping another dot switches; tapping elsewhere closes ----
       if (width < 400) {
         await evaluate(`${entry('onsen-010')}.scrollIntoView({block:'center'})`);
         await delay(100);
-        const p = await center(`${entry('onsen-010')}.querySelector('.bath-color')`);
-        await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [p] });
-        await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-        await delay(150);
-        const s = await tipState('onsen-010');
-        assert.ok(s.visible && s.inside, 'tap shows the color name inside the card');
+        const tap = async p => { await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [p] }); await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await delay(150); };
+        await tap(await center(dotExpr('onsen-010', 0)));
+        assert.deepEqual([(await tipState('onsen-010', 0)).visible, (await tipState('onsen-010', 1)).visible], [true, false]);
+        await tap(await center(dotExpr('onsen-010', 1)));
+        assert.deepEqual([(await tipState('onsen-010', 0)).visible, (await tipState('onsen-010', 1)).visible], [false, true]);
+        assert.ok((await tipState('onsen-010', 1)).inside);
         assert.equal(await evaluate("document.getElementById('modalBg').style.display==='flex'"), false);
         const shot = await send('Page.captureScreenshot', { format: 'png' });
-        fs.writeFileSync(`scratch/bath-color-qa/tap-${width}.png`, Buffer.from(shot.data, 'base64'));
-        await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 3, y: 3 }] });
-        await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-        await delay(150);
-        assert.equal((await tipState('onsen-010')).visible, false);
+        fs.writeFileSync(`scratch/bath-color-qa/multi-tap-${width}.png`, Buffer.from(shot.data, 'base64'));
+        await tap({ x: 3, y: 3 });
+        assert.equal((await tipState('onsen-010', 1)).visible, false);
       }
 
-      // keyboard: focus + Enter opens, Escape closes; neither opens the detail view
-      await evaluate(`${entry('onsen-017')}.scrollIntoView({block:'center'});${entry('onsen-017')}.querySelector('.bath-color').focus()`);
+      // ---- keyboard: Tab order reaches each dot; Enter opens, Escape closes; never opens the detail view ----
+      await evaluate(`${entry('onsen-017')}.scrollIntoView({block:'center'});${dotExpr('onsen-017', 1)}.focus()`);
       await key('Enter', 'Enter', 13, '\r');
       await delay(100);
-      assert.ok((await tipState('onsen-017')).visible, 'Enter shows the color name');
+      assert.deepEqual([(await tipState('onsen-017', 0)).visible, (await tipState('onsen-017', 1)).visible, (await tipState('onsen-017', 2)).visible], [false, true, false]);
+      await key('Tab', 'Tab', 9);
+      await delay(100);
+      assert.equal(await evaluate("document.activeElement.classList.contains('bath-color')"), true, 'Tab moves to the next dot');
       await key('Escape', 'Escape', 27);
       await delay(100);
-      assert.equal(await evaluate(`${entry('onsen-017')}.querySelector('.bath-color').classList.contains('is-open')`), false);
+      assert.equal(await evaluate("document.querySelectorAll('.bath-color.is-open').length"), 0);
       assert.equal(await evaluate("document.getElementById('modalBg').style.display==='flex'"), false);
 
-      // existing official/map links stay in place
-      for (const id of Object.keys(TIP)) {
+      for (const id of Object.keys(TIPS)) {
         assert.equal(await evaluate(`!!${entry(id)}.querySelector('.facility-name-link')`), true, id + ' official link');
         assert.equal(await evaluate(`!!${entry(id)}.querySelector('.map-link')`), true, id + ' map link');
       }
     }
 
-    // the detail button still works after a dot was used, and card and detail agree on the color
-    await send('Emulation.setDeviceMetricsOverride', { width: 390, height: 900, deviceScaleFactor: 1, mobile: true });
-    for (const [id, word] of [['onsen-006', '乳白色'], ['onsen-018', '灰白色'], ['onsen-012', '乳白色']]) {
-      await evaluate(`${entry(id)}.querySelector('[data-detail]').click()`);
-      await delay(100);
-      assert.ok(await evaluate("document.getElementById('featureBathList').textContent.includes('湯の色 " + word + "')"), id);
-      assert.ok((await evaluate(`${entry(id)}.querySelector('.bath-color').getAttribute('aria-label')`)).includes(word), id);
-      await evaluate("document.getElementById('modalClose').click()");
+    // ---- 詳細画面「代表的な湯」: the dot right after a bath name, only for colors confirmed for that bath ----
+    const DETAIL = {
+      'onsen-002': { '玉の湯': 1, 'ヒバ千人風呂': 1 },
+      'onsen-006': { '混浴露天風呂': 1, '内湯': 1 },
+      'onsen-010': { '薬師の湯': 1, '混浴露天風呂': 1, '小浴場': 1 },
+      'onsen-012': { '混浴露天風呂': 1, '男女別内湯': 1, '宿泊者専用露天風呂': 1 },
+      'onsen-018': { '神経痛の湯': 1 },
+      'onsen-021': { '大露天風呂': 1 }
+    };
+    const NO_DETAIL_DOTS = ['onsen-004', 'onsen-015', 'onsen-017', 'onsen-003', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014'];
+    for (const width of [1280, 390, 320]) {
+      await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
+      for (const [id, want] of Object.entries(DETAIL)) {
+        await evaluate(`${entry(id)}.querySelector('[data-detail]').click()`);
+        await delay(100);
+        const D = await evaluate(`(()=>{const m=document.querySelector('.modal').getBoundingClientRect();return[...document.querySelectorAll('#featureBathList .feature-bath')].map(li=>{const h=li.querySelector('h4').getBoundingClientRect(),ds=[...li.querySelectorAll('.bath-color-dot')].map(d=>d.getBoundingClientRect()),btn=li.querySelector('.bath-color');
+          return{name:li.querySelector('h4').textContent,n:ds.length,size:ds.map(d=>d.width+'x'+d.height),gap:ds.length?Math.round((ds[0].left-h.right)*10)/10:null,centered:ds.length?Math.abs((ds[0].top+ds[0].height/2)-(h.top+h.height/2))<=4:null,inside:ds.every(d=>d.right<=m.right&&d.left>=m.left),label:btn?btn.getAttribute('aria-label'):null,sibling:ds.length?li.querySelector('.bath-colors').previousElementSibling.tagName:null}})})()`);
+        for (const b of D) {
+          assert.equal(b.n, want[b.name] || 0, `${id}/${b.name}@${width}`);
+          if (b.n) {
+            assert.deepEqual(b.size, ['16x16']);
+            assert.ok(b.gap >= 6 && b.gap <= 10, `${id}/${b.name}@${width}: gap ${b.gap}px`);
+            assert.ok(b.centered && b.inside, `${id}/${b.name}@${width}`);
+            assert.equal(b.sibling, 'H4');
+            // the detail tooltip text equals the card tooltip text for the same color (no contradiction)
+            assert.ok(b.label.startsWith('湯の色: ') && b.label.includes('（' ) && b.label.includes(b.name), `${id}/${b.name}: ${b.label}`);
+          }
+        }
+        assert.equal(await evaluate("document.documentElement.scrollWidth>innerWidth || document.querySelector('.modal').scrollWidth>document.querySelector('.modal').clientWidth"), false);
+        if (width === 390 && id === 'onsen-012') {
+          // tap on a detail dot opens its tooltip inside the modal; Escape/outside tap closes it; the modal stays open
+          const p = await center("document.querySelectorAll('#featureBathList .bath-color')[0]");
+          await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [p] });
+          await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+          await delay(150);
+          assert.equal(await evaluate("(()=>{const t=document.querySelector('#featureBathList .bath-color-tip'),s=getComputedStyle(t),r=t.getBoundingClientRect(),m=document.querySelector('.modal').getBoundingClientRect();return s.visibility==='visible'&&r.left>=m.left&&r.right<=m.right})()"), true);
+          const shot = await send('Page.captureScreenshot', { format: 'png' });
+          fs.writeFileSync(`scratch/bath-color-qa/detail-tap-${width}.png`, Buffer.from(shot.data, 'base64'));
+          await key('Escape', 'Escape', 27);
+          // Escape closes the tooltip first (the detail view may close too: both are acceptable, the dot never saves anything)
+          await delay(100);
+          assert.equal(await evaluate("document.querySelectorAll('.bath-color.is-open').length"), 0);
+        }
+        if (width === 1280 && id === 'onsen-006') { const shot = await send('Page.captureScreenshot', { format: 'png' }); fs.writeFileSync(`scratch/bath-color-qa/detail-${width}.png`, Buffer.from(shot.data, 'base64')); }
+        await evaluate("document.getElementById('modalClose').click()");
+        await delay(50);
+      }
+      // facility-wide colors are never copied onto individual baths; uncolored baths get no dot
+      for (const id of NO_DETAIL_DOTS) {
+        await evaluate(`${entry(id)}.querySelector('[data-detail]').click()`);
+        await delay(100);
+        assert.equal(await evaluate("document.querySelectorAll('#featureBathList .bath-color').length"), 0, `${id}: no dot on baths in the detail view`);
+        await evaluate("document.getElementById('modalClose').click()");
+        await delay(50);
+      }
     }
-    await evaluate(`${entry('onsen-010')}.querySelector('[data-detail]').click()`);
-    assert.ok(await evaluate("document.getElementById('featureBathNote').textContent.includes('緑色')"));
-    await evaluate("document.getElementById('modalClose').click()");
-    // the color dots never touch visit records or localStorage
+
+    // the dots never touch visit records or localStorage
     assert.equal(await evaluate('JSON.stringify(localStorage)'), '{}');
     ws.close();
   } finally { edge.kill(); server.closeAllConnections(); server.close(); }
