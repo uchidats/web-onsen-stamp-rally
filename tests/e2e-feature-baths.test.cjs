@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 
-test('E2E: 代表的な湯 in the detail view (Akita trial facilities, desktop and mobile)', async (t) => {
+test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, desktop and mobile)', async (t) => {
   const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
   if (!fs.existsSync(edgePath)) { t.skip('Edge not installed at standard path'); return; }
 
@@ -47,6 +47,13 @@ test('E2E: 代表的な湯 in the detail view (Akita trial facilities, desktop a
     fs.mkdirSync('scratch/feature-bath-qa', { recursive: true });
 
     const expected = {
+      'onsen-006': { facility: '峡雲荘', names: ['混浴露天風呂', '女性専用露天風呂', '内湯'], colors: ['湯の色 乳白色(わずかに緑をふくむ)'], note: false },
+      'onsen-007': { facility: '藤三旅館', names: ['白猿の湯', '桂の湯', '白糸の湯'], colors: [], note: true },
+      'onsen-008': { facility: '山水閣', names: ['大沢の湯', '豊沢の湯', '山水の湯'], colors: [], note: false },
+      'onsen-009': { facility: '元湯夏油', names: ['大湯', '滝の湯', '真湯'], colors: [], note: true },
+      'onsen-010': { facility: '石塚旅館', names: ['薬師の湯', '混浴露天風呂', '小浴場'], colors: [], note: true },
+      'onsen-011': { facility: 'ほっとゆだ', names: ['大浴場', '貸切風呂'], colors: [], note: false },
+      'onsen-012': { facility: '彩雲荘', names: ['混浴露天風呂', '宿泊者専用露天風呂', '男女別内湯'], colors: ['湯の色 乳白色', '湯の色 乳白色'], note: true },
       'onsen-013': { facility: '新玉川温泉', names: ['大浴場', '新緑の露天風呂', '貸切浴場'], colors: [], note: false },
       'onsen-014': { facility: '玉川温泉', names: ['大浴場', '箱蒸し湯', '天然岩盤浴'], colors: [], note: false },
       'onsen-015': { facility: '鶴の湯温泉', names: ['混浴露天風呂', '白湯', '黒湯'], colors: [], note: true },
@@ -95,7 +102,7 @@ test('E2E: 代表的な湯 in the detail view (Akita trial facilities, desktop a
         assert.equal(s.overflowX, false, `overflow ${id}@${width} ${JSON.stringify(s)}`);
         assert.equal(s.inside, true, `inside ${id}@${width}`);
         assert.ok(!s.labels.some(l => ['分類', '主泉質', '駅からの距離', '獲得標高'].includes(l)), JSON.stringify(s.labels));
-        assert.deepEqual(s.labels, ['日帰り入浴', '最寄り駅']);
+        assert.deepEqual(s.labels.filter(l => l !== '分類について'), ['日帰り入浴', '最寄り駅']); // 「分類について」は旧(掲載終了)の施設だけに出る既存の注記
         assert.deepEqual(s.meta, ['初回訪問日', '—', '訪問メモ', '—']);
         assert.ok(s.metaInVisit);
         assert.deepEqual(s.h3.map(h=>h.slice(0,3)), [['22px', '600', true], ['18px', '600', true]]);
@@ -110,7 +117,7 @@ test('E2E: 代表的な湯 in the detail view (Akita trial facilities, desktop a
       const nyuto = await evaluate("[...document.querySelectorAll('[data-facility-id=\"onsen-015\"],[data-facility-id=\"onsen-016\"]')].map(e=>e.closest('.card')?.dataset?.groupId||e.closest('.card')?.querySelector('h3')?.textContent)");
       assert.equal(nyuto[0], nyuto[1]);
       // other facilities have no data → section hidden
-      for (const id of ['onsen-001', 'onsen-012', 'onsen-024', 'onsen-067']) {
+      for (const id of ['onsen-001', 'onsen-005', 'onsen-024', 'onsen-067']) {
         if (!await evaluate(`!!document.querySelector('[data-detail="${id}"]')`)) continue;
         await evaluate(`document.querySelector('[data-detail="${id}"]').click()`);
         const s = await evaluate(readSection);

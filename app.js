@@ -45,9 +45,14 @@ function groupedCards(list){
   }
   return [...groups.values()];
 }
+// 湯の色の丸。データは bath-colors.js(公式資料で確認できた色だけ)。無い施設・定義の無い色は何も出さない。
+const BATH_COLOR_LIMIT=3;
+function bathColorText(c,def){const scope=c.scope==='bath'&&Array.isArray(c.scopeNames)&&c.scopeNames.length?'（'+c.scopeNames.join('・')+'）':'（施設全体）',parts=['湯の色: '+def.label+scope];if(c.expression&&c.expression!==def.label)parts.push('公式の表現「'+c.expression+'」');if(c.change&&c.change.note)parts.push(c.change.note);return parts.join('。')+'。'}
+function bathColorDots(x){const defs=window.ONSEN_COLOR_DEFS||{},entry=(window.ONSEN_BATH_COLORS||{})[x.id],list=(entry&&Array.isArray(entry.colors)?entry.colors:[]).filter(c=>c&&defs[c.color]).slice(0,BATH_COLOR_LIMIT);if(!list.length)return '';return '<span class="bath-colors" role="group" aria-label="湯の色">'+list.map(c=>{const def=defs[c.color],text=bathColorText(c,def);return '<button type="button" class="bath-color" aria-label="'+esc(text)+'"><i class="bath-color-dot'+(def.hollow?' is-hollow':'')+'" style="--dot:'+esc(def.fill)+';--ring:'+esc(def.ring)+'" aria-hidden="true"></i><span class="bath-color-tip" role="tooltip" aria-hidden="true">'+esc(text)+'</span></button>'}).join('')+'</span>'}
+function closeBathColorTips(except){document.querySelectorAll('.bath-color.is-open').forEach(b=>{if(b!==except)b.classList.remove('is-open')})}
 function facilityRow(x){
   const info=visitInfo(x.id);
-  return `<div class="facility-entry ${info.visited?'is-visited':'is-unvisited'}" data-facility-id="${esc(x.id)}"><div class="facility">${facilityName(x)}${info.visited?'<span class="conquered-badge">制覇</span>':''}</div><div class="facility-meta">${facilityMap(x)}<button type="button" class="link facility-detail icon-text-link" data-detail="${esc(x.id)}" aria-label="${esc(x.facility)}の詳細を見る">詳細<svg class="external-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h6v6M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg></button>${x.category?'<span class="tag gold">'+esc(categoryLabel(x.category))+'</span>':''}${x.springType?'<span class="tag">'+esc(x.springType)+'</span>':''}</div></div>`;
+  return `<div class="facility-entry ${info.visited?'is-visited':'is-unvisited'}" data-facility-id="${esc(x.id)}"><div class="facility">${facilityName(x)}${bathColorDots(x)}${info.visited?'<span class="conquered-badge">制覇</span>':''}</div><div class="facility-meta">${facilityMap(x)}<button type="button" class="link facility-detail icon-text-link" data-detail="${esc(x.id)}" aria-label="${esc(x.facility)}の詳細を見る">詳細<svg class="external-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h6v6M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg></button>${x.category?'<span class="tag gold">'+esc(categoryLabel(x.category))+'</span>':''}${x.springType?'<span class="tag">'+esc(x.springType)+'</span>':''}</div></div>`;
 }
 function renderCards(){
   const list=filtered(),groups=groupedCards(list);
@@ -57,6 +62,7 @@ function renderCards(){
   document.querySelectorAll('[data-detail]').forEach(b=>b.onclick=()=>openDetail(b.dataset.detail));
 }
 
+$('cards').addEventListener('click',e=>{const b=e.target.closest('.bath-color');if(!b)return;const open=!b.classList.contains('is-open');closeBathColorTips(b);b.classList.toggle('is-open',open)});document.addEventListener('click',e=>{if(!e.target.closest('.bath-color'))closeBathColorTips()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeBathColorTips()});
 function render(){renderDashboard();renderPrefs();renderCards();$('visitMigration').hidden=!store.needsMigration();japanMap?.refresh();onsenMap?.refresh()}
 function editable(){if(store.needsMigration()){showToast('旧記録のバックアップと移行を確認してください');return false}return true}
 function toggleVisit(id){if(!DATA.some(x=>x.id===id)||!editable())return;const info=visitInfo(id);if(info.visited&&(info.visitCount>1||info.lastVisit)){openDetail(id);$('visitHeading').scrollIntoView({block:'nearest'});return}if(info.visited&&!confirm('日付不明の訪問記録を削除し、未訪問に戻しますか？'))return;try{state=store.setVisited(state,id,!info.visited);render();if(current===id)renderVisits();showToast(visited({id})?'訪問済み・日付不明として記録しました ♨':'未訪問に戻しました')}catch(err){showToast(err.message||'保存できませんでした。元の記録は変更していません。')}}
