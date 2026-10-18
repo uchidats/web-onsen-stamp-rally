@@ -249,6 +249,18 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 #mapCanvas .onsen-map-marker span { pointer-events: auto; clip-path: circle(50%); }
 .onsen-map-marker span { display: block; width: 20px; height: 20px; background: var(--marker-color); border: 3px solid var(--surface); border-radius: 50%; box-shadow: 0 1px 5px #192e2940; }
 .onsen-map-marker.is-visited span::after { content: ""; display: block; width: 6px; height: 3px; border-left: 1.5px solid var(--surface); border-bottom: 1.5px solid var(--surface); transform: rotate(-45deg); margin: 4px auto; }
+/* 試作: 県別地図の♨マーカー(map.js の MARKER_STYLE='spring')。♨のグリフ(BIZ UDゴシック・SIL OFL 1.1、assets/licenses/BIZUDGothic-OFL.txt)をSVGパスとして固定し、マスクで色(--marker-color)を塗る。
+   文字要素は使わない。背景の丸・枠・バッジは付けない。見た目は幅21px、タップ可能な円(span)は24px。近接マーカーの選択テストが円の重なりを前提にしているため、円はこれ以上大きくしていない。
+   丸に戻す場合は MARKER_STYLE='dot' にするだけでよく、このブロックは使われなくなる。 */
+:root { --spring-glyph: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%22-60 -60 2128 1830%22%3E%3Cpath d=%22M1735 967Q1968 1081 1968 1261Q1968 1459 1743 1590Q1487 1739 1024 1739Q604 1739 351 1615Q80 1482 80 1259Q80 1080 313 967L369 1043Q299 1078 259 1134Q223 1186 223 1238Q223 1355 376 1451Q601 1592 1025 1592Q1408 1592 1633 1473Q1825 1372 1825 1237Q1825 1118 1679 1043ZM903 1344Q1014 1197 1014 1004Q1014 852 916 662Q823 482 823 333Q823 184 952 0L1041 37Q979 166 979 293Q979 432 1086 641Q1176 818 1176 974Q1176 1191 983 1387ZM504 1247Q584 1126 584 993Q584 869 494 684Q430 552 430 430Q430 291 551 121L631 156Q571 267 571 378Q571 503 653 670Q729 824 729 955Q729 1038 688 1130Q650 1217 582 1288ZM1352 1250Q1426 1133 1426 986Q1426 860 1348 709Q1258 534 1258 397Q1258 273 1346 127L1432 160Q1395 242 1395 346Q1395 483 1493 670Q1573 822 1573 948Q1573 1138 1434 1286Z%22 fill=%22%23000%22 stroke=%22%23000%22 stroke-width=%2280%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E"); }
+#mapCanvas .onsen-map-marker--spring span { width: 24px; height: 24px; border: 0; border-radius: 50%; box-shadow: none; background: var(--marker-color);
+  -webkit-mask: var(--spring-glyph) center / 21px 18px no-repeat; mask: var(--spring-glyph) center / 21px 18px no-repeat;
+  filter: drop-shadow(0 0 1px var(--surface)) drop-shadow(0 0 1.5px var(--surface)); }
+/* 県別地図の凡例(.map-legend)も♨に統一。map.js が MARKER_STYLE='spring' のときだけ .is-spring を付ける。全国地図の凡例(.legend-marker)は従来の丸のまま。 */
+.map-legend.is-spring .legend-dot { width: 17px; height: 15px; border-radius: 0; -webkit-mask: var(--spring-glyph) center / contain no-repeat; mask: var(--spring-glyph) center / contain no-repeat; }
+/* 近くの温泉施設の選択(♨の周囲をタップして複数候補があるとき) */
+.map-choice-list { display: grid; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+.map-choice-list button { width: 100%; min-height: 44px; text-align: left; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--moss); font: inherit; padding: 8px 12px; }
 .map-canvas .leaflet-control-zoom a { width: 44px; height: 44px; line-height: 44px; background: var(--surface); color: var(--moss); }
 .map-canvas .leaflet-control-attribution { color: #303832; background: #fbf9f3f2; font-size: 10px; }
 .map-canvas .leaflet-control-attribution a { color: #344f43; text-decoration: underline; }
