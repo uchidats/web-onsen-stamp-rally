@@ -36,13 +36,19 @@ const FUKUSHIMA = {
   'onsen-034': '旅館玉子湯', 'onsen-035': '安達屋旅館', 'onsen-036': '野地温泉ホテル', 'onsen-037': '柏屋旅館', 'onsen-039': '御宿 万葉亭'
 };
 
+const GUNMA = { 'onsen-048': '鍾寿館', 'onsen-053': '湯宿 三河屋' };
+
 const IWATE = {
   'onsen-006': '峡雲荘', 'onsen-007': '藤三旅館', 'onsen-008': '山水閣', 'onsen-009': '元湯夏油', 'onsen-010': '石塚旅館', 'onsen-011': 'ほっとゆだ', 'onsen-012': '彩雲荘'
 };
 
-test('feature baths: data is keyed by existing facility IDs and covers exactly the 11 Akita, 7 Iwate, 4 Aomori, 6 Yamagata, 3 Miyagi and 5 Fukushima facilities', () => {
+test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 2 Gunma facilities', () => {
   assert.equal(data.length, 67);
-  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA)].sort());
+  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(GUNMA)].sort());
+  for (const [id, name] of Object.entries(GUNMA)) {
+    assert.equal(data.find(x => x.id === id).facility, name);
+    assert.equal(data.find(x => x.id === id).prefecture, '群馬県');
+  }
   for (const [id, name] of Object.entries(AKITA)) {
     const x = data.find(v => v.id === id);
     assert.ok(x, id);
@@ -105,7 +111,7 @@ test('feature baths: only officially confirmed content is published (no unconfir
   for (const [id, e] of Object.entries(feature)) assert.deepEqual(e.baths.filter(b => b.color).map(b => b.name), COLORED[id] || [], id);
   // 岩盤浴は色・泉質の検索対象にしない(色なし)、料金・営業時間は載せない
   assert.equal(feature['onsen-014'].baths.find(b => b.kind === '岩盤浴').color, undefined);
-  assert.ok(!/円|\d{1,2}:\d{2}|営業時間/.test(JSON.stringify(Object.values(feature).map(e => [e.note, e.baths]))), 'no prices or hours');
+  assert.ok(!/(?:\d[\d,]*|[一二三四五六七八九十百千万]+)円|\d{1,2}:\d{2}|営業時間/.test(JSON.stringify(Object.values(feature).map(e => [e.note, e.baths]))), 'no prices or hours (円形 is a shape, not a price)');
   const text = JSON.stringify(feature);
   for (const banned of ['candidate', 'unconfirmed', '未確認', '候補']) assert.ok(!text.includes(banned), banned);
 });

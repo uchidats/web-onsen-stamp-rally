@@ -155,3 +155,18 @@ test('gensei: Fukushima certifies only 玉子湯 (3) and 大気の湯 (1, third-
   // 福島のどの規則にも scope:'all' を機械的に作らない
   for (const id of ['onsen-034', 'onsen-035']) for (const r of [...rule(id, 'water'), ...rule(id, 'heating')]) { assert.equal(r.scope, 'baths', id); assert.ok(r.scopeNote.length > 30, id); }
 });
+
+test('gensei: Gunma holds conflicting fill-water evidence and never certifies Mikawaya from overflow or source quality', () => {
+  for (const name of ['古式風呂 一乃湯', '古式風呂 二乃湯・三乃湯']) {
+    const result = evaluate(kake['onsen-048'], name);
+    assert.equal(result.kake, true);
+    assert.equal(result.heating, 'none');
+    assert.equal(result.water, 'unknown', 'conflicting fill-water reports remain undecided');
+    assert.equal(result.result, 'pending');
+  }
+  assert.equal(evaluate(kake['onsen-048'], '山里乃湯').result, 'excluded', 'summer cooling water precludes certification');
+  assert.deepEqual(certifiedBaths(kake['onsen-048']), []);
+  assert.equal(evaluate(kake['onsen-048'], '源乃湯の蒸し湯').result, 'not_applicable');
+  assert.equal(kake['onsen-053'], undefined, 'overflow when entering a bath does not establish continuous spring flow');
+  for (const b of feature['onsen-053'].baths) assert.equal(evaluate(kake['onsen-053'], b.name).result, 'pending');
+});

@@ -49,6 +49,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-035': ['湯の色: 乳白色（施設全体）。公式の表現「白濁」。'],
       'onsen-036': ['湯の色: 乳白色（施設全体）。公式の表現「乳白色にごり湯」。'],
       'onsen-039': ['湯の色: 乳白色（施設全体）。年に数回、乳白色になります。'],
+      'onsen-048': ['湯の色: 無色透明（施設全体）。公式の表現「無色透明」。'],
       'onsen-026': ['湯の色: 無色透明（露天風呂付き大浴場(洞窟の湯)）。第三者資料の記載です。']
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);

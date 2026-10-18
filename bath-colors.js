@@ -193,5 +193,12 @@ window.ONSEN_BATH_COLORS = {
       change: { kind: 'rare', note: '年に数回、乳白色になります' }
     }],
     source: { url: 'https://www.manyoutei.jp/hotspa.html', checkedAt: '2026-10-18' }
+  },
+  'onsen-048': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '施設掲載のじゃらん宿泊プラン（2026年8月12日更新）が、家族風呂の利用案内に続けて「無色透明で、匂いもない天然温泉です」と説明。分析書の色ではなく利用する温泉の紹介。浴槽ごとの色は特定されていないため施設全体に限定する。施設公式サイト本文での湯色記載は確認できていない' }
+    }],
+    source: { url: 'https://www.jalan.net/yad324528/plan/plan02025828/', checkedAt: '2026-10-18' }
   }
 };

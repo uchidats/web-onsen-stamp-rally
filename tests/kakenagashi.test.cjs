@@ -28,12 +28,12 @@ test('kakenagashi: every entry is keyed by an existing facility and records scop
   }
 });
 
-test('kakenagashi: the card icon facilities are exactly the confirmed ones (33); unconfirmed facilities get none', () => {
+test('kakenagashi: the card icon facilities are exactly the confirmed ones (34); unconfirmed facilities get none', () => {
   assert.deepEqual(Object.keys(kake).sort(), [
     'onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012',
     'onsen-015', 'onsen-016', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027',
     'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033',
-    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039'
+    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-048'
   ]);
   // 酸ヶ湯・新玉川・玉川・川原毛は、かけ流しを明記した資料を確認できていない
   for (const id of ['onsen-002', 'onsen-013', 'onsen-014', 'onsen-022']) assert.equal(kake[id], undefined, id);
@@ -62,7 +62,7 @@ test('kakenagashi: per-bath icons use only bath-level evidence and match 代表�
     // 第三者団体の一覧(施設単位)だけでは、個々の浴槽に広げない
     if (e.evidence.type === 'third_party') assert.deepEqual(e.baths, [], id);
   }
-  assert.equal(n, 51);
+  assert.equal(n, 54);
   // 施設全体の記述だけの施設・かけ流しが明記されていない浴槽には付けない
   assert.deepEqual(kake['onsen-008'].baths, ['大沢の湯']); // 山水の湯・豊沢の湯は公式FAQのかけ流しの列挙に含まれない
   assert.deepEqual(kake['onsen-011'].baths, ['大浴場']); // 貸切風呂は記載なし

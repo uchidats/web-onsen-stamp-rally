@@ -259,6 +259,19 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の館内施設ページ「湯は源泉１００％掛流し。露天風呂、大浴場、貸切風呂と３つの湯舟で楽しめる」。列挙された露天・大浴場・貸切の3種類に限って対応づけた。加水加温循環なしの記載は中ノ沢温泉の説明で、各浴槽の記載ではない' },
     dilution: { water: 'unknown', note: '公式の「加水加温循環なし」は中ノ沢温泉を主語にした説明で、各浴槽への適用は未確認' },
     source: { url: 'https://www.manyoutei.jp/facilities.html', checkedAt: '2026-10-18' }
+  },
+  'onsen-048': {
+    scope: 'facility', baths: ['古式風呂 一乃湯', '古式風呂 二乃湯・三乃湯', '山里乃湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '施設掲載のじゃらん宿泊プラン「温泉は敷地内で湧出する自家源泉を掛け流しで注ぎ込んでおります」。同じプランが古式風呂と山里乃湯を紹介し、公式サイトも各浴場と利用状況を列挙している。循環なしだけからの推定ではない' },
+    scopeNote: '施設掲載プランの家族風呂・露天風呂の利用説明を、公式に掲載される入浴用の代表3浴場群へ対応づけた。源乃湯は利用形態に食い違いがあり代表選定から外す。蒸し湯は対象外。',
+    dilution: { water: 'for_temperature', note: '公式の利用状況表で山里乃湯は夏期のみ冷却のため加水。一乃湯・二乃湯・三乃湯は加水「無」だが、古い第三者資料の湯張り時の加水記載との違いを解消できず、加水なしの認定規則は作らない' },
+    source: { url: 'https://www.jalan.net/yad324528/plan/plan02025828/', checkedAt: '2026-10-18' },
+    nonBathing: [{ name: '源乃湯の蒸し湯', reason: '蒸し湯は全身を湯に浸す入浴用の浴槽ではないため認定の対象外' }],
+    treatment: {
+      water: [{ status: 'yes', scope: 'baths', baths: ['山里乃湯'], coverage: '山里乃湯の3つの湯船（夏期の冷却加水）', scopeNote: '公式の利用状況表の山里乃湯行は加水「有※1」、注記は夏期のみ。通年加水なしとは扱わない。古式風呂の加水なしは湯張り時の加水を記す古い資料との食い違いが残るため保留', quote: '※1 冷却のため、夏期のみ加水を致しております（源乃湯・山里乃湯）', url: 'http://www.naf.co.jp/shojukan/onsentop.stm', checkedAt: '2026-10-18' }],
+      heating: [{ status: 'none', scope: 'baths', baths: ['古式風呂 一乃湯', '古式風呂 二乃湯・三乃湯', '山里乃湯'], coverage: '公式表の一乃湯・二乃湯・三乃湯・山里乃湯の各行', scopeNote: '温泉利用状況表の加温列は各行とも「無」。二乃湯・三乃湯は両行を確認して1表示項目へまとめた。加水や消毒の有無を意味しない', quote: '温泉利用状況／加温：一乃湯 無、二乃湯 無、三乃湯 無、山里乃湯 無（表の各行）', url: 'http://www.naf.co.jp/shojukan/onsentop.stm', checkedAt: '2026-10-18' }],
+      circulation: [{ status: 'none', scope: 'baths', baths: ['古式風呂 一乃湯', '古式風呂 二乃湯・三乃湯', '山里乃湯'], coverage: '公式表の一乃湯・二乃湯・三乃湯・山里乃湯の各行', scopeNote: '温泉利用状況表の循環列だけを記録。ろ過単独・消毒はこの表では確認できない', quote: '温泉利用状況／循環：一乃湯 無、二乃湯 無、三乃湯 無、山里乃湯 無（表の各行）', url: 'http://www.naf.co.jp/shojukan/onsentop.stm', checkedAt: '2026-10-18' }]
+    }
   }
 };
 

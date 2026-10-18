@@ -290,5 +290,23 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '貸切露天風呂(陶器2槽)', kind: '露天', form: '貸切', tags: ['陶器の湯船2つ'] }
     ],
     source: { url: 'https://www.manyoutei.jp/hotspa.html', checkedAt: '2026-10-18' }
+  },
+  'onsen-048': {
+    note: '古式風呂はメンテナンスのため、いずれか1か所が利用できない場合があります。',
+    baths: [
+      { name: '古式風呂 一乃湯', kind: '内湯', form: '貸切', tags: ['石造り', '常盤之湯'], note: '専用の源泉から自然流下で約5mの経路を通して給湯する家族風呂' },
+      { name: '古式風呂 二乃湯・三乃湯', kind: '内湯', form: '貸切', tags: ['檜造り', '塩之湯'], note: '各2〜3名向きの檜造りの家族風呂です' },
+      { name: '山里乃湯', kind: '露天', form: '貸切', tags: ['山里の風情', '3つの湯船'], note: '裏山へ上ったところにある、木の塀で仕切られた1組ずつ使う露天風呂です' }
+    ],
+    source: { url: 'http://www.naf.co.jp/shojukan/onsentop.stm', checkedAt: '2026-10-18' }
+  },
+  'onsen-053': {
+    note: '宿泊者専用の貸切風呂です。空いていれば予約なしで利用できます。',
+    baths: [
+      { name: '福寿草', form: '貸切', tags: ['内湯と露天', '円形の露天風呂'], note: '円形の露天風呂と内湯を楽しめます' },
+      { name: '都忘れ', kind: '半露天', form: '貸切', tags: ['窓を開放'], note: '窓を開けると半露天、閉めると内風呂になる浴場です' },
+      { name: '水芭蕉', kind: '露天', form: '貸切', tags: ['寝湯', '2024年改修'], note: '2024年3月にリニューアルした、寝湯としても楽しめる露天風呂です' }
+    ],
+    source: { url: 'https://www.yado-mikawaya.com/spa/index.html', checkedAt: '2026-10-18' }
   }
 };
