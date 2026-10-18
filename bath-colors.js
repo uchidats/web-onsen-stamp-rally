@@ -200,5 +200,35 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '施設掲載のじゃらん宿泊プラン（2026年8月12日更新）が、家族風呂の利用案内に続けて「無色透明で、匂いもない天然温泉です」と説明。分析書の色ではなく利用する温泉の紹介。浴槽ごとの色は特定されていないため施設全体に限定する。施設公式サイト本文での湯色記載は確認できていない' }
     }],
     source: { url: 'https://www.jalan.net/yad324528/plan/plan02025828/', checkedAt: '2026-10-18' }
+  },
+  'onsen-041': {
+    colors: [
+      {
+        color: 'milky_white', expression: '白や青白', scope: 'facility', role: 'base',
+        evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「5本とも無色透明の湯ですが、湯船にためると次第に白や青白くなります」。白と青白は同じ湯の表現の違いとして乳白色1色にまとめた。透明な「たけの湯」や灰色の湯花の色は含めない。施設全体の説明で、個別の浴槽の色ではない' },
+        change: { kind: 'tint', note: '湯船にためると白や青白くなり、投入量・気温・気圧で変わります' }
+      },
+      {
+        color: 'black', expression: '年に数回は黒くなる', scope: 'facility', role: 'variant',
+        evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「湯船の色についても、加仁湯は緑色に見えることはありませんが、年に数回は黒くなることがあります」。まれな変化色で、どの浴槽かは特定されていない' },
+        change: { kind: 'rare', note: '年に数回、黒くなることがあります' }
+      }
+    ],
+    source: { url: 'http://www.naf.co.jp/kaniyu/onsen.stm', checkedAt: '2026-10-18' }
+  },
+  'onsen-043': {
+    colors: [
+      { color: 'milky_white', expression: '白濁', scope: 'facility', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップの画像のalt文章「日によって温泉の色も白濁、緑色、黒色など様々」。写真の見た目からの推定ではない。色の順序・頻度・どの浴槽かは未確認' }, change: { kind: 'seasonal', note: '日によって色が変わります' } },
+      { color: 'green', expression: '緑色', scope: 'facility', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップの画像のalt文章「日によって温泉の色も白濁、緑色、黒色など様々」。写真の見た目からの推定ではない' }, change: { kind: 'seasonal', note: '日によって色が変わります' } },
+      { color: 'black', expression: '黒色', scope: 'facility', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップの画像のalt文章「日によって温泉の色も白濁、緑色、黒色など様々」。写真の見た目からの推定ではない' }, change: { kind: 'seasonal', note: '日によって色が変わります' } }
+    ],
+    source: { url: 'https://gensenkan.com/', checkedAt: '2026-10-18' }
+  },
+  'onsen-044': {
+    colors: [{
+      color: 'milky_white', expression: '白いにごり湯', scope: 'facility',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '日本温泉協会の施設紹介「栃木県最古の湯、白いにごり湯」。分析書の色ではなく利用する湯の紹介。男湯・女湯のどの温度の浴槽かは特定されておらず、公式サイトでの確認ではない' }
+    }],
+    source: { url: 'https://www.spa.or.jp/search_f/detail_f/?F_ID=1685', checkedAt: '2026-10-18' }
   }
 };

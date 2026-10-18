@@ -43,6 +43,12 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       'onsen-035': { facility: '安達屋旅館', names: ['大気の湯(東・西)', '薬師の湯', '東の湯・西の湯'], colors: [], note: false },
       'onsen-036': { facility: '野地温泉ホテル', names: ['鬼面の湯', '天狗の湯', '千寿の湯'], colors: [], note: true },
       'onsen-037': { facility: '柏屋旅館', names: ['自噴巌風呂', '滝の湯', '檜風呂'], colors: [], note: false },
+      'onsen-040': { facility: '明賀屋本館', names: ['川岸露天風呂(混浴)', '女性専用川岸露天風呂', 'やすらぎの湯・太古の湯'], colors: [], note: false },
+      'onsen-041': { facility: '加仁湯', names: ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'], colors: [], note: false },
+      'onsen-042': { facility: '八丁の湯', names: ['雪見の湯', '滝見の湯', '石楠花の湯'], colors: [], note: false },
+      'onsen-043': { facility: '秘湯の宿 元泉館', names: ['高尾の湯(渓流露天風呂)', '邯鄲の湯', '宝の湯'], colors: [], note: false },
+      'onsen-044': { facility: '那須 鹿の湯', names: ['男湯(41〜48℃)', '女湯(41〜46℃)'], colors: [], note: true },
+      'onsen-045': { facility: '大黒屋', names: ['露天の湯', 'たいようの湯', 'ひのきの湯'], colors: [], note: false },
       'onsen-039': { facility: '御宿 万葉亭', names: ['大浴場(内湯)', '男女別露天風呂', '貸切露天風呂(陶器2槽)'], colors: [], note: true },
       'onsen-033': { facility: '吾妻屋', names: ['根っこ風呂', '眺望露天風呂'], colors: [], note: false },
       'onsen-002': { facility: '酸ヶ湯温泉旅館', names: ['ヒバ千人風呂', '玉の湯'], colors: ['湯の色 白濁(乳白色)'], note: false },
@@ -119,7 +125,7 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       const nyuto = await evaluate("[...document.querySelectorAll('[data-facility-id=\"onsen-015\"],[data-facility-id=\"onsen-016\"]')].map(e=>e.closest('.card')?.dataset?.groupId||e.closest('.card')?.querySelector('h3')?.textContent)");
       assert.equal(nyuto[0], nyuto[1]);
       // other facilities have no data → section hidden
-      for (const id of ['onsen-001', 'onsen-025', 'onsen-038', 'onsen-040', 'onsen-067']) {
+      for (const id of ['onsen-001', 'onsen-025', 'onsen-038', 'onsen-046', 'onsen-067']) {
         if (!await evaluate(`!!document.querySelector('[data-detail="${id}"]')`)) continue;
         await evaluate(`document.querySelector('[data-detail="${id}"]').click()`);
         const s = await evaluate(readSection);

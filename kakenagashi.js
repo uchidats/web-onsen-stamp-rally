@@ -272,6 +272,48 @@ window.ONSEN_KAKENAGASHI = {
       heating: [{ status: 'none', scope: 'baths', baths: ['古式風呂 一乃湯', '古式風呂 二乃湯・三乃湯', '山里乃湯'], coverage: '公式表の一乃湯・二乃湯・三乃湯・山里乃湯の各行', scopeNote: '温泉利用状況表の加温列は各行とも「無」。二乃湯・三乃湯は両行を確認して1表示項目へまとめた。加水や消毒の有無を意味しない', quote: '温泉利用状況／加温：一乃湯 無、二乃湯 無、三乃湯 無、山里乃湯 無（表の各行）', url: 'http://www.naf.co.jp/shojukan/onsentop.stm', checkedAt: '2026-10-18' }],
       circulation: [{ status: 'none', scope: 'baths', baths: ['古式風呂 一乃湯', '古式風呂 二乃湯・三乃湯', '山里乃湯'], coverage: '公式表の一乃湯・二乃湯・三乃湯・山里乃湯の各行', scopeNote: '温泉利用状況表の循環列だけを記録。ろ過単独・消毒はこの表では確認できない', quote: '温泉利用状況／循環：一乃湯 無、二乃湯 無、三乃湯 無、山里乃湯 無（表の各行）', url: 'http://www.naf.co.jp/shojukan/onsentop.stm', checkedAt: '2026-10-18' }]
     }
+  },
+  'onsen-040': {
+    scope: 'facility', baths: ['川岸露天風呂(混浴)', '女性専用川岸露天風呂', 'やすらぎの湯・太古の湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「全ての浴槽が源泉かけ流しになっております」。同ページが川岸露天風呂(混浴)・女性専用川岸露天風呂・内湯(やすらぎの湯・太古の湯)を掲載している' },
+    dilution: { water: 'for_temperature', note: '公式「温度が高めの為、入浴に適した温度にするための加水をしている源泉もあります」。どの浴槽かは未確認' },
+    source: { url: 'http://www.myogaya.com/onsen.stm', checkedAt: '2026-10-18' }
+  },
+  'onsen-041': {
+    scope: 'partial', baths: ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップ「お部屋のユニットバス以外の全ての湯船が源泉掛け流しです」。客室ユニットバスは例外として対象外。公式の温泉ページに載る第三露天風呂・第一露天風呂・利き湯 ロマンの湯(5つの湯船)に限って対応づけた' },
+    dilution: { water: 'none', note: '公式「加温・加水は一切しておりません」(客室ユニットバス以外の全ての湯船)' },
+    source: { url: 'http://www.naf.co.jp/kaniyu/', checkedAt: '2026-10-18' },
+    treatment: {
+      water: [{ status: 'none', scope: 'baths', baths: ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'], coverage: '客室ユニットバス以外の全ての湯船のうち、温泉ページに載る3浴場', scopeNote: '公式トップが「お部屋のユニットバス以外の全ての湯船が源泉掛け流しです。」に続けて「加温・加水は一切しておりません。」と書き、温泉ページの「加温も加水もしません」とも一致する(2026-10-18に再確認)。対象は客室ユニットバスを除く全湯船で、温泉ページには第一・第二・第三露天風呂、利き湯 ロマンの湯(5つの湯船)、カモシカの湯、貸切露天・内湯が載っている。3浴場はこの一覧に含まれる。ロマンの湯は5つの小浴槽を1浴場群として扱う。かぶり湯用の設備・客室ユニットバスは含めない。源泉の量や混合での温度調整は加水とは別', quote: 'お部屋のユニットバス以外の全ての湯船が源泉掛け流しです。加温・加水は一切しておりません。', url: 'http://www.naf.co.jp/kaniyu/', checkedAt: '2026-10-18' }],
+      heating: [{ status: 'none', scope: 'baths', baths: ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'], coverage: '客室ユニットバス以外の全ての湯船のうち、温泉ページに載る3浴場', scopeNote: '公式トップが「お部屋のユニットバス以外の全ての湯船が源泉掛け流しです。」に続けて「加温・加水は一切しておりません。」と書き、温泉ページの「加温も加水もしません」とも一致する(2026-10-18に再確認)。対象は客室ユニットバスを除く全湯船で、温泉ページには第一・第二・第三露天風呂、利き湯 ロマンの湯(5つの湯船)、カモシカの湯、貸切露天・内湯が載っている。3浴場はこの一覧に含まれる。ロマンの湯は5つの小浴槽を1浴場群として扱う。かぶり湯用の設備・客室ユニットバスは含めない', quote: 'お部屋のユニットバス以外の全ての湯船が源泉掛け流しです。加温・加水は一切しておりません。', url: 'http://www.naf.co.jp/kaniyu/', checkedAt: '2026-10-18' }]
+    }
+  },
+  'onsen-042': {
+    scope: 'facility', baths: ['雪見の湯', '滝見の湯', '石楠花の湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「当館自慢の源泉は、100%自然湧出のかけ流しです」。同じ段落が「すべての浴槽へ引湯している」と書き、雪見の湯・滝見の湯・石楠花の湯の3つの野天風呂が同ページに載っている' },
+    dilution: { water: 'unknown', note: '日本秘湯を守る会は加水ありと記載するが、対象の浴槽・季節が不明。公式は加水について書いていない。加温も未判定: 公式の温泉説明欄は「高温泉なので、ボイラーなどによる追い炊きをしていません。」と書くが、これは追い炊き(再加熱)の否定で、給湯の途中での加温までは否定できないため、加温なしとは扱わない' },
+    source: { url: 'https://www.8tyo-no-yu.co.jp/spa/', checkedAt: '2026-10-18' }
+  },
+  'onsen-043': {
+    scope: 'partial', baths: ['高尾の湯(渓流露天風呂)'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式ページの説明文「渓流沿いのにごり湯源泉掛け流しの露天風呂」が渓流露天風呂を名指しし、温泉ページで高尾の湯の渓流露天風呂と対応する。邯鄲の湯・宝の湯は個別のかけ流しの記載がなく、施設全体の「完全放流式掛け流し」からは広げない(旅行サイトに否定の記載もあり未確認)' },
+    dilution: { water: 'for_temperature', note: 'JR東日本は宝の湯の夏季加水と、高尾の湯・邯鄲の湯の季節による加温を記載。季節・旧資料との食い違いがあり、源生の湯は保留' },
+    source: { url: 'https://gensenkan.com/question.htm', checkedAt: '2026-10-18' }
+  },
+  'onsen-044': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: '日本温泉協会の浴場紹介「41℃から48℃まで温度によって分けられた６槽（女子は46℃までの５つ）厳しく管理された源泉かけ流しのお湯と…」と基本情報「掛け流し浴槽: 有」。「源泉かけ流し」が男湯6槽・女湯5槽のどれを指すかは文章で明示されておらず、浴槽の記載もないため、施設カードだけにして個々の湯には付けない。公式の記載ではない。かぶり湯用の設備は対象外' },
+    dilution: { water: 'unknown' },
+    source: { url: 'https://www.spa.or.jp/search_f/detail_f/?F_ID=1685', checkedAt: '2026-10-18' },
+    nonBathing: [{ name: 'かぶり湯', reason: 'かぶり湯用の設備は全身を湯に浸す入浴用の浴槽ではないため認定の対象外' }]
+  },
+  'onsen-045': {
+    scope: 'partial', baths: ['露天の湯', 'たいようの湯', 'ひのきの湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式FAQ「すべての浴槽は源泉掛け流し100%の温泉です」。同FAQが本館の露天の湯・ひのきの湯・たいようの湯を列挙している。別館保養の館など本館の3浴場以外には広げない' },
+    dilution: { water: 'unknown', note: '旧記事のひのきの湯の無加温、冬季加温、旅行サイトの露天の湯の加温の記載が食い違い、未確認' },
+    source: { url: 'https://www.itamuro-daikokuya.com/faq1/', checkedAt: '2026-10-18' },
+    nonBathing: [{ name: '黄土浴アタラクシア', reason: '黄土浴の設備は全身を湯に浸す入浴用の浴槽ではないため認定の対象外' }]
   }
 };
 

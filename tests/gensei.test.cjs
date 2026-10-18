@@ -77,14 +77,15 @@ test('gensei: every treatment rule carries its source, scope and quote; no manua
   for (const [id, e] of Object.entries(kake)) if (e.evidence.type === 'third_party') assert.deepEqual(certifiedBaths(e), [], id);
 });
 
-test('gensei: current certification (5 facilities, 13 baths) and the reasons others stay undecided or excluded', () => {
+test('gensei: current certification (6 facilities, 16 baths) and the reasons others stay undecided or excluded', () => {
   const certified = Object.fromEntries(Object.entries(kake).map(([id, e]) => [id, certifiedBaths(e)]).filter(([, b]) => b.length));
   assert.deepEqual(certified, {
     'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'],
     'onsen-009': ['大湯', '滝の湯', '真湯'],
     'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'],
     'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'],
-    'onsen-035': ['大気の湯(東・西)']
+    'onsen-035': ['大気の湯(東・西)'],
+    'onsen-041': ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯']
   });
   // 認定された湯は、必ず源泉かけ流しの湯(深緑の波)でもある
   for (const [id, names] of Object.entries(certified)) for (const n of names) assert.ok(kake[id].baths.includes(n), `${id}/${n}`);
@@ -169,4 +170,25 @@ test('gensei: Gunma holds conflicting fill-water evidence and never certifies Mi
   assert.equal(evaluate(kake['onsen-048'], '源乃湯の蒸し湯').result, 'not_applicable');
   assert.equal(kake['onsen-053'], undefined, 'overflow when entering a bath does not establish continuous spring flow');
   for (const b of feature['onsen-053'].baths) assert.equal(evaluate(kake['onsen-053'], b.name).result, 'pending');
+});
+
+test('gensei: Tochigi certifies only 加仁湯 (3 baths); 八丁の湯, 元泉館, 大黒屋 and others stay undecided; no manual list', () => {
+  const rule = (id, kind) => kake[id].treatment[kind];
+  for (const k of ['water', 'heating']) {
+    assert.equal(rule('onsen-041', k).length, 1);
+    assert.equal(rule('onsen-041', k)[0].scope, 'baths');
+    assert.deepEqual(rule('onsen-041', k)[0].baths, ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯']);
+    assert.match(rule('onsen-041', k)[0].scopeNote, /客室ユニットバス/);
+  }
+  assert.equal(evaluate(kake['onsen-041'], 'ロマンの湯').result, 'pending'); // 名称が違えば別物(浴槽名の厳密一致)
+  // 八丁の湯: 「追い炊きをしていません」は給湯途中の加温を否定できないため、加温も加水も未判定(規則なし)。根拠文は dilution.note に残す
+  assert.equal(kake['onsen-042'].treatment, undefined);
+  assert.match(kake['onsen-042'].dilution.note, /追い炊き/);
+  for (const n of kake['onsen-042'].baths) { const r = evaluate(kake['onsen-042'], n); assert.equal(r.heating, 'unknown', n); assert.equal(r.water, 'unknown', n); assert.equal(r.result, 'pending', n); }
+  // 元泉館・大黒屋・明賀屋・鹿の湯: 季節加水・加温や矛盾があり規則を設けない(認定保留)
+  for (const id of ['onsen-040', 'onsen-043', 'onsen-044', 'onsen-045']) { assert.deepEqual(certifiedBaths(kake[id]), [], id); assert.equal(kake[id].treatment, undefined, id); }
+  // かぶり湯・アタラクシアは認定対象外
+  assert.equal(evaluate(kake['onsen-044'], 'かぶり湯').result, 'not_applicable');
+  assert.equal(evaluate(kake['onsen-045'], '黄土浴アタラクシア').result, 'not_applicable');
+  assert.ok(kake['onsen-045'].nonBathing.some(n => n.name === '黄土浴アタラクシア'));
 });

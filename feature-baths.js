@@ -308,5 +308,53 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '水芭蕉', kind: '露天', form: '貸切', tags: ['寝湯', '2024年改修'], note: '2024年3月にリニューアルした、寝湯としても楽しめる露天風呂です' }
     ],
     source: { url: 'https://www.yado-mikawaya.com/spa/index.html', checkedAt: '2026-10-18' }
+  },
+  'onsen-040': {
+    baths: [
+      { name: '川岸露天風呂(混浴)', kind: '露天', form: '混浴', tags: ['川岸', '女性専用時間あり'], note: '朝7時〜8時は女性専用です。館内から88段の階段を下りた川岸にあります' },
+      { name: '女性専用川岸露天風呂', kind: '露天', form: '女性専用', tags: ['川岸'] },
+      { name: 'やすらぎの湯・太古の湯', kind: '内湯', form: '男女別', tags: ['2系統の温泉'], note: 'やすらぎの湯が女性、太古の湯が男性です' }
+    ],
+    source: { url: 'http://www.myogaya.com/onsen.stm', checkedAt: '2026-10-18' }
+  },
+  'onsen-041': {
+    baths: [
+      { name: '第三露天風呂', kind: '露天', form: '混浴' },
+      { name: '第一露天風呂', kind: '露天', form: '女性専用' },
+      { name: '利き湯 ロマンの湯', tags: ['5源泉を入り比べ'], note: '5つの湯船に別々の源泉を引き、わざと熱い湯船とぬるい湯船があります' }
+    ],
+    source: { url: 'http://www.naf.co.jp/kaniyu/onsen.stm', checkedAt: '2026-10-18' }
+  },
+  'onsen-042': {
+    baths: [
+      { name: '雪見の湯', kind: '露天', form: '混浴', tags: ['開業時からの野天'], note: '昭和4(1929)年の開業時からある野天風呂です' },
+      { name: '滝見の湯', kind: '露天', form: '混浴', tags: ['滝を正面に望む'], note: '岩肌を縫うように流れ落ちる滝を正面に仰ぎます' },
+      { name: '石楠花の湯', kind: '露天', form: '混浴', tags: ['滝の真横'], note: '滝のすぐ真横に位置する野天風呂です' }
+    ],
+    source: { url: 'https://www.8tyo-no-yu.co.jp/spa/', checkedAt: '2026-10-18' }
+  },
+  'onsen-043': {
+    baths: [
+      { name: '高尾の湯(渓流露天風呂)', kind: '露天', form: '男女別', tags: ['赤川渓谷', '夜間ライトアップ'] },
+      { name: '邯鄲の湯', kind: '内湯', form: '混浴', tags: ['岩肌湧出', '女性専用時間あり'], note: '館内の岩風呂。女性専用の時間帯があります' },
+      { name: '宝の湯', kind: '内湯', form: '男女別', tags: ['檜風呂', '間欠泉'], note: '宿泊者向けの館内檜風呂です' }
+    ],
+    source: { url: 'https://gensenkan.com/onsen.htm', checkedAt: '2026-10-18' }
+  },
+  'onsen-044': {
+    note: '男湯・女湯の名称は公式の固有名ではなく、浴槽の構成を示す説明用の名称です。',
+    baths: [
+      { name: '男湯(41〜48℃)', form: '男女別', tags: ['温度別浴槽', '短熱浴'], note: '41・42・43・44・46・48度の6種類の浴槽があります' },
+      { name: '女湯(41〜46℃)', form: '男女別', tags: ['温度別浴槽', '短熱浴'], note: '女湯には48度の浴槽がありません' }
+    ],
+    source: { url: 'https://www.shikanoyu.jp/hotspa/', checkedAt: '2026-10-18' }
+  },
+  'onsen-045': {
+    baths: [
+      { name: '露天の湯', kind: '露天', tags: ['那珂川のせせらぎ', '2023年改修'] },
+      { name: 'たいようの湯', tags: ['陽光'] },
+      { name: 'ひのきの湯', tags: ['檜造り', '熱め・ぬるめの2槽'] }
+    ],
+    source: { url: 'https://www.itamuro-daikokuya.com/onsen/', checkedAt: '2026-10-18' }
   }
 };

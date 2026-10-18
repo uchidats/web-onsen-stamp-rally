@@ -28,12 +28,12 @@ test('kakenagashi: every entry is keyed by an existing facility and records scop
   }
 });
 
-test('kakenagashi: the card icon facilities are exactly the confirmed ones (34); unconfirmed facilities get none', () => {
+test('kakenagashi: the card icon facilities are exactly the confirmed ones (40); unconfirmed facilities get none', () => {
   assert.deepEqual(Object.keys(kake).sort(), [
     'onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012',
     'onsen-015', 'onsen-016', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027',
     'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033',
-    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-048'
+    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-040', 'onsen-041', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-048'
   ]);
   // 酸ヶ湯・新玉川・玉川・川原毛は、かけ流しを明記した資料を確認できていない
   for (const id of ['onsen-002', 'onsen-013', 'onsen-014', 'onsen-022']) assert.equal(kake[id], undefined, id);
@@ -62,7 +62,7 @@ test('kakenagashi: per-bath icons use only bath-level evidence and match 代表�
     // 第三者団体の一覧(施設単位)だけでは、個々の浴槽に広げない
     if (e.evidence.type === 'third_party') assert.deepEqual(e.baths, [], id);
   }
-  assert.equal(n, 54);
+  assert.equal(n, 67);
   // 施設全体の記述だけの施設・かけ流しが明記されていない浴槽には付けない
   assert.deepEqual(kake['onsen-008'].baths, ['大沢の湯']); // 山水の湯・豊沢の湯は公式FAQのかけ流しの列挙に含まれない
   assert.deepEqual(kake['onsen-011'].baths, ['大浴場']); // 貸切風呂は記載なし
@@ -83,4 +83,25 @@ test('kakenagashi: the wave icon replaces the plain 源泉かけ流し tag; diff
   assert.ok(tags.includes('足元湧出'));
   // 「源泉100%」だけでは、かけ流しと判定しない(源泉100%を挙げる浴槽でも、かけ流しの根拠が無ければアイコンなし)
   assert.ok(!(kake['onsen-014'] || { baths: [] }).baths.length);
+});
+
+test('kakenagashi: Tochigi 6 facilities, 13 bath-level waves, each with the scope recorded', () => {
+  assert.deepEqual(kake['onsen-040'].baths, ['川岸露天風呂(混浴)', '女性専用川岸露天風呂', 'やすらぎの湯・太古の湯']);
+  assert.deepEqual(kake['onsen-041'].baths, ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯']);
+  assert.match(kake['onsen-041'].evidence.note, /客室ユニットバス/);
+  assert.deepEqual(kake['onsen-042'].baths, ['雪見の湯', '滝見の湯', '石楠花の湯']);
+  // 元泉館: 渓流露天の高尾の湯だけ。邯鄲の湯・宝の湯は施設全体の記述から広げない
+  assert.deepEqual(kake['onsen-043'].baths, ['高尾の湯(渓流露天風呂)']);
+  assert.equal(kake['onsen-043'].scope, 'partial');
+  // 鹿の湯: 団体文章は「かけ流し」が男湯・女湯のどの浴槽群かを明示していないため施設カードだけ(浴槽別の波なし)
+  assert.deepEqual(kake['onsen-044'].baths, []);
+  assert.equal(kake['onsen-044'].evidence.type, 'third_party');
+  assert.equal(kake['onsen-044'].evidence.confidence, 'third_party_reported');
+  assert.ok(!('perBathEvidence' in kake['onsen-044']));
+  // 大黒屋: 本館の3浴場に限定
+  assert.deepEqual(kake['onsen-045'].baths, ['露天の湯', 'たいようの湯', 'ひのきの湯']);
+  assert.match(kake['onsen-045'].evidence.note, /本館の3浴場以外には広げない/);
+  let n = 0;
+  for (const id of ['onsen-040', 'onsen-041', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045']) n += kake[id].baths.length;
+  assert.equal(n, 13);
 });

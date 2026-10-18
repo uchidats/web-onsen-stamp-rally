@@ -27,7 +27,7 @@ test('bath colors: shared definitions cover every color class with a formal name
 
 test('bath colors: keyed by existing facility IDs, up to 3 colors, source recorded, nothing for unconfirmed facilities', () => {
   const ids = new Set(data.map(x => x.id));
-  assert.deepEqual(Object.keys(colors).sort(), ['onsen-002', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-015', 'onsen-017', 'onsen-018', 'onsen-020', 'onsen-021', 'onsen-026', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-034', 'onsen-035', 'onsen-036', 'onsen-039', 'onsen-048']);
+  assert.deepEqual(Object.keys(colors).sort(), ['onsen-002', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-015', 'onsen-017', 'onsen-018', 'onsen-020', 'onsen-021', 'onsen-026', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-034', 'onsen-035', 'onsen-036', 'onsen-039', 'onsen-041', 'onsen-043', 'onsen-044', 'onsen-048']);
   for (const [id, e] of Object.entries(colors)) {
     assert.ok(ids.has(id), id);
     assert.ok(e.colors.length >= 1, id);
@@ -44,7 +44,7 @@ test('bath colors: keyed by existing facility IDs, up to 3 colors, source record
     }
   }
   // 源泉の「無色透明」(玉川・新玉川)や泉質からの推測を色として載せない。源泉分析値だけでは無色透明の丸を作らない
-  for (const id of ['onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-022', 'onsen-023', 'onsen-024', 'onsen-025', 'onsen-027', 'onsen-037', 'onsen-038', 'onsen-053', 'onsen-028', 'onsen-029', 'onsen-033']) assert.equal(colors[id], undefined, id);
+  for (const id of ['onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-022', 'onsen-023', 'onsen-024', 'onsen-025', 'onsen-027', 'onsen-040', 'onsen-042', 'onsen-045', 'onsen-037', 'onsen-038', 'onsen-053', 'onsen-028', 'onsen-029', 'onsen-033']) assert.equal(colors[id], undefined, id);
   // 無色透明は洞窟の湯(第三者・浴槽単位)と鍾寿館(施設掲載プラン・施設単位)だけ
   assert.deepEqual(Object.entries(colors).filter(([, e]) => e.colors.some(c => c.color === 'colorless')).map(([id]) => id), ['onsen-026', 'onsen-048']);
 });
@@ -89,7 +89,7 @@ test('bath colors: consistent with the 代表的な湯 data (no contradiction be
   assert.match(colors['onsen-010'].colors[1].change.note, /まれに/);
   // 詳細画面の湯名の右に丸が出るのは scope:bath の湯だけ(施設全体の色は個々の湯へ適用しない)
   const bathScoped = Object.fromEntries(Object.entries(colors).map(([id, e]) => [id, e.colors.filter(c => c.scope === 'bath').flatMap(c => c.scopeNames)]));
-  assert.deepEqual(bathScoped, { 'onsen-002': ['玉の湯', 'ヒバ千人風呂'], 'onsen-004': [], 'onsen-006': ['混浴露天風呂', '内湯'], 'onsen-010': ['薬師の湯', '混浴露天風呂', '小浴場'], 'onsen-012': ['混浴露天風呂', '男女別内湯', '宿泊者専用露天風呂'], 'onsen-015': [], 'onsen-017': [], 'onsen-018': ['神経痛の湯'], 'onsen-020': [], 'onsen-021': ['大露天風呂'], 'onsen-026': ['露天風呂付き大浴場(洞窟の湯)'], 'onsen-034': [], 'onsen-035': ['大気の湯(東・西)'], 'onsen-036': [], 'onsen-039': [], 'onsen-048': [], 'onsen-030': ['かわら湯', '展望風呂(地蔵の湯・観音の湯)'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'], 'onsen-032': ['混浴露天風呂', '女性専用露天風呂'] });
+  assert.deepEqual(bathScoped, { 'onsen-002': ['玉の湯', 'ヒバ千人風呂'], 'onsen-004': [], 'onsen-006': ['混浴露天風呂', '内湯'], 'onsen-010': ['薬師の湯', '混浴露天風呂', '小浴場'], 'onsen-012': ['混浴露天風呂', '男女別内湯', '宿泊者専用露天風呂'], 'onsen-015': [], 'onsen-017': [], 'onsen-018': ['神経痛の湯'], 'onsen-020': [], 'onsen-021': ['大露天風呂'], 'onsen-026': ['露天風呂付き大浴場(洞窟の湯)'], 'onsen-034': [], 'onsen-035': ['大気の湯(東・西)'], 'onsen-036': [], 'onsen-039': [], 'onsen-041': [], 'onsen-043': [], 'onsen-044': [], 'onsen-048': [], 'onsen-030': ['かわら湯', '展望風呂(地蔵の湯・観音の湯)'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'], 'onsen-032': ['混浴露天風呂', '女性専用露天風呂'] });
 });
 
 test('bath colors: evidence is recorded for every color; photo-based or third-party colors can never look confirmed', () => {
@@ -122,7 +122,7 @@ test('bath colors: photo-inferred and third-party colors are recorded as such, w
     }
   }
   assert.deepEqual(photo, ['onsen-006/内湯', 'onsen-010/薬師の湯,混浴露天風呂,小浴場', 'onsen-012/宿泊者専用露天風呂', 'onsen-032/混浴露天風呂,女性専用露天風呂']);
-  assert.deepEqual(third, ['onsen-002/ヒバ千人風呂', 'onsen-015/facility', 'onsen-020/facility', 'onsen-021/大露天風呂', 'onsen-026/露天風呂付き大浴場(洞窟の湯)', 'onsen-035/大気の湯(東・西)']);
+  assert.deepEqual(third, ['onsen-002/ヒバ千人風呂', 'onsen-015/facility', 'onsen-020/facility', 'onsen-021/大露天風呂', 'onsen-026/露天風呂付き大浴場(洞窟の湯)', 'onsen-035/大気の湯(東・西)', 'onsen-044/facility']);
   // 写真から「無色透明」は登録しない(透明と無色の区別、浴槽の底・照明の影響で断定できない)。洞窟の湯は文章による第三者記載
   assert.ok(!photo.some(p => /onsen-026/.test(p)));
   // 天女風呂(公式の源泉紹介からの間接候補)・峩々温泉の施設色・源泉分析書の色は登録しない
@@ -149,4 +149,22 @@ test('bath colors: Fukushima facility colors stay facility-scoped; only 大気�
   const m = colors['onsen-039'].colors[0];
   assert.equal(m.role, 'variant');
   assert.equal(m.change.kind, 'rare');
+});
+
+test('bath colors: Tochigi has 3 facility-level colors only (no bath-level color), merged tints and a third-party label', () => {
+  for (const id of ['onsen-041', 'onsen-043', 'onsen-044']) assert.ok(colors[id].colors.every(c => c.scope === 'facility'), id);
+  // 明賀屋・八丁の湯・大黒屋には根拠不足の色を載せない
+  for (const id of ['onsen-040', 'onsen-042', 'onsen-045']) assert.equal(colors[id], undefined, id);
+  // 加仁湯: 白・青白は乳白色1色、黒はまれな変化色
+  const k = colors['onsen-041'].colors;
+  assert.deepEqual(k.map(c => c.color), ['milky_white', 'black']);
+  assert.equal(k[1].role, 'variant'); assert.equal(k[1].change.kind, 'rare');
+  assert.ok(!JSON.stringify(k).includes('"green"'));
+  // 元泉館: 公式の画像alt文章(写真推定ではない)。白濁・緑・黒
+  const g = colors['onsen-043'].colors;
+  assert.deepEqual(g.map(c => c.color), ['milky_white', 'green', 'black']);
+  assert.ok(g.every(c => c.evidence.type === 'official_text' && c.evidence.confidence === 'confirmed' && c.listed === true));
+  // 鹿の湯: 第三者団体の記載
+  assert.equal(colors['onsen-044'].colors[0].evidence.confidence, 'third_party_reported');
+  assert.equal(colors['onsen-044'].colors[0].evidence.type, 'third_party');
 });

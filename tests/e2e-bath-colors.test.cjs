@@ -49,11 +49,14 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-035': ['湯の色: 乳白色（施設全体）。公式の表現「白濁」。'],
       'onsen-036': ['湯の色: 乳白色（施設全体）。公式の表現「乳白色にごり湯」。'],
       'onsen-039': ['湯の色: 乳白色（施設全体）。年に数回、乳白色になります。'],
-      'onsen-048': ['湯の色: 無色透明（施設全体）。公式の表現「無色透明」。'],
+      'onsen-048': ['湯の色: 無色透明（施設全体）。'],
+      'onsen-041': ['湯の色: 乳白色（施設全体）。公式の表現「白や青白」。湯船にためると白や青白くなり、投入量・気温・気圧で変わります。', '湯の色: 黒（施設全体）。年に数回、黒くなることがあります。'],
+      'onsen-043': ['乳白色', '緑', '黒'].map(l => `湯の色: ${l}（施設全体）。日によって色が変わります。${LIST}`),
+      'onsen-044': ['湯の色: 乳白色（施設全体）。資料の表現「白いにごり湯」。第三者資料の記載です。'],
       'onsen-026': ['湯の色: 無色透明（露天風呂付き大浴場(洞窟の湯)）。第三者資料の記載です。']
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
-    const NONE = ['onsen-037', 'onsen-038', 'onsen-024', 'onsen-025', 'onsen-027', 'onsen-028', 'onsen-029', 'onsen-033', 'onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-023'];
+    const NONE = ['onsen-040', 'onsen-042', 'onsen-045', 'onsen-037', 'onsen-038', 'onsen-024', 'onsen-025', 'onsen-027', 'onsen-028', 'onsen-029', 'onsen-033', 'onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-023'];
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
     const center = async expr => { const r = await rect(expr); return { x: r.x + r.w / 2, y: r.y + r.h / 2 }; };
@@ -185,7 +188,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-031': { '岩風呂': 1, '檜露天風呂': 1, '混浴内風呂': 1 },
       'onsen-032': { '混浴露天風呂': 1, '女性専用露天風呂': 1 }
     };
-    const NO_DETAIL_DOTS = ['onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-029', 'onsen-033', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-003', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014'];
+    const NO_DETAIL_DOTS = ['onsen-041', 'onsen-043', 'onsen-044', 'onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-029', 'onsen-033', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-003', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014'];
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       for (const [id, want] of Object.entries(DETAIL)) {
