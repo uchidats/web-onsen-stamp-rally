@@ -53,17 +53,20 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-012': ['湯の色: 乳白色（混浴露天風呂・男女別内湯）。'],
       'onsen-015': ['湯の色: 乳白色（施設全体）。資料の表現「乳白色の湯」。第三者資料の記載です。'],
       'onsen-020': ['湯の色: 乳白色（施設全体）。資料の表現「溢れる乳白色の硫黄泉」。第三者資料の記載です。'],
+      'onsen-030': ['湯の色: 茶褐色（かわら湯）。公式の表現「微かに茶褐色」。', '湯の色: 黄（展望風呂(地蔵の湯・観音の湯)）。公式の表現「微かに黄色」。'],
+      'onsen-031': ['湯の色: 乳白色（岩風呂・檜露天風呂・混浴内風呂）。公式の表現「乳白色の濁り湯」。日本秘湯を守る会は「青白く濁る湯」と紹介しています(乳白色と同じ湯の別の表現で、別の色とは扱いません)。'],
+      'onsen-032': ['湯の色: 乳白色（混浴露天風呂・女性専用露天風呂）。資料の表現「公式写真の青みを帯びた乳白色の湯」。写真では青みを帯びた乳白色に見えます。写真からの推定です。'],
       'onsen-017': ['茶褐色', '緑', '白'].map(l => `湯の色: ${l}（施設全体）。${SEASONAL}${LIST}`),
       'onsen-018': ['湯の色: 灰白色（神経痛の湯）。公式の表現「灰白色の「にごり湯」」。'],
       'onsen-021': ['湯の色: 白（施設全体）。公式の表現「白濁の湯」。']
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
-    const NONE = ['onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-023'];
+    const NONE = ['onsen-028', 'onsen-029', 'onsen-033', 'onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-023'];
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
     const center = async expr => { const r = await rect(expr); return { x: r.x + r.w / 2, y: r.y + r.h / 2 }; };
     const dotExpr = (id, i) => `${entry(id)}.querySelectorAll('.bath-color')[${i}]`;
-    const tipState = async (id, i = 0) => evaluate(`(()=>{const e=${entry(id)},t=e.querySelectorAll('.bath-color-tip')[${i}],s=getComputedStyle(t),r=t.getBoundingClientRect(),c=e.closest('.card').getBoundingClientRect();return{visible:s.visibility==='visible'&&+s.opacity>0,inside:r.left>=c.left-1&&r.right<=c.right+1&&r.top>=c.top-1}})()`);
+    const tipState = async (id, i = 0) => evaluate(`(()=>{const e=${entry(id)},t=e.querySelectorAll('.bath-colors .bath-color-tip')[${i}],s=getComputedStyle(t),r=t.getBoundingClientRect(),c=e.closest('.card').getBoundingClientRect();return{visible:s.visibility==='visible'&&+s.opacity>0,inside:r.left>=c.left-1&&r.right<=c.right+1&&r.top>=c.top-1}})()`);
     const key = async (name, code, vk, text) => {
       await send('Input.dispatchKeyEvent', { type: 'keyDown', key: name, code, windowsVirtualKeyCode: vk, ...(text ? { text } : {}) });
       await send('Input.dispatchKeyEvent', { type: 'keyUp', key: name, code, windowsVirtualKeyCode: vk });
@@ -87,7 +90,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       for (const [id, tips] of Object.entries(TIPS)) {
         assert.equal(await evaluate(`${entry(id)}.querySelectorAll('.bath-color').length`), tips.length, id);
         assert.deepEqual(await evaluate(`[...${entry(id)}.querySelectorAll('.bath-color')].map(b=>b.getAttribute('aria-label'))`), tips, id);
-        assert.deepEqual(await evaluate(`[...${entry(id)}.querySelectorAll('.bath-color-tip')].map(b=>b.textContent)`), tips, id);
+        assert.deepEqual(await evaluate(`[...${entry(id)}.querySelectorAll('.bath-colors .bath-color-tip')].map(b=>b.textContent)`), tips, id);
       }
       for (const id of NONE) assert.equal(await evaluate(`${entry(id)}.querySelectorAll('.bath-color').length`), 0, id + ' must have no dot');
       assert.equal(await evaluate("document.querySelectorAll('#cards .bath-color').length"), TOTAL_DOTS);
@@ -183,9 +186,12 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-010': { '薬師の湯': 1, '混浴露天風呂': 1, '小浴場': 1 },
       'onsen-012': { '混浴露天風呂': 1, '男女別内湯': 1, '宿泊者専用露天風呂': 1 },
       'onsen-018': { '神経痛の湯': 1 },
-      'onsen-021': { '大露天風呂': 1 }
+      'onsen-021': { '大露天風呂': 1 },
+      'onsen-030': { 'かわら湯': 1, '展望風呂(地蔵の湯・観音の湯)': 1 },
+      'onsen-031': { '岩風呂': 1, '檜露天風呂': 1, '混浴内風呂': 1 },
+      'onsen-032': { '混浴露天風呂': 1, '女性専用露天風呂': 1 }
     };
-    const NO_DETAIL_DOTS = ['onsen-004', 'onsen-015', 'onsen-017', 'onsen-003', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014'];
+    const NO_DETAIL_DOTS = ['onsen-028', 'onsen-029', 'onsen-033', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-003', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014'];
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       for (const [id, want] of Object.entries(DETAIL)) {

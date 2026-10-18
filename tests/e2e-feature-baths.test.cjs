@@ -47,6 +47,12 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
     fs.mkdirSync('scratch/feature-bath-qa', { recursive: true });
 
     const expected = {
+      'onsen-028': { facility: '東屋', names: ['滝風呂', '石風呂', '露天風呂'], colors: [], note: false },
+      'onsen-029': { facility: '湯守の宿三之亟', names: ['大岩風呂', 'ひょうたん風呂'], colors: [], note: false },
+      'onsen-030': { facility: '湯宿元河原湯', names: ['かわら湯', '展望風呂(地蔵の湯・観音の湯)'], colors: ['湯の色 微かに茶褐色', '湯の色 微かに黄色'], note: false },
+      'onsen-031': { facility: '福島屋', names: ['岩風呂', '檜露天風呂', '混浴内風呂'], colors: ['湯の色 乳白色の濁り湯', '湯の色 乳白色の濁り湯', '湯の色 乳白色の濁り湯'], note: false },
+      'onsen-032': { facility: '桝形屋', names: ['混浴露天風呂', '女性専用露天風呂', '檜造りの内風呂'], colors: [], note: false },
+      'onsen-033': { facility: '吾妻屋', names: ['根っこ風呂', '眺望露天風呂'], colors: [], note: false },
       'onsen-002': { facility: '酸ヶ湯温泉旅館', names: ['ヒバ千人風呂', '玉の湯'], colors: ['湯の色 白濁(乳白色)'], note: false },
       'onsen-003': { facility: '蔦温泉旅館', names: ['久安の湯', '泉響の湯', '貸切風呂'], colors: [], note: true },
       'onsen-004': { facility: '黄金崎不老ふ死温泉', names: ['海辺の露天風呂', '不老ふ死の湯', '黄金の湯'], colors: [], note: true },

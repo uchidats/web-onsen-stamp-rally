@@ -130,5 +130,30 @@ window.ONSEN_BATH_COLORS = {
       }
     ],
     source: { url: 'https://www.doroyu.com/', checkedAt: '2026-10-17' }
+  },
+  'onsen-030': {
+    colors: [
+      { color: 'brown', expression: '微かに茶褐色', scope: 'bath', scopeNames: ['かわら湯'], evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの浴槽別の表「湯の色: 微かに茶褐色」(貸切風呂かわら湯)' } },
+      { color: 'yellow', expression: '微かに黄色', scope: 'bath', scopeNames: ['展望風呂(地蔵の湯・観音の湯)'], evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの浴槽別の表「湯の色: 微かに黄色」(展望風呂)。2つの浴槽の色は別々に記載されている' } }
+    ],
+    source: { url: 'https://irori.in/hotspa/', checkedAt: '2026-10-18' }
+  },
+  'onsen-031': {
+    colors: [{
+      color: 'milky_white', expression: '乳白色の濁り湯', scope: 'bath', scopeNames: ['岩風呂', '檜露天風呂', '混浴内風呂'],
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「当館のお風呂は全て源泉掛け流し。3つの自家源泉からは乳白色の濁り湯が絶え間なく浴槽に注がれ」。全ての浴槽について明記されている' },
+      change: { kind: 'tint', note: '日本秘湯を守る会は「青白く濁る湯」と紹介しています(乳白色と同じ湯の別の表現で、別の色とは扱いません)' }
+    }],
+    source: { url: 'https://www.namegawa-fukushimaya.com/', checkedAt: '2026-10-18' }
+  },
+  'onsen-032': {
+    colors: [{
+      color: 'milky_white', expression: '公式写真の青みを帯びた乳白色の湯', scope: 'bath', scopeNames: ['混浴露天風呂', '女性専用露天風呂'],
+      evidence: { type: 'official_photo', confidence: 'photo_inferred', note: '公式サイトの混浴露天風呂・女性専用露天風呂の写真2枚(hotspring_img01/02)で、湯面が不透明な淡い青みの乳白色であることを目視確認。日本温泉協会「色: 白色」、日本秘湯を守る会「にごり湯」と整合する。文章に浴槽の色の記載はなく、檜造りの内風呂は写真の色が判別できず未登録' },
+      change: { kind: 'tint', note: '写真では青みを帯びた乳白色に見えます' },
+      source: { url: 'http://www.ubayuonsen.com/hotspring.html', checkedAt: '2026-10-18' }
+    }],
+    source: { url: 'http://www.ubayuonsen.com/hotspring.html', checkedAt: '2026-10-18' }
   }
+
 };

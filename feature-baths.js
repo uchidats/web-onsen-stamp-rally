@@ -6,6 +6,51 @@
 //   tags  特徴(短い語)                  note 短い補足(湯ごと)。施設全体の補足は entry.note
 // source は表示しない管理用の情報(公式ページ・確認日)。
 window.ONSEN_FEATURE_BATHS = {
+  'onsen-028': {
+    baths: [
+      { name: '滝風呂', note: '東屋の象徴。約400年受け継がれる石造りの浴槽に、湯が滝のように落ちます' },
+      { name: '石風呂', note: '庭石を昭和26年から2年かけて手彫りした石風呂' },
+      { name: '露天風呂', kind: '露天', form: '男女別', tags: ['雪見風呂'], note: '男性用・女性用があり、男女の入れ替えはありません' }
+    ],
+    source: { url: 'https://www.shirabu-higashiya.com/', checkedAt: '2026-10-18' }
+  },
+  'onsen-029': {
+    baths: [
+      { name: '大岩風呂', form: '混浴', tags: ['足元湧出', '女性専用時間あり'], note: '深湯・中湯は湯舟の底から湧き出る足元湧出湯です' },
+      { name: 'ひょうたん風呂', form: '貸切', note: '予約制の貸切風呂です' }
+    ],
+    source: { url: 'https://3nojo.com/hotspring/', checkedAt: '2026-10-18' }
+  },
+  'onsen-030': {
+    baths: [
+      { name: 'かわら湯', form: '貸切', color: '微かに茶褐色', note: '1階の貸切風呂。元河原湯源泉だけを注ぎます' },
+      { name: '展望風呂(地蔵の湯・観音の湯)', form: '男女別', color: '微かに黄色', tags: ['日帰り入浴可'], note: '4階の大浴場。地蔵の湯が男湯、観音の湯が女湯です' }
+    ],
+    source: { url: 'https://irori.in/hotspa/', checkedAt: '2026-10-18' }
+  },
+  'onsen-031': {
+    baths: [
+      { name: '岩風呂', kind: '露天', form: '混浴', color: '乳白色の濁り湯', tags: ['女性専用時間あり'], note: '前川を見下ろす岩の露天風呂' },
+      { name: '檜露天風呂', kind: '露天', color: '乳白色の濁り湯', note: '5〜6人サイズ。宿泊の方は貸切にもできます' },
+      { name: '混浴内風呂', kind: '内湯', form: '混浴', color: '乳白色の濁り湯', note: '石造りで天井が高く、湯治の方に一番人気です' }
+    ],
+    source: { url: 'https://www.namegawa-fukushimaya.com/', checkedAt: '2026-10-18' }
+  },
+  'onsen-032': {
+    baths: [
+      { name: '混浴露天風呂', kind: '露天', form: '混浴', tags: ['奇岩の絶景'], note: '時間によって入れ替えがあります' },
+      { name: '女性専用露天風呂', kind: '露天', form: '女性専用', note: '時間によって入れ替えがあります' },
+      { name: '檜造りの内風呂', kind: '内湯', form: '男女別', note: '日帰り入浴は露天風呂のみです' }
+    ],
+    source: { url: 'http://www.ubayuonsen.com/hotspring.html', checkedAt: '2026-10-18' }
+  },
+  'onsen-033': {
+    baths: [
+      { name: '根っこ風呂', note: '巨木の根をくり抜いてつくった風呂(丸形・横型)' },
+      { name: '眺望露天風呂', kind: '露天', note: '標高1126mの山懐から眺める露天風呂' }
+    ],
+    source: { url: 'https://www.hitou.or.jp/provider/736', checkedAt: '2026-10-18' }
+  },
   'onsen-002': {
     baths: [
       { name: 'ヒバ千人風呂', form: '混浴', tags: ['名物', '女性専用時間あり', '湯滝'], note: '160畳の総ヒバ造り。4つの異なる源泉があります' },
@@ -16,16 +61,16 @@ window.ONSEN_FEATURE_BATHS = {
   'onsen-003': {
     note: '公式: 湯船の底板から空気に触れていない源泉が湧き出す「源泉湧き流し」の温泉です。',
     baths: [
-      { name: '久安の湯', tags: ['足元湧出', '時間で男女入替', '源泉かけ流し'], note: '源泉が足元から湧き出る浴場。シャワーはありません' },
-      { name: '泉響の湯', form: '男女別', tags: ['足元湧出', '源泉かけ流し'], note: '浴槽から梁までの高さが最頂部で12mある高い天井の浴場' },
-      { name: '貸切風呂', form: '貸切', tags: ['足元湧出', '源泉かけ流し'], note: '現地予約制。シャワーがあります' }
+      { name: '久安の湯', tags: ['足元湧出', '時間で男女入替'], note: '源泉が足元から湧き出る浴場。シャワーはありません' },
+      { name: '泉響の湯', form: '男女別', tags: ['足元湧出'], note: '浴槽から梁までの高さが最頂部で12mある高い天井の浴場' },
+      { name: '貸切風呂', form: '貸切', tags: ['足元湧出'], note: '現地予約制。シャワーがあります' }
     ],
     source: { url: 'https://tsutaonsen.com/hotspring/', checkedAt: '2026-10-18' }
   },
   'onsen-004': {
     note: '公式: 湯の色は赤褐色(茶褐色)。湧き出た瞬間は透明ですが、空気に触れて酸化します。',
     baths: [
-      { name: '海辺の露天風呂', kind: '露天', tags: ['波打ち際', '日本海と夕陽の眺め', '源泉かけ流し'], note: '混浴と女性専用の2つの浴槽があります' },
+      { name: '海辺の露天風呂', kind: '露天', tags: ['波打ち際', '日本海と夕陽の眺め'], note: '混浴と女性専用の2つの浴槽があります' },
       { name: '不老ふ死の湯', tags: ['内湯と露天', '日本海の眺め', '時間で男女入替'], note: '新館大浴場。パノラマ露天風呂があります' },
       { name: '黄金の湯', kind: '内湯', tags: ['熱湯とぬる湯'], note: '本館大浴場。2つの浴槽があります' }
     ],
@@ -33,20 +78,20 @@ window.ONSEN_FEATURE_BATHS = {
   },
   'onsen-005': {
     baths: [
-      { name: '大浴場', tags: ['ぬる湯', '源泉かけ流し'], note: '町内一ぬるい温泉と紹介されています' }
+      { name: '大浴場', tags: ['ぬる湯'], note: '町内一ぬるい温泉と紹介されています' }
     ],
     source: { url: 'https://www.town.tohoku.lg.jp/kankou/onsen.html', checkedAt: '2026-10-18' }
   },
   'onsen-006': {
     baths: [
-      { name: '混浴露天風呂', kind: '露天', form: '混浴', color: '乳白色(わずかに緑をふくむ)', tags: ['源泉かけ流し', '原生林の眺め'] },
-      { name: '女性専用露天風呂', kind: '露天', form: '女性専用', tags: ['源泉かけ流し'] },
+      { name: '混浴露天風呂', kind: '露天', form: '混浴', color: '乳白色(わずかに緑をふくむ)', tags: ['原生林の眺め'] },
+      { name: '女性専用露天風呂', kind: '露天', form: '女性専用' },
       { name: '内湯', kind: '内湯', form: '男女別', note: 'シャワーはなく、樋の源泉を汲んで使います' }
     ],
     source: { url: 'https://kyounso.jp/', checkedAt: '2026-10-17' }
   },
   'onsen-007': {
-    note: '公式: 館内4浴場すべて源泉100%掛け流しです。',
+    note: '公式: 館内4浴場すべて源泉100%で、加熱・循環・差し水をしていません。',
     baths: [
       { name: '白猿の湯', form: '混浴', tags: ['足元湧出', '立ち湯', '女性専用時間あり'], note: '深さ平均1.25mの立居浴専用' },
       { name: '桂の湯', form: '男女別', tags: ['内湯と露天', '渓流の眺め'], note: '川岸にもう一つ露天風呂があります' },
@@ -56,7 +101,7 @@ window.ONSEN_FEATURE_BATHS = {
   },
   'onsen-008': {
     baths: [
-      { name: '大沢の湯', kind: '露天', form: '混浴', tags: ['名物', '女性専用時間あり', '源泉かけ流し'], note: '湯治屋の浴場です' },
+      { name: '大沢の湯', kind: '露天', form: '混浴', tags: ['名物', '女性専用時間あり'], note: '湯治屋の浴場です' },
       { name: '豊沢の湯', kind: '半露天', form: '男女別', tags: ['豊沢川の眺め', '日帰り入浴可'], note: '冬期は内湯になります' },
       { name: '山水の湯', tags: ['内湯と露天', '宿泊者専用'] }
     ],
@@ -82,7 +127,7 @@ window.ONSEN_FEATURE_BATHS = {
   },
   'onsen-011': {
     baths: [
-      { name: '大浴場', tags: ['列車接近の信号機', '駅舎併設', '源泉かけ流し'] },
+      { name: '大浴場', tags: ['列車接近の信号機', '駅舎併設'] },
       { name: '貸切風呂', form: '貸切' }
     ],
     source: { url: 'https://www.nishiwaga.biz/hot-spring/hotto-yuda/', checkedAt: '2026-10-17' }
@@ -92,7 +137,7 @@ window.ONSEN_FEATURE_BATHS = {
     baths: [
       { name: '混浴露天風呂', kind: '露天', form: '混浴', color: '乳白色', tags: ['源泉100%', '女性専用時間あり', '八幡平の景観'] },
       { name: '宿泊者専用露天風呂', kind: '露天', form: '男女別', tags: ['宿泊者専用', '岩手山の眺め', '源泉100%'] },
-      { name: '男女別内湯', kind: '内湯', form: '男女別', color: '乳白色', tags: ['源泉100%', '源泉かけ流し'] }
+      { name: '男女別内湯', kind: '内湯', form: '男女別', color: '乳白色', tags: ['源泉100%'] }
     ],
     source: { url: 'https://toushichi.com/onsen/', checkedAt: '2026-10-17' }
   },
@@ -124,7 +169,7 @@ window.ONSEN_FEATURE_BATHS = {
     note: '公式: 役内川の河原で湧く源泉は「清流のように澄んでいて」肌ざわりがやわらかいとされています。',
     baths: [
       { name: '大浴場', tags: ['名物', '立ち湯', '時間で男女入替'], note: '明治の創業当時からの名残をとどめる湯' },
-      { name: '河原野天風呂', kind: '露天', form: '混浴', tags: ['宿泊者限定', '100%源泉かけ流し', 'ぬる湯'] },
+      { name: '河原野天風呂', kind: '露天', form: '混浴', tags: ['宿泊者限定', '源泉100%', 'ぬる湯'] },
       { name: '混浴半露天風呂', kind: '半露天', form: '混浴', tags: ['役内川の眺め'], note: '湯あみ着の着用可' }
     ],
     source: { url: 'http://takanoyuonsen.com/温泉/', checkedAt: '2026-10-17' }

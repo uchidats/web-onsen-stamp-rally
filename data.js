@@ -58,7 +58,7 @@ window.ONSEN_DATA = [
     "station": "七戸十和田駅",
     "distanceKm": 32,
     "elevationM": 450,
-    "springType": "単純温泉",
+    "springType": "硫酸塩泉・炭酸水素塩泉・塩化物泉",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%94%A6%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E9%9D%92%E6%A3%AE%E7%9C%8C",
     "coordinateCheckedAt": "2026-10-11"
   },
@@ -699,7 +699,7 @@ window.ONSEN_DATA = [
     "longitude": 140.13246795,
     "coordinateSource": "https://www.openstreetmap.org/way/526613445",
     "coordinateVerified": true,
-    "officialUrl": "",
+    "officialUrl": "https://www.on1000.jp/",
     "category": "旧（掲載終了）",
     "bathing": "露天のみ日帰り可",
     "station": "米沢駅",
