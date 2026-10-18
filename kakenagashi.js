@@ -12,6 +12,12 @@
 //               confidence: 'confirmed'|'third_party_reported', note: 根拠の原文と適用範囲 }
 //   dilution  加水・加温の情報。かけ流しかどうかとは別に管理する(画面には出さない)。water: 'none'|'for_temperature'|'added'|'unknown'
 //   source    管理用(URLと確認日)
+//   treatment 任意。「源生の湯」(源泉かけ流し・加水なし・加温なし)の判定用に、加水(water)・加温(heating)・消毒(disinfection)を
+//             かけ流しとは独立した規則の配列で持つ。規則: { status:'none'|'yes', scope:'all'(コメントの coverage が全浴槽を対象と明記)|'baths'(baths の湯だけ),
+//             baths, coverage:適用範囲, quote:原文, url, checkedAt }。規則が無い・当てはまらない湯は「未確認」。施設全体の記述だけでは個々の湯に広げない。
+//   nonBathing 任意。{ name, reason } の配列。足湯・蒸し風呂など、全身を湯に浸す通常の入浴用浴槽ではないもの。名前に「足湯」「蒸し風呂」「蒸し湯」「砂湯」「サウナ」を含む浴槽も同じ扱い。
+//             3条件が揃っていても「源生の湯」の対象外(判定結果 not_applicable。非該当・未判定とは別)。かけ流しの波アイコンの対象には影響しない
+//   otherBaths 任意。代表的な湯に載っていないが、浴槽単位でかけ流しを確認できた浴槽名(今は無し)
 // 判定の基準: 「源泉かけ流し」「源泉掛け流し」「源泉掛流し」「源泉湧き流し(蔦温泉が自ら『かけ流し』と説明)」など、かけ流しを明記した記述だけ。
 //   「源泉100%」「天然温泉」「自家源泉」「加水なし」「循環なし」だけの記述からは判定しない。
 window.ONSEN_KAKENAGASHI = {
@@ -19,7 +25,10 @@ window.ONSEN_KAKENAGASHI = {
     scope: 'facility', baths: ['久安の湯', '泉響の湯', '貸切風呂'],
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式FAQ「温泉は源泉かけ流しですか？ はい。…湯船の底から源泉が湧き出してくる『源泉湧き流し』の温泉」。久安の湯は利用形態「浴底より源泉湧き流し」、泉響の湯は公式トップが久安の湯とともに「源泉湧き流し」と記載、貸切風呂は青森県公式観光サイトが「貸切風呂で源泉湧き流しの湯は蔦温泉だけ」と記載' },
     dilution: { water: 'for_temperature', note: '温度調節のため蔦の森の湧水を入れている(久安の湯。公式)' },
-    source: { url: 'https://tsutaonsen.com/faq/', checkedAt: '2026-10-18' }
+    source: { url: 'https://tsutaonsen.com/faq/', checkedAt: '2026-10-18' },
+    treatment: {
+      water: [{ status: 'yes', scope: 'baths', baths: ['久安の湯'], coverage: '久安の湯', quote: '温度調節のため蔦の森の湧水を入れている', url: 'https://tsutaonsen.com/faq/', checkedAt: '2026-10-18' }]
+    }
   },
   'onsen-004': {
     scope: 'partial', baths: ['海辺の露天風呂'],
@@ -43,7 +52,11 @@ window.ONSEN_KAKENAGASHI = {
     scope: 'facility', baths: ['白猿の湯', '桂の湯', '白糸の湯'],
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「館内全4浴場すべて『源泉100％掛流し』」「加熱や循環・差し水などを一切していない掛け流しの100％天然温泉」' },
     dilution: { water: 'none', note: '公式「加熱や循環・差し水などを一切していない」' },
-    source: { url: 'https://namari-onsen-ryokan.com/spa/', checkedAt: '2026-10-17' }
+    source: { url: 'https://namari-onsen-ryokan.com/spa/', checkedAt: '2026-10-17' },
+    treatment: {
+      water: [{ status: 'none', scope: 'all', coverage: '館内全4浴場', scopeNote: '再確認: 「館内全4浴場すべて源泉100％掛流し」に続く※注記で、同じ4浴場(白猿の湯・桂の湯・白糸の湯ほか)について述べている', quote: '※加熱や循環・差し水などを一切していない掛け流しの100％天然温泉です。', url: 'https://namari-onsen-ryokan.com/spa/', checkedAt: '2026-10-18' }],
+      heating: [{ status: 'none', scope: 'all', coverage: '館内全4浴場', scopeNote: '再確認: 「館内全4浴場すべて源泉100％掛流し」に続く※注記で、同じ4浴場(白猿の湯・桂の湯・白糸の湯ほか)について述べている', quote: '※加熱や循環・差し水などを一切していない掛け流しの100％天然温泉です。／沸かさず、薄めず、循環させずとも、皆様に適温の温泉をお愉しみいただけるように、湯守がいて管理をしています。', url: 'https://namari-onsen-ryokan.com/spa/', checkedAt: '2026-10-18' }]
+    }
   },
   'onsen-008': {
     scope: 'partial', baths: ['大沢の湯'],
@@ -55,7 +68,11 @@ window.ONSEN_KAKENAGASHI = {
     scope: 'facility', baths: ['大湯', '滝の湯', '真湯'],
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉は全て100％源泉掛け流しとなっております」。露天風呂はすべて湯船そのものが源泉の足元湧出泉' },
     dilution: { water: 'none', note: '公式「一切お湯に手を加えて…」(露天)' },
-    source: { url: 'https://www.motoyugeto.com/%E6%B8%A9%E6%B3%89/', checkedAt: '2026-10-17' }
+    source: { url: 'https://www.motoyugeto.com/%E6%B8%A9%E6%B3%89/', checkedAt: '2026-10-17' },
+    treatment: {
+      water: [{ status: 'none', scope: 'baths', baths: ['大湯', '滝の湯', '真湯'], coverage: '全ての露天風呂(3湯とも露天)', scopeNote: '再確認(2026-10-18): 公式「館内施設」ページが露天風呂として大湯・疝気の湯・真湯・女(目)の湯・滝の湯を挙げ、白猿の湯・小天狗の湯は内風呂。よって「全ての露天風呂」に大湯・滝の湯・真湯の3湯とも含まれる。直前の「温泉は全て100％源泉掛け流し」と合わせてかけ流しも確認。「一切お湯に手を加えておりません」は同ページが「加水や加温など人の手が加えられ」と対比しており、加水・加温の両方がないという意味。内風呂は「直接源泉を湯船に引く」とだけあり対象外', quote: '全ての露天風呂は温泉が発見されて以来、湯船そのものが源泉であり…そのため一切お湯に手を加えておりません', url: 'https://www.motoyugeto.com/%E6%B8%A9%E6%B3%89/', checkedAt: '2026-10-18' }],
+      heating: [{ status: 'none', scope: 'baths', baths: ['大湯', '滝の湯', '真湯'], coverage: '全ての露天風呂(3湯とも露天)', scopeNote: '再確認(2026-10-18): 公式「館内施設」ページが露天風呂として大湯・疝気の湯・真湯・女(目)の湯・滝の湯を挙げ、白猿の湯・小天狗の湯は内風呂。よって「全ての露天風呂」に大湯・滝の湯・真湯の3湯とも含まれる。直前の「温泉は全て100％源泉掛け流し」と合わせてかけ流しも確認。「一切お湯に手を加えておりません」は同ページが「加水や加温など人の手が加えられ」と対比しており、加水・加温の両方がないという意味。内風呂は「直接源泉を湯船に引く」とだけあり対象外', quote: '全ての露天風呂は…湯船そのものが源泉…そのため一切お湯に手を加えておりません(同ページが「加水や加温など人の手が加えられ」と対比して述べている)', url: 'https://www.motoyugeto.com/%E6%B8%A9%E6%B3%89/', checkedAt: '2026-10-18' }]
+    }
   },
   'onsen-010': {
     scope: 'facility', baths: [],
@@ -97,13 +114,22 @@ window.ONSEN_KAKENAGASHI = {
     scope: 'facility', baths: ['神経痛の湯', '火山風呂'],
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「大小浴場・全浴槽共に100%源泉かけ流し(温度調節の為の加水のみ・源泉は共通です)」。箱蒸し風呂は蒸し風呂のため個別の湯には付けない' },
     dilution: { water: 'for_temperature', note: '公式「温度調節の為の加水のみ」' },
-    source: { url: 'https://www.goshougake.com/hotspring.html', checkedAt: '2026-10-17' }
+    source: { url: 'https://www.goshougake.com/hotspring.html', checkedAt: '2026-10-17' },
+    nonBathing: [{ name: '箱蒸し風呂', reason: '蒸し風呂は湯に浸かる浴槽ではないため認定の対象外' }],
+    treatment: {
+      water: [{ status: 'yes', scope: 'all', coverage: '大小浴場・全浴槽', quote: '大小浴場・全浴槽共に100%源泉かけ流し(温度調節の為の加水のみ・源泉は共通です)', url: 'https://www.goshougake.com/hotspring.html', checkedAt: '2026-10-17' }]
+    }
   },
   'onsen-019': {
     scope: 'partial', baths: ['大浴場', '河原野天風呂', '混浴半露天風呂'],
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページの各浴場に「かけ流し／加水」(大浴場・内湯・半露天)「かけ流し／加水なし」(河原野天風呂・足湯)と浴場ごとに明記' },
     dilution: { water: 'added', note: '大浴場・内湯・半露天は加水あり、河原野天風呂・足湯は加水・加温なし(公式)' },
-    source: { url: 'http://takanoyuonsen.com/温泉/', checkedAt: '2026-10-17' }
+    source: { url: 'http://takanoyuonsen.com/温泉/', checkedAt: '2026-10-17' },
+    nonBathing: [{ name: '足湯', reason: '足湯は全身を湯に浸す入浴用の浴槽ではないため、公式に「かけ流し／加水なし／加温なし」とあっても認定の対象外(代表的な湯にも載せない)' }],
+    treatment: {
+      water: [{ status: 'yes', scope: 'baths', baths: ['大浴場', '混浴半露天風呂'], coverage: '浴場ごとの表示', quote: '大浴場・内湯・半露天「かけ流し／加水」', url: 'http://takanoyuonsen.com/温泉/', checkedAt: '2026-10-17' },
+              { status: 'none', scope: 'baths', baths: ['河原野天風呂'], coverage: '浴場ごとの表示', quote: '河原野天風呂「かけ流し／加水なし」', url: 'http://takanoyuonsen.com/温泉/', checkedAt: '2026-10-17' }]
+    }
   },
   'onsen-020': {
     scope: 'facility', baths: [],
@@ -145,7 +171,11 @@ window.ONSEN_KAKENAGASHI = {
     scope: 'facility', baths: ['岩風呂', '檜露天風呂', '混浴内風呂'],
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「当館のお風呂は全て源泉掛け流し」(全ての浴槽について明記)' },
     dilution: { water: 'none', note: '公式「加水・加温・循環なし」' },
-    source: { url: 'https://www.namegawa-fukushimaya.com/', checkedAt: '2026-10-18' }
+    source: { url: 'https://www.namegawa-fukushimaya.com/', checkedAt: '2026-10-18' },
+    treatment: {
+      water: [{ status: 'none', scope: 'all', coverage: '当館のお風呂は全て(岩風呂・檜露天風呂・混浴内風呂・女性用内風呂)', scopeNote: '再確認(2026-10-18): 公式トップ施設紹介の1つの段落に「当館のお風呂は全て源泉掛け流し。」「3つの自家源泉からは…浴槽に注がれ」「自然のものを自然のままに、加水･加温・循環消毒は一切行っていません。」と続けて書かれ、主語は同じ「当館のお風呂」(岩風呂・檜露天風呂・混浴内風呂・女性用内風呂の4浴槽)。例外の記載はなく、各浴槽の個別説明にも加水・加温の記載は無く矛盾しない。ただし「全浴槽」という語が加水・加温の文にあるわけではなく、同じ段落の流れから同じ浴槽群への記述と判断した', quote: '当館のお風呂は全て源泉掛け流し。…自然のものを自然のままに、加水･加温・循環消毒は一切行っていません。', url: 'https://www.namegawa-fukushimaya.com/', checkedAt: '2026-10-18' }],
+      heating: [{ status: 'none', scope: 'all', coverage: '当館のお風呂は全て(岩風呂・檜露天風呂・混浴内風呂・女性用内風呂)', scopeNote: '再確認(2026-10-18): 公式トップ施設紹介の1つの段落に「当館のお風呂は全て源泉掛け流し。」「3つの自家源泉からは…浴槽に注がれ」「自然のものを自然のままに、加水･加温・循環消毒は一切行っていません。」と続けて書かれ、主語は同じ「当館のお風呂」(岩風呂・檜露天風呂・混浴内風呂・女性用内風呂の4浴槽)。例外の記載はなく、各浴槽の個別説明にも加水・加温の記載は無く矛盾しない。ただし「全浴槽」という語が加水・加温の文にあるわけではなく、同じ段落の流れから同じ浴槽群への記述と判断した', quote: '当館のお風呂は全て源泉掛け流し。…自然のものを自然のままに、加水･加温・循環消毒は一切行っていません。', url: 'https://www.namegawa-fukushimaya.com/', checkedAt: '2026-10-18' }]
+    }
   },
   'onsen-032': {
     scope: 'facility', baths: [],
@@ -160,3 +190,33 @@ window.ONSEN_KAKENAGASHI = {
     source: { url: 'https://www.hitou.or.jp/provider/736', checkedAt: '2026-10-18' }
   }
 };
+
+// 「源生の湯」: 本サイト独自の称号。次の3条件がすべて確認できた浴槽にだけ付く(泉質・効能の優劣は意味しない)。
+//   1. 源泉かけ流し  2. 加水なし  3. 加温なし   消毒の有無は別属性で、この判定には使わない。
+// 認定は上の表から自動で計算する(手動の認定リストは持たない)。
+//   certified=3条件すべて確認済み / excluded=いずれかが「あり」と確認済み(非該当) / pending=情報不足(未判定)
+//   not_applicable=足湯・蒸し風呂など入浴用浴槽ではない(3条件が揃っていても対象外)
+//   各規則の scopeNote に、記述がどの浴槽群を対象にしていると判断したかの根拠を記録する
+(function () {
+  const NON_BATHING = /足湯|蒸し風呂|蒸し湯|砂湯|サウナ/;
+  function ruleStatus(rules, name) {
+    const hit = (rules || []).filter(r => r.scope === 'all' || (r.baths || []).includes(name));
+    if (hit.some(r => r.status === 'yes')) return 'yes';
+    if (hit.some(r => r.status === 'none')) return 'none';
+    return 'unknown';
+  }
+  function evaluate(entry, bathName) {
+    if (!entry) return { kake: false, water: 'unknown', heating: 'unknown', result: 'pending' };
+    if (NON_BATHING.test(bathName) || (entry.nonBathing || []).some(n => n.name === bathName)) return { kake: (entry.baths || []).includes(bathName), water: 'unknown', heating: 'unknown', result: 'not_applicable' };
+    const kake = (entry.baths || []).includes(bathName) || (entry.otherBaths || []).includes(bathName);
+    const t = entry.treatment || {};
+    const water = ruleStatus(t.water, bathName), heating = ruleStatus(t.heating, bathName);
+    const result = water === 'yes' || heating === 'yes' ? 'excluded' : (kake && water === 'none' && heating === 'none' ? 'certified' : 'pending');
+    return { kake, water, heating, result };
+  }
+  function certifiedBaths(entry) {
+    if (!entry) return [];
+    return [...new Set([...(entry.baths || []), ...(entry.otherBaths || [])])].filter(n => evaluate(entry, n).result === 'certified');
+  }
+  window.ONSEN_GENSEI = { evaluate, certifiedBaths };
+})();

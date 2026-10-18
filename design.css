@@ -8,6 +8,7 @@
   --moss: #344f43;
   --deep: #192e29;
   --gold: #c5ad7c;
+  --gensei: #a5832f;
   --line: #dcd9ce;
   --serif: "Iowan Old Style", "Palatino Linotype", "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
@@ -776,12 +777,18 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .bath-color:focus-visible { outline: 2px solid var(--moss); outline-offset: 0; }
 .bath-color-tip { position: absolute; left: 0; bottom: calc(100% + 2px); width: max-content; max-width: 100%; padding: 6px 10px; border-radius: 4px; background: var(--deep); color: var(--surface); font-size: 11px; line-height: 1.6; text-align: left; white-space: normal; visibility: hidden; opacity: 0; pointer-events: none; z-index: 3; }
 .bath-color:hover .bath-color-tip, .bath-color:focus-visible .bath-color-tip, .bath-color.is-open .bath-color-tip,
-.kake-icon:hover .bath-color-tip, .kake-icon:focus-visible .bath-color-tip, .kake-icon.is-open .bath-color-tip { visibility: visible; opacity: 1; }
+.kake-icon:hover .bath-color-tip, .kake-icon:focus-visible .bath-color-tip, .kake-icon.is-open .bath-color-tip,
+.gensei-icon:hover .bath-color-tip, .gensei-icon:focus-visible .bath-color-tip, .gensei-icon.is-open .bath-color-tip { visibility: visible; opacity: 1; }
 /* 源泉かけ流しの波アイコン(16px・深緑)。湯色の丸の右、無ければ施設名のすぐ右。 */
 .kake-wrap { display: inline-flex; align-items: center; vertical-align: middle; margin-inline-start: 6px; }
 .bath-colors + .kake-wrap { margin-inline-start: 0; }
 .kake-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--moss); cursor: pointer; font: inherit; }
 .kake-svg { display: block; width: 16px; height: 16px; }
+/* 源生の湯: 深緑の波の右に並べる金色の波(同じ形・色だけ違う。装飾やアニメーションなし)。波どうしの間隔は4px */
+.gensei-wrap { display: inline-flex; align-items: center; vertical-align: middle; margin-inline-start: 0; }
+.gensei-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--gensei); cursor: pointer; font: inherit; }
+.gensei-icon:focus-visible { outline: 2px solid var(--gensei); outline-offset: 0; }
+.feature-bath-head .gensei-wrap { align-self: center; margin-inline-start: -10px; }
 .kake-icon:focus-visible { outline: 2px solid var(--moss); outline-offset: 0; }
 @media (min-width: 601px) {
   #cards .card .tag { font-size: 12px; line-height: 1.4; padding: 3px 7px; }

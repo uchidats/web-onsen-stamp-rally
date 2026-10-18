@@ -91,7 +91,7 @@ test('E2E: 源泉かけ流し wave icon on cards and in 代表的な湯 (layout,
         await evaluate(`${entry('onsen-006')}.scrollIntoView({block:'center'})`);
         await delay(100);
         const p = await center(`${entry('onsen-006')}.querySelector('.kake-icon')`);
-        const pagesNow = async () => (await send('Target.getTargets')).targetInfos.filter(t => t.type === 'page').map(t => t.url);
+        const pagesNow = async () => (await send('Target.getTargets')).targetInfos.filter(t => t.type === 'page' && t.url.startsWith('http:')).map(t => t.url);
         const pagesBefore = await pagesNow();
         await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y });
         await delay(100);
