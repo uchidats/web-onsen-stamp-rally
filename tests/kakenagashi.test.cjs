@@ -28,16 +28,25 @@ test('kakenagashi: every entry is keyed by an existing facility and records scop
   }
 });
 
-test('kakenagashi: the card icon facilities are exactly the confirmed ones (27); unconfirmed facilities get none', () => {
+test('kakenagashi: the card icon facilities are exactly the confirmed ones (33); unconfirmed facilities get none', () => {
   assert.deepEqual(Object.keys(kake).sort(), [
     'onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012',
     'onsen-015', 'onsen-016', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027',
-    'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033'
+    'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033',
+    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039'
   ]);
   // 酸ヶ湯・新玉川・玉川・川原毛は、かけ流しを明記した資料を確認できていない
   for (const id of ['onsen-002', 'onsen-013', 'onsen-014', 'onsen-022']) assert.equal(kake[id], undefined, id);
   // 一部の浴槽だけの施設は施設全体と断定しない(partial)
-  for (const id of ['onsen-004', 'onsen-008', 'onsen-011', 'onsen-019', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027']) assert.equal(kake[id].scope, 'partial', id);
+  for (const id of ['onsen-004', 'onsen-008', 'onsen-011', 'onsen-019', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027', 'onsen-035']) assert.equal(kake[id].scope, 'partial', id);
+  // 福島: 安達屋は大気の湯だけ(薬師の湯・東の湯・西の湯は個別のかけ流しの記載なし)、二階堂は施設カードのみ(浴槽名・稼働が未確認)
+  assert.deepEqual(kake['onsen-034'].baths, ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音']);
+  assert.deepEqual(kake['onsen-035'].baths, ['大気の湯(東・西)']);
+  assert.deepEqual(kake['onsen-036'].baths, ['鬼面の湯', '天狗の湯', '千寿の湯']);
+  assert.deepEqual(kake['onsen-037'].baths, ['自噴巌風呂', '滝の湯', '檜風呂']);
+  assert.deepEqual(kake['onsen-038'].baths, []);
+  assert.equal(kake['onsen-038'].evidence.type, 'third_party');
+  assert.deepEqual(kake['onsen-039'].baths, ['大浴場(内湯)', '男女別露天風呂', '貸切露天風呂(陶器2槽)']);
   // 宮城: 峩々温泉は大浴場だけ(混浴露天・天空の湯へ施設全体の記述を広げない)、時音の宿は薬湯だけ(洞窟の湯は循環の記載)、大沼は3湯
   assert.deepEqual(kake['onsen-024'].baths, ['大浴場(あつ湯・ぬる湯)']);
   assert.deepEqual(kake['onsen-026'].baths, ['薬湯']);
@@ -53,7 +62,7 @@ test('kakenagashi: per-bath icons use only bath-level evidence and match 代表�
     // 第三者団体の一覧(施設単位)だけでは、個々の浴槽に広げない
     if (e.evidence.type === 'third_party') assert.deepEqual(e.baths, [], id);
   }
-  assert.equal(n, 38);
+  assert.equal(n, 51);
   // 施設全体の記述だけの施設・かけ流しが明記されていない浴槽には付けない
   assert.deepEqual(kake['onsen-008'].baths, ['大沢の湯']); // 山水の湯・豊沢の湯は公式FAQのかけ流しの列挙に含まれない
   assert.deepEqual(kake['onsen-011'].baths, ['大浴場']); // 貸切風呂は記載なし

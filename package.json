@@ -1,0 +1,8 @@
+{
+  "name": "web-onsen-stamp-rally",
+  "private": true,
+  "scripts": {
+    "test:quick": "node scripts/run-tests.cjs quick",
+    "test:full": "node scripts/run-tests.cjs full"
+  }
+}

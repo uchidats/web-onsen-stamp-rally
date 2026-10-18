@@ -17,25 +17,11 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const htmlUrl = `http://127.0.0.1:${server.address().port}/web-onsen-stamp-rally/index.html`;
-  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-bath-colors-'));
-  const port = 9225;
-  const edge = spawn(edgePath, ['--headless=new', '--disable-gpu', '--no-first-run', `--user-data-dir=${profile}`, `--remote-debugging-port=${port}`, '--remote-allow-origins=*', htmlUrl]);
+  let browser;
+  t.after(async () => { await browser?.close(); server.closeAllConnections(); server.close(); });
+  browser = await require('./helpers/browser.cjs').startBrowser(edgePath, htmlUrl);
+  const { ws, send, evaluate } = browser;
   try {
-    await new Promise(r => setTimeout(r, 1200));
-    let res;
-    for (let i = 0; i < 50; i++) { try { res = await fetch(`http://127.0.0.1:${port}/json`); break; } catch { await new Promise(r => setTimeout(r, 200)); } }
-    assert.ok(res, 'Edge debugging endpoint must start');
-    const page = (await res.json()).find(p => p.type === 'page' && p.url === htmlUrl);
-    const ws = new globalThis.WebSocket(page.webSocketDebuggerUrl);
-    await new Promise((resolve, reject) => { ws.onopen = resolve; ws.onerror = reject; });
-    let idSeq = 0;
-    const send = (method, params = {}) => new Promise(resolve => {
-      const id = ++idSeq;
-      const onMsg = event => { const msg = JSON.parse(event.data); if (msg.id === id) { ws.removeEventListener('message', onMsg); resolve(msg.result); } };
-      ws.addEventListener('message', onMsg);
-      ws.send(JSON.stringify({ id, method, params }));
-    });
-    const evaluate = async expr => (await send('Runtime.evaluate', { expression: expr, returnByValue: true })).result?.value;
     const waitFor = async expr => { for (let i = 0; i < 100; i++) { if (await evaluate(expr)) return; await new Promise(r => setTimeout(r, 100)); } assert.fail('Timed out: ' + expr); };
     const delay = ms => new Promise(r => setTimeout(r, ms));
     await send('Page.enable');
@@ -59,10 +45,14 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-017': ['茶褐色', '緑', '白'].map(l => `湯の色: ${l}（施設全体）。${SEASONAL}${LIST}`),
       'onsen-018': ['湯の色: 灰白色（神経痛の湯）。公式の表現「灰白色の「にごり湯」」。'],
       'onsen-021': ['湯の色: 白（施設全体）。公式の表現「白濁の湯」。'],
+      'onsen-034': ['湯の色: 乳白色（施設全体）。公式の表現「白濁」。'],
+      'onsen-035': ['湯の色: 乳白色（施設全体）。公式の表現「白濁」。'],
+      'onsen-036': ['湯の色: 乳白色（施設全体）。公式の表現「乳白色にごり湯」。'],
+      'onsen-039': ['湯の色: 乳白色（施設全体）。年に数回、乳白色になります。'],
       'onsen-026': ['湯の色: 無色透明（露天風呂付き大浴場(洞窟の湯)）。第三者資料の記載です。']
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
-    const NONE = ['onsen-024', 'onsen-025', 'onsen-027', 'onsen-028', 'onsen-029', 'onsen-033', 'onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-023'];
+    const NONE = ['onsen-037', 'onsen-038', 'onsen-024', 'onsen-025', 'onsen-027', 'onsen-028', 'onsen-029', 'onsen-033', 'onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-023'];
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
     const center = async expr => { const r = await rect(expr); return { x: r.x + r.w / 2, y: r.y + r.h / 2 }; };
@@ -189,11 +179,12 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-018': { '神経痛の湯': 1 },
       'onsen-021': { '大露天風呂': 1 },
       'onsen-026': { '露天風呂付き大浴場(洞窟の湯)': 1 },
+      'onsen-035': { '大気の湯(東・西)': 1 },
       'onsen-030': { 'かわら湯': 1, '展望風呂(地蔵の湯・観音の湯)': 1 },
       'onsen-031': { '岩風呂': 1, '檜露天風呂': 1, '混浴内風呂': 1 },
       'onsen-032': { '混浴露天風呂': 1, '女性専用露天風呂': 1 }
     };
-    const NO_DETAIL_DOTS = ['onsen-028', 'onsen-029', 'onsen-033', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-003', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014'];
+    const NO_DETAIL_DOTS = ['onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-029', 'onsen-033', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-003', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014'];
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       for (const [id, want] of Object.entries(DETAIL)) {
@@ -244,5 +235,5 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
     // the dots never touch visit records or localStorage
     assert.equal(await evaluate('JSON.stringify(localStorage)'), '{}');
     ws.close();
-  } finally { edge.kill(); server.closeAllConnections(); server.close(); }
+  } finally { await browser.close(); server.closeAllConnections(); server.close(); }
 });

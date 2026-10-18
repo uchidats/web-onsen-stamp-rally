@@ -23,56 +23,11 @@ test('E2E: background tiles, regional bounds, filters, errors, retry and file gu
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   // Match the GitHub Pages project subdirectory as well as local HTTP behavior.
   const htmlUrl = `http://127.0.0.1:${server.address().port}/web-onsen-stamp-rally/index.html`;
-  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-map-browser-'));
-  const port = 9225;
-
-  const edge = spawn(edgePath, [
-    '--headless=new',
-    '--disable-gpu',
-    '--no-first-run',
-    `--user-data-dir=${profile}`,
-    `--remote-debugging-port=${port}`,
-    '--remote-allow-origins=*',
-    htmlUrl
-  ]);
-
+  let browser;
+  t.after(async () => { await browser?.close(); server.closeAllConnections(); server.close(); });
+  browser = await require('./helpers/browser.cjs').startBrowser(edgePath, htmlUrl);
+  const { ws, send, evaluate } = browser;
   try {
-    await new Promise(r => setTimeout(r, 1200));
-
-    let res;
-    for(let i=0;i<50;i++){try{res=await fetch(`http://127.0.0.1:${port}/json`);break;}catch{await new Promise(r=>setTimeout(r,200));}}
-    assert.ok(res,'Edge debugging endpoint must start');
-    const pages = await res.json();
-    const page = pages.find(p => p.type === 'page' && p.url === htmlUrl);
-    assert.ok(page, 'Application browser page must be available');
-
-    const ws = new globalThis.WebSocket(page.webSocketDebuggerUrl);
-    await new Promise((resolve, reject) => {
-      ws.onopen = resolve;
-      ws.onerror = reject;
-    });
-
-    let idSeq = 0;
-    function send(method, params = {}) {
-      return new Promise((resolve) => {
-        const id = ++idSeq;
-        const onMsg = (event) => {
-          const msg = JSON.parse(event.data);
-          if (msg.id === id) {
-            ws.removeEventListener('message', onMsg);
-            resolve(msg.result);
-          }
-        };
-        ws.addEventListener('message', onMsg);
-        ws.send(JSON.stringify({ id, method, params }));
-      });
-    }
-
-    async function evaluate(expr) {
-      const res = await send('Runtime.evaluate', { expression: expr, returnByValue: true });
-      return res.result?.value;
-    }
-
     await send('Page.enable');
 
     for (let attempt = 0; attempt < 50; attempt++) {
@@ -119,5 +74,5 @@ test('E2E: background tiles, regional bounds, filters, errors, retry and file gu
     assert.equal(await evaluate(`document.querySelectorAll('#mapCanvas img.leaflet-tile').length`),0);
     fs.writeFileSync('scratch/tile-qa/network.json',JSON.stringify({responses,expectedBlockedFailures:failures,exceptions},null,2));
     ws.close();
-  } finally {edge.kill();server.closeAllConnections();server.close();}
+  } finally {await browser.close();server.closeAllConnections();server.close();}
 });

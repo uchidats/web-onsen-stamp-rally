@@ -162,5 +162,36 @@ window.ONSEN_BATH_COLORS = {
       source: { url: 'https://discoverjapan-web.com/article/15652', checkedAt: '2026-10-18' }
     }],
     source: { url: 'https://discoverjapan-web.com/article/15652', checkedAt: '2026-10-18' }
+  },
+  'onsen-034': {
+    colors: [{
+      color: 'milky_white', expression: '白濁', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式お知らせ(2026年8月)の利用者向け紹介「高湯温泉独特の白濁した肌に優しいお湯」。施設全体の説明で、浴槽ごとの色ではない。公式の源泉紹介「青白濁の玉子湯」は源泉の説明のため浴槽色に転用していない' }
+    }],
+    source: { url: 'https://www.tamagoyu.jp/news/430/', checkedAt: '2026-10-18' }
+  },
+  'onsen-035': {
+    colors: [
+      { color: 'milky_white', expression: '白濁', scope: 'facility', evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「自家源泉による白濁の湯」。施設全体の説明で、個別の浴槽の色ではない' }, source: { url: 'https://www.adachiya.jp/hotspring/history/index.html', checkedAt: '2026-10-18' } },
+      {
+        color: 'milky_white', expression: 'ミルキーブルーのにごり湯', scope: 'bath', scopeNames: ['大気の湯(東・西)'],
+        evidence: { type: 'third_party', confidence: 'third_party_reported', note: '2025年7月の改修後の露天風呂を取材した記事:「ミルキーブルーのにごり湯は、加水、加温なしのかけ流し温泉」。公式の白濁と同じ白濁湯の表現の違いとして同じ乳白色にまとめ、青の丸は別に作らない。薬師の湯・東の湯・西の湯の色は未登録' },
+        change: { kind: 'tint', note: '第三者の記事は青みを帯びたにごり湯と表現しています' },
+        source: { url: 'https://otonano-shumatsu.com/articles/507140/3', checkedAt: '2026-10-18' }
+      }
+    ],
+    source: { url: 'https://www.adachiya.jp/hotspring/history/index.html', checkedAt: '2026-10-18' }
+  },
+  'onsen-036': {
+    colors: [{ color: 'milky_white', expression: '乳白色にごり湯', scope: 'facility', evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「自慢の乳白色にごり湯柔らかい硫黄泉」。施設全体の説明で、個別の浴槽の色ではない' } }],
+    source: { url: 'https://www.nojionsen.com/spa/', checkedAt: '2026-10-18' }
+  },
+  'onsen-039': {
+    colors: [{
+      color: 'milky_white', expression: '乳白色', scope: 'facility', role: 'variant',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「本来は透明な温泉です」「透明か白濁かはその日によって違います」「年に数回乳白色になります」。普段は透明(透明度の記載で、無色の丸は作らない)で、乳白色はまれな変化色。施設全体の説明で、個別の浴槽の色ではない' },
+      change: { kind: 'rare', note: '年に数回、乳白色になります' }
+    }],
+    source: { url: 'https://www.manyoutei.jp/hotspa.html', checkedAt: '2026-10-18' }
   }
 };

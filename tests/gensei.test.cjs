@@ -77,12 +77,14 @@ test('gensei: every treatment rule carries its source, scope and quote; no manua
   for (const [id, e] of Object.entries(kake)) if (e.evidence.type === 'third_party') assert.deepEqual(certifiedBaths(e), [], id);
 });
 
-test('gensei: current certification (3 facilities, 9 baths) and the reasons others stay undecided or excluded', () => {
+test('gensei: current certification (5 facilities, 13 baths) and the reasons others stay undecided or excluded', () => {
   const certified = Object.fromEntries(Object.entries(kake).map(([id, e]) => [id, certifiedBaths(e)]).filter(([, b]) => b.length));
   assert.deepEqual(certified, {
     'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'],
     'onsen-009': ['大湯', '滝の湯', '真湯'],
-    'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂']
+    'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'],
+    'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'],
+    'onsen-035': ['大気の湯(東・西)']
   });
   // 認定された湯は、必ず源泉かけ流しの湯(深緑の波)でもある
   for (const [id, names] of Object.entries(certified)) for (const n of names) assert.ok(kake[id].baths.includes(n), `${id}/${n}`);
@@ -139,4 +141,17 @@ test('gensei: Miyagi has no certified bath (Onuma heating is contradictory) and 
   for (const n of kake['onsen-027'].baths) { const r = evaluate(kake['onsen-027'], n); assert.equal(r.heating, 'unknown', n); assert.equal(r.result, 'pending', n); }
   // 峩々温泉: 施設全体の記述から scope:all を作らない
   assert.equal(kake['onsen-024'].treatment, undefined);
+});
+
+test('gensei: Fukushima certifies only 玉子湯 (3) and 大気の湯 (1, third-party scope); other facilities stay undecided', () => {
+  const rule = (id, kind) => kake[id].treatment[kind];
+  // 玉子湯: 足湯は対象外
+  assert.equal(evaluate(kake['onsen-034'], 'のんびり足湯').result, 'not_applicable');
+  // 安達屋: 大気の湯の第三者記載に限定。薬師の湯・東の湯・西の湯・大浴場へ広げない
+  for (const k of ['water', 'heating']) { assert.equal(rule('onsen-035', k).length, 1); assert.deepEqual(rule('onsen-035', k)[0].baths, ['大気の湯(東・西)']); assert.equal(rule('onsen-035', k)[0].evidenceType, 'third_party_reported'); assert.equal(rule('onsen-035', k)[0].scope, 'baths'); }
+  for (const n of ['薬師の湯', '東の湯・西の湯']) assert.equal(evaluate(kake['onsen-035'], n).result, 'pending', n);
+  // 野地・柏屋・二階堂・万葉亭は認定しない(加水の食い違い・夏季加水・浴槽単位の情報不足・地域説明)
+  for (const id of ['onsen-036', 'onsen-037', 'onsen-038', 'onsen-039']) { assert.deepEqual(certifiedBaths(kake[id]), [], id); assert.equal(kake[id].treatment, undefined, id); }
+  // 福島のどの規則にも scope:'all' を機械的に作らない
+  for (const id of ['onsen-034', 'onsen-035']) for (const r of [...rule(id, 'water'), ...rule(id, 'heating')]) { assert.equal(r.scope, 'baths', id); assert.ok(r.scopeNote.length > 30, id); }
 });

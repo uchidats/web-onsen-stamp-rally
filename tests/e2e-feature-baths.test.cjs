@@ -18,27 +18,11 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const htmlUrl = `http://127.0.0.1:${server.address().port}/web-onsen-stamp-rally/index.html`;
-  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-feature-baths-'));
-  const port = 9225;
-  const edge = spawn(edgePath, ['--headless=new', '--disable-gpu', '--no-first-run', `--user-data-dir=${profile}`, `--remote-debugging-port=${port}`, '--remote-allow-origins=*', htmlUrl]);
-
+  let browser;
+  t.after(async () => { await browser?.close(); server.closeAllConnections(); server.close(); });
+  browser = await require('./helpers/browser.cjs').startBrowser(edgePath, htmlUrl);
+  const { ws, send, evaluate } = browser;
   try {
-    await new Promise(r => setTimeout(r, 1200));
-    let res;
-    for (let i = 0; i < 50; i++) { try { res = await fetch(`http://127.0.0.1:${port}/json`); break; } catch { await new Promise(r => setTimeout(r, 200)); } }
-    assert.ok(res, 'Edge debugging endpoint must start');
-    const page = (await res.json()).find(p => p.type === 'page' && p.url === htmlUrl);
-    assert.ok(page, 'Application browser page must be available');
-    const ws = new globalThis.WebSocket(page.webSocketDebuggerUrl);
-    await new Promise((resolve, reject) => { ws.onopen = resolve; ws.onerror = reject; });
-    let idSeq = 0;
-    const send = (method, params = {}) => new Promise(resolve => {
-      const id = ++idSeq;
-      const onMsg = event => { const msg = JSON.parse(event.data); if (msg.id === id) { ws.removeEventListener('message', onMsg); resolve(msg.result); } };
-      ws.addEventListener('message', onMsg);
-      ws.send(JSON.stringify({ id, method, params }));
-    });
-    const evaluate = async expr => (await send('Runtime.evaluate', { expression: expr, returnByValue: true })).result?.value;
     const waitFor = async expr => { for (let i = 0; i < 100; i++) { if (await evaluate(expr)) return; await new Promise(r => setTimeout(r, 100)); } assert.fail('Timed out: ' + expr); };
     await send('Page.enable');
     ws.addEventListener('message', event => { if (JSON.parse(event.data).method === 'Page.javascriptDialogOpening') send('Page.handleJavaScriptDialog', { accept: true }); });
@@ -55,6 +39,11 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       'onsen-024': { facility: '峩々温泉', names: ['大浴場(あつ湯・ぬる湯)', '混浴露天風呂', '貸切露天風呂(天空の湯)'], colors: [], note: false },
       'onsen-026': { facility: '時音の宿 湯主一條', names: ['薬湯', '露天風呂付き大浴場(洞窟の湯)'], colors: [], note: false },
       'onsen-027': { facility: '旅館大沼', names: ['母里の湯', '薬師千人風呂', '天女風呂'], colors: [], note: false },
+      'onsen-034': { facility: '旅館玉子湯', names: ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], colors: [], note: false },
+      'onsen-035': { facility: '安達屋旅館', names: ['大気の湯(東・西)', '薬師の湯', '東の湯・西の湯'], colors: [], note: false },
+      'onsen-036': { facility: '野地温泉ホテル', names: ['鬼面の湯', '天狗の湯', '千寿の湯'], colors: [], note: true },
+      'onsen-037': { facility: '柏屋旅館', names: ['自噴巌風呂', '滝の湯', '檜風呂'], colors: [], note: false },
+      'onsen-039': { facility: '御宿 万葉亭', names: ['大浴場(内湯)', '男女別露天風呂', '貸切露天風呂(陶器2槽)'], colors: [], note: true },
       'onsen-033': { facility: '吾妻屋', names: ['根っこ風呂', '眺望露天風呂'], colors: [], note: false },
       'onsen-002': { facility: '酸ヶ湯温泉旅館', names: ['ヒバ千人風呂', '玉の湯'], colors: ['湯の色 白濁(乳白色)'], note: false },
       'onsen-003': { facility: '蔦温泉旅館', names: ['久安の湯', '泉響の湯', '貸切風呂'], colors: [], note: true },
@@ -130,7 +119,7 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       const nyuto = await evaluate("[...document.querySelectorAll('[data-facility-id=\"onsen-015\"],[data-facility-id=\"onsen-016\"]')].map(e=>e.closest('.card')?.dataset?.groupId||e.closest('.card')?.querySelector('h3')?.textContent)");
       assert.equal(nyuto[0], nyuto[1]);
       // other facilities have no data → section hidden
-      for (const id of ['onsen-001', 'onsen-025', 'onsen-040', 'onsen-067']) {
+      for (const id of ['onsen-001', 'onsen-025', 'onsen-038', 'onsen-040', 'onsen-067']) {
         if (!await evaluate(`!!document.querySelector('[data-detail="${id}"]')`)) continue;
         await evaluate(`document.querySelector('[data-detail="${id}"]').click()`);
         const s = await evaluate(readSection);
@@ -155,5 +144,5 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
     assert.equal(await evaluate("document.querySelector('#visitMeta dd').textContent"), '—');
     await evaluate("document.getElementById('modalClose').click()");
     ws.close();
-  } finally { edge.kill(); server.closeAllConnections(); server.close(); }
+  } finally { await browser.close(); server.closeAllConnections(); server.close(); }
 });

@@ -17,25 +17,11 @@ test('E2E: 源泉かけ流し wave icon on cards and in 代表的な湯 (layout,
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const htmlUrl = `http://127.0.0.1:${server.address().port}/web-onsen-stamp-rally/index.html`;
-  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-kake-'));
-  const port = 9225;
-  const edge = spawn(edgePath, ['--headless=new', '--disable-gpu', '--no-first-run', `--user-data-dir=${profile}`, `--remote-debugging-port=${port}`, '--remote-allow-origins=*', htmlUrl]);
+  let browser;
+  t.after(async () => { await browser?.close(); server.closeAllConnections(); server.close(); });
+  browser = await require('./helpers/browser.cjs').startBrowser(edgePath, htmlUrl);
+  const { ws, send, evaluate } = browser;
   try {
-    await new Promise(r => setTimeout(r, 1200));
-    let res;
-    for (let i = 0; i < 50; i++) { try { res = await fetch(`http://127.0.0.1:${port}/json`); break; } catch { await new Promise(r => setTimeout(r, 200)); } }
-    assert.ok(res, 'Edge debugging endpoint must start');
-    const page = (await res.json()).find(p => p.type === 'page' && p.url === htmlUrl);
-    const ws = new globalThis.WebSocket(page.webSocketDebuggerUrl);
-    await new Promise((resolve, reject) => { ws.onopen = resolve; ws.onerror = reject; });
-    let idSeq = 0;
-    const send = (method, params = {}) => new Promise(resolve => {
-      const id = ++idSeq;
-      const onMsg = event => { const msg = JSON.parse(event.data); if (msg.id === id) { ws.removeEventListener('message', onMsg); resolve(msg.result); } };
-      ws.addEventListener('message', onMsg);
-      ws.send(JSON.stringify({ id, method, params }));
-    });
-    const evaluate = async expr => (await send('Runtime.evaluate', { expression: expr, returnByValue: true })).result?.value;
     const waitFor = async expr => { for (let i = 0; i < 100; i++) { if (await evaluate(expr)) return; await new Promise(r => setTimeout(r, 100)); } assert.fail('Timed out: ' + expr); };
     const delay = ms => new Promise(r => setTimeout(r, ms));
     await send('Page.enable');
@@ -43,10 +29,10 @@ test('E2E: 源泉かけ流し wave icon on cards and in 代表的な湯 (layout,
     await evaluate('localStorage.clear()');
     fs.mkdirSync('scratch/kakenagashi-qa', { recursive: true });
 
-    const WITH = ['onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012', 'onsen-015', 'onsen-016', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027', 'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033'];
+    const WITH = ['onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012', 'onsen-015', 'onsen-016', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027', 'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033', 'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039'];
     const WITHOUT = ['onsen-001', 'onsen-002', 'onsen-013', 'onsen-014', 'onsen-022', 'onsen-025', 'onsen-067'];
-    const DOTS = ['onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-015', 'onsen-017', 'onsen-018', 'onsen-020', 'onsen-021', 'onsen-026', 'onsen-030', 'onsen-031', 'onsen-032']; // 湯色の丸もある施設
-    const DETAIL = { 'onsen-016': 1, 'onsen-003': 3, 'onsen-006': 3, 'onsen-008': 1, 'onsen-011': 1, 'onsen-018': 2, 'onsen-029': 2, 'onsen-031': 3, 'onsen-023': 1, 'onsen-024': 1, 'onsen-026': 1, 'onsen-027': 3 };
+    const DOTS = ['onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-015', 'onsen-017', 'onsen-018', 'onsen-020', 'onsen-021', 'onsen-026', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-034', 'onsen-035', 'onsen-036', 'onsen-039']; // 湯色の丸もある施設
+    const DETAIL = { 'onsen-016': 1, 'onsen-003': 3, 'onsen-006': 3, 'onsen-008': 1, 'onsen-011': 1, 'onsen-018': 2, 'onsen-029': 2, 'onsen-031': 3, 'onsen-023': 1, 'onsen-024': 1, 'onsen-026': 1, 'onsen-027': 3, 'onsen-034': 3, 'onsen-035': 1, 'onsen-036': 3, 'onsen-037': 3, 'onsen-039': 3 };
     const TIP = '源泉かけ流しの浴槽あり';
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
@@ -179,5 +165,5 @@ test('E2E: 源泉かけ流し wave icon on cards and in 代表的な湯 (layout,
     }
     assert.equal(await evaluate('JSON.stringify(localStorage)'), '{}');
     ws.close();
-  } finally { edge.kill(); server.closeAllConnections(); server.close(); }
+  } finally { await browser.close(); server.closeAllConnections(); server.close(); }
 });

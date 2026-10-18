@@ -17,25 +17,11 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const htmlUrl = `http://127.0.0.1:${server.address().port}/web-onsen-stamp-rally/index.html`;
-  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-gensei-'));
-  const port = 9225;
-  const edge = spawn(edgePath, ['--headless=new', '--disable-gpu', '--no-first-run', `--user-data-dir=${profile}`, `--remote-debugging-port=${port}`, '--remote-allow-origins=*', htmlUrl]);
+  let browser;
+  t.after(async () => { await browser?.close(); server.closeAllConnections(); server.close(); });
+  browser = await require('./helpers/browser.cjs').startBrowser(edgePath, htmlUrl);
+  const { ws, send, evaluate } = browser;
   try {
-    await new Promise(r => setTimeout(r, 1200));
-    let res;
-    for (let i = 0; i < 50; i++) { try { res = await fetch(`http://127.0.0.1:${port}/json`); break; } catch { await new Promise(r => setTimeout(r, 200)); } }
-    assert.ok(res, 'Edge debugging endpoint must start');
-    const page = (await res.json()).find(p => p.type === 'page' && p.url === htmlUrl);
-    const ws = new globalThis.WebSocket(page.webSocketDebuggerUrl);
-    await new Promise((resolve, reject) => { ws.onopen = resolve; ws.onerror = reject; });
-    let idSeq = 0;
-    const send = (method, params = {}) => new Promise(resolve => {
-      const id = ++idSeq;
-      const onMsg = event => { const msg = JSON.parse(event.data); if (msg.id === id) { ws.removeEventListener('message', onMsg); resolve(msg.result); } };
-      ws.addEventListener('message', onMsg);
-      ws.send(JSON.stringify({ id, method, params }));
-    });
-    const evaluate = async expr => (await send('Runtime.evaluate', { expression: expr, returnByValue: true })).result?.value;
     const waitFor = async expr => { for (let i = 0; i < 100; i++) { if (await evaluate(expr)) return; await new Promise(r => setTimeout(r, 100)); } assert.fail('Timed out: ' + expr); };
     const delay = ms => new Promise(r => setTimeout(r, ms));
     await send('Page.enable');
@@ -43,10 +29,10 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
     await evaluate('localStorage.clear()');
     fs.mkdirSync('scratch/gensei-qa', { recursive: true });
 
-    const GOLD = ['onsen-007', 'onsen-009', 'onsen-031'];
+    const GOLD = ['onsen-007', 'onsen-009', 'onsen-031', 'onsen-034', 'onsen-035'];
     // 深緑の波はあるが、源生の湯の根拠が足りない/非該当の施設には金色の波を付けない
-    const GREEN_ONLY = ['onsen-003', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-032', 'onsen-030'];
-    const DETAIL_GOLD = { 'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'], 'onsen-009': ['大湯', '滝の湯', '真湯'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'] };
+    const GREEN_ONLY = ['onsen-003', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-032', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039'];
+    const DETAIL_GOLD = { 'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'], 'onsen-009': ['大湯', '滝の湯', '真湯'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'], 'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], 'onsen-035': ['大気の湯(東・西)'] };
     const TIP_CARD = '源生の湯の浴槽あり', TIP_BATH = '源生の湯｜源泉かけ流し・加水なし・加温なし';
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
@@ -140,7 +126,7 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
     // ---- detail view: only certified baths get the gold wave, right after the green wave ----
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
-      const NONE = ['onsen-003', 'onsen-006', 'onsen-018', 'onsen-030'];
+      const NONE = ['onsen-003', 'onsen-006', 'onsen-018', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039'];
       for (const id of [...Object.keys(DETAIL_GOLD), ...NONE]) {
         await evaluate(`${entry(id)}.querySelector('[data-detail]').click()`);
         await delay(100);
@@ -166,5 +152,5 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
     }
     assert.equal(await evaluate('JSON.stringify(localStorage)'), '{}');
     ws.close();
-  } finally { edge.kill(); server.closeAllConnections(); server.close(); }
+  } finally { await browser.close(); server.closeAllConnections(); server.close(); }
 });

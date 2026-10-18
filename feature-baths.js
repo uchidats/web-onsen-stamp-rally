@@ -248,5 +248,47 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '天女風呂', kind: '内湯', form: '女性専用', tags: ['婦人名湯'], note: '純重曹泉「大沼の湯」が注がれる女性専用のお風呂' }
     ],
     source: { url: 'https://www.ohnuma.co.jp/hotspring/indoorbath.php', checkedAt: '2026-10-18' }
+  },
+  'onsen-034': {
+    baths: [
+      { name: '萱ぶき湯小屋「玉子湯」', form: '男女別', tags: ['萱ぶき屋根', '湯治場の趣'], note: '明治元年創業の趣を残す湯小屋。男女別に脱衣所と浴槽があります' },
+      { name: '天渓の湯', kind: '露天', form: '男女別', tags: ['巨岩', '1日おきに男女入替'], note: '巨岩を屏風にした大小2つの浴槽があります' },
+      { name: '瀬音', kind: '露天', form: '貸切', tags: ['川のせせらぎ'], note: '野天風呂ならではの解放感のある貸切露天風呂' }
+    ],
+    source: { url: 'https://tamagoyu.jp/spa/spa2/', checkedAt: '2026-10-18' }
+  },
+  'onsen-035': {
+    baths: [
+      { name: '大気の湯(東・西)', kind: '露天', form: '男女別', tags: ['2025年改修', '男女入替'], note: '2025年7月の改修で混浴から男女別になり、東と西がチェックイン日とチェックアウト日で男女入れ替え制です' },
+      { name: '薬師の湯', kind: '露天', form: '貸切', tags: ['木造りの湯小屋'], note: '壱ノ湯・弐ノ湯の貸切露天風呂が2つあります' },
+      { name: '東の湯・西の湯', kind: '内湯', form: '男女別', tags: ['露天と一体', '男女入替'], note: '露天風呂と一体になった大浴場。東と西で雰囲気が異なります' }
+    ],
+    source: { url: 'https://www.adachiya.jp/hotspring/taikinoyu/index.html', checkedAt: '2026-10-18' }
+  },
+  'onsen-036': {
+    note: '公式: 毎日1か所の湯殿が清掃のため利用できません。鬼面の湯・天狗の湯・千寿の湯は3時間ごとに男女が入れ替わります。',
+    baths: [
+      { name: '鬼面の湯', kind: '露天', form: '男女別', tags: ['夜のライトアップ', '時間で男女入替'], note: '四季の景色を楽しめる露天風呂' },
+      { name: '天狗の湯', form: '男女別', tags: ['内湯と露天', '時間で男女入替'], note: '内湯から露天風呂へ入浴したまま移動できます' },
+      { name: '千寿の湯', kind: '内湯', form: '男女別', tags: ['檜造り', '時間で男女入替'], note: '温度の異なる3つの浴槽がある伝統の檜風呂' }
+    ],
+    source: { url: 'https://www.nojionsen.com/spa/', checkedAt: '2026-10-18' }
+  },
+  'onsen-037': {
+    baths: [
+      { name: '自噴巌風呂', form: '貸切', tags: ['足元湧出'], note: 'タガネでくり抜いた岩の湯船。足元から源泉が湧き出します' },
+      { name: '滝の湯', form: '男女別', tags: ['時間で男女入替'], note: '建設時に出てきた自然岩をそのまま利用した浴場' },
+      { name: '檜風呂', form: '男女別', tags: ['檜造り', '時間で男女入替'], note: '浴槽と壁が檜でできた浴場' }
+    ],
+    source: { url: 'https://kashiwayaryokan.com/hotsprings/', checkedAt: '2026-10-18' }
+  },
+  'onsen-039': {
+    note: '3つの湯の名称は公式の固有名ではなく、種類を示す説明用の名称です。',
+    baths: [
+      { name: '大浴場(内湯)', kind: '内湯', form: '男女別', tags: ['檜の湯船', 'ヒバの床と壁'] },
+      { name: '男女別露天風呂', kind: '露天', form: '男女別', tags: ['渓流沿い'] },
+      { name: '貸切露天風呂(陶器2槽)', kind: '露天', form: '貸切', tags: ['陶器の湯船2つ'] }
+    ],
+    source: { url: 'https://www.manyoutei.jp/hotspa.html', checkedAt: '2026-10-18' }
   }
 };

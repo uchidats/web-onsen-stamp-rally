@@ -214,6 +214,51 @@ window.ONSEN_KAKENAGASHI = {
     treatment: {
       water: [{ status: 'none', scope: 'baths', baths: ['母里の湯', '薬師千人風呂', '天女風呂'], coverage: '浴槽f(母里の湯)・a(薬師仙人風呂=公式の薬師千人風呂)・b(天女風呂)', scopeNote: '2020-05-07の純温泉認定書に限定した記載。加温は同団体本文の「加温あり」と認定書の「加温なし」が矛盾しており未解決のため、加温の規則は設けない(源生の湯は未判定のまま)', quote: '浴槽a・f 加水:なし／浴槽b・c・d・e 加水:なし', url: 'https://realonsen.com/higashinaruko-oonuma/', checkedAt: '2026-10-18' }]
     }
+  },
+  'onsen-034': {
+    scope: 'facility', baths: ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップ「400年絶えず自然湧出する源泉は加温加水を一切行わず、100％源泉掛け流しを7つの湯処で堪能する」。公式の湯処ページが萱ぶき湯小屋「玉子湯」・天渓の湯・瀬音などを列挙している。足湯「のんびり足湯」は認定の対象外' },
+    dilution: { water: 'none', note: '公式「加温加水を一切行わず」' },
+    source: { url: 'https://tamagoyu.jp/', checkedAt: '2026-10-18' },
+    nonBathing: [{ name: 'のんびり足湯', reason: '足湯は全身を湯に浸す入浴用の浴槽ではないため認定の対象外' }],
+    treatment: {
+      water: [{ status: 'none', scope: 'baths', baths: ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], coverage: '公式の湯処ページに載る入浴用の3湯', scopeNote: '公式トップが「源泉は加温加水を一切行わず、」と「100％源泉掛け流しを7つの湯処で堪能する。」を続けて書き、7つの湯処は公式の湯処ページで列挙されている。3湯は湯処ページに浴槽として掲載されている。足湯は対象外。浴槽ごとの個別記載ではなく、続く2文の範囲から対応づけた', quote: '400年絶えず自然湧出する源泉は加温加水を一切行わず、／100％源泉掛け流しを7つの湯処で堪能する。', url: 'https://tamagoyu.jp/', checkedAt: '2026-10-18' }],
+      heating: [{ status: 'none', scope: 'baths', baths: ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], coverage: '公式の湯処ページに載る入浴用の3湯', scopeNote: '公式トップが「源泉は加温加水を一切行わず、」と「100％源泉掛け流しを7つの湯処で堪能する。」を続けて書き、7つの湯処は公式の湯処ページで列挙されている。3湯は湯処ページに浴槽として掲載されている。足湯は対象外。浴槽ごとの個別記載ではなく、続く2文の範囲から対応づけた', quote: '400年絶えず自然湧出する源泉は加温加水を一切行わず、／100％源泉掛け流しを7つの湯処で堪能する。', url: 'https://tamagoyu.jp/', checkedAt: '2026-10-18' }]
+    }
+  },
+  'onsen-035': {
+    scope: 'partial', baths: ['大気の湯(東・西)'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の大気の湯のページが「県下一のかけ流し」「大天然露天風呂」と書いている。薬師の湯・東の湯・西の湯には個別のかけ流しの記載がなく、対象外' },
+    dilution: { water: 'none', note: '第三者の取材記事「加水、加温なしのかけ流し」(大気の湯のみ)' },
+    source: { url: 'https://www.adachiya.jp/hotspring/taikinoyu/index.html', checkedAt: '2026-10-18' },
+    treatment: {
+      water: [{ status: 'none', scope: 'baths', baths: ['大気の湯(東・西)'], evidenceType: 'third_party_reported', coverage: '改修後の大気の湯(東・西の露天風呂)', scopeNote: '第三者の記事(2025年11月公開)。2025年7月の工事で男女別に分けた露天風呂について「ミルキーブルーのにごり湯は、加水、加温なしのかけ流し温泉」と同じ段落で述べており、男女別になった東・西の大気の湯に当たる。内湯の東湯・西湯や薬師の湯、大浴場には広げない。公式の記載ではない', quote: 'ミルキーブルーのにごり湯は、加水、加温なしのかけ流し温泉で、', url: 'https://otonano-shumatsu.com/articles/507140/3', checkedAt: '2026-10-18' }],
+      heating: [{ status: 'none', scope: 'baths', baths: ['大気の湯(東・西)'], evidenceType: 'third_party_reported', coverage: '改修後の大気の湯(東・西の露天風呂)', scopeNote: '第三者の記事(2025年11月公開)。2025年7月の工事で男女別に分けた露天風呂について「ミルキーブルーのにごり湯は、加水、加温なしのかけ流し温泉」と同じ段落で述べており、男女別になった東・西の大気の湯に当たる。内湯の東湯・西湯や薬師の湯、大浴場には広げない。公式の記載ではない', quote: 'ミルキーブルーのにごり湯は、加水、加温なしのかけ流し温泉で、', url: 'https://otonano-shumatsu.com/articles/507140/3', checkedAt: '2026-10-18' }]
+    }
+  },
+  'onsen-036': {
+    scope: 'facility', baths: ['鬼面の湯', '天狗の湯', '千寿の湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「「千寿の湯」「鬼面の湯」など6つの趣の異なる湯殿が楽しめ、お湯は一切手を加えない源泉かけ流しの天然温泉」。天狗の湯も同ページの6つの湯殿の一覧に載っている。加水はJR東日本の「加水あり」と公式の「一切手を加えない」が食い違い、加温の記載もないため、加水・加温の規則は設けない' },
+    dilution: { water: 'unknown', note: '公式「一切手を加えない」とJR東日本「温度を下げるため加水あり」が併存し未解決' },
+    source: { url: 'https://www.nojionsen.com/spa/', checkedAt: '2026-10-18' }
+  },
+  'onsen-037': {
+    scope: 'facility', baths: ['自噴巌風呂', '滝の湯', '檜風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「全ての温泉が自然湧出の源泉かけ流し」。同じページが自噴巌風呂・滝の湯・檜風呂を個別に紹介している。2019年に流失した旧対岸の野天風呂は含めない' },
+    dilution: { water: 'for_temperature', note: '日本源泉湯宿を守る会・Yahoo!トラベルは外気温の高い時期の加水ありと記載。個人の訪問記事(2026年9月)は加水なし。食い違いは未解決' },
+    source: { url: 'https://kashiwayaryokan.com/hotsprings/', checkedAt: '2026-10-18' }
+  },
+  'onsen-038': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: '日本温泉協会の施設情報「掛け流し浴槽: 有」。公式サイトを取得できず、現在の浴槽の名称・稼働も確認できないため、個々の湯には付けない' },
+    dilution: { water: 'unknown' },
+    source: { url: 'https://www.spa.or.jp/search_f/detail_f/?F_ID=1381', checkedAt: '2026-10-18' }
+  },
+  'onsen-039': {
+    scope: 'facility', baths: ['大浴場(内湯)', '男女別露天風呂', '貸切露天風呂(陶器2槽)'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の館内施設ページ「湯は源泉１００％掛流し。露天風呂、大浴場、貸切風呂と３つの湯舟で楽しめる」。列挙された露天・大浴場・貸切の3種類に限って対応づけた。加水加温循環なしの記載は中ノ沢温泉の説明で、各浴槽の記載ではない' },
+    dilution: { water: 'unknown', note: '公式の「加水加温循環なし」は中ノ沢温泉を主語にした説明で、各浴槽への適用は未確認' },
+    source: { url: 'https://www.manyoutei.jp/facilities.html', checkedAt: '2026-10-18' }
   }
 };
 

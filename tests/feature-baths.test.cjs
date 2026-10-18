@@ -32,13 +32,17 @@ const MIYAGI = {
   'onsen-024': '峩々温泉', 'onsen-026': '時音の宿 湯主一條', 'onsen-027': '旅館大沼'
 };
 
+const FUKUSHIMA = {
+  'onsen-034': '旅館玉子湯', 'onsen-035': '安達屋旅館', 'onsen-036': '野地温泉ホテル', 'onsen-037': '柏屋旅館', 'onsen-039': '御宿 万葉亭'
+};
+
 const IWATE = {
   'onsen-006': '峡雲荘', 'onsen-007': '藤三旅館', 'onsen-008': '山水閣', 'onsen-009': '元湯夏油', 'onsen-010': '石塚旅館', 'onsen-011': 'ほっとゆだ', 'onsen-012': '彩雲荘'
 };
 
-test('feature baths: data is keyed by existing facility IDs and covers exactly the 11 Akita, 7 Iwate, 4 Aomori, 6 Yamagata and 3 Miyagi facilities', () => {
+test('feature baths: data is keyed by existing facility IDs and covers exactly the 11 Akita, 7 Iwate, 4 Aomori, 6 Yamagata, 3 Miyagi and 5 Fukushima facilities', () => {
   assert.equal(data.length, 67);
-  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI)].sort());
+  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA)].sort());
   for (const [id, name] of Object.entries(AKITA)) {
     const x = data.find(v => v.id === id);
     assert.ok(x, id);
@@ -205,4 +209,29 @@ test('feature baths: Miyagi publishes 8 confirmed baths for 3 facilities; Okazak
   assert.equal(feature['onsen-024'].baths[1].form, '混浴');
   // 湯の色は feature-baths には書かない(bath-colors.js が正本)
   assert.ok(Object.keys(MIYAGI).every(id => feature[id].baths.every(b => !b.color)));
+});
+
+test('feature baths: Fukushima publishes 15 baths for 5 facilities; Nikaido (onsen-038) is held but stays in the facility master', () => {
+  const names = id => feature[id].baths.map(b => b.name);
+  assert.deepEqual(names('onsen-034'), ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音']);
+  assert.deepEqual(names('onsen-035'), ['大気の湯(東・西)', '薬師の湯', '東の湯・西の湯']);
+  assert.deepEqual(names('onsen-036'), ['鬼面の湯', '天狗の湯', '千寿の湯']);
+  assert.deepEqual(names('onsen-037'), ['自噴巌風呂', '滝の湯', '檜風呂']);
+  assert.deepEqual(names('onsen-039'), ['大浴場(内湯)', '男女別露天風呂', '貸切露天風呂(陶器2槽)']);
+  assert.equal(Object.keys(FUKUSHIMA).reduce((n, id) => n + feature[id].baths.length, 0), 15);
+  for (const id of Object.keys(FUKUSHIMA)) assert.equal(data.find(x => x.id === id).prefecture, '福島県');
+  assert.ok(data.some(x => x.id === 'onsen-038'));
+  assert.equal(feature['onsen-038'], undefined);
+  assert.ok(!JSON.stringify(feature).includes('research-fukushima'));
+  // 瀬音は現行公式の貸切。天翔の湯は独立に追加しない。流失した旧対岸の野天風呂を復活させない
+  assert.equal(feature['onsen-034'].baths[2].form, '貸切');
+  assert.ok(!JSON.stringify(feature['onsen-034']).includes('天翔'));
+  assert.ok(!JSON.stringify(feature['onsen-037']).includes('対岸'));
+  // 安達屋: 旧混浴・旧名(不動の湯・姫の湯)を使わない
+  assert.equal(feature['onsen-035'].baths[0].form, '男女別');
+  assert.ok(!/不動の湯|姫の湯|混浴/.test(feature['onsen-035'].baths.map(b => b.name + (b.form || '')).join('')));
+  // 万葉亭の3名称は説明用であることを明記
+  assert.match(feature['onsen-039'].note, /説明用/);
+  // 湯色は feature-baths に書かない
+  assert.ok(Object.keys(FUKUSHIMA).every(id => feature[id].baths.every(b => !b.color)));
 });

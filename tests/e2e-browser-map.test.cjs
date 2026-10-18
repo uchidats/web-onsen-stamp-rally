@@ -22,54 +22,11 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
   });
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   const htmlUrl = `http://127.0.0.1:${server.address().port}/index.html`;
-  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-map-browser-'));
-  const port = 9225;
-
-  const edge = spawn(edgePath, [
-    '--headless=new',
-    '--disable-gpu',
-    '--no-first-run',
-    `--user-data-dir=${profile}`,
-    `--remote-debugging-port=${port}`,
-    '--remote-allow-origins=*',
-    htmlUrl
-  ]);
-
+  let browser;
+  t.after(async () => { await browser?.close(); server.closeAllConnections(); server.close(); });
+  browser = await require('./helpers/browser.cjs').startBrowser(edgePath, htmlUrl);
+  const { ws, send, evaluate } = browser;
   try {
-    await new Promise(r => setTimeout(r, 1200));
-
-    const res = await fetch(`http://localhost:${port}/json`);
-    const pages = await res.json();
-    const page = pages.find(p => p.type === 'page' && p.url === htmlUrl);
-    assert.ok(page, 'Application browser page must be available');
-
-    const ws = new globalThis.WebSocket(page.webSocketDebuggerUrl);
-    await new Promise((resolve, reject) => {
-      ws.onopen = resolve;
-      ws.onerror = reject;
-    });
-
-    let idSeq = 0;
-    function send(method, params = {}) {
-      return new Promise((resolve) => {
-        const id = ++idSeq;
-        const onMsg = (event) => {
-          const msg = JSON.parse(event.data);
-          if (msg.id === id) {
-            ws.removeEventListener('message', onMsg);
-            resolve(msg.result);
-          }
-        };
-        ws.addEventListener('message', onMsg);
-        ws.send(JSON.stringify({ id, method, params }));
-      });
-    }
-
-    async function evaluate(expr) {
-      const res = await send('Runtime.evaluate', { expression: expr, returnByValue: true });
-      return res.result?.value;
-    }
-
     await send('Page.enable');
 
     for (let attempt = 0; attempt < 50; attempt++) {
@@ -368,7 +325,7 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
 
     ws.close();
   } finally {
-    edge.kill();
+    await browser.close();
     server.closeAllConnections();server.close();
   }
 });

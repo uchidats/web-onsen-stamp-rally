@@ -17,20 +17,11 @@ test('E2E: 67 exact projected national markers, overlap choices, regional select
  });
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  const url=`http://127.0.0.1:${server.address().port}/web-onsen-stamp-rally/index.html`;
- const profile=fs.mkdtempSync(path.join(os.tmpdir(),'onsen-nine-coordinates-'));
- const child=spawn(browser,['--headless=new','--disable-gpu','--no-first-run',`--user-data-dir=${profile}`,'--remote-debugging-port=0','--remote-allow-origins=*',url],{stdio:'ignore'});
- let ws;
+ let session;
+ t.after(async()=>{await session?.close();server.closeAllConnections();server.close();});
+ session=await require('./helpers/browser.cjs').startBrowser(browser,url);
+ const {ws,send,evaluate}=session;
  try{
-  let port;for(let i=0;i<100;i++){const f=path.join(profile,'DevToolsActivePort');if(fs.existsSync(f)){port=fs.readFileSync(f,'utf8').split('\n')[0];break;}await delay(100);}
-  assert.ok(port,'Browser must start');let page;for(let i=0;i<100;i++){const pages=await(await fetch(`http://127.0.0.1:${port}/json`)).json();page=pages.find(p=>p.type==='page'&&p.url===url);if(page)break;await delay(100);}assert.ok(page);
-  ws=new WebSocket(page.webSocketDebuggerUrl);await new Promise((r,j)=>{ws.onopen=r;ws.onerror=j;});
-  let sequence=0;
-  const send=(method,params={})=>new Promise((resolve,reject)=>{
-   const id=++sequence;const listener=e=>{const m=JSON.parse(e.data);if(m.id!==id)return;clearTimeout(timer);ws.removeEventListener('message',listener);m.error?reject(Error(JSON.stringify(m.error))):resolve(m.result);};
-   const timer=setTimeout(()=>{ws.removeEventListener('message',listener);reject(Error('CDP timeout: '+method));},15000);
-   ws.addEventListener('message',listener);ws.send(JSON.stringify({id,method,params}));
-  });
-  const evaluate=async expression=>{const r=await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result?.value;};
   const waitFor=async expression=>{for(let i=0;i<100;i++){if(await evaluate(expression))return;await delay(100);}assert.fail('Timed out: '+expression);};
   const click=async(point,mobile)=>{if(mobile){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...point,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...point,button:'left',clickCount:1});}};
   await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===67");
@@ -113,5 +104,5 @@ test('E2E: 67 exact projected national markers, overlap choices, regional select
   assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設を訪問済み');
   fs.writeFileSync(output+'/results.json',JSON.stringify(results,null,2));
   t.diagnostic('PASS: 134 national and 150 regional mouse/touch selections; exact shared projection, overlap chooser, 67 verified; synthetic 3/67 progress and storage preserved');
- }finally{ws?.close();child.kill();server.closeAllConnections();server.close();}
+ }finally{await session.close();server.closeAllConnections();server.close();}
 });
