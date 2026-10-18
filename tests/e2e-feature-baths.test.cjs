@@ -113,7 +113,8 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
         assert.deepEqual(s.labels.filter(l => l !== '分類について'), ['日帰り入浴', '最寄り駅']); // 「分類について」は旧(掲載終了)の施設だけに出る既存の注記
         assert.deepEqual(s.meta, ['初回訪問日', '—', '訪問メモ', '—']);
         assert.ok(s.metaInVisit);
-        assert.deepEqual(s.h3.map(h=>h.slice(0,3)), [['22px', '600', true], ['18px', '600', true]]);
+        // 「代表的な湯」の見出しは太字(700)で、Webフォントを使わず端末の1フォントに統一(浴場名との太さ混在を防ぐ)。訪問記録の見出しは従来どおり
+        assert.deepEqual(s.h3.map(h=>h.slice(0,3)), [['22px', '700', false], ['18px', '600', true]]);
         assert.equal(s.h3[0][3], s.h3[1][3]);
         assert.ok(s.itemBorders.every(v => v === '0px/0px'), 'no rules between baths');
         if (id === 'onsen-018') assert.deepEqual(s.tags, [['メイン浴槽', '熱め・濃いめ'], ['名物', '天然蒸気'], ['気泡', 'ややぬるめ']]);

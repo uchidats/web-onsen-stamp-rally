@@ -199,7 +199,8 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .visit-meta { margin: 14px 0; }
 .feature-baths:not([hidden]) + .details { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
 .feature-baths[hidden] { display: none; }
-.modal .feature-baths h3 { font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif; font-weight: 600; font-size: 22px; line-height: 1.4; margin: 0 0 10px; }
+/* 「代表的な湯」の見出しと各浴場名は、どの施設でも同じ太さ(太字)にそろえる。Webフォント(Shippori Mincho / Noto Sans JP)は施設名などの固定文字だけを収めた一部の字形しか持たず、浴場名は任意の文字なので、一部の字だけWebフォント・残りは端末の代替フォントになり太さが混ざる。そこでこの2つはWebフォントを使わず、端末のフォント1種類で全ての字を描く。 */
+.modal .feature-baths h3 { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-weight: 700; font-size: 22px; line-height: 1.4; margin: 0 0 10px; }
 .modal .visit-section h3 { font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif; font-weight: 600; font-size: 18px; line-height: 1.4; }
 .feature-bath-section-note { margin: -4px 0 10px; font-size: 12px; line-height: 1.8; color: var(--muted); }
 .feature-bath-list { list-style: none; margin: 0; padding: 0; }
@@ -208,7 +209,7 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .feature-bath-head .bath-colors { align-self: center; margin-inline-start: -4px; }
 .feature-bath-head .kake-wrap { align-self: center; margin-inline-start: -4px; }
 .feature-bath-head .bath-colors + .kake-wrap { margin-inline-start: -10px; }
-.feature-bath h4 { margin: 0; font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif; font-size: 15px; font-weight: 600; line-height: 1.5; color: #866329; overflow-wrap: anywhere; }
+.feature-bath h4 { margin: 0; font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; font-size: 15px; font-weight: 700; line-height: 1.5; color: #866329; overflow-wrap: anywhere; }
 .feature-bath-meta { font-size: 12px; color: var(--moss); letter-spacing: .04em; }
 .feature-bath-color, .feature-bath-note { margin: 2px 0 0; font-size: 12px; line-height: 1.8; color: var(--muted); overflow-wrap: anywhere; }
 .feature-bath-tags { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
