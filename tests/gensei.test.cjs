@@ -130,3 +130,13 @@ test('gensei: the judgement behind 元湯夏油 and 福島屋 is recorded in the
   // 福島屋: 「全て源泉掛け流し」と「加水･加温・循環消毒は一切行っていません」は同じ段落・同じ「当館のお風呂」
   for (const r of rules('onsen-031')) { assert.match(r.quote, /当館のお風呂は全て源泉掛け流し/); assert.match(r.quote, /加水･加温・循環消毒は一切行っていません/); assert.match(r.scopeNote, /同じ段落/); }
 });
+
+test('gensei: Miyagi has no certified bath (Onuma heating is contradictory) and gold waves are never shown without evidence', () => {
+  for (const id of ['onsen-024', 'onsen-026', 'onsen-027']) assert.deepEqual(certifiedBaths(kake[id]), [], id);
+  assert.equal(evaluate(kake['onsen-026'], '薬湯').result, 'excluded'); // 加温あり(第三者誌)
+  // 旅館大沼: 認定書(2020)の加温なしと団体本文の加温ありが矛盾するため、heating の規則を設けない
+  assert.equal(kake['onsen-027'].treatment.heating, undefined);
+  for (const n of kake['onsen-027'].baths) { const r = evaluate(kake['onsen-027'], n); assert.equal(r.heating, 'unknown', n); assert.equal(r.result, 'pending', n); }
+  // 峩々温泉: 施設全体の記述から scope:all を作らない
+  assert.equal(kake['onsen-024'].treatment, undefined);
+});

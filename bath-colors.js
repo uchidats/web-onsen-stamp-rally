@@ -154,6 +154,13 @@ window.ONSEN_BATH_COLORS = {
       source: { url: 'http://www.ubayuonsen.com/hotspring.html', checkedAt: '2026-10-18' }
     }],
     source: { url: 'http://www.ubayuonsen.com/hotspring.html', checkedAt: '2026-10-18' }
+  },
+  'onsen-026': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'bath', scopeNames: ['露天風呂付き大浴場(洞窟の湯)'],
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '専門誌Discover Japanの写真説明:「敷地内にある洞窟から引湯している「洞窟の湯」。無色透明で肌にツヤがでる」。公式サイトは浴槽の色を書いていない。公式の「知覚 無色透明」は源泉分析の欄で浴槽色の根拠にしていない。薬湯の色は未登録' },
+      source: { url: 'https://discoverjapan-web.com/article/15652', checkedAt: '2026-10-18' }
+    }],
+    source: { url: 'https://discoverjapan-web.com/article/15652', checkedAt: '2026-10-18' }
   }
-
 };

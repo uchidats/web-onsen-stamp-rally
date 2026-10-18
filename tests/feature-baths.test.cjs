@@ -28,13 +28,17 @@ const YAMAGATA = {
   'onsen-028': '東屋', 'onsen-029': '湯守の宿三之亟', 'onsen-030': '湯宿元河原湯', 'onsen-031': '福島屋', 'onsen-032': '桝形屋', 'onsen-033': '吾妻屋'
 };
 
+const MIYAGI = {
+  'onsen-024': '峩々温泉', 'onsen-026': '時音の宿 湯主一條', 'onsen-027': '旅館大沼'
+};
+
 const IWATE = {
   'onsen-006': '峡雲荘', 'onsen-007': '藤三旅館', 'onsen-008': '山水閣', 'onsen-009': '元湯夏油', 'onsen-010': '石塚旅館', 'onsen-011': 'ほっとゆだ', 'onsen-012': '彩雲荘'
 };
 
-test('feature baths: data is keyed by existing facility IDs and covers exactly the 11 Akita, 7 Iwate, 4 Aomori and 6 Yamagata facilities', () => {
+test('feature baths: data is keyed by existing facility IDs and covers exactly the 11 Akita, 7 Iwate, 4 Aomori, 6 Yamagata and 3 Miyagi facilities', () => {
   assert.equal(data.length, 67);
-  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA)].sort());
+  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI)].sort());
   for (const [id, name] of Object.entries(AKITA)) {
     const x = data.find(v => v.id === id);
     assert.ok(x, id);
@@ -184,4 +188,21 @@ test('feature baths: Yamagata 6 facilities publish only confirmed, currently usa
   assert.equal(feature['onsen-030'].baths[0].color, '微かに茶褐色');
   assert.equal(feature['onsen-030'].baths[1].color, '微かに黄色');
   assert.ok(feature['onsen-031'].baths.every(b => b.color === '乳白色の濁り湯'));
+});
+
+test('feature baths: Miyagi publishes 8 confirmed baths for 3 facilities; Okazaki Ryokan is held until its operation is confirmed', () => {
+  const names = id => feature[id].baths.map(b => b.name);
+  assert.deepEqual(names('onsen-024'), ['大浴場(あつ湯・ぬる湯)', '混浴露天風呂', '貸切露天風呂(天空の湯)']);
+  assert.deepEqual(names('onsen-026'), ['薬湯', '露天風呂付き大浴場(洞窟の湯)']);
+  assert.deepEqual(names('onsen-027'), ['母里の湯', '薬師千人風呂', '天女風呂']);
+  assert.equal(Object.keys(MIYAGI).reduce((n, id) => n + feature[id].baths.length, 0), 8);
+  for (const id of Object.keys(MIYAGI)) assert.equal(data.find(x => x.id === id).prefecture, '宮城県');
+  assert.equal(feature['onsen-025'], undefined);
+  // 研究用ID(bth-*)を公開データに持ち込まない
+  assert.ok(!JSON.stringify(feature).includes('bth-'));
+  // 峩々温泉: 混浴と男女別を1つの属性にまとめない。大浴場の男女別は第三者記載のため公開しない
+  assert.equal(feature['onsen-024'].baths[0].form, undefined);
+  assert.equal(feature['onsen-024'].baths[1].form, '混浴');
+  // 湯の色は feature-baths には書かない(bath-colors.js が正本)
+  assert.ok(Object.keys(MIYAGI).every(id => feature[id].baths.every(b => !b.color)));
 });

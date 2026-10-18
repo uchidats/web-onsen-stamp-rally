@@ -188,6 +188,32 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'third_party', confidence: 'third_party_reported', note: '日本秘湯を守る会「利用形態: 源泉かけ流し」。公式サイトはリニューアル中で記載がなく、浴槽ごとの記載もない' },
     dilution: { water: 'unknown' },
     source: { url: 'https://www.hitou.or.jp/provider/736', checkedAt: '2026-10-18' }
+  },
+  'onsen-024': {
+    scope: 'partial', baths: ['大浴場(あつ湯・ぬる湯)'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「鮮度の高い源泉温泉かけ流し」の段落が「当宿では100%源泉かけ流し」と述べ、「本館大浴場には、あつ湯とぬる湯、男女別露天風呂とございます」と浴場を挙げている。大浴場(あつ湯・ぬる湯)だけを対象にする。混浴露天風呂・貸切露天風呂(天空の湯)は段落に挙がっておらず、天空の湯はサイフォン式で湯が溢れ出ない旨の記載もあるため、施設全体の記述から広げない' },
+    dilution: { water: 'unknown' },
+    source: { url: 'https://gagaonsen.com/hotspring/', checkedAt: '2026-10-18' }
+  },
+  'onsen-026': {
+    scope: 'partial', baths: ['薬湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式FAQ「鎌先の湯「薬湯」(源泉かけ流し)(男女)」と薬湯を名指しで明記。露天風呂付き大浴場(洞窟の湯)は第三者誌に「こちらの大浴場は循環」の記載があり、かけ流しの記載がないため対象外' },
+    dilution: { water: 'none', note: 'Discover Japan「薬湯は源泉掛け流し／加温あり／加水なし」(加温あり)' },
+    source: { url: 'https://www.ichijoh.co.jp/contact/faq/', checkedAt: '2026-10-18' },
+    treatment: {
+      water: [{ status: 'none', scope: 'baths', baths: ['薬湯'], coverage: '薬湯', scopeNote: '専門誌Discover Japanが薬湯を名指しして書いた第三者の記載。公式は加水・加温を書いていない', quote: '薬湯は源泉掛け流し／加温あり／加水なし', url: 'https://discoverjapan-web.com/article/15652', checkedAt: '2026-10-18' }],
+      heating: [{ status: 'yes', scope: 'baths', baths: ['薬湯'], coverage: '薬湯', scopeNote: '専門誌Discover Japanが薬湯を名指しして書いた第三者の記載(源泉温度27.8度のため加温)。加温ありのため源生の湯の対象外', quote: '薬湯は源泉掛け流し／加温あり／加水なし', url: 'https://discoverjapan-web.com/article/15652', checkedAt: '2026-10-18' }]
+    }
+  },
+  'onsen-027': {
+    scope: 'partial', baths: ['母里の湯', '薬師千人風呂', '天女風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「全て源泉掛け流しでご提供しています」。さらに2020-05-07の純温泉認定書が母里の湯(浴槽f)・薬師仙人風呂=公式の薬師千人風呂(浴槽a)・天女風呂(浴槽b)を「完全放流式」と記載。公式が掲載する各浴場を対象とし、足湯・ふかし風呂は含めない' },
+    dilution: { water: 'none', note: '2020-05-07の認定書は加水なし。現在も同一処理かは未確認' },
+    source: { url: 'https://www.ohnuma.co.jp/hotspring/', checkedAt: '2026-10-18' },
+    nonBathing: [{ name: '足湯', reason: '足湯は全身を湯に浸す入浴用の浴槽ではないため認定の対象外' }, { name: 'ふかし風呂', reason: '蒸し風呂は湯に浸かる浴槽ではないため認定の対象外' }],
+    treatment: {
+      water: [{ status: 'none', scope: 'baths', baths: ['母里の湯', '薬師千人風呂', '天女風呂'], coverage: '浴槽f(母里の湯)・a(薬師仙人風呂=公式の薬師千人風呂)・b(天女風呂)', scopeNote: '2020-05-07の純温泉認定書に限定した記載。加温は同団体本文の「加温あり」と認定書の「加温なし」が矛盾しており未解決のため、加温の規則は設けない(源生の湯は未判定のまま)', quote: '浴槽a・f 加水:なし／浴槽b・c・d・e 加水:なし', url: 'https://realonsen.com/higashinaruko-oonuma/', checkedAt: '2026-10-18' }]
+    }
   }
 };
 

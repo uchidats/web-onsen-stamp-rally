@@ -52,6 +52,9 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       'onsen-030': { facility: '湯宿元河原湯', names: ['かわら湯', '展望風呂(地蔵の湯・観音の湯)'], colors: ['湯の色 微かに茶褐色', '湯の色 微かに黄色'], note: false },
       'onsen-031': { facility: '福島屋', names: ['岩風呂', '檜露天風呂', '混浴内風呂'], colors: ['湯の色 乳白色の濁り湯', '湯の色 乳白色の濁り湯', '湯の色 乳白色の濁り湯'], note: false },
       'onsen-032': { facility: '桝形屋', names: ['混浴露天風呂', '女性専用露天風呂', '檜造りの内風呂'], colors: [], note: false },
+      'onsen-024': { facility: '峩々温泉', names: ['大浴場(あつ湯・ぬる湯)', '混浴露天風呂', '貸切露天風呂(天空の湯)'], colors: [], note: false },
+      'onsen-026': { facility: '時音の宿 湯主一條', names: ['薬湯', '露天風呂付き大浴場(洞窟の湯)'], colors: [], note: false },
+      'onsen-027': { facility: '旅館大沼', names: ['母里の湯', '薬師千人風呂', '天女風呂'], colors: [], note: false },
       'onsen-033': { facility: '吾妻屋', names: ['根っこ風呂', '眺望露天風呂'], colors: [], note: false },
       'onsen-002': { facility: '酸ヶ湯温泉旅館', names: ['ヒバ千人風呂', '玉の湯'], colors: ['湯の色 白濁(乳白色)'], note: false },
       'onsen-003': { facility: '蔦温泉旅館', names: ['久安の湯', '泉響の湯', '貸切風呂'], colors: [], note: true },
@@ -127,7 +130,7 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       const nyuto = await evaluate("[...document.querySelectorAll('[data-facility-id=\"onsen-015\"],[data-facility-id=\"onsen-016\"]')].map(e=>e.closest('.card')?.dataset?.groupId||e.closest('.card')?.querySelector('h3')?.textContent)");
       assert.equal(nyuto[0], nyuto[1]);
       // other facilities have no data → section hidden
-      for (const id of ['onsen-001', 'onsen-024', 'onsen-040', 'onsen-067']) {
+      for (const id of ['onsen-001', 'onsen-025', 'onsen-040', 'onsen-067']) {
         if (!await evaluate(`!!document.querySelector('[data-detail="${id}"]')`)) continue;
         await evaluate(`document.querySelector('[data-detail="${id}"]').click()`);
         const s = await evaluate(readSection);

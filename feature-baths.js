@@ -225,5 +225,28 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '火山風呂', form: '男女別', tags: ['気泡', 'ややぬるめ'] }
     ],
     source: { url: 'https://www.goshougake.com/hotspring.html', checkedAt: '2026-10-17' }
+  },
+  'onsen-024': {
+    baths: [
+      { name: '大浴場(あつ湯・ぬる湯)', kind: '内湯', tags: ['あつ湯47度', 'ぬる湯38〜42度'], note: 'あつ湯では木枕に寝そべり、竹の筒で湯を掛ける「かけ湯」が伝統です' },
+      { name: '混浴露天風呂', kind: '露天', form: '混浴', note: '男女別の露天風呂から石段を下りた先にあります。厳冬期はクローズ' },
+      { name: '貸切露天風呂(天空の湯)', kind: '露天', form: '貸切', tags: ['月光の入浴'], note: '天を仰いで入るための貸切露天風呂。深夜は照明を落とします' }
+    ],
+    source: { url: 'https://gagaonsen.com/hotspring/', checkedAt: '2026-10-18' }
+  },
+  'onsen-026': {
+    baths: [
+      { name: '薬湯', kind: '内湯', form: '男女別', tags: ['茶色い湯花'], note: '傷に鎌先の由来となった湯。茶色い湯花が浮き、タイルが茶色に染まるのは温泉の性質です' },
+      { name: '露天風呂付き大浴場(洞窟の湯)', form: '男女別', tags: ['つや肌の湯', '洞窟が目の前'], note: '内湯と露天風呂から四季の森を眺められます' }
+    ],
+    source: { url: 'https://www.ichijoh.co.jp/hotspring/', checkedAt: '2026-10-18' }
+  },
+  'onsen-027': {
+    baths: [
+      { name: '母里の湯', kind: '露天', form: '貸切', note: '庭園貸切露天風呂。宿の裏山にあり、石鹸・シャンプーは使えません' },
+      { name: '薬師千人風呂', kind: '内湯', form: '混浴', tags: ['女性専用時間あり'], note: '昔ながらの混浴大浴場。浴槽内に半身浴用の座石があります' },
+      { name: '天女風呂', kind: '内湯', form: '女性専用', tags: ['婦人名湯'], note: '純重曹泉「大沼の湯」が注がれる女性専用のお風呂' }
+    ],
+    source: { url: 'https://www.ohnuma.co.jp/hotspring/indoorbath.php', checkedAt: '2026-10-18' }
   }
 };
