@@ -1,0 +1,277 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+require('../records.js');
+require('../sync-core.js');
+require('../sync-engine.js');
+require('./helpers/fake-cloud.cjs');
+const { OnsenRecords: R, OnsenSyncEngine: E, OnsenSyncCore: C, FakeCloud } = globalThis;
+
+const mem = () => { const m = new Map(); return { getItem: k => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, String(v)), removeItem: k => m.delete(k), _m: m }; };
+const settle = async () => { for (let i = 0; i < 12; i++) await new Promise(r => setImmediate(r)); };
+
+// 1台の端末(PC/Android)。ローカルは本物のrecords.js(localStorage相当)、クラウドは共有のFakeCloud
+function device(cloud, name, uid = 'user-1', storage = mem()) {
+  const repo = R.create(storage);
+  const adapter = cloud.adapter(), d = { name, storage, repo, statuses: [], uid, adapter };
+  d.state = repo.load();
+  d.engine = E.create({ repo, getState: () => d.state, setState: s => { d.state = s; }, storage, uid, projectId: 'test', adapter, debounceMs: 0, afterStale: async () => { await settle(); }, isOnline: () => cloud.online, onStatus: s => d.statuses.push(s) });
+  d.add = (fid, date) => { d.state = repo.addVisit(d.state, fid, date); d.engine.notifyLocalChange('change'); };
+  d.remove = (fid, i) => { d.state = repo.deleteVisit(d.state, fid, d.state.userData.visits[fid].records[i].id); d.engine.notifyLocalChange('change'); };
+  d.edit = (fid, i, date) => { d.state = repo.editVisit(d.state, fid, d.state.userData.visits[fid].records[i].id, date); d.engine.notifyLocalChange('change'); };
+  d.note = (fid, text) => { d.state = repo.setNotes(d.state, fid, text); d.engine.notifyLocalChange('change'); };
+  d.visits = fid => (d.state.userData.visits[fid]?.records || []).map(r => r.date);
+  d.count = () => Object.values(d.state.userData.visits).reduce((n, v) => n + v.records.length, 0);
+  d.last = () => d.statuses.at(-1);
+  d.begin = async () => { await d.engine.start(); await settle(); };
+  d.join = async () => { await d.begin(); await d.engine.consent(); await settle(); };
+  return d;
+}
+const flush = async (...ds) => { for (let i = 0; i < 3; i++) { for (const d of ds) await d.engine.syncNow(); await settle(); } };
+
+test('PC adds a visit -> it appears on Android; Android adds -> PC (both directions, same account)', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-01-10'); await flush(pc, android);
+  assert.deepEqual(android.visits('onsen-001'), ['2026-01-10']);
+  android.add('onsen-006', '2026-02-02'); await flush(android, pc);
+  assert.deepEqual(pc.visits('onsen-006'), ['2026-02-02']);
+  assert.equal(pc.last().state, 'synced'); assert.equal(android.last().state, 'synced');
+  // 同じ訪問は同じIDで、両端末で同数
+  assert.equal(pc.count(), 2); assert.equal(android.count(), 2);
+});
+
+test('concurrent adds of the same facility and the same day are both kept (no date-based dedup); null dates are kept too', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-03-03'); android.add('onsen-001', '2026-03-03');
+  pc.add('onsen-001', null); android.add('onsen-001', null);
+  await flush(pc, android, pc);
+  for (const d of [pc, android]) {
+    assert.equal(d.visits('onsen-001').filter(x => x === '2026-03-03').length, 2, d.name);
+    assert.equal(d.visits('onsen-001').filter(x => x === null).length, 2, d.name);
+    assert.equal(d.count(), 4);
+  }
+  assert.equal(cloud.visits.size, 4);
+  // 達成率は訪問済み施設数のまま(件数ではない)
+  assert.equal(Object.values(pc.state.userData.visits).filter(v => v.records.length).length, 1);
+});
+
+test('offline: records can be added locally and are synced when the connection returns (nothing is lost)', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  cloud.online = false;
+  android.add('onsen-009', '2026-04-01'); android.add('onsen-009', '2026-04-02');
+  await android.engine.syncNow();
+  assert.equal(android.last().state, 'offline');
+  assert.equal(android.count(), 2); assert.equal(cloud.visits.size, 0);
+  cloud.online = true; cloud.emit(); await flush(android, pc);
+  assert.equal(cloud.visits.size, 2);
+  assert.deepEqual(pc.visits('onsen-009').sort(), ['2026-04-01', '2026-04-02']);
+  assert.equal(android.last().state, 'synced');
+});
+
+test('delete is propagated; a record deleted elsewhere does not come back from a stale device', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-05-05'); pc.add('onsen-001', '2026-05-06'); await flush(pc, android);
+  const idx = android.visits('onsen-001').indexOf('2026-05-05');
+  android.remove('onsen-001', idx); await flush(android, pc);
+  assert.deepEqual(pc.visits('onsen-001'), ['2026-05-06']);
+  const doc = [...cloud.visits.values()].find(d => d.date === '2026-05-05');
+  assert.equal(doc.status, 'deleted'); // tombstone が残る(物理削除しない)
+  // 何度同期しても復活しない
+  await flush(pc, android, pc, android);
+  assert.deepEqual(pc.visits('onsen-001'), ['2026-05-06']); assert.deepEqual(android.visits('onsen-001'), ['2026-05-06']);
+  assert.equal(cloud.visits.get(doc.eventId).status, 'deleted');
+});
+
+test('a stale device that edited a record deleted elsewhere gets a conflict, not a silent resurrection or loss', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-06-01'); await flush(pc, android);
+  android.adapter.offline = true;
+  android.edit('onsen-001', 0, '2026-06-09');          // Androidはオフラインで編集
+  pc.remove('onsen-001', 0); await flush(pc);          // PCが削除
+  android.adapter.offline = false; cloud.emit(); await flush(android, pc);
+  const c = android.engine.openConflicts();
+  assert.equal(c.length, 1); assert.equal(c[0].kind, 'deletedRemotely');
+  assert.deepEqual(android.visits('onsen-001'), ['2026-06-09']);   // 編集はローカルに残っている
+  assert.equal([...cloud.visits.values()][0].status, 'deleted');   // クラウドは削除のまま(勝手に復活しない)
+  // 明示的に復元を選ぶと復活する
+  await android.engine.resolveConflict(c[0].id, 'restore'); await flush(android, pc);
+  assert.equal([...cloud.visits.values()][0].status, 'active');
+  assert.deepEqual(pc.visits('onsen-001'), ['2026-06-09']);
+});
+
+test('edit on one device and delete on another: delete wins and the edit is kept in a conflict for review', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-07-01'); await flush(pc, android);
+  android.adapter.offline = true;                                        // Androidは圏外(最新を受け取れない)
+  pc.edit('onsen-001', 0, '2026-07-07'); await flush(pc);              // PCが編集(クラウド更新)
+  android.remove('onsen-001', 0); android.adapter.offline = false;      // Androidは古い版を削除して復帰
+  cloud.emit(); await flush(android, pc);
+  const c = android.engine.openConflicts();
+  assert.equal(c.length, 1); assert.equal(c[0].kind, 'editVsDelete');
+  assert.equal(JSON.parse(c[0].remote).date, '2026-07-07');            // 編集内容は失われない
+  assert.equal([...cloud.visits.values()][0].status, 'deleted');
+  await android.engine.resolveConflict(c[0].id, 'restore'); await flush(android, pc);
+  assert.deepEqual(pc.visits('onsen-001'), ['2026-07-07']);
+});
+
+test('edits to different fields on two devices are merged automatically; same-field edits become a conflict that keeps both', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-08-01'); await flush(pc, android);
+  // 別項目: PCは日付、Androidはメモ(施設メモとは別の訪問メモは画面から編集できないため、日付と施設メモで検証)
+  pc.adapter.offline = true; android.adapter.offline = true; pc.edit('onsen-001', 0, '2026-08-11'); android.note('onsen-001', 'Androidのメモ'); pc.adapter.offline = false; android.adapter.offline = false; cloud.emit();
+  await flush(pc, android, pc, android);
+  assert.deepEqual(pc.visits('onsen-001'), ['2026-08-11']); assert.deepEqual(android.visits('onsen-001'), ['2026-08-11']);
+  assert.equal(pc.state.userData.visits['onsen-001'].notes, 'Androidのメモ');
+  // 同じ施設メモを両端末で変更 → 競合(自動で上書きしない)
+  pc.adapter.offline = true; android.adapter.offline = true; pc.note('onsen-001', 'PCのメモ'); android.note('onsen-001', 'Androidの別のメモ'); pc.adapter.offline = false; android.adapter.offline = false; cloud.emit();
+  await flush(pc, android);
+  const conflicts = [...cloud.conflicts.values()].filter(c => c.status === 'open');
+  assert.equal(conflicts.length, 1); assert.equal(conflicts[0].kind, 'facilityNote');
+  // 競合中は両端末とも自分のメモのまま(どちらも消えていない)
+  assert.equal(pc.state.userData.visits['onsen-001'].notes, 'PCのメモ'); assert.equal(android.state.userData.visits['onsen-001'].notes, 'Androidの別のメモ');
+  assert.equal(pc.last().state, 'conflicts');
+  // 「両方を結合」で解決 → 両端末に両方の本文が残る
+  await pc.engine.resolveConflict(conflicts[0].id, 'merge'); await flush(pc, android, pc);
+  for (const d of [pc, android]) { const n = d.state.userData.visits['onsen-001'].notes; assert.ok(n.includes('PCのメモ') && n.includes('Androidの別のメモ'), d.name + ': ' + n); }
+  assert.equal(pc.engine.openConflicts().length, 0);
+});
+
+test('first sync merges local and cloud records without deleting anything; same-day duplicates and legacy IDs survive; a backup of the local records is saved first', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join();
+  pc.add('onsen-001', '2026-01-01'); await flush(pc);
+  // 旧移行由来の連番ID(legacy-…)が2台にある状況: 別の端末で同じIDを持つローカル記録
+  const storage = mem(); const legacyDev = R.create(storage);
+  storage.setItem('onsen-rally-user-v3', JSON.stringify({ userData: { schemaVersion: 3, visits: { 'onsen-001': { records: [
+    { id: 'legacy-onsen-001-1', date: '2026-01-01', notes: '', photos: [], gpsStamp: null }, { id: 'legacy-onsen-001-2', date: '2026-01-01', notes: '', photos: [], gpsStamp: null }, { id: 'legacy-onsen-001-3', date: null, notes: 'メモあり', photos: [], gpsStamp: null, legacyDate: '不明' }], notes: '施設メモ' } }, rankings: [], rankingVisibility: 'private', gpsStamps: [] } }));
+  const dev = device(cloud, 'old-phone', 'user-1', storage);
+  await dev.begin();
+  assert.equal(dev.last().state, 'consent');
+  const p = dev.last().summary;
+  assert.equal(p.local.visits, 3); assert.equal(p.local.sameDayGroups, 1); assert.equal(p.local.unknownDate, 1); assert.equal(p.willUpload, 3); assert.equal(p.willDownload, 1);
+  assert.equal(cloud.visits.size, 1, 'nothing is sent before consent');
+  const before = storage.getItem('onsen-rally-user-v3');
+  await dev.engine.consent(); await settle(); await flush(dev, pc);
+  // 退避(同意の直前の生データ)が保存されている
+  const safe = JSON.parse(storage.getItem('onsen-rally-before-sync-v1')); assert.equal(safe.raw, before);
+  // 結果: 4件(同日2件+日付なし+クラウドの1件)。元の記録は1件も消えていない
+  assert.equal(dev.count(), 4); assert.equal(pc.count(), 4);
+  assert.equal(dev.visits('onsen-001').filter(d => d === '2026-01-01').length, 3);
+  assert.equal(dev.visits('onsen-001').filter(d => d === null).length, 1);
+  assert.equal(dev.state.userData.visits['onsen-001'].notes, '施設メモ');
+  const nul = dev.state.userData.visits['onsen-001'].records.find(r => r.date === null);
+  assert.equal(nul.notes, 'メモあり'); assert.equal(nul.legacyDate, '不明');   // 元の日付表記・メモを保持
+  assert.equal(cloud.visits.size, 4);
+  // legacy連番IDはクラウドには別のeventIdで送られる(端末間で衝突しない)
+  assert.ok([...cloud.visits.keys()].every(id => !id.startsWith('legacy-')));
+});
+
+test('a different account on the same device never receives this device\'s records until the user agrees; local data is untouched', async () => {
+  const cloud = new FakeCloud(), storage = mem();
+  const a = device(cloud, 'pc', 'user-A', storage);
+  await a.join(); a.add('onsen-001', '2026-09-09'); await flush(a); a.engine.stop();
+  const cloud2 = new FakeCloud();                                  // 別アカウントのクラウド(空)
+  const b = device(cloud2, 'pc', 'user-B', storage);
+  await b.begin();
+  assert.equal(b.last().state, 'consent'); assert.equal(b.last().summary.otherAccount, true);
+  await flush(b);
+  assert.equal(cloud2.visits.size, 0, 'no upload before consent');
+  assert.equal(b.count(), 1, 'local records stay');
+});
+
+test('lost response after a commit: retrying never duplicates the visit', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join();
+  cloud.loseNextResponse = true;
+  pc.add('onsen-001', '2026-10-10'); await flush(pc);
+  assert.equal(cloud.visits.size, 1);
+  await flush(pc, pc);
+  assert.equal(cloud.visits.size, 1); assert.equal(pc.count(), 1);
+  assert.equal(pc.last().state, 'synced');
+});
+
+test('a second sync with no changes writes nothing (no wasted writes)', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-01-01'); pc.add('onsen-006', null); pc.note('onsen-001', 'x'); await flush(pc, android);
+  const w = cloud.writes;
+  await flush(pc, android, pc, android);
+  assert.equal(cloud.writes, w);
+});
+
+test('safety stop: an emptied device does not delete the cloud; reconcile restores from the cloud without deleting anything', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join();
+  for (let i = 1; i <= 10; i++) pc.add('onsen-001', '2026-01-' + String(i).padStart(2, '0'));
+  await flush(pc);
+  assert.equal(cloud.visits.size, 10);
+  // 端末の記録が消えた(ブラウザのデータ消去など)
+  pc.storage.setItem('onsen-rally-user-v3', JSON.stringify(R.create(mem()).empty()));
+  pc.repo = R.create(pc.storage); pc.state = pc.repo.load();
+  pc.engine.stop();
+  const again = device(cloud, 'pc', 'user-1', pc.storage); await again.begin(); await flush(again);
+  assert.equal(again.last().state, 'error'); assert.equal(again.last().safety, true);
+  assert.equal([...cloud.visits.values()].filter(d => d.status === 'active').length, 10, 'cloud untouched');
+  await again.engine.reconcileNow(); await flush(again);
+  assert.equal(again.count(), 10);
+  assert.equal(again.last().state, 'synced');
+});
+
+test('restoring an older JSON backup never loses cloud records (reconcile mode); a record deleted in the cloud is held as a conflict, not resurrected', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join();
+  pc.add('onsen-001', '2026-01-01'); pc.add('onsen-001', '2026-01-02'); await flush(pc);
+  const oldBackup = pc.repo.backup(pc.state);                       // 2件の時点のバックアップ
+  pc.add('onsen-006', '2026-02-02'); pc.remove('onsen-001', pc.visits('onsen-001').indexOf('2026-01-02')); await flush(pc);
+  // バックアップを復元(全置換)
+  pc.state = pc.repo.replace(R.create(mem()).prepareImport(oldBackup, pc.state), pc.state, true);
+  pc.engine.notifyLocalChange('replace'); await flush(pc, pc);
+  // 新しい記録(onsen-006)は復元後もクラウドから戻る。削除済み(01-02)は勝手に復活せず競合として保留
+  assert.deepEqual(pc.visits('onsen-006'), ['2026-02-02']);
+  assert.equal([...cloud.visits.values()].filter(d => d.status === 'active').length, 2);
+  const c = pc.engine.openConflicts(); assert.equal(c.length, 1); assert.equal(c[0].kind, 'deletedRemotely');
+  assert.equal([...cloud.visits.values()].find(d => d.date === '2026-01-02').status, 'deleted');
+});
+
+test('logout keeps the device\'s records (stop() only stops syncing and never touches local data)', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join(); pc.add('onsen-001', '2026-01-01'); pc.note('onsen-001', 'メモ'); await flush(pc);
+  const raw = pc.storage.getItem('onsen-rally-user-v3');
+  pc.engine.stop();
+  assert.equal(pc.storage.getItem('onsen-rally-user-v3'), raw);
+  pc.add('onsen-006', '2026-03-03');                                 // ログアウト中もローカルで記録できる
+  assert.equal(pc.count(), 2);
+  await pc.engine.syncNow(); assert.equal(cloud.visits.size, 1, 'stopped engine does not send');
+});
+
+test('oversized records block syncing without touching local data', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join();
+  const s = JSON.parse(JSON.stringify(pc.state));
+  s.userData.visits['onsen-001'] = { records: [{ id: 'abcdefgh-1', date: null, notes: '', photos: [{ big: 'x'.repeat(30000) }], gpsStamp: null }], notes: '' };
+  pc.state = pc.repo.replace(s, pc.state, true);
+  await flush(pc);
+  assert.equal(pc.last().state, 'error'); assert.match(pc.last().detail, /サイズ/);
+  assert.equal(cloud.visits.size, 0); assert.equal(pc.count(), 1);
+});
+
+test('core: reconcile classifies add / update / delete / conflicts from base, local and cloud', () => {
+  const ev = (id, date, notes = '', extra = '') => [id, { eventId: id, localId: id, facilityId: 'onsen-001', sourceVisitId: id, date, notes, extra }];
+  const doc = (date, revision, status = 'active', notes = '') => ({ facilityId: 'onsen-001', date, notes, extra: '', revision, status });
+  const r = C.reconcile({
+    local: { events: new Map([ev('aaaaaaaa', '2026-01-01'), ev('bbbbbbbb', '2026-01-02', 'mine')]), notes: {} },
+    cloud: { visits: new Map([['aaaaaaaa', doc('2026-01-01', 1)], ['bbbbbbbb', doc('2026-01-02', 2, 'active', 'theirs')], ['cccccccc', doc('2026-01-03', 1)]]), notes: new Map() },
+    base: { events: { aaaaaaaa: { rev: 1, date: '2026-01-01', notes: '', extra: '' }, bbbbbbbb: { rev: 1, date: '2026-01-02', notes: '', extra: '' } }, notes: {} } });
+  assert.deepEqual(r.changes.map(c => c.type + ':' + c.eventId), ['add:cccccccc']);
+  assert.equal(r.conflicts.length, 1); assert.equal(r.conflicts[0].kind, 'visit'); assert.equal(r.conflicts[0].field, 'notes');
+  assert.equal(r.pushes.length, 0);
+  assert.equal(C.unnaturalDecrease({ before: 100, deletesLocal: 31, deletesRemote: 0 }), true);
+  assert.equal(C.unnaturalDecrease({ before: 100, deletesLocal: 30, deletesRemote: 3 }), false);
+  assert.equal(C.unnaturalDecrease({ before: 2, deletesLocal: 3, deletesRemote: 0 }), false);
+});

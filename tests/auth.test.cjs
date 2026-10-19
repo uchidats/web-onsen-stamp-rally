@@ -175,3 +175,18 @@ test('auth: no secrets or storage APIs in the auth code and config; Firestore an
   assert.ok(!/firestore|functions|storage|private_key|client_secret|service.?account/i.test(src.replace(/\/\/.*$/gm, '')));
   assert.ok(!/addScope/.test(src.replace(/\/\/.*$/gm, '')));
 });
+
+test('cloud sync: enabled only where the environment sets sync:true (localhost / staging site); never on production, 127.0.0.1 or any other host, even if the settings are edited', () => {
+  const fs2 = require('node:fs'), vm2 = require('node:vm');
+  const syncSrc = fs2.readFileSync('sync.js', 'utf8');
+  const runSync = (win) => { win.document = { getElementById: () => { throw Error('sync must not touch the page here'); }, querySelector: () => { throw Error('sync must not touch the page here'); } }; win.OnsenSyncEngine = {}; win.OnsenHost = {}; vm2.runInNewContext(syncSrc, win); return win; };
+  assert.equal(load({}, 'localhost').OnsenAuth.syncEnabled(), true);
+  assert.equal(load({}, 'my-onsen-journey-staging.web.app').OnsenAuth.syncEnabled(), true);
+  const sneaky = { sdkVersion: '10.14.1', environments: { production: { hosts: ['uchidats.github.io'], sync: true, config: GOOD }, local: { hosts: ['uchidats.github.io'], sync: true, config: GOOD } } };
+  for (const [host, extra] of [['uchidats.github.io', {}], ['uchidats.github.io', { ONSEN_FIREBASE: sneaky }], ['127.0.0.1', {}], ['example.com', {}], ['my-onsen-journey-staging.firebaseapp.com', {}]]) {
+    const w = load(extra, host);
+    assert.equal(w.OnsenAuth.syncEnabled(), false, host);
+    const after = runSync(w);   // 例外なく即座に戻り、ページにも触れず、同期は起動しない
+    assert.equal(after.OnsenSync, undefined, host);
+  }
+});

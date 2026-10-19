@@ -70,6 +70,8 @@ test('E2E: Google login (Phase 1) - disabled without config; sign-in/out and fai
       await send('Page.reload');
       await waitFor("document.readyState==='complete' && document.querySelectorAll('#cards .card').length>0 && document.getElementById('accountRow').hidden===false");
       assert.equal(await evaluate('OnsenAuth.enabled() && OnsenAuth.environmentName()'), 'local');
+      assert.equal(await evaluate('typeof OnsenSync'), 'undefined', 'cloud sync stays off unless the environment enables it (sync: true)');
+      assert.equal(await evaluate("document.getElementById('syncStatus').hidden"), true);
       assert.equal(await evaluate("document.getElementById('loginBtn').textContent"), 'Googleでログイン');
       assert.equal(await evaluate("document.getElementById('accountRememberBox').checked"), false, 'persistence opt-in starts off');
       assert.match(await evaluate("document.querySelector('.account-note').textContent"), /クラウド保存・端末間の同期はまだありません/, 'login must not imply cloud saving');

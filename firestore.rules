@@ -1,0 +1,148 @@
+rules_version = '2';
+
+// 温泉の旅: クラウド同期(訪問履歴・個人メモ)のSecurity Rules。
+// ・自分(request.auth.uid)の accounts/{uid}/ 以下だけ読み書きできる。他のユーザーのデータは読み書きとも不可。未ログインも不可。
+// ・訪問(visits)は eventId 単位。削除は物理削除ではなく status:'deleted'(tombstone)。物理deleteはすべて禁止。
+//   revision は必ず +1 ずつ(古い版からの上書きを防ぐ)。deleted → active は、明示的な復元(restoredAt == request.time)だけ許可。
+// ・フィールドの型・長さ・形式を検証し、想定外のフィールドを拒否する。時刻は request.time(サーバー時刻)と一致を要求する。
+// ・施設マスター(67施設)はFirestoreに置かない(静的配信)。個人記録だけを保存する。
+// ・将来クラウド同期を有料機能にする時は syncAllowed() で entitlements/{uid}(管理者だけが書き込む)を参照する。今は本人であれば許可。
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isOwner(uid) { return signedIn() && request.auth.uid == uid; }
+    function syncAllowed(uid) { return isOwner(uid); }
+
+    function visitKeys() {
+      return ['schemaVersion', 'facilityId', 'sourceVisitId', 'sourceDatasetId', 'date', 'notes', 'extra', 'status', 'revision', 'lastOpId', 'createdAt', 'updatedAt', 'deletedAt', 'restoredAt'];
+    }
+    function validVisit(d, eventId) {
+      return d.keys().hasOnly(visitKeys()) && d.keys().hasAll(visitKeys())
+        && d.schemaVersion == 1
+        && eventId.matches('^[A-Za-z0-9_-]{8,100}$')
+        && d.facilityId is string && d.facilityId.matches('^onsen-[a-zA-Z0-9-]+$') && d.facilityId.size() <= 40
+        && d.sourceVisitId is string && d.sourceVisitId.size() >= 1 && d.sourceVisitId.size() <= 200
+        && d.sourceDatasetId is string && d.sourceDatasetId.size() <= 100
+        && (d.date == null || (d.date is string && d.date.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')))
+        && d.notes is string && d.notes.size() <= 10000
+        && d.extra is string && d.extra.size() <= 20000
+        && d.status in ['active', 'deleted']
+        && d.revision is int && d.revision >= 1
+        && d.lastOpId is string && d.lastOpId.size() >= 1 && d.lastOpId.size() <= 100
+        && d.createdAt is timestamp && d.updatedAt is timestamp
+        && (d.deletedAt == null || d.deletedAt is timestamp)
+        && (d.restoredAt == null || d.restoredAt is timestamp);
+    }
+    function noteKeys() { return ['schemaVersion', 'facilityId', 'notes', 'revision', 'lastOpId', 'updatedAt']; }
+    function validNote(d, facilityId) {
+      return d.keys().hasOnly(noteKeys()) && d.keys().hasAll(noteKeys())
+        && d.schemaVersion == 1
+        && facilityId.matches('^onsen-[a-zA-Z0-9-]+$') && d.facilityId == facilityId
+        && d.notes is string && d.notes.size() <= 10000
+        && d.revision is int && d.revision >= 1
+        && d.lastOpId is string && d.lastOpId.size() >= 1 && d.lastOpId.size() <= 100
+        && d.updatedAt is timestamp;
+    }
+    function conflictKeys() {
+      return ['schemaVersion', 'kind', 'key', 'facilityId', 'eventId', 'field', 'base', 'remote', 'local', 'status', 'createdAt', 'resolvedAt', 'resolution'];
+    }
+    function validConflict(d) {
+      return d.keys().hasOnly(conflictKeys()) && d.keys().hasAll(conflictKeys())
+        && d.schemaVersion == 1
+        && d.kind in ['visit', 'facilityNote', 'deletedRemotely', 'editVsDelete']
+        && d.key is string && d.key.size() <= 150
+        && d.facilityId is string && d.facilityId.matches('^onsen-[a-zA-Z0-9-]+$')
+        && d.eventId is string && d.eventId.size() <= 100
+        && d.field is string && d.field.size() <= 50
+        && d.base is string && d.base.size() <= 30000
+        && d.remote is string && d.remote.size() <= 30000
+        && d.local is string && d.local.size() <= 30000
+        && d.status in ['open', 'resolved']
+        && d.createdAt is timestamp
+        && (d.resolvedAt == null || d.resolvedAt is timestamp)
+        && d.resolution is string && d.resolution.size() <= 20;
+    }
+
+    match /accounts/{uid} {
+      allow read: if isOwner(uid);
+      allow create: if syncAllowed(uid)
+        && request.resource.data.keys().hasOnly(['schemaVersion', 'createdAt'])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+
+      match /visits/{eventId} {
+        allow read: if isOwner(uid);
+        allow create: if syncAllowed(uid)
+          && validVisit(request.resource.data, eventId)
+          && request.resource.data.revision == 1
+          && request.resource.data.status == 'active'
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time
+          && request.resource.data.deletedAt == null
+          && request.resource.data.restoredAt == null;
+        allow update: if syncAllowed(uid)
+          && validVisit(request.resource.data, eventId)
+          && request.resource.data.revision == resource.data.revision + 1
+          && request.resource.data.facilityId == resource.data.facilityId
+          && request.resource.data.sourceVisitId == resource.data.sourceVisitId
+          && request.resource.data.sourceDatasetId == resource.data.sourceDatasetId
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.updatedAt == request.time
+          && (
+            // 通常の編集(active → active): 削除・復元の印は変えない
+            (resource.data.status == 'active' && request.resource.data.status == 'active'
+              && request.resource.data.deletedAt == null && request.resource.data.restoredAt == resource.data.restoredAt)
+            // 削除(active → deleted): deletedAt はサーバー時刻
+            || (resource.data.status == 'active' && request.resource.data.status == 'deleted'
+              && request.resource.data.deletedAt == request.time && request.resource.data.restoredAt == resource.data.restoredAt)
+            // 明示的な復元(deleted → active)だけが削除済みを戻せる
+            || (resource.data.status == 'deleted' && request.resource.data.status == 'active'
+              && request.resource.data.deletedAt == null && request.resource.data.restoredAt == request.time)
+          );
+        allow delete: if false;
+      }
+
+      match /facilityNotes/{facilityId} {
+        allow read: if isOwner(uid);
+        allow create: if syncAllowed(uid)
+          && validNote(request.resource.data, facilityId)
+          && request.resource.data.revision == 1
+          && request.resource.data.updatedAt == request.time;
+        allow update: if syncAllowed(uid)
+          && validNote(request.resource.data, facilityId)
+          && request.resource.data.revision == resource.data.revision + 1
+          && request.resource.data.updatedAt == request.time;
+        allow delete: if false;
+      }
+
+      match /conflicts/{conflictId} {
+        allow read: if isOwner(uid);
+        allow create: if syncAllowed(uid)
+          && validConflict(request.resource.data)
+          && request.resource.data.status == 'open'
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.resolvedAt == null
+          && request.resource.data.resolution == '';
+        // 解決(open → resolved)だけ可能。内容(両案)は変更できない
+        allow update: if syncAllowed(uid)
+          && resource.data.status == 'open'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'resolvedAt', 'resolution'])
+          && request.resource.data.status == 'resolved'
+          && request.resource.data.resolvedAt == request.time
+          && request.resource.data.resolution in ['local', 'remote', 'merge', 'delete', 'restore', 'discard'];
+        allow delete: if false;
+      }
+    }
+
+    // 将来の有料化用。管理者(コンソール/Admin SDK)だけが書き込む。本人は読み取りのみ
+    match /entitlements/{uid} {
+      allow read: if isOwner(uid);
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

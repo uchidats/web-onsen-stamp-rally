@@ -10,7 +10,10 @@ const read = f => fs.readFileSync(f, 'utf8');
 
 test('staging hosting: firebase.json publishes only dist-staging, adds noindex, no rewrites/redirects/functions, and .firebaserc points only to the staging project', () => {
   const fb = JSON.parse(read('firebase.json'));
-  assert.deepEqual(Object.keys(fb), ['hosting']); // Firestore・Functions・Storage等の設定を含まない
+  // Hosting + Firestore(Rules/インデックス) + ローカルのエミュレータ設定だけ。Functions・Storage・Realtime Database・課金系の設定は含まない
+  assert.deepEqual(Object.keys(fb).sort(), ['emulators', 'firestore', 'hosting']);
+  assert.deepEqual(fb.firestore, { rules: 'firestore.rules', indexes: 'firestore.indexes.json' });
+  assert.deepEqual(Object.keys(fb.emulators).sort(), ['firestore', 'singleProjectMode', 'ui']);
   assert.equal(fb.hosting.public, 'dist-staging');
   assert.ok(!('rewrites' in fb.hosting) && !('redirects' in fb.hosting));
   assert.ok(fb.hosting.ignore.includes('**/.*') && fb.hosting.ignore.includes('**/node_modules/**'));
@@ -31,7 +34,10 @@ test('staging hosting: firebase.json publishes only dist-staging, adds noindex, 
 test('staging hosting: the published file list is a small allowlist with no repo, research, test, doc, backup or secret files', () => {
   const files = collect();
   assert.deepEqual(check(files), []);
-  assert.equal(files.length, 35);
+  assert.equal(files.length, 39);
+  for (const f of ['sync-core.js', 'sync-engine.js', 'sync-firestore.js', 'sync.js']) assert.ok(files.includes(f), f);
+  // 公開物にRules・エミュレータ・テストは含めない(Rulesはfirebase deploy --only firestore で別に適用する)
+  assert.ok(!files.some(f => /firestore\.rules|firestore\.indexes|firebase\.json/.test(f)));
   for (const f of ['index.html', 'design.css', 'app.js', 'auth.js', 'firebase-config.js', 'data.js', 'records.js', 'map.js', 'japan-map.js', 'vendor/leaflet/leaflet.js']) assert.ok(files.includes(f), f);
   for (const f of files) {
     for (const re of FORBIDDEN) assert.ok(!re.test(f), f + ' matched ' + re);
@@ -59,15 +65,25 @@ test('staging hosting: the built directory matches the list byte for byte and co
   } finally { fs.rmSync(out, { recursive: true, force: true }); }
 });
 
-test('staging hosting: the app uses Firebase Authentication only (no Firestore/Functions/Storage/Analytics SDK), so visit records are never sent to Firebase', () => {
-  const src = ['auth.js', 'firebase-config.js', 'app.js', 'records.js'].map(read).join('\n').replace(/\/\/.*$/gm, '');
-  assert.ok(!/firebase-firestore|firebase-functions|firebase-storage|firebase-database|firebase-analytics|firebase-messaging|firebase-app-check/.test(src));
-  assert.ok(!/firestore\.googleapis|cloudfunctions\.net|firebasestorage|firebaseio\.com/.test(src));
+test('cloud sync: Firestore is used only by the sync adapter, only on staging/local (never production), and nothing else from Firebase (Functions/Storage/Analytics) is used', () => {
+  const strip = f => read(f).replace(/\/\/.*$/gm, '');
+  const all = ['auth.js', 'firebase-config.js', 'app.js', 'records.js', 'sync.js', 'sync-core.js', 'sync-engine.js', 'sync-firestore.js'].map(strip).join('\n');
+  assert.ok(!/firebase-functions|firebase-storage|firebase-database|firebase-analytics|firebase-messaging|firebase-app-check|firebase-performance|firebase-remote-config/.test(all));
+  assert.ok(!/cloudfunctions\.net|firebasestorage|firebaseio\.com|stripe|payment/i.test(all));
+  // これらのファイルは Firebase に触れない(認証・同期の橋渡しは auth.js / sync.js / sync-firestore.js だけ)
+  for (const f of ['app.js', 'records.js', 'sync-core.js', 'sync-engine.js', 'hitou-membership.js', 'data.js']) assert.ok(!/firebase/i.test(strip(f)), f + ' does not touch Firebase');
+  // Firestore SDK の読み込み(import)は sync.js だけ
+  assert.match(strip('sync.js'), /import\(urls\.firestore\)/);
+  assert.ok(!/import\(/.test(strip('sync-firestore.js')) && !/import\(/.test(strip('sync-engine.js')));
   // 認証コードは訪問記録の保存領域・記録APIを使わない
   assert.ok(!/OnsenRecords|onsen-rally-/.test(read('auth.js') + read('firebase-config.js')));
-  // SDK の読み込みは認証用の2モジュールだけ
-  const urls = [...read('auth.js').matchAll(/base\+'(firebase-[a-z]+\.js)'/g)].map(m => m[1]);
-  assert.deepEqual(urls, ['firebase-app.js', 'firebase-auth.js']);
+  // クラウド同期は sync:true の環境(staging・local)だけ。本番には付かず、sync.js は無効な環境では即座に何もしない
+  const sb = { window: {} }; require('node:vm').runInNewContext(read('firebase-config.js'), sb);
+  const envs = JSON.parse(JSON.stringify(sb.window.ONSEN_FIREBASE.environments));
+  assert.equal(envs.production.sync, undefined); assert.equal(envs.production.config, null);
+  assert.equal(envs.staging.sync, true); assert.equal(envs.local.sync, true);
+  assert.match(strip('sync.js'), /!Auth\.syncEnabled\(\)[^;]*\) return;/);
+  assert.match(strip('auth.js'), /ENABLED_ENVIRONMENTS=\['local','staging'\]/);
 });
 
 test('staging hosting: the built site loads from its own directory (every published file is served, cards and 67 map markers render, auth stays off on 127.0.0.1)', async (t) => {

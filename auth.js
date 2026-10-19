@@ -17,13 +17,13 @@
   function resolveEnvironment(settings,hostname){
     const envs=settings&&settings.environments;if(!envs||typeof envs!=='object'||typeof hostname!=='string'||BLOCKED_HOSTS.includes(hostname))return null;
     for(const [name,env] of Object.entries(envs)){
-      if(ENABLED_ENVIRONMENTS.includes(name)&&env&&Array.isArray(env.hosts)&&env.hosts.includes(hostname)&&validConfig(env.config))return {name,config:env.config};
+      if(ENABLED_ENVIRONMENTS.includes(name)&&env&&Array.isArray(env.hosts)&&env.hosts.includes(hostname)&&validConfig(env.config))return {name,config:env.config,sync:env.sync===true};
     }
     return null;
   }
   function sdkUrls(version){
     if(typeof version!=='string'||!/^\d+\.\d+\.\d+$/.test(version))return null;
-    const base='https://www.gstatic.com/firebasejs/'+version+'/';return {app:base+'firebase-app.js',auth:base+'firebase-auth.js'};
+    const base='https://www.gstatic.com/firebasejs/'+version+'/';return {app:base+'firebase-app.js',auth:base+'firebase-auth.js',firestore:base+'firebase-firestore.js'};
   }
   // SDK の読み込み(設定の loadSdk があればそれを使う=試験用)。
   async function defaultLoadSdk(settings){
@@ -49,6 +49,9 @@
     const loadSdk=typeof settings.loadSdk==='function'?()=>settings.loadSdk():()=>defaultLoadSdk(settings);
     let state={status:env?'signedOut':'disabled',user:null,message:'',busy:false,sdkReady:false};
     const listeners=new Set();let sdk=null,auth=null,loading=null;
+    // 内部の認証セッション(同期用)。表示用の state には UID を入れない。トークンは扱わない。generation は認証状態が変わるたびに増える
+    let session={ready:false,uid:null,generation:0},fbApp=null;const sessionListeners=new Set();
+    const apiSession=()=>({ready:session.ready,uid:session.uid,generation:session.generation,projectId:env.config.projectId,app:fbApp});
     const set=patch=>{state={...state,...patch};for(const fn of listeners)try{fn(state)}catch(e){}};
     // 公開するユーザー情報は表示名だけ(メール・写真・UIDは画面にも状態にも持たない)
     const toUser=u=>u?{name:String(u.displayName||'').trim()||'Googleアカウント'}:null;
@@ -58,7 +61,8 @@
       if(!loading)loading=(async()=>{
         const mod=await loadSdk();
         const app=mod.initializeApp(env.config);auth=mod.getAuth(app);sdk=mod;
-        mod.onAuthStateChanged(auth,u=>set({status:u?'signedIn':'signedOut',user:toUser(u),busy:false,sdkReady:true}),()=>set({busy:false}));
+        fbApp=app;
+        mod.onAuthStateChanged(auth,u=>{session={ready:true,uid:u&&typeof u.uid==='string'?u.uid:null,generation:session.generation+1};set({status:u?'signedIn':'signedOut',user:toUser(u),busy:false,sdkReady:true});for(const fn of sessionListeners)try{fn(apiSession())}catch(e){}},()=>set({busy:false}));
         set({sdkReady:true});return mod;
       })().catch(e=>{loading=null;throw e});
       return loading;
@@ -85,7 +89,8 @@
       try{await sdk.signOut(auth);set({busy:false,message:''})}
       catch(error){set({busy:false,message:'ログアウトできませんでした。時間をおいてもう一度お試しください。'})}
     }
-    return {init,signIn,signOut,getState:()=>state,subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn)},enabled:()=>!!env};
+    return {init,signIn,signOut,getState:()=>state,subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn)},enabled:()=>!!env,
+      getSession:apiSession,onSession:fn=>{sessionListeners.add(fn);return()=>sessionListeners.delete(fn)},syncEnabled:()=>!!env&&env.sync===true};
   }
   // 画面: ヘッダーの既存ボタン(#loginBtn)を使い、ログイン設定がある時だけ小さな行(#accountRow)を表示する。
   function bind(controller,doc){
@@ -105,7 +110,7 @@
     return {initialLabel};
   }
   const environment=resolveEnvironment(root.ONSEN_FIREBASE,root.location&&root.location.hostname);
-  const api={validConfig,resolveEnvironment,sdkUrls,errorInfo,create,bind,enabledEnvironments:()=>ENABLED_ENVIRONMENTS.slice(),enabled:()=>!!environment,environmentName:()=>environment?environment.name:null};
+  const api={validConfig,resolveEnvironment,sdkUrls,errorInfo,create,bind,enabledEnvironments:()=>ENABLED_ENVIRONMENTS.slice(),syncEnabled:()=>!!environment&&environment.sync===true,enabled:()=>!!environment,environmentName:()=>environment?environment.name:null};
   root.OnsenAuth=api;
   if(environment){
     const controller=create({settings:root.ONSEN_FIREBASE,environment});

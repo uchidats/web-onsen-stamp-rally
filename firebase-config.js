@@ -28,12 +28,14 @@ window.ONSEN_FIREBASE = window.ONSEN_FIREBASE || {
       // 試験サイト(Firebase Hosting)。GitHub Pagesの本番とは別のホスト名・別のオリジン(localStorageも別)。
       // *.firebaseapp.com 側のホスト名は意図的に含めない(認証はこの .web.app でだけ有効にする)。
       hosts: ['my-onsen-journey-staging.web.app'],
+      sync: true, // クラウド同期(Firestore)。試験用プロジェクトだけで有効。本番(production)には sync を付けない
       config: STAGING_WEB_CONFIG
     },
     local: {
       // 手元確認用。Googleログインを試す時は http://localhost:<ポート>/ で開く(localhost は Firebase の既定の承認済みドメイン)。
       // 127.0.0.1 は意図的に含めない(未登録で認証できず、自動テストのサーバーが実Firebaseへ接続しないため)。
       hosts: ['localhost'],
+      sync: true,
       config: STAGING_WEB_CONFIG
     }
   }
