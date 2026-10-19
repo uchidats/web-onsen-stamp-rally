@@ -535,7 +535,7 @@ window.ONSEN_DATA = [
     "distanceKm": 35,
     "elevationM": 500,
     "springType": "",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B2%A1%E5%B4%8E%E6%97%85%E9%A4%A8%20%E5%AE%AE%E5%9F%8E%E7%9C%8C",
+    "mapUrl": "https://www.google.com/maps/place/?q=place_id:ChIJJbKCdDc3il8R0e3TEzzx98I",
     "coordinateCheckedAt": "2026-10-11"
   },
   {
@@ -808,7 +808,7 @@ window.ONSEN_DATA = [
     "longitude": 140.2929004,
     "coordinateSource": "https://www.openstreetmap.org/node/13201180472",
     "coordinateVerified": true,
-    "officialUrl": "",
+    "officialUrl": "http://www.takayuonsen.jp/nikaidou/",
     "category": "旧（掲載終了）",
     "bathing": "",
     "station": "福島駅",
