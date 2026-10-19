@@ -329,6 +329,40 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「大浴場」ページが共同浴場3つ(したの湯・うえの湯・おくの湯)を挙げ「栃尾又一号泉/源泉100％かけ流し」と記載。別の自在館一号泉を使う貸切風呂には広げない' },
     dilution: { water: 'unknown', note: '主浴槽は「加温せずそのまま湯船へ」(上がり湯は加温)とある一方、湯守のポリシーに冬季は浴槽底の不凍液配管で温める説明があり併存(不凍液の循環は温泉水の循環とは別)。無加水も現行の浴槽別には未確認のため、源生の湯は保留' },
     source: { url: 'https://www.jizaikan.jp/furo.html', checkedAt: '2026-10-19' }
+  },
+  'onsen-054': {
+    scope: 'partial', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「ランプの湯」「源泉かけ流しで、冷泉のままの湯と加熱泉の２つの湯船があり」。かけ流しの記載は冷泉槽の部分範囲で、加熱泉の槽には循環併用の説明(JR東日本)があるため、ランプの湯の全体がかけ流しとは断定しない。浴場群全体に見えないよう、個々の湯には波を付けず施設カードだけにする。四季の湯・雲上の野天風呂は個別のかけ流しの記載が未確認' },
+    dilution: { water: 'unknown', note: 'ランプの湯・四季の湯は冷泉(源泉のまま)と加熱泉の2槽で、槽ごとに条件が異なる。冷泉槽と加熱槽の条件は合成しない。野天風呂の無加水は未確認' },
+    source: { url: 'https://www.takamine.co.jp/about/hot-springs/', checkedAt: '2026-10-19' }
+  },
+  'onsen-055': {
+    scope: 'partial', baths: ['大浴場（内湯）', '大浴場（露天風呂）', '源泉かけ流し貸切風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「源泉近くの大浴場、庭園内にある木漏れ日の貸切風呂。いずれも源泉かけ流しとなっております。」大浴場の内湯・露天と貸切の3群に対応。非循環・無加水・無加温まで保証する記載ではない' },
+    dilution: { water: 'unknown', note: '予約サイト(一休)は大浴場のかけ流しなし・加温、JTBは加温循環併用と無加水無加温放流の欄を併記し矛盾する。公式のかけ流しを優先しつつ、加水・加温・循環は温度別槽との対応が不明のため保留' },
+    source: { url: 'https://nakadanasou.com/spa/', checkedAt: '2026-10-19' }
+  },
+  'onsen-056': {
+    scope: 'facility', baths: ['男女別内湯', '露天風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「自家源泉掛け流しの奈良屋の湯。男女別内湯と露天風呂があります。」地域の外湯には広げない。「自然湧出」は足元湧出ではない' },
+    dilution: { water: 'for_temperature', note: '公式「管理上季節により加水する場合もございます。」どちらの浴槽がいつ加水するかは未確認のため、個別の加水規則は付けず源生の湯は保留' },
+    source: { url: 'https://nozawa-naraya.jp/hot_spring/', checkedAt: '2026-10-19' }
+  },
+  'onsen-057': {
+    scope: 'partial', baths: ['湯元館（龍神の湯・薬師の湯）', '鬼ケ城 野天風呂', '仙人の湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「当館の大浴場、露天・野天風呂、貸切風呂はすべて、自家源泉からの源泉直引き、かけ流しの湯です。」湯元館・鬼ケ城・仙人の湯の3群に限り、別館・煤香庵・客室の浴槽へは広げない' },
+    dilution: { water: 'unknown', note: '公式は続けて「ご入浴の最適温にするために加温しております」と記載(加温あり)。加水・循環・ろ過・消毒は未確認' },
+    source: { url: 'https://www.shirahone.net/hotspring', checkedAt: '2026-10-19' },
+    treatment: {
+      heating: [{ status: 'yes', scope: 'baths', baths: ['湯元館（龍神の湯・薬師の湯）', '鬼ケ城 野天風呂', '仙人の湯'], coverage: '大浴場・露天野天風呂・貸切風呂', scopeNote: '直前の大浴場・露天野天・貸切の3種すべての説明に続く文。温度だけからの推定ではない', quote: 'なお、ご入浴の最適温にするために加温しております。', url: 'https://www.shirahone.net/hotspring', checkedAt: '2026-10-19' }]
+    }
+  },
+  'onsen-058': {
+    scope: 'partial', baths: ['客室露天風呂（朝霧草・小町草）'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式客室紹介「源泉掛け流し展望露天風呂付のお部屋『朝霧草』と『小町草』」「お部屋の露天風呂には源泉かけ流し温泉が注ぎ」。客室露天だけで、展望大浴場・地上の星空(貸切)には広げない' },
+    dilution: { water: 'unknown', note: '客室露天・共用浴場とも無加水・無加温の明示は未確認。サウナは源生の湯の対象外設備' },
+    source: { url: 'https://nanakusanoyu.net/guestroom.html', checkedAt: '2026-10-19' },
+    nonBathing: [{ name: 'サウナ', reason: 'サウナは全身を湯に浸す入浴用の浴槽ではないため認定の対象外' }]
   }
 };
 

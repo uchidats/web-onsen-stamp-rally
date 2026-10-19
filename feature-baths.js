@@ -401,5 +401,56 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '山の湯［深湯］', kind: '露天', form: '男女別', tags: ['深さ約130cm', '夜は宿泊者貸切'] }
     ],
     source: { url: 'https://www.rankei.com/spa/', checkedAt: '2026-10-19' }
+  },
+  'onsen-054': {
+    note: '雲上の野天風呂は宿泊者専用で、天候や凍結、積雪時などは入れない場合があります。',
+    baths: [
+      { name: '雲上の野天風呂', kind: '露天', tags: ['宿泊者専用', '雲上の眺望'] },
+      { name: 'ランプの湯', tags: ['冷温2槽'], note: '冷泉のままの湯と加熱泉の2つの湯船があり、交互に入浴できます' },
+      { name: '四季の湯', form: '女性専用', tags: ['宿泊者専用', '展望風呂', '檜の湯船'], note: '源泉と加熱泉の2つの湯船があります' }
+    ],
+    source: { url: 'https://www.takamine.co.jp/about/hot-springs/', checkedAt: '2026-10-19' }
+  },
+  'onsen-055': {
+    note: '「大浴場(内湯)」「大浴場(露天風呂)」は、公式の「大浴場」を内外で分けた説明用の名称です。',
+    baths: [
+      { name: '大浴場（内湯）', kind: '内湯', tags: ['脱衣所と一体'] },
+      { name: '大浴場（露天風呂）', kind: '露天', tags: ['木漏れ日の露天'] },
+      { name: '源泉かけ流し貸切風呂', form: '貸切', tags: ['庭園の小径', '木造'], note: '庭園の小径を進んだ先にある小さな木造の貸切風呂です' }
+    ],
+    source: { url: 'https://nakadanasou.com/spa/', checkedAt: '2026-10-19' }
+  },
+  'onsen-056': {
+    baths: [
+      { name: '男女別内湯', kind: '内湯', form: '男女別', tags: ['木の造り'] },
+      { name: '露天風呂', kind: '露天', tags: ['岩造り', '雪見'], note: '内湯から階段を下りた先にあり、冬は凍結に注意が必要です' }
+    ],
+    source: { url: 'https://nozawa-naraya.jp/hot_spring/', checkedAt: '2026-10-19' }
+  },
+  'onsen-057': {
+    note: '「湯元館（龍神の湯・薬師の湯）」は男女入替で使う2つの大浴場をまとめた表示です。別館・煤香庵は含みません。',
+    baths: [
+      { name: '湯元館（龍神の湯・薬師の湯）', tags: ['男女入替', '檜・椹造り'] },
+      { name: '鬼ケ城 野天風呂', kind: '露天', tags: ['男女入替', '湯治湯の再現'], note: '2種類の風呂があります' },
+      { name: '仙人の湯', form: '貸切', tags: ['バリアフリー', '予約制'], note: 'ご家族向けの貸切風呂です' }
+    ],
+    source: { url: 'https://www.shirahone.net/hotspring', checkedAt: '2026-10-19' }
+  },
+  'onsen-058': {
+    note: '「客室露天風呂（朝霧草・小町草）」は2つの客室の露天風呂をまとめた表示で、宿泊する客室専用です。',
+    baths: [
+      { name: '展望大浴場', form: '男女別', tags: ['露天風呂付', '塩田平の眺望'] },
+      { name: '地上の星空', form: '貸切', tags: ['貸切展望風呂'] },
+      { name: '客室露天風呂（朝霧草・小町草）', kind: '露天', tags: ['客室専用', '塩田平の眺望'] }
+    ],
+    source: { url: 'https://nanakusanoyu.net/onsen.html', checkedAt: '2026-10-19' }
+  },
+  'onsen-059': {
+    note: '2つの湯の名称は公式の固有名ではなく、浴槽の違いを示す説明用の名称です。浴槽の構成は日本秘湯を守る会と訪問記による補助情報で、公式本文では確認できていません。',
+    baths: [
+      { name: '内湯（加温主浴槽）', kind: '内湯', tags: ['温冷浴'] },
+      { name: '内湯（源泉冷鉱泉浴槽）', kind: '内湯', tags: ['冷鉱泉', '温冷浴'] }
+    ],
+    source: { url: 'https://www.hitou.or.jp/provider/detail?providerId=684', checkedAt: '2026-10-19' }
   }
 };

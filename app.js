@@ -50,7 +50,7 @@ function groupedCards(list){
 const BATH_COLOR_LIMIT=3;
 const EVIDENCE_NOTE={photo_inferred:'写真からの推定です',third_party_reported:'第三者資料の記載です'};
 function bathColorText(c,def){
-  const scope=c.scope==='bath'&&Array.isArray(c.scopeNames)&&c.scopeNames.length?'（'+c.scopeNames.join('・')+'）':'（施設全体）',parts=['湯の色: '+def.label+scope];
+  const scope=c.scope==='bath'&&Array.isArray(c.scopeNames)&&c.scopeNames.length?'（'+c.scopeNames.join('・')+'）':c.scope==='facility'&&c.scopeLabel?'（'+c.scopeLabel+'）':'（施設全体）',parts=['湯の色: '+def.label+scope];
   if(c.expression&&c.expression!==def.label&&!c.listed&&c.role!=='variant')parts.push((c.evidence&&c.evidence.type&&c.evidence.type!=='official_text'?'資料の表現「':'公式の表現「')+c.expression+'」');
   if(c.change&&c.change.note)parts.push(c.change.note);
   const conf=c.evidence&&c.evidence.confidence;if(conf&&EVIDENCE_NOTE[conf])parts.push(EVIDENCE_NOTE[conf]);

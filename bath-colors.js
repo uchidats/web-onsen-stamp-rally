@@ -10,6 +10,8 @@
 //     scope       'facility'=施設全体について書かれた色 / 'bath'=特定の浴槽について書かれた色(scopeNames に浴槽名)
 //                 ・カードには scope に関わらず登録された色が並ぶ。詳細画面の湯名の右には、scope:'bath' で scopeNames にその湯が
 //                   含まれる色だけが出る(施設全体の色を個々の湯へ自動適用しない)。
+//     scopeLabel  任意。scope:'facility' の色が施設の一部(浴場の一つの槽など)についての記載のとき、ツールチップの「(施設全体)」の代わりに出す適用範囲の語。
+//                 施設カードだけに出る(詳細画面の湯名には出ない)。部分範囲を個別の湯の丸で表せないときに使う。
 //     evidence    根拠。{ type: 'official_text'(公式文章)|'official_photo'(公式サイト・パンフレットの浴槽写真)|'third_party'(日本秘湯を守る会・
 //                 観光協会・専門誌などの第三者資料), confidence: 'confirmed'(確認済み)|'photo_inferred'(写真からの推定)|'third_party_reported'(第三者資料の記載),
 //                 note }  省略時は official_text / confirmed。
@@ -251,5 +253,27 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「色のない透明に澄んだお湯です。」入浴に適温まで加温する湯の説明で、分析書の原泉色ではない。施設全体の説明で、個別の浴槽の色ではない' }
     }],
     source: { url: 'https://www.rankei.com/spa/', checkedAt: '2026-10-19' }
+  },
+  'onsen-054': {
+    colors: [{
+      color: 'milky_white', expression: '乳白色', scope: 'facility', scopeLabel: '四季の湯・源泉槽',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉紹介「乳白色の源泉と加熱泉の２つの湯船があります。」(四季の湯)。乳白色は四季の湯の源泉槽の記載で、加熱槽や他の浴場・浴槽の色とは断定しない。部分範囲を個別の湯に表せないため、施設カードだけに載せ、詳細画面の湯名には丸を出さない(個別色は将来のUI対応か追加確認まで保留)' }
+    }],
+    source: { url: 'https://www.takamine.co.jp/about/hot-springs/', checkedAt: '2026-10-19' }
+  },
+  'onsen-057': {
+    colors: [{
+      color: 'milky_white', expression: '乳白色', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「白骨温泉と言えば…乳白色の湯。」「無色透明。空気にふれると、乳白色に変化。」旅館の温泉利用の説明で、個々の浴槽の色ではない。源泉段階の無色透明は別の色として載せない' },
+      change: { kind: 'tint', note: '無色透明の湯が空気に触れて乳白色に変わると公式が説明しています' }
+    }],
+    source: { url: 'https://www.shirahone.net/first', checkedAt: '2026-10-19' }
+  },
+  'onsen-059': {
+    colors: [{
+      color: 'other', expression: '橙色の濁ったミネラル湯', scope: 'facility',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '下諏訪観光協会「橙色の濁ったミネラル湯が特徴です。」既存の色分類に橙色がないため「その他」。特定の浴槽名はなく施設の内湯の説明で、公式サイトでの確認ではない。個人記事の冷鉱泉槽(ほぼ無色透明・茶褐色の湯の華)とは対応づけない' }
+    }],
+    source: { url: 'https://shimosuwaonsen.jp/spa/1045/', checkedAt: '2026-10-19' }
   }
 };
