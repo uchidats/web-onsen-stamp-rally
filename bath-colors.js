@@ -275,5 +275,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'third_party', confidence: 'third_party_reported', note: '下諏訪観光協会「橙色の濁ったミネラル湯が特徴です。」既存の色分類に橙色がないため「その他」。特定の浴槽名はなく施設の内湯の説明で、公式サイトでの確認ではない。個人記事の冷鉱泉槽(ほぼ無色透明・茶褐色の湯の華)とは対応づけない' }
     }],
     source: { url: 'https://shimosuwaonsen.jp/spa/1045/', checkedAt: '2026-10-19' }
+  },
+  'onsen-066': {
+    colors: [{
+      color: 'white', expression: '白く濁る', scope: 'bath', scopeNames: ['男女別の展望内湯'],
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉案内「白く濁る硫黄の香りの100%掛け流しのお湯が、1日の疲れを温かく癒してくれます。」男女別の展望内湯を特定した説明。「うす乳白色」などの同系の表現は別の色として載せない' }
+    }],
+    source: { url: 'https://mikuri.com/onsen/', checkedAt: '2026-10-19' }
   }
 };

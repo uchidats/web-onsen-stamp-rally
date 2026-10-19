@@ -29,10 +29,10 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
     await evaluate('localStorage.clear()');
     fs.mkdirSync('scratch/gensei-qa', { recursive: true });
 
-    const GOLD = ['onsen-007', 'onsen-009', 'onsen-031', 'onsen-034', 'onsen-035', 'onsen-041'];
+    const GOLD = ['onsen-007', 'onsen-009', 'onsen-031', 'onsen-034', 'onsen-035', 'onsen-041', 'onsen-066'];
     // 深緑の波はあるが、源生の湯の根拠が足りない/非該当の施設には金色の波を付けない
-    const GREEN_ONLY = ['onsen-003', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-032', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039', 'onsen-040', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045'];
-    const DETAIL_GOLD = { 'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'], 'onsen-009': ['大湯', '滝の湯', '真湯'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'], 'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], 'onsen-035': ['大気の湯(東・西)'], 'onsen-041': ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'] };
+    const GREEN_ONLY = ['onsen-003', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-032', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039', 'onsen-040', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-065', 'onsen-067'];
+    const DETAIL_GOLD = { 'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'], 'onsen-009': ['大湯', '滝の湯', '真湯'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'], 'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], 'onsen-035': ['大気の湯(東・西)'], 'onsen-041': ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'], 'onsen-066': ['男女別の展望内湯'] };
     const TIP_CARD = '源生の湯の浴槽あり', TIP_BATH = '源生の湯｜源泉かけ流し・加水なし・加温なし';
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
@@ -126,7 +126,7 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
     // ---- detail view: only certified baths get the gold wave, right after the green wave ----
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
-      const NONE = ['onsen-003', 'onsen-006', 'onsen-018', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039', 'onsen-040', 'onsen-042', 'onsen-043', 'onsen-045'];
+      const NONE = ['onsen-003', 'onsen-006', 'onsen-018', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039', 'onsen-040', 'onsen-042', 'onsen-043', 'onsen-045', 'onsen-065', 'onsen-067'];
       for (const id of [...Object.keys(DETAIL_GOLD), ...NONE]) {
         await evaluate(`${entry(id)}.querySelector('[data-detail]').click()`);
         await delay(100);

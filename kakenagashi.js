@@ -363,6 +363,28 @@ window.ONSEN_KAKENAGASHI = {
     dilution: { water: 'unknown', note: '客室露天・共用浴場とも無加水・無加温の明示は未確認。サウナは源生の湯の対象外設備' },
     source: { url: 'https://nanakusanoyu.net/guestroom.html', checkedAt: '2026-10-19' },
     nonBathing: [{ name: 'サウナ', reason: 'サウナは全身を湯に浸す入浴用の浴槽ではないため認定の対象外' }]
+  },
+  'onsen-065': {
+    scope: 'partial', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「塩化物泉と硫酸塩泉の2つの源泉が混ざったお湯です。湧出量は毎分360リットルと豊富で源泉掛け流しです。」泉質を説明する施設総論で、男性露天・女性露天・大浴場のどれに当たるかは明示されていないため、施設カードだけにして個々の湯には付けない' },
+    dilution: { water: 'unknown', note: '加水・加温・循環・ろ過・消毒は未確認' },
+    source: { url: 'https://www.oomaki.jp/hotspring/', checkedAt: '2026-10-19' }
+  },
+  'onsen-066': {
+    scope: 'partial', baths: ['男女別の展望内湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉案内「白く濁る硫黄の香りの100%掛け流しのお湯が、1日の疲れを温かく癒してくれます。」男女別の展望内湯を特定した説明' },
+    dilution: { water: 'none', note: '公式「源泉は地獄谷にあり、無加水・無加温、男女別の展望内湯が一つずつ。」ろ過・循環・消毒は未確認(未確認を「なし」とは扱わない)' },
+    source: { url: 'https://mikuri.com/onsen/', checkedAt: '2026-10-19' },
+    treatment: {
+      water: [{ status: 'none', scope: 'baths', baths: ['男女別の展望内湯'], coverage: '男女別の展望内湯', scopeNote: '公式温泉案内の冒頭が男女別の展望内湯を特定して「無加水・無加温」と述べ、続く「100%掛け流し」の文も同じ浴場を指す', quote: '源泉は地獄谷にあり、無加水・無加温、男女別の展望内湯が一つずつ。', url: 'https://mikuri.com/onsen/', checkedAt: '2026-10-19' }],
+      heating: [{ status: 'none', scope: 'baths', baths: ['男女別の展望内湯'], coverage: '男女別の展望内湯', scopeNote: '公式温泉案内の冒頭が男女別の展望内湯を特定して「無加水・無加温」と述べ、続く「100%掛け流し」の文も同じ浴場を指す', quote: '源泉は地獄谷にあり、無加水・無加温、男女別の展望内湯が一つずつ。', url: 'https://mikuri.com/onsen/', checkedAt: '2026-10-19' }]
+    }
+  },
+  'onsen-067': {
+    scope: 'partial', baths: ['天然洞窟野天風呂', '大浴場'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「天然の洞窟を活用した源泉掛け流しの混浴露天風呂」(天然洞窟野天風呂)、「湯船からあふれ出るたっぷりとした掛け流しのお湯が自慢です。」(大浴場の項)。蓮華の湯は浴槽別の記載が確認できないため個別の波は付けない' },
+    dilution: { water: 'unknown', note: '公式ページ間に矛盾がある: 公式LPは「加水・加温・循環を行わない」、同じ公式ページに「入浴に適した温度にするため、泉質を損なわない範囲で加水する場合がございます」の注記。適用浴槽・時季が不明なため加水の規則は作らず、源生の湯は認定しない' },
+    source: { url: 'https://www.ogawaonsen.co.jp/spa/', checkedAt: '2026-10-19' }
   }
 };
 

@@ -452,5 +452,28 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '内湯（源泉冷鉱泉浴槽）', kind: '内湯', tags: ['冷鉱泉', '温冷浴'] }
     ],
     source: { url: 'https://www.hitou.or.jp/provider/detail?providerId=684', checkedAt: '2026-10-19' }
+  },
+  'onsen-065': {
+    baths: [
+      { name: '男性露天風呂', kind: '露天', form: '男女別', tags: ['岩組み', '原生林'], note: '原生林に包まれた開放的な岩組みの露天風呂です' },
+      { name: '女性露天風呂', kind: '露天', form: '男女別', tags: ['岩のくぼみの小湯舟', '峡谷の眺望'], note: '大きな湯船と、岩のくぼみにお湯をはった小さな湯舟の2つがあります' },
+      { name: '大浴場', kind: '内湯', form: '男女別', tags: ['湖水のほとり', '断崖の眺望'], note: 'ワイドガラス越しに断崖と水面を眺められます' }
+    ],
+    source: { url: 'https://www.oomaki.jp/hotspring/', checkedAt: '2026-10-19' }
+  },
+  'onsen-066': {
+    note: '「男女別の展望内湯」は公式の固有名ではなく、男女別に1つずつある展望内湯をまとめた説明用の群名です。',
+    baths: [
+      { name: '男女別の展望内湯', kind: '内湯', form: '男女別', tags: ['展望', 'ぬるめと熱めの浴槽'], note: '源泉は地獄谷にあり、ぬるめのお湯と熱めのお湯の浴槽があります' }
+    ],
+    source: { url: 'https://mikuri.com/onsen/', checkedAt: '2026-10-19' }
+  },
+  'onsen-067': {
+    baths: [
+      { name: '天然洞窟野天風呂', kind: '露天', form: '混浴', tags: ['石灰華の洞窟', '天然記念物', '日帰りは男性専用'], note: '日帰り入浴は男性専用で、女性は利用できません。宿泊の方は混浴で利用できます。野天風呂は冬季閉鎖です' },
+      { name: '蓮華の湯', kind: '露天', form: '女性専用', tags: ['野天風呂', '自然に囲まれる'], note: '空や山、川に囲まれた女性専用の野天風呂です。冬季閉鎖です' },
+      { name: '大浴場', kind: '内湯', tags: ['大きな窓', '渓流の眺望'], note: '大きな窓から光が入る開放的な内湯です' }
+    ],
+    source: { url: 'https://www.ogawaonsen.co.jp/spa/', checkedAt: '2026-10-19' }
   }
 };

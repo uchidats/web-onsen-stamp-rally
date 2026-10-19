@@ -126,7 +126,7 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       const nyuto = await evaluate("[...document.querySelectorAll('[data-facility-id=\"onsen-015\"],[data-facility-id=\"onsen-016\"]')].map(e=>e.closest('.card')?.dataset?.groupId||e.closest('.card')?.querySelector('h3')?.textContent)");
       assert.equal(nyuto[0], nyuto[1]);
       // other facilities have no data → section hidden
-      for (const id of ['onsen-001', 'onsen-025', 'onsen-038', 'onsen-046', 'onsen-067']) {
+      for (const id of ['onsen-001', 'onsen-025', 'onsen-038', 'onsen-046', 'onsen-047']) {
         if (!await evaluate(`!!document.querySelector('[data-detail="${id}"]')`)) continue;
         await evaluate(`document.querySelector('[data-detail="${id}"]').click()`);
         const s = await evaluate(readSection);

@@ -38,6 +38,7 @@ const FUKUSHIMA = {
 
 const TOCHIGI = { 'onsen-040': '明賀屋本館', 'onsen-041': '加仁湯', 'onsen-042': '八丁の湯', 'onsen-043': '秘湯の宿 元泉館', 'onsen-044': '那須 鹿の湯', 'onsen-045': '大黒屋' };
 const GUNMA = { 'onsen-048': '鍾寿館', 'onsen-053': '湯宿 三河屋' };
+const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
 const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯' };
 const NIIGATA = { 'onsen-060': 'ひなの宿ちとせ', 'onsen-061': '自在館', 'onsen-062': '貝掛温泉', 'onsen-063': '瀬波グランドホテルはぎのや', 'onsen-064': '嵐渓荘' };
 
@@ -47,7 +48,7 @@ const IWATE = {
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 2 Gunma facilities', () => {
   assert.equal(data.length, 67);
-  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO)].sort());
+  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
     assert.equal(data.find(x => x.id === id).prefecture, '群馬県');
@@ -295,4 +296,22 @@ test('feature baths: Nagano has 16 bath groups; names, partial scopes and unconf
     assert.ok(feature[id].baths.every(b => !b.color), id + ': no bath color text');
   }
   assert.ok(feature['onsen-059'].note.includes('説明用'));
+});
+
+test('feature baths: Toyama has 7 bath groups; explanatory group name and Ogawa cave bath conditions are recorded', () => {
+  const names = id => feature[id].baths.map(b => b.name);
+  assert.deepEqual(names('onsen-065'), ['男性露天風呂', '女性露天風呂', '大浴場']);
+  assert.deepEqual(names('onsen-066'), ['男女別の展望内湯']);
+  assert.deepEqual(names('onsen-067'), ['天然洞窟野天風呂', '蓮華の湯', '大浴場']);
+  assert.ok(feature['onsen-066'].note.includes('説明用'));
+  const cave = feature['onsen-067'].baths[0];
+  assert.equal(cave.form, '混浴');
+  assert.ok(cave.note.includes('日帰り入浴は男性専用') && cave.note.includes('宿泊の方は混浴'));
+  assert.ok(cave.tags.includes('日帰りは男性専用'));
+  // 大浴場の男女構成は未確認のため形態を付けない
+  assert.equal(feature['onsen-067'].baths[2].form, undefined);
+  for (const id of Object.keys(TOYAMA)) {
+    assert.ok(!JSON.stringify(feature[id]).includes('research-toyama'), id);
+    assert.ok(feature[id].baths.every(b => !b.color), id + ': no bath color text');
+  }
 });
