@@ -110,7 +110,7 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
         assert.equal(s.overflowX, false, `overflow ${id}@${width} ${JSON.stringify(s)}`);
         assert.equal(s.inside, true, `inside ${id}@${width}`);
         assert.ok(!s.labels.some(l => ['分類', '主泉質', '駅からの距離', '獲得標高'].includes(l)), JSON.stringify(s.labels));
-        assert.deepEqual(s.labels.filter(l => l !== '分類について'), ['日帰り入浴', '最寄り駅']); // 「分類について」は旧(掲載終了)の施設だけに出る既存の注記
+        assert.deepEqual(s.labels, ['日帰り入浴', '最寄り駅']);
         assert.deepEqual(s.meta, ['初回訪問日', '—', '訪問メモ', '—']);
         assert.ok(s.metaInVisit);
         // 「代表的な湯」の見出しは太字(700)で、Webフォントを使わず端末の1フォントに統一(浴場名との太さ混在を防ぐ)。訪問記録の見出しは従来どおり

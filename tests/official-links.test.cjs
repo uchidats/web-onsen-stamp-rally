@@ -16,9 +16,10 @@ assert.ok(!html.includes('現・旧')&&!html.includes('現（新規）')&&!html.
 // 施設カードの分類ラベルは現行認定・旧認定とも「地♨」に統一し、読み上げ・ホバーは「地・温泉」(旧を区別しない)。対象は従来と同じ43施設(34+9)。フィルター・検索の語は従来のまま
 assert.equal((html.match(/aria-label="地・温泉" title="地・温泉">地♨<\/span>/g)||[]).length,43);
 assert.ok(!html.includes('地♨（旧）')&&!html.includes('地・温泉（旧）'));
+assert.ok(!app.includes('地・温泉（旧）')&&!app.includes('地♨（旧）')&&!fs.readFileSync('index.html','utf8').includes('（旧）'));
+assert.ok(!html.includes('分類について'));
 for(const filter of ['search','categorySelect']){
-  assert.equal((render(data,{[filter]:'地・温泉'}).match(/data-facility-id=/g)||[]).length,filter==='search'?43:34);
-  assert.equal((render(data,{[filter]:'地・温泉（旧）'}).match(/data-facility-id=/g)||[]).length,9);
+  assert.equal((render(data,{[filter]:'地・温泉'}).match(/data-facility-id=/g)||[]).length,43); // 現行・旧認定を区別せず43施設
 }
 for(const [category,count] of [['現・旧',26],['現（新規）',8],['旧（掲載終了）',9]])assert.equal((render(data,{categorySelect:category}).match(/data-facility-id=/g)||[]).length,count);
 assert.equal((html.match(/class="facility-name facility-name-link"/g)||[]).length,data.filter(x=>x.officialUrl).length);
