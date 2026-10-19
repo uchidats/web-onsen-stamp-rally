@@ -60,6 +60,14 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .logo { font-size: 22.8px; font-weight: 650; letter-spacing: .08em; line-height: 1.4; }
 .logo small { display: block; color: #bdc8b8; font-size: 11.8px; letter-spacing: .17em; line-height: 1.5; margin-top: 8px; font-weight: 500; }
 .login { border: 1px solid #a7b19d70; background: transparent; color: #e2e5d9; padding: 10px 16px; border-radius: 4px; font-size: 12px; min-height: 44px; max-width: 100%; }
+/* Googleログイン(設定がある環境だけ表示)。ヘッダーの既存ボタンの下に、控えめな小さな行として出す */
+.account-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 10px; color: #bdc8b8; font-size: 11.5px; line-height: 1.6; }
+.account-row[hidden], .account-row [hidden] { display: none; }
+.account-name { color: #e2e5d9; font-weight: 600; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account-remember { display: inline-flex; align-items: center; gap: 6px; }
+.account-remember input { width: 16px; height: 16px; accent-color: var(--gold); }
+.account-row .account-msg { flex-basis: 100%; margin: 0; max-width: none; color: var(--gold); font-size: 11.5px; line-height: 1.6; }
+.login:disabled { opacity: .6; cursor: default; }
 .hero-main { padding: 76px 0 32px; }
 .eyebrow { color: var(--gold); font-size: 11px; letter-spacing: .19em; line-height: 1.6; font-weight: 600; }
 .hero-main > .eyebrow { font-size: 13.2px; letter-spacing: .16em; line-height: 1.7; }
