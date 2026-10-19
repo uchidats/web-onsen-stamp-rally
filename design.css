@@ -146,6 +146,10 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .tags { display: flex; gap: 7px; flex-wrap: wrap; }
 .tag { font-size: 11px; color: #4a5d4c; background: #e9ede2; padding: 4px 8px; border-radius: 2px; overflow-wrap: anywhere; }
 .tag.gold { background: #eee8d8; color: #746039; }
+/* 「秘♨」(日本秘湯を守る会 加盟宿)は「地♨」と同じ見た目のリンク。サイズ・色・枠・余白は .tag.gold と共通で、下線だけ消す */
+a.tag.gold { text-decoration: none; cursor: pointer; }
+a.tag.gold:link, a.tag.gold:visited { color: #746039; }
+a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; }
 .card h3 { font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: 20px; font-weight: 600; line-height: 1.4; margin: 8px 0 6px; overflow-wrap: anywhere; }
 .facility { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
 .facility-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }

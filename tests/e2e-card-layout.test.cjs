@@ -14,6 +14,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
   }
 
   const fixtures=Array.from({length:8},(_,i)=>({id:'onsen-'+String(i+1).padStart(3,'0'),prefecture:'青森県',category:'独自セレクション',onsen:'レイアウト検証温泉 '+(i+1),facility:i<4?'検証の温泉宿 '+(i+1):'長い宿名でも自然に読める静かな温泉旅館'.repeat(4),officialUrl:i%2?'https://example.com/':'',mapUrl:i%4>=2?'https://maps.google.com/':'',latitude:null,longitude:null,coordinateVerified:false}));
+  const HITOU_IDS=Object.keys((()=>{const sb={window:{}};require('node:vm').runInNewContext(fs.readFileSync('hitou-membership.js','utf8'),sb);return sb.window.ONSEN_HITOU_MEMBERSHIP})());
   fixtures[0].id='onsen-015';fixtures[1].id='onsen-016';
   for(const x of fixtures.slice(0,2)){x.prefecture='秋田県';x.onsen='乳頭温泉郷';x.mapUrl='https://maps.google.com/?q='+x.id;x.officialUrl='https://example.com/'+x.id;}
   for(const x of fixtures.slice(4))x.springType='硫黄泉・酸性泉・放射能泉';
@@ -76,7 +77,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
         assert.equal(c.official,!!fixtures[i].officialUrl);
         assert.equal(c.map,!!fixtures[i].mapUrl);
         assert.equal(c.name,fixtures[i].facility);
-        assert.deepEqual(c.order,[...(c.map?['map']:[]),'detail','tag',...(fixtures[i].springType?['tag']:[])]);
+        assert.deepEqual(c.order,[...(c.map?['map']:[]),'detail','tag',...(HITOU_IDS.includes(c.id)?['tag']:[]),...(fixtures[i].springType?['tag']:[])]); // 加盟宿は「秘♨」が分類ラベルの右に並ぶ
         assert.equal(c.badge,['onsen-015','onsen-005'].includes(c.id));
         if(c.official)assert.equal(c.officialUrl,fixtures[i].officialUrl);
         if(c.map)assert.ok(c.mapLabel.includes('Google Maps')&&c.mapLabel.includes(fixtures[i].facility));
