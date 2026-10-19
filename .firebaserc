@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "my-onsen-journey-staging",
+    "staging": "my-onsen-journey-staging"
+  }
+}

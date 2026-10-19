@@ -3,6 +3,8 @@
   "private": true,
   "scripts": {
     "test:quick": "node scripts/run-tests.cjs quick",
-    "test:full": "node scripts/run-tests.cjs full"
+    "test:full": "node scripts/run-tests.cjs full",
+    "staging:files": "node scripts/build-staging.cjs --list",
+    "staging:build": "node scripts/build-staging.cjs"
   }
 }

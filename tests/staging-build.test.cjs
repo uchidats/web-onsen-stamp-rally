@@ -1,0 +1,102 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { spawnSync } = require('node:child_process');
+const { collect, check, FORBIDDEN } = require('../scripts/build-staging.cjs');
+
+const read = f => fs.readFileSync(f, 'utf8');
+
+test('staging hosting: firebase.json publishes only dist-staging, adds noindex, no rewrites/redirects/functions, and .firebaserc points only to the staging project', () => {
+  const fb = JSON.parse(read('firebase.json'));
+  assert.deepEqual(Object.keys(fb), ['hosting']); // Firestore・Functions・Storage等の設定を含まない
+  assert.equal(fb.hosting.public, 'dist-staging');
+  assert.ok(!('rewrites' in fb.hosting) && !('redirects' in fb.hosting));
+  assert.ok(fb.hosting.ignore.includes('**/.*') && fb.hosting.ignore.includes('**/node_modules/**'));
+  const all = fb.hosting.headers.find(h => h.source === '**').headers.map(h => h.key + ':' + h.value);
+  assert.ok(all.includes('X-Robots-Tag:noindex, nofollow'), 'the test site is not indexed');
+  assert.ok(all.includes('X-Content-Type-Options:nosniff'));
+  // ポップアップ認証を妨げるCOOP/COEPは付けない
+  assert.ok(!JSON.stringify(fb).includes('Cross-Origin-Opener-Policy') && !JSON.stringify(fb).includes('Cross-Origin-Embedder-Policy'));
+  const rc = JSON.parse(read('.firebaserc'));
+  assert.deepEqual(rc.projects, { default: 'my-onsen-journey-staging', staging: 'my-onsen-journey-staging' }); // 本番のエイリアスは作らない
+  assert.match(read('.gitignore'), /^dist-staging\/$/m);
+  const pkg = JSON.parse(read('package.json'));
+  assert.equal(pkg.scripts['staging:files'], 'node scripts/build-staging.cjs --list');
+  assert.equal(pkg.scripts['staging:build'], 'node scripts/build-staging.cjs');
+  assert.ok(!Object.keys(pkg.scripts).some(k => /deploy/.test(k)), 'no script deploys automatically');
+});
+
+test('staging hosting: the published file list is a small allowlist with no repo, research, test, doc, backup or secret files', () => {
+  const files = collect();
+  assert.deepEqual(check(files), []);
+  assert.equal(files.length, 35);
+  for (const f of ['index.html', 'design.css', 'app.js', 'auth.js', 'firebase-config.js', 'data.js', 'records.js', 'map.js', 'japan-map.js', 'vendor/leaflet/leaflet.js']) assert.ok(files.includes(f), f);
+  for (const f of files) {
+    for (const re of FORBIDDEN) assert.ok(!re.test(f), f + ' matched ' + re);
+    assert.ok(!/^(\.git|scratch|GitHub|tests|scripts|docs|node_modules)(\/|$)/.test(f), f);
+  }
+  // 公開される .json はフォントのmanifestだけ(訪問記録・バックアップ・調査資料は含まれない)
+  assert.deepEqual(files.filter(f => f.endsWith('.json')), ['assets/fonts/bathnames-manifest.json', 'assets/fonts/manifest.json']);
+  assert.ok(!files.some(f => f.startsWith('assets/coordinates.json')));
+});
+
+test('staging hosting: the built directory matches the list byte for byte and contains no private keys or credentials', () => {
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-staging-'));
+  try {
+    const r = spawnSync(process.execPath, ['scripts/build-staging.cjs', '--out', out], { encoding: 'utf8' });
+    assert.equal(r.status, 0, r.stderr);
+    const built = [];
+    (function walk(d) { for (const n of fs.readdirSync(d)) { const p = path.join(d, n); fs.statSync(p).isDirectory() ? walk(p) : built.push(path.relative(out, p).split(path.sep).join('/')); } })(out);
+    assert.deepEqual(built.sort(), collect());
+    for (const f of built) {
+      assert.ok(fs.readFileSync(path.join(out, f)).equals(fs.readFileSync(f)), f + ' is an exact copy');
+      if (/\.(js|html|css|json)$/.test(f)) assert.ok(!/BEGIN (RSA |EC )?PRIVATE KEY|"private_key"|client_secret|firebase-adminsdk/i.test(read(path.join(out, f))), f);
+    }
+    // 認証設定は Web設定だけ(公開してよい値)で、本番の設定は入っていない
+    assert.match(read(path.join(out, 'firebase-config.js')), /config: null \/\/ 本番/);
+  } finally { fs.rmSync(out, { recursive: true, force: true }); }
+});
+
+test('staging hosting: the app uses Firebase Authentication only (no Firestore/Functions/Storage/Analytics SDK), so visit records are never sent to Firebase', () => {
+  const src = ['auth.js', 'firebase-config.js', 'app.js', 'records.js'].map(read).join('\n').replace(/\/\/.*$/gm, '');
+  assert.ok(!/firebase-firestore|firebase-functions|firebase-storage|firebase-database|firebase-analytics|firebase-messaging|firebase-app-check/.test(src));
+  assert.ok(!/firestore\.googleapis|cloudfunctions\.net|firebasestorage|firebaseio\.com/.test(src));
+  // 認証コードは訪問記録の保存領域・記録APIを使わない
+  assert.ok(!/OnsenRecords|onsen-rally-/.test(read('auth.js') + read('firebase-config.js')));
+  // SDK の読み込みは認証用の2モジュールだけ
+  const urls = [...read('auth.js').matchAll(/base\+'(firebase-[a-z]+\.js)'/g)].map(m => m[1]);
+  assert.deepEqual(urls, ['firebase-app.js', 'firebase-auth.js']);
+});
+
+test('staging hosting: the built site loads from its own directory (every published file is served, cards and 67 map markers render, auth stays off on 127.0.0.1)', async (t) => {
+  const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
+  if (!fs.existsSync(edgePath)) { t.skip('Edge not installed at standard path'); return; }
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-staging-'));
+  assert.equal(spawnSync(process.execPath, ['scripts/build-staging.cjs', '--out', out], { encoding: 'utf8' }).status, 0);
+  const server = require('node:http').createServer((req, res) => {
+    const file = path.resolve(out + new URL(req.url, 'http://localhost').pathname.replace(/^\/$/, '/index.html'));
+    if (!file.startsWith(out + path.sep)) { res.writeHead(403).end(); return; }
+    const type = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css', '.woff2': 'font/woff2', '.json': 'application/json', '.txt': 'text/plain' }[path.extname(file)];
+    if (type) res.setHeader('Content-Type', type);
+    fs.createReadStream(file).on('error', () => res.writeHead(404).end()).pipe(res);
+  });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const url = `http://127.0.0.1:${server.address().port}/index.html`;
+  let browser;
+  t.after(async () => { await browser?.close(); server.closeAllConnections(); server.close(); fs.rmSync(out, { recursive: true, force: true }); });
+  browser = await require('./helpers/browser.cjs').startBrowser(edgePath, url);
+  const { ws, send, evaluate } = browser;
+  await send('Page.enable');
+  const waitFor = async expr => { for (let i = 0; i < 100; i++) { if (await evaluate(expr)) return; await new Promise(r => setTimeout(r, 100)); } assert.fail('Timed out: ' + expr); };
+  await waitFor("document.querySelectorAll('#cards .card').length>0 && document.querySelectorAll('.japan-map-marker').length===67");
+  assert.equal(await evaluate('OnsenAuth.enabled()'), false);
+  assert.equal(await evaluate("document.getElementById('loginBtn').textContent"), '記録はこの端末に保存');
+  const bad = JSON.parse(await evaluate(`(async()=>{const r=[];for(const f of ${JSON.stringify(collect())}){const x=await fetch(f);if(!x.ok)r.push(f+' '+x.status)}return JSON.stringify(r)})()`));
+  assert.deepEqual(bad, []);
+  // 公開されないはずのファイルは存在しない(404)
+  const hidden = JSON.parse(await evaluate(`(async()=>{const r=[];for(const f of ['scratch/','tests/auth.test.cjs','scripts/build-staging.cjs','docs/google-login-setup.md','README.md','.git/config','firebase.json','package.json']){const x=await fetch(f);if(x.ok&&x.headers.get('content-type')&&!/text\\/html/.test(x.headers.get('content-type')))r.push(f)}return JSON.stringify(r)})()`));
+  assert.deepEqual(hidden, []);
+  ws.close();
+});

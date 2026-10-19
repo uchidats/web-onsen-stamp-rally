@@ -36,20 +36,23 @@ function fakeSdk(behavior = {}) {
 }
 const settingsWith = sdk => ({ sdkVersion: '10.14.1', loadSdk: async () => sdk, environments: { staging: { hosts: ['stg.example.io'], config: GOOD } } });
 
-test('auth: repo config enables the staging project on localhost only; production and every other host stay disabled', () => {
+test('auth: repo config enables the staging project on localhost and the staging Hosting site only; production and every other host stay disabled', () => {
   const STAGING = { apiKey: 'AIzaSyDPzEQLDtgeuRt47OKf5HejcenwGMliY_s', authDomain: 'my-onsen-journey-staging.firebaseapp.com', projectId: 'my-onsen-journey-staging', appId: '1:183881233571:web:08b2a48f63f748338b7b16' };
   const cfg = load({}, 'localhost').ONSEN_FIREBASE;
+  const plain = x => JSON.parse(JSON.stringify(x));
   assert.equal(cfg.environments.production.config, null);
-  assert.equal(cfg.environments.staging.config, null);
-  assert.deepEqual(JSON.parse(JSON.stringify(cfg.environments.local.config)), STAGING);
+  assert.deepEqual(plain(cfg.environments.staging.config), STAGING);
+  assert.deepEqual(plain(cfg.environments.local.config), STAGING);
   assert.deepEqual(Object.keys(cfg.environments.local.config).sort(), ['apiKey', 'appId', 'authDomain', 'projectId']); // Web設定だけ(秘密鍵などは無い)
-  assert.deepEqual(JSON.parse(JSON.stringify(cfg.environments.local.hosts)), ['localhost']);
-  // localhost だけで有効(試験用プロジェクト)
-  const local = load({}, 'localhost').OnsenAuth;
-  assert.equal(local.enabled(), true);
-  assert.equal(local.environmentName(), 'local');
-  // 本番サイト・自動テストのサーバー(127.0.0.1)・その他のホストでは無効で、コントローラも作られない
-  for (const host of ['uchidats.github.io', '127.0.0.1', 'example.com', 'my-onsen-journey-staging.firebaseapp.com', 'uchidats.github.io.evil.example']) {
+  assert.deepEqual(plain(cfg.environments.local.hosts), ['localhost']);
+  assert.deepEqual(plain(cfg.environments.staging.hosts), ['my-onsen-journey-staging.web.app']);
+  assert.deepEqual(plain(cfg.environments.production.hosts), ['uchidats.github.io']);
+  // 有効になるのは localhost と試験サイト(Firebase Hosting)だけ
+  const local = load({}, 'localhost').OnsenAuth, stg = load({}, 'my-onsen-journey-staging.web.app').OnsenAuth;
+  assert.equal(local.enabled(), true); assert.equal(local.environmentName(), 'local');
+  assert.equal(stg.enabled(), true); assert.equal(stg.environmentName(), 'staging');
+  // 本番サイト・自動テストのサーバー(127.0.0.1)・firebaseapp.com側・紛らわしいホスト名では無効で、コントローラも作られない
+  for (const host of ['uchidats.github.io', '127.0.0.1', 'example.com', 'my-onsen-journey-staging.firebaseapp.com', 'my-onsen-journey-staging.web.app.evil.example', 'evil-my-onsen-journey-staging.web.app', 'uchidats.github.io.evil.example']) {
     const w = load({}, host);
     assert.equal(w.OnsenAuth.enabled(), false, host);
     assert.equal(w.OnsenAuth.controller, undefined, host);

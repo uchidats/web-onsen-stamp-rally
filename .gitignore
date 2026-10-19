@@ -39,6 +39,10 @@ id_rsa*
 id_ed25519*
 
 # Local tools and generated output
+# Firebase Hosting(試験環境)へ公開するファイルだけを集めた一時ディレクトリ(scripts/build-staging.cjs が作る)
+dist-staging/
+.firebase/
+firebase-debug.log
 # Keep scratch artifacts local; already tracked files remain tracked.
 /scratch/
 node_modules/
