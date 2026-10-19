@@ -157,6 +157,11 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .card .facility-name { display: inline; padding: 0; }
 .card .facility-name-link { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .card .facility-name-link:hover { color: var(--moss); text-decoration-color: currentColor; }
+/* 詳細画面の施設名(公式サイトへのリンク)。控えめな下線と小さな外部リンクアイコン。タップしやすいよう上下に余白を足し、レイアウトは動かさない */
+.modal .facility-name-link { display: inline-flex; align-items: center; gap: 4px; padding-block: 10px; margin-block: -10px; color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.modal .facility-name-link:hover { color: var(--moss); text-decoration-color: currentColor; }
+.modal .facility-name-link:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+.modal .facility-name-link .external-link-icon { opacity: .6; }
 .card .map-link { flex: none; width: 28px; min-height: 28px; }
 .facility-links { display: inline-flex; align-items: center; flex: none; gap: 2px; }
 .facility-link, .map-link { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; color: var(--moss); border-radius: 4px; }

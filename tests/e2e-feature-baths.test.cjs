@@ -80,7 +80,7 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       names:items.map(i=>i.querySelector('h4').textContent),colors:items.flatMap(i=>[...i.querySelectorAll('.feature-bath-color')].map(n=>n.textContent)),
       tags:items.map(i=>[...i.querySelectorAll('.feature-bath-tags .tag')].map(n=>n.textContent)),
       note:!document.getElementById('featureBathNote').hidden,heading:document.getElementById('featureBathsHeading').textContent,
-      noLinks:box.querySelectorAll('a').length===0&&m.querySelectorAll('#modalSubtitle a, #detailMap, .facility-link, .map-link').length===0,
+      noLinks:box.querySelectorAll('a').length===0&&m.querySelectorAll('#modalSubtitle a:not(.facility-name-link), #detailMap, .facility-link, .map-link').length===0,
       overflowX:m.scrollWidth>m.clientWidth||document.documentElement.scrollWidth>innerWidth,
       inside:[...box.querySelectorAll('*')].filter(n=>{const b=n.getBoundingClientRect(),mr=m.getBoundingClientRect();return b.width>0&&!(b.right<=mr.right+0.5&&b.left>=mr.left-0.5)}).map(n=>n.tagName+':'+n.className+':'+JSON.stringify(n.getBoundingClientRect())+'|'+JSON.stringify(m.getBoundingClientRect())).join(';')||true,
       h4:cs(items[0]?.querySelector('h4')||box).fontSize,tagSize:cs(items[0]?.querySelector('.tag')||box).fontSize,modalH:Math.round(m.scrollHeight),boxH:Math.round(r.height),

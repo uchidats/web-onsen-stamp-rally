@@ -13,7 +13,8 @@ function facilityName(x,context='card'){
     const name=url?`<a class="facility-name facility-name-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(x.facility)}の公式サイト（新しいタブで開く）">${esc(x.facility)}</a>`:`<span class="facility-name">${esc(x.facility)}</span>`;
     return name;
   }
-  // The detail view repeats nothing the card already links to (official site, Google Maps).
+  // 詳細画面の施設名は、公式サイトが登録されていればその公式サイトへのリンクにする(新しいタブ)。Google Mapsは詳細画面では繰り返さない。
+  if(url)return `<a class="facility-name facility-name-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(x.facility)}の公式サイト（新しいタブで開く）">${esc(x.facility)}<svg class="external-link-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h6v6M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg></a>`;
   return `<span class="facility-name">${esc(x.facility)}</span>`;
 }
 // Extend this registry with an ID, label and facility predicate for future scopes.
