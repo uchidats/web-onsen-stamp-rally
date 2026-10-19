@@ -13,9 +13,9 @@ function render(rows,filters={},visitedIds=[]){const elements=new Map(),saved=ne
 }
 const html=render(data);
 assert.ok(!html.includes('現・旧')&&!html.includes('現（新規）')&&!html.includes('旧（掲載終了）'));
-// 施設カードの分類ラベルは「地♨」(従来の正式名「地・温泉」は読み上げ・ホバーで維持)。表示条件は従来と同じ
-assert.equal((html.match(/aria-label="地・温泉" title="地・温泉">地♨<\/span>/g)||[]).length,34);
-assert.equal((html.match(/aria-label="地・温泉（旧）" title="地・温泉（旧）">地♨（旧）<\/span>/g)||[]).length,9);
+// 施設カードの分類ラベルは現行認定・旧認定とも「地♨」に統一し、読み上げ・ホバーは「地・温泉」(旧を区別しない)。対象は従来と同じ43施設(34+9)。フィルター・検索の語は従来のまま
+assert.equal((html.match(/aria-label="地・温泉" title="地・温泉">地♨<\/span>/g)||[]).length,43);
+assert.ok(!html.includes('地♨（旧）')&&!html.includes('地・温泉（旧）'));
 for(const filter of ['search','categorySelect']){
   assert.equal((render(data,{[filter]:'地・温泉'}).match(/data-facility-id=/g)||[]).length,filter==='search'?43:34);
   assert.equal((render(data,{[filter]:'地・温泉（旧）'}).match(/data-facility-id=/g)||[]).length,9);
