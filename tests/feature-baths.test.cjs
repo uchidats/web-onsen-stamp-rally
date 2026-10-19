@@ -38,6 +38,7 @@ const FUKUSHIMA = {
 
 const TOCHIGI = { 'onsen-040': '明賀屋本館', 'onsen-041': '加仁湯', 'onsen-042': '八丁の湯', 'onsen-043': '秘湯の宿 元泉館', 'onsen-044': '那須 鹿の湯', 'onsen-045': '大黒屋' };
 const GUNMA = { 'onsen-048': '鍾寿館', 'onsen-053': '湯宿 三河屋' };
+const NIIGATA = { 'onsen-060': 'ひなの宿ちとせ', 'onsen-061': '自在館', 'onsen-062': '貝掛温泉', 'onsen-063': '瀬波グランドホテルはぎのや', 'onsen-064': '嵐渓荘' };
 
 const IWATE = {
   'onsen-006': '峡雲荘', 'onsen-007': '藤三旅館', 'onsen-008': '山水閣', 'onsen-009': '元湯夏油', 'onsen-010': '石塚旅館', 'onsen-011': 'ほっとゆだ', 'onsen-012': '彩雲荘'
@@ -45,7 +46,7 @@ const IWATE = {
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 2 Gunma facilities', () => {
   assert.equal(data.length, 67);
-  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA)].sort());
+  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
     assert.equal(data.find(x => x.id === id).prefecture, '群馬県');
@@ -264,4 +265,18 @@ test('feature baths: Tochigi publishes 17 baths for 6 facilities; unconfirmed fo
   // 鹿の湯の名称は説明用であることを明記。湯色はこのファイルに書かない
   assert.match(feature['onsen-044'].note, /説明用/);
   assert.ok(Object.keys(TOCHIGI).every(id => feature[id].baths.every(b => !b.color)));
+});
+
+test('feature baths: Niigata has 15 bath groups (3 per facility) with names kept as researched', () => {
+  const names = id => feature[id].baths.map(b => b.name);
+  assert.deepEqual(names('onsen-060'), ['月見の湯', 'ほんやらの湯（露天）', '山の湯・里の湯']);
+  assert.deepEqual(names('onsen-061'), ['したの湯', 'うえの湯', 'おくの湯']);
+  assert.deepEqual(names('onsen-062'), ['内湯（源泉ぬる湯）', '露天風呂（源泉ぬる湯）', '露天風呂（加温湯）']);
+  assert.deepEqual(names('onsen-063'), ['眺', '熱の湯', '望']);
+  assert.deepEqual(names('onsen-064'), ['大浴場', '山の湯［石湯］', '山の湯［深湯］']);
+  for (const id of Object.keys(NIIGATA)) {
+    assert.ok(!JSON.stringify(feature[id]).includes('research-niigata'), id);
+    assert.ok(feature[id].baths.every(b => !b.color), id + ': no bath color text');
+  }
+  assert.ok(feature['onsen-062'].note.includes('説明用'));
 });

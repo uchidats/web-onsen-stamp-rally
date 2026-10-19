@@ -356,5 +356,50 @@ window.ONSEN_FEATURE_BATHS = {
       { name: 'ひのきの湯', tags: ['檜造り', '熱め・ぬるめの2槽'] }
     ],
     source: { url: 'https://www.itamuro-daikokuya.com/onsen/', checkedAt: '2026-10-18' }
+  },
+  'onsen-060': {
+    note: '「山の湯・里の湯」は2つの貸切風呂をまとめた表示です。「ほんやらの湯（露天）」の括弧は、循環式の内湯を除いた露天風呂だけを指す説明用の表記です。',
+    baths: [
+      { name: '月見の湯', kind: '露天', form: '男女別', tags: ['あつ湯・ぬる湯の仕切り', '雪見', '時間で男女入替'], note: '湯舟をあつ湯とぬる湯に仕切った露天風呂。2024年に改修されました' },
+      { name: 'ほんやらの湯（露天）', kind: '露天', form: '男女別', note: '露天風呂付き大浴場の男女別の露天風呂です' },
+      { name: '山の湯・里の湯', form: '貸切', note: '2つの貸切風呂です。宿泊者のみ利用できます' }
+    ],
+    source: { url: 'https://chitose.tv/bath/', checkedAt: '2026-10-19' }
+  },
+  'onsen-061': {
+    note: '共同浴場の「したの湯」「うえの湯」「おくの湯」を載せています。別の源泉を使う貸切風呂は含みません。',
+    baths: [
+      { name: 'したの湯', kind: '内湯', form: '男女別', tags: ['1日ごとに男女入替', 'ぬる湯', '長湯文化'] },
+      { name: 'うえの湯', kind: '内湯', form: '男女別', tags: ['1日ごとに男女入替', 'ぬる湯', '長湯文化'] },
+      { name: 'おくの湯', kind: '内湯', form: '男女別', tags: ['1日ごとに男女入替', 'ぬる湯', '長湯文化'] }
+    ],
+    source: { url: 'https://www.jizaikan.jp/furo.html', checkedAt: '2026-10-19' }
+  },
+  'onsen-062': {
+    note: '3つの湯の名称は公式の固有名ではなく、温度と内外を示す説明用の名称です。',
+    baths: [
+      { name: '内湯（源泉ぬる湯）', kind: '内湯', form: '男女別', tags: ['ぬる湯', '長湯文化'] },
+      { name: '露天風呂（源泉ぬる湯）', kind: '露天', form: '男女別', tags: ['岩造り', 'ぬる湯'] },
+      { name: '露天風呂（加温湯）', kind: '露天', form: '男女別', note: '加熱した湯の露天風呂です' }
+    ],
+    source: { url: 'https://kaikake.jp/?page_id=932', checkedAt: '2026-10-19' }
+  },
+  'onsen-063': {
+    note: '共用の大浴場3つを載せています。客室付きの露天風呂は含みません。',
+    baths: [
+      { name: '眺', tags: ['8階の展望大浴場', '時間で男女入替'] },
+      { name: '熱の湯', form: '男女別', tags: ['7階', '檜風呂'], note: '男湯・女湯ともにひのき材をたっぷり使った浴場です' },
+      { name: '望', tags: ['3階の大浴場', '時間で男女入替'] }
+    ],
+    source: { url: 'https://senamionsen.com/hotspa/', checkedAt: '2026-10-19' }
+  },
+  'onsen-064': {
+    note: '「山の湯［石湯］」「山の湯［深湯］」は日中は男女別、夕方以降は宿泊者の貸切です。',
+    baths: [
+      { name: '大浴場', kind: '内湯', form: '男女別' },
+      { name: '山の湯［石湯］', form: '男女別', tags: ['川石の湯船', '夜は宿泊者貸切'], note: '五十嵐川の石で組んだ湯船です' },
+      { name: '山の湯［深湯］', kind: '露天', form: '男女別', tags: ['深さ約130cm', '夜は宿泊者貸切'] }
+    ],
+    source: { url: 'https://www.rankei.com/spa/', checkedAt: '2026-10-19' }
   }
 };

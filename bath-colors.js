@@ -230,5 +230,26 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'third_party', confidence: 'third_party_reported', note: '日本温泉協会の施設紹介「栃木県最古の湯、白いにごり湯」。分析書の色ではなく利用する湯の紹介。男湯・女湯のどの温度の浴槽かは特定されておらず、公式サイトでの確認ではない' }
     }],
     source: { url: 'https://www.spa.or.jp/search_f/detail_f/?F_ID=1685', checkedAt: '2026-10-18' }
+  },
+  'onsen-061': {
+    colors: [
+      { color: 'colorless', expression: '無色透明', scope: 'facility', evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「大浴場」ページ「見た目には無色透明で一見何の変哲もない『ラジウム温泉』」。共同浴場3つの説明で、貸切風呂を含む全館の色とは断定しない。季節による色変化は未確認' } },
+      { color: 'colorless', expression: '無色透明', scope: 'bath', scopeNames: ['したの湯', 'うえの湯', 'おくの湯'], evidence: { type: 'official_text', confidence: 'confirmed', note: '同ページが「したの湯」「うえの湯」「おくの湯」を挙げた直後の「これらのお風呂」「見た目には無色透明」の段落。分析書の色の転用ではない。貸切風呂・上がり湯には広げない' } }
+    ],
+    source: { url: 'https://www.jizaikan.jp/furo.html', checkedAt: '2026-10-19' }
+  },
+  'onsen-062': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「無色透明で無臭の貝掛の湯」。入浴文化を説明する本文で、分析書の欄ではない。施設全体の説明で、個別の浴槽の色ではない(ぬる湯・加温湯との対応は明示されていない)' }
+    }],
+    source: { url: 'https://kaikake.jp/?page_id=932', checkedAt: '2026-10-19' }
+  },
+  'onsen-064': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉ページ「色のない透明に澄んだお湯です。」入浴に適温まで加温する湯の説明で、分析書の原泉色ではない。施設全体の説明で、個別の浴槽の色ではない' }
+    }],
+    source: { url: 'https://www.rankei.com/spa/', checkedAt: '2026-10-19' }
   }
 };

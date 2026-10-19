@@ -314,6 +314,21 @@ window.ONSEN_KAKENAGASHI = {
     dilution: { water: 'unknown', note: '旧記事のひのきの湯の無加温、冬季加温、旅行サイトの露天の湯の加温の記載が食い違い、未確認' },
     source: { url: 'https://www.itamuro-daikokuya.com/faq1/', checkedAt: '2026-10-18' },
     nonBathing: [{ name: '黄土浴アタラクシア', reason: '黄土浴の設備は全身を湯に浸す入浴用の浴槽ではないため認定の対象外' }]
+  },
+  'onsen-060': {
+    scope: 'partial', baths: ['月見の湯', 'ほんやらの湯（露天）', '山の湯・里の湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「露天風呂「月見の湯」では、効能豊かな源泉掛け流しの湯」「露天風呂は「源泉掛け流し」、内湯は「新湯注入循環方式」」「貸切風呂の山の湯・里の湯…「源泉掛け流しの湯」」。ほんやらの湯は露天風呂だけが対象で、循環式の内湯には広げない' },
+    dilution: { water: 'added', note: '公式「当館ではすべての浴槽に加水しております」。月見の湯の旧記事(2015年・第三者)の極寒期加温は改修前で、現行の加温有無は未確認' },
+    source: { url: 'https://chitose.tv/bath/', checkedAt: '2026-10-19' },
+    treatment: {
+      water: [{ status: 'yes', scope: 'baths', baths: ['月見の湯', 'ほんやらの湯（露天）', '山の湯・里の湯'], coverage: '通常の温泉浴槽(月見の水風呂は対象外)', scopeNote: '公式の全浴槽加水と引湯先の列挙を照合し、3群とも列挙範囲内', quote: '当館ではすべての浴槽に加水しております。', url: 'https://chitose.tv/bath/', checkedAt: '2026-10-19' }]
+    }
+  },
+  'onsen-061': {
+    scope: 'partial', baths: ['したの湯', 'うえの湯', 'おくの湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「大浴場」ページが共同浴場3つ(したの湯・うえの湯・おくの湯)を挙げ「栃尾又一号泉/源泉100％かけ流し」と記載。別の自在館一号泉を使う貸切風呂には広げない' },
+    dilution: { water: 'unknown', note: '主浴槽は「加温せずそのまま湯船へ」(上がり湯は加温)とある一方、湯守のポリシーに冬季は浴槽底の不凍液配管で温める説明があり併存(不凍液の循環は温泉水の循環とは別)。無加水も現行の浴槽別には未確認のため、源生の湯は保留' },
+    source: { url: 'https://www.jizaikan.jp/furo.html', checkedAt: '2026-10-19' }
   }
 };
 
