@@ -28,9 +28,9 @@ test('kakenagashi: every entry is keyed by an existing facility and records scop
   }
 });
 
-test('kakenagashi: the card icon facilities are exactly the confirmed ones (50); unconfirmed facilities get none', () => {
+test('kakenagashi: the card icon facilities are exactly the confirmed ones (51); unconfirmed facilities get none', () => {
   assert.deepEqual(Object.keys(kake).sort(), [
-    'onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012',
+    'onsen-001', 'onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012',
     'onsen-015', 'onsen-016', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027',
     'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033',
     'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-040', 'onsen-041', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-048', 'onsen-054', 'onsen-055', 'onsen-056', 'onsen-057', 'onsen-058', 'onsen-060', 'onsen-061', 'onsen-065', 'onsen-066', 'onsen-067'
@@ -62,7 +62,7 @@ test('kakenagashi: per-bath icons use only bath-level evidence and match 代表�
     // 第三者団体の一覧(施設単位)だけでは、個々の浴槽に広げない
     if (e.evidence.type === 'third_party') assert.deepEqual(e.baths, [], id);
   }
-  assert.equal(n, 85);
+  assert.equal(n, 88);
   // 施設全体の記述だけの施設・かけ流しが明記されていない浴槽には付けない
   assert.deepEqual(kake['onsen-008'].baths, ['大沢の湯']); // 山水の湯・豊沢の湯は公式FAQのかけ流しの列挙に含まれない
   assert.deepEqual(kake['onsen-011'].baths, ['大浴場']); // 貸切風呂は記載なし
@@ -153,4 +153,20 @@ test('kakenagashi: Toyama has 3 card waves and 3 bath-level waves (Mikurigaike 1
   assert.match(kake['onsen-067'].dilution.note, /矛盾/);
   for (const id of ['onsen-065', 'onsen-067']) assert.equal(GENSEI.certifiedBaths(kake[id]).length, 0, id);
   for (const b of kake['onsen-067'].baths) assert.equal(GENSEI.evaluate(kake['onsen-067'], b).result, 'pending', b);
+});
+
+test('kakenagashi: Hokkaido (Shiriuchi) has 1 card wave and 3 bath-level waves based on third-party sources; no gold wave', () => {
+  const e = kake['onsen-001'];
+  assert.deepEqual(e.baths, ['上の湯', '下の湯', '混浴露天風呂']);
+  // 施設総論は公式の予約FAQ、個別の湯への適用は第三者資料(青森県観光情報サイト・JR東日本)で、種別を分けて記録する
+  assert.equal(e.evidence.type, 'official_text');
+  assert.equal(e.perBathEvidence.type, 'third_party');
+  assert.equal(e.perBathEvidence.confidence, 'third_party_reported');
+  assert.match(e.perBathEvidence.note, /第三者資料/);
+  assert.match(e.perBathEvidence.note, /施設公式の浴槽別の記載ではない/);
+  // 源生の湯: 入浴者による加水を公式が容認し、加温なしの明文もないため規則を作らず3群とも未判定
+  assert.equal(e.treatment, undefined);
+  assert.equal(GENSEI.certifiedBaths(e).length, 0);
+  for (const b of e.baths) assert.equal(GENSEI.evaluate(e, b).result, 'pending', b);
+  assert.match(e.dilution.note, /お客様にお任せ/);
 });

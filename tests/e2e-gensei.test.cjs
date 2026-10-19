@@ -31,7 +31,7 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
 
     const GOLD = ['onsen-007', 'onsen-009', 'onsen-031', 'onsen-034', 'onsen-035', 'onsen-041', 'onsen-066'];
     // 深緑の波はあるが、源生の湯の根拠が足りない/非該当の施設には金色の波を付けない
-    const GREEN_ONLY = ['onsen-003', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-032', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039', 'onsen-040', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-065', 'onsen-067'];
+    const GREEN_ONLY = ['onsen-001', 'onsen-003', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-032', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039', 'onsen-040', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-065', 'onsen-067'];
     const DETAIL_GOLD = { 'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'], 'onsen-009': ['大湯', '滝の湯', '真湯'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'], 'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], 'onsen-035': ['大気の湯(東・西)'], 'onsen-041': ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'], 'onsen-066': ['男女別の展望内湯'] };
     const TIP_CARD = '源生の湯の浴槽あり', TIP_BATH = '源生の湯｜源泉かけ流し・加水なし・加温なし';
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;

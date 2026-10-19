@@ -201,3 +201,7 @@ test('bath colors: Toyama has only Mikurigaike white (card + the single bath gro
   assert.equal(colors['onsen-066'].colors.length, 1);
   for (const id of ['onsen-065', 'onsen-067']) assert.equal(colors[id], undefined, id);
 });
+
+test('bath colors: Hokkaido (Shiriuchi) has no color yet (conflicting sources are held)', () => {
+  assert.equal(colors['onsen-001'], undefined);
+});

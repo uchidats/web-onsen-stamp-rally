@@ -475,5 +475,14 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '大浴場', kind: '内湯', tags: ['大きな窓', '渓流の眺望'], note: '大きな窓から光が入る開放的な内湯です' }
     ],
     source: { url: 'https://www.ogawaonsen.co.jp/spa/', checkedAt: '2026-10-19' }
+  },
+  'onsen-001': {
+    note: '「混浴露天風呂」は公式の固有名ではなく、露天風呂を示す説明用の名称です。上の湯・下の湯の男女別の構成は、JR東日本の旅行紹介による情報です。',
+    baths: [
+      { name: '上の湯', kind: '内湯', form: '男女別', tags: ['坂の上の源泉'], note: '坂の上に源泉があることから上の湯と呼ばれています' },
+      { name: '下の湯', kind: '内湯', form: '男女別', tags: ['鉄分泉'], note: '鉄分泉が濃く、源泉が上の湯より建物に近いため冷めにくいと紹介されています' },
+      { name: '混浴露天風呂', kind: '露天', form: '混浴', note: '運営者のページに、混浴(岩風呂)または予約による貸切との案内があります。予約の条件は確認できていません' }
+    ],
+    source: { url: 'https://shiriuchionsen.com/onsen.php', checkedAt: '2026-10-19' }
   }
 };
