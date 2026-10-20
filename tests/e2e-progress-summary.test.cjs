@@ -34,7 +34,7 @@ test('Four progress rings: responsive layout, percentages, record edits, backup 
     }
     assert.fail('Timed out: ' + expr);
   };
-  await wait("document.readyState==='complete' && document.getElementById('totalText').textContent==='0 / 67 施設'");
+  await wait("document.readyState==='complete' && document.getElementById('totalText')?.textContent==='0 / 67 施設'");
   await evaluate('document.fonts.ready');
   const seed = count => evaluate(`(()=>{const h=OnsenHost;let state=h.store.replace(h.store.empty(),h.getState(),true);for(const x of ONSEN_DATA.slice(0,${count}))state=h.store.setVisited(state,x.id,true);h.setState(state)})()`);
   async function check() {
@@ -64,13 +64,31 @@ test('Four progress rings: responsive layout, percentages, record edits, backup 
         const cards=[...document.querySelectorAll('.progress-card')],rects=cards.map(e=>e.getBoundingClientRect());
         return {columns:new Set(rects.map(r=>Math.round(r.left))).size,rows:new Set(rects.map(r=>Math.round(r.top))).size,overflow:document.documentElement.scrollWidth>innerWidth,contained:cards.every(e=>{const r=e.getBoundingClientRect();return [...e.querySelectorAll('h3,.progress-ring,.progress-percent,.progress-count')].every(x=>{const b=x.getBoundingClientRect();return b.left>=r.left&&b.right<=r.right&&b.top>=r.top&&b.bottom<=r.bottom})}),controls:document.querySelectorAll('#progressRings button,#progressRings a,#progressRings select,#progressScope,#totalBar').length};
       })()`);
-      assert.deepEqual(layout, { columns: width === 1280 ? 4 : 2, rows: width === 1280 ? 1 : 2, overflow: false, contained: true, controls: 0 });
+      assert.deepEqual(layout, { columns: width === 1280 ? 4 : 2, rows: width === 1280 ? 1 : 2, overflow: false, contained: true, controls: 1 });
       assert.deepEqual(rings.map(r => r.total), [67, 43, 51, 7]);
       await evaluate("document.getElementById('progress').scrollIntoView({block:'center',behavior:'instant'})");
       await evaluate('new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))');
       const shot = await send('Page.captureScreenshot', { format: 'png' });
       fs.writeFileSync(path.join(browser.profile, `rings-${width}-${count}.png`), Buffer.from(shot.data, 'base64'));
     }
+    await evaluate("document.getElementById('progressGenseiHelp').focus()");
+    for (const type of ['keyDown','keyUp']) await send('Input.dispatchKeyEvent',{type,key:'Enter',code:'Enter',windowsVirtualKeyCode:13,text:type==='keyDown'?'\r':''});
+    assert.equal(await evaluate("document.getElementById('progressGenseiTip').hidden"),false);
+    assert.equal(await evaluate("document.getElementById('progressGenseiTip').textContent"),'源泉かけ流しで、加水・加温なしが確認された湯。当サイト独自の分類です。');
+    assert.equal(await evaluate("(()=>{const r=document.getElementById('progressGenseiTip').getBoundingClientRect();return r.left>=0&&r.right<=innerWidth})()"),true);
+    fs.writeFileSync(path.join(browser.profile, `rings-help-${width}.png`), Buffer.from((await send('Page.captureScreenshot', { format: 'png' })).data, 'base64'));
+    await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
+    assert.equal(await evaluate("document.getElementById('progressGenseiTip').hidden"),true);
+    await send('Emulation.setTouchEmulationEnabled',{enabled:width<400});
+    const point=await evaluate("(()=>{const r=document.getElementById('progressGenseiHelp').getBoundingClientRect();return{x:r.x+r.width/2,y:r.y+r.height/2}})()");
+    if(width<400){
+      await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});
+      await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+    }else await send('Input.dispatchMouseEvent',{type:'mouseMoved',...point});
+    assert.equal(await evaluate("document.getElementById('progressGenseiTip').hidden"),false);
+    await evaluate("document.body.click()");
+    assert.equal(await evaluate("document.getElementById('progressGenseiTip').hidden"),true);
+    assert.equal(await evaluate("document.querySelector('#progress-kake-label svg').outerHTML===document.querySelector('#cards .kake-svg').outerHTML && document.querySelector('#progress-gensei-label svg').outerHTML===document.querySelector('#cards .gensei-svg').outerHTML"),true);
     await seed(0);
     await evaluate("document.querySelector('[data-detail=\"onsen-001\"]').click();document.getElementById('detailStamp').click()");
     await check();

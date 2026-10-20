@@ -30,7 +30,7 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
         panelFits: panel.left >= 0 && panel.right <= innerWidth,
         overlap: hero.bottom - panel.top,
         percent: document.getElementById('totalPercent').textContent,
-        labels: [...document.querySelectorAll('.progress-card h3')].map(e => e.textContent),
+        labels: [...document.querySelectorAll('.progress-card h3')].map(e => {const label=e.cloneNode(true);label.querySelectorAll('button,.progress-help-tip').forEach(x=>x.remove());return label.textContent}),
         cardsPlain: [...document.querySelectorAll('.progress-card')].every(e=>{const s=getComputedStyle(e);return s.backgroundColor==='rgba(0, 0, 0, 0)'&&['Top','Right','Bottom','Left'].every(side=>s['border'+side+'Width']==='0px')}),
         rings: [...document.querySelectorAll('.progress-ring')].map(e=>{const r=e.getBoundingClientRect(),label=e.previousElementSibling.getBoundingClientRect();return {width:r.width,height:r.height,gap:r.top-label.bottom,stroke:getComputedStyle(e.querySelector('svg')).strokeWidth}}),
         columns: new Set([...document.querySelectorAll('.progress-card')].map(e=>Math.round(e.getBoundingClientRect().left))).size

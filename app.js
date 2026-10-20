@@ -87,6 +87,19 @@ function bathColorDotsFor(x,bathName){return bathColorButtons(bathColorEntry(x).
 // 源泉かけ流しの波アイコン。データは kakenagashi.js(かけ流しを明記した記述だけ)。ツールチップ・操作は湯色の丸と共通。
 const KAKE_WAVE='<svg class="kake-svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M1.5 3.5c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4 0"/><path d="M1.5 8c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4 0"/><path d="M1.5 12.5c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4 0"/></svg>';
 const GENSEI_DROP='<svg class="gensei-svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M8 1C6.8 2.9 3 6.8 3 10a5 5 0 0 0 10 0C13 6.8 9.2 2.9 8 1Z"/></svg>';
+// Progress labels share the exact SVG artwork used by facility cards.
+$('progress-kake-label').innerHTML='<span class="progress-label">源泉かけ流し'+KAKE_WAVE+'</span>';
+$('progress-gensei-label').innerHTML='<span class="progress-label progress-help">源生の湯<button type="button" id="progressGenseiHelp" class="progress-help-button" aria-label="源生の湯の説明" aria-expanded="false" aria-controls="progressGenseiTip" aria-describedby="progressGenseiTip">'+GENSEI_DROP+'<span aria-hidden="true">ⓘ</span></button><span id="progressGenseiTip" class="progress-help-tip" role="tooltip" hidden>源泉かけ流しで、加水・加温なしが確認された湯。当サイト独自の分類です。</span></span>';
+{
+  const button=$('progressGenseiHelp'),tip=$('progressGenseiTip'),wrap=$('progress-gensei-label');
+  const show=open=>{tip.hidden=!open;button.setAttribute('aria-expanded',String(open))};
+  button.addEventListener('click',()=>show(tip.hidden));
+  wrap.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')show(true)});
+  wrap.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')show(false)});
+  wrap.addEventListener('focusout',e=>{if(!wrap.contains(e.relatedTarget))show(false)});
+  document.addEventListener('click',e=>{if(!wrap.contains(e.target))show(false)});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')show(false)});
+}
 function kakeButton(text){return '<span class="kake-wrap"><button type="button" class="kake-icon" aria-label="'+esc(text)+'">'+KAKE_WAVE+'<span class="bath-color-tip" role="tooltip" aria-hidden="true">'+esc(text)+'</span></button></span>'}
 // 「源生の湯」(源泉かけ流し・加水なし・加温なし)の金色の水滴。認定は kakenagashi.js の表から自動計算(ONSEN_GENSEI)。深緑の波の右に並べる。
 function genseiButton(text){return '<span class="gensei-wrap"><button type="button" class="gensei-icon" aria-label="'+esc(text)+'">'+GENSEI_DROP+'<span class="bath-color-tip" role="tooltip" aria-hidden="true">'+esc(text)+'</span></button></span>'}

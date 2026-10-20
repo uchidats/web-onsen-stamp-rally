@@ -166,6 +166,11 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .progress-card-kake { --ring-color: #567864; }
 .progress-card-gensei { --ring-color: var(--gensei); }
 .progress-card h3 { margin: 0 0 10px; color: var(--moss); font-size: 14px; font-weight: 500; line-height: 1.5; }
+.progress-label { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; vertical-align: top; }
+.progress-help { position: relative; }
+.progress-help-button { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0; border: 0; background: transparent; color: var(--gensei); font: inherit; font-size: 11px; }
+.progress-help-button:focus-visible { outline: 2px solid var(--gensei); outline-offset: 2px; }
+.progress-help-tip { position: absolute; z-index: 10; top: 100%; right: 0; width: min(248px, calc(100vw - 48px)); padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--moss); font-size: 12px; font-weight: 400; line-height: 1.7; text-align: left; white-space: normal; }
 .progress-ring { position: relative; width: 104px; height: 104px; margin: auto; }
 .progress-ring svg { display: block; width: 100%; height: 100%; transform: rotate(-90deg); fill: none; stroke-width: 6; }
 .progress-ring-track { stroke: #e3e4dd; }
