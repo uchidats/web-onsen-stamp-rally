@@ -65,6 +65,22 @@ test('Map help opens, closes and preserves legends and prefecture navigation at 
     assert.equal(await evaluate('document.getElementById("japanMap").hidden'), true);
     assert.equal(await evaluate('document.getElementById("mapHeading").textContent'), '青森県の温泉マップ');
     assert.equal(await evaluate('[...document.querySelectorAll("#cards .card")].length'), 4);
+    assert.equal(await evaluate('document.getElementById("mapCount").textContent'), '表示 4施設 / 座標確認済み 4施設');
+    assert.equal(await evaluate('document.getElementById("mapCount").getClientRects().length'), 0);
+    assert.equal(await evaluate('document.querySelectorAll(".map-bottom").length'), 0);
+    assert.equal(await evaluate('document.querySelectorAll("#japanMap a[href*=fixthemap],#prefectureMap a[href*=fixthemap]").length'), 0);
+    assert.equal(await evaluate('!!document.querySelector("#mapCanvas .leaflet-control-attribution a[href*=openstreetmap]")'), true);
+    await evaluate('document.getElementById("mapCanvas").scrollIntoView({block:"end",behavior:"instant"})');
+    fs.writeFileSync(path.join(browser.profile, `map-bottom-${width}.png`), Buffer.from((await send('Page.captureScreenshot', { format: 'png' })).data, 'base64'));
+    await click('#aboutOpen', mobile);
+    assert.equal(await evaluate('document.getElementById("aboutDialog").open'), true);
+    const report = await evaluate(`(() => {
+      const a=document.querySelector('#aboutDialog a[href="https://www.openstreetmap.org/fixthemap"]'),r=a.getBoundingClientRect();
+      return {text:a.textContent,target:a.target,rel:a.rel,fits:r.left>=0&&r.right<=innerWidth&&document.getElementById('aboutDialog').scrollWidth<=document.getElementById('aboutDialog').clientWidth};
+    })()`);
+    assert.deepEqual(report, {text:'地図の修正を報告 ↗',target:'_blank',rel:'noopener noreferrer',fits:true});
+    fs.writeFileSync(path.join(browser.profile, `about-report-${width}.png`), Buffer.from((await send('Page.captureScreenshot', { format: 'png' })).data, 'base64'));
+    await click('#aboutClose', mobile);
     await evaluate('document.getElementById("resetPref").click()');
     assert.equal(await evaluate('document.getElementById("japanMap").hidden'), false);
     assert.equal(await evaluate('JSON.stringify(localStorage)'), stored);
