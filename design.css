@@ -34,27 +34,23 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  /* Three diffuse mist banks veil the vertical shadows at the forest edges. */
-  background:
-    radial-gradient(ellipse 75% 17% at 72% 94%, #d9d8c316, transparent 78%),
-    radial-gradient(ellipse 62% 14% at 94% 71%, #b9c5b51a, transparent 82%),
-    radial-gradient(ellipse 58% 12% at 52% 57%, #c7cec00c, transparent 85%),
-    radial-gradient(ellipse 1.1% 85% at 97% 32%, #102a2352, transparent 90%),
-    radial-gradient(ellipse .7% 76% at 92% 40%, #142d2440, transparent 90%),
-    radial-gradient(ellipse 1.3% 90% at 87% 25%, #122b233d, transparent 90%),
-    radial-gradient(ellipse .8% 70% at 81% 45%, #152d2530, transparent 90%),
-    radial-gradient(ellipse .9% 88% at 2% 29%, #10282145, transparent 90%),
-    radial-gradient(ellipse .6% 76% at 6% 42%, #122b2333, transparent 90%),
-    radial-gradient(ellipse 1% 80% at 10% 38%, #142c2424, transparent 90%);
+  background-image: var(--hero-bg-shade, linear-gradient(90deg, #102a23b8 0%, #17342ba8 70%, #17342b94 100%)), linear-gradient(0deg, #102a2366, transparent 65%), url("assets/hero-onsen-bg.webp");
+  background-repeat: no-repeat;
+  background-size: cover, cover, var(--hero-bg-size, 115% auto);
+  background-position: center, center, var(--hero-bg-position, 0% 15%);
 }
-.hero::after {
-  content: ""; position: absolute; inset: 30% -8% -22% 30%; z-index: -2; pointer-events: none;
-  /* Soft, overlapping slopes replace the angular ridge; no external assets. */
-  background:
-    radial-gradient(ellipse 50% 42% at 89% 105%, #10271f38 55%, transparent 72%),
-    radial-gradient(ellipse 43% 46% at 53% 97%, #172d2530 55%, transparent 74%),
-    radial-gradient(ellipse 49% 53% at 77% 87%, #80917b16 48%, transparent 73%),
-    radial-gradient(ellipse 39% 41% at 27% 100%, #73846e12 48%, transparent 75%);
+:root[data-hero-background="mist"] { --hero-bg-size: 115% auto; --hero-bg-position: 0% 15%; }
+:root[data-hero-background="ridge"] { --hero-bg-size: 140% auto; --hero-bg-position: 35% 0%; }
+:root[data-hero-background="water"] { --hero-bg-size: 140% auto; --hero-bg-position: 30% 100%; }
+:root[data-hero-background="ryokan"] { --hero-bg-size: 125% auto; --hero-bg-position: 100% 35%; }
+:root[data-hero-background="lantern"] { --hero-bg-size: 155% auto; --hero-bg-position: 100% 60%; }
+@media (max-width: 900px) {
+  :root { --hero-bg-shade: linear-gradient(90deg, #102a23db 0%, #102a23db 70%, #102a23d6 100%); }
+  :root[data-hero-background="mist"] { --hero-bg-size: auto 115%; --hero-bg-position: 25% 15%; }
+  :root[data-hero-background="ridge"] { --hero-bg-size: auto 140%; --hero-bg-position: 47% 0%; }
+  :root[data-hero-background="water"] { --hero-bg-size: auto 185%; --hero-bg-position: 50% 100%; }
+  :root[data-hero-background="ryokan"] { --hero-bg-size: auto 115%; --hero-bg-position: 87% 50%; }
+  :root[data-hero-background="lantern"] { --hero-bg-size: auto 150%; --hero-bg-position: 100% 60%; }
 }
 .top { display: flex; align-items: center; justify-content: space-between; gap: 20px clamp(10px, 2vw, 20px); flex-wrap: wrap; }
 .logo { font-size: 22.8px; font-weight: 650; letter-spacing: .08em; line-height: 1.4; }
@@ -384,8 +380,6 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   .hero h1 { font-size: clamp(22.1px, 6.545vw, 30.6px); letter-spacing: .01em; margin-top: 20px; line-height: 1.6; min-height: 3.2em; }
   .hero p { font-size: 14px; }
   .hero-actions { gap: 12px; margin-top: 28px; }
-  .hero::before { opacity: .75; }
-  .hero::after { inset: 45% -28% -16% 0; opacity: .7; }
   .logo { font-size: 20.4px; }
   .logo small { font-size: 10.6px; }
   .login { padding: 9px 12px; font-size: 11px; }

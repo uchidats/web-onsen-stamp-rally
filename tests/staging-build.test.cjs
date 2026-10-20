@@ -34,7 +34,8 @@ test('staging hosting: firebase.json publishes only dist-staging, adds noindex, 
 test('staging hosting: the published file list is a small allowlist with no repo, research, test, doc, backup or secret files', () => {
   const files = collect();
   assert.deepEqual(check(files), []);
-  assert.equal(files.length, 41);
+  assert.equal(files.length, 44);
+  for (const file of ['hero-background.js', 'assets/hero-onsen-bg.png', 'assets/hero-onsen-bg.webp']) assert.ok(files.includes(file));
   assert.ok(files.includes('account-menu.js'));
   for (const f of ['sync-core.js', 'sync-engine.js', 'sync-firestore.js', 'sync.js']) assert.ok(files.includes(f), f);
   // 公開物にRules・エミュレータ・テストは含めない(Rulesはfirebase deploy --only firestore で別に適用する)
