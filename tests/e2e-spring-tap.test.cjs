@@ -34,8 +34,8 @@ test('E2E: spring marker touch tolerance (single facility, close facilities, mou
     else { await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y }); await send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', clickCount: 1 }); await send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', clickCount: 1 }); }
     await wait(450);
   };
-  const state = () => evaluate(`(() => ({popupFacility: document.querySelector('.onsen-popup > div')?.textContent || null, chooser: [...document.querySelectorAll('.map-choice-list button')].map(b => b.textContent), hasPopup: !!document.querySelector('.leaflet-popup')}))()`);
-  const clear = async () => { await evaluate('qaMap.closePopup();void 0'); await wait(150); };
+  const state = () => evaluate(`(() => ({detailFacility: document.getElementById('modalBg').style.display==='flex'?document.querySelector('#modalSubtitle .facility-name').textContent:null, chooser: [...document.querySelectorAll('.map-choice-list button')].map(b => b.textContent), hasPopup: !!document.querySelector('.leaflet-popup')}))()`);
+  const clear = async () => { await evaluate("document.getElementById('modalClose').click();document.getElementById('mapNearbyChoices')?.remove();void 0"); await wait(150); };
   // container point of a facility, in page coordinates
   const pagePoint = id => evaluate(`(() => {const x=ONSEN_DATA.find(v=>v.id==='${id}'),p=qaMap.latLngToContainerPoint([x.latitude,x.longitude]),b=document.getElementById('mapCanvas').getBoundingClientRect();return {x:b.left+p.x,y:b.top+p.y}})()`);
 
@@ -68,19 +68,21 @@ test('E2E: spring marker touch tolerance (single facility, close facilities, mou
     await clear();
     await tap(c.x + 18, c.y, touch);
     let s = await state();
-    if (touch) { assert.equal(s.popupFacility, facility, `${width}px: tap 18px away selects the single facility`); assert.deepEqual(s.chooser, []); }
-    else assert.equal(s.hasPopup, false, 'mouse: only the marker itself is clickable (unchanged)');
+    assert.equal(s.hasPopup,false);
+    if (touch) { assert.equal(s.detailFacility, facility, `${width}px: tap 18px away selects the single facility`); assert.deepEqual(s.chooser, []); }
+    else assert.equal(s.detailFacility, null, 'mouse: only the marker itself is clickable (unchanged)');
     await clear();
-    c = await pagePoint(lone); // the popup auto-pans the map; re-measure
+    c = await pagePoint(lone); // re-measure without moving the map
     await tap(c.x + 40, c.y, touch);
     s = await state();
+    assert.equal(s.detailFacility, null);
     assert.equal(s.hasPopup, false, `${width}px: a tap 40px away does nothing`);
     await clear();
     // the marker itself still works for both
     await clear();
     c = await pagePoint(lone);
     await tap(c.x, c.y, touch);
-    s = await state(); assert.equal(s.popupFacility, facility, `${width}px: direct tap on the marker`);
+    s = await state(); assert.equal(s.detailFacility, facility, `${width}px: direct tap on the marker`);
     await clear();
 
     // --- close facilities: zoom so that two markers are 28-40px apart; tap the midpoint (outside both 12px circles)
@@ -104,7 +106,7 @@ test('E2E: spring marker touch tolerance (single facility, close facilities, mou
     await tap(m.x, m.y, touch);
     s = await state();
     if (touch) {
-      assert.equal(s.popupFacility, null, `${width}px: no facility is chosen on its own between two close markers`);
+      assert.equal(s.detailFacility, null, `${width}px: no facility is chosen on its own between two close markers`);
       assert.equal(s.chooser.length, 2, `${width}px: chooser lists both facilities`);
       const names = await evaluate(`[${JSON.stringify(pair.a)},${JSON.stringify(pair.b)}].map(id=>ONSEN_DATA.find(v=>v.id===id).facility)`);
       for (const n of names) assert.ok(s.chooser.some(x => x.startsWith(n)), `${width}px: ${n} listed`);
@@ -112,7 +114,7 @@ test('E2E: spring marker touch tolerance (single facility, close facilities, mou
       await evaluate("document.querySelectorAll('.map-choice-list button')[1].click()");
       await wait(450);
       s = await state();
-      assert.ok(names.includes(s.popupFacility), `${width}px: the chosen facility opens its own popup`);
+      assert.ok(names.includes(s.detailFacility), `${width}px: the chosen facility opens its shared detail panel`);
       assert.equal(s.chooser.length, 0);
     } else assert.equal(s.hasPopup, false);
     await clear();
@@ -131,7 +133,7 @@ test('E2E: spring marker touch tolerance (single facility, close facilities, mou
     await clear();
     await tap(lm.x, lm.y, touch);
     s = await state();
-    if (touch) { assert.ok(topFacility, `${width}px: overlap point is covered by a marker`); assert.equal(s.popupFacility, topFacility, `${width}px: overlap -> topmost marker`); assert.deepEqual(s.chooser, []); }
+    if (touch) { assert.ok(topFacility, `${width}px: overlap point is covered by a marker`); assert.equal(s.detailFacility, topFacility, `${width}px: overlap -> topmost marker`); assert.deepEqual(s.chooser, []); }
     await clear();
 
     // --- map operations are not disturbed: pan by dragging empty map keeps zoom/center semantics and opens nothing
@@ -150,6 +152,7 @@ test('E2E: spring marker touch tolerance (single facility, close facilities, mou
     }
     await wait(500);
     s = await state();
+    assert.equal(s.detailFacility, null);
     assert.equal(s.hasPopup, false, `${width}px: a pan gesture opens no popup`);
     const after = await evaluate('JSON.stringify([qaMap.getZoom(),qaMap.getCenter()])');
     assert.equal(JSON.parse(after)[0], JSON.parse(before)[0], 'zoom unchanged by pan');

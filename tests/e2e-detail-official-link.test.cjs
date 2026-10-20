@@ -61,7 +61,7 @@ test('E2E: facility name in the detail view links to the official site (card and
           assert.equal(i.underline, 'underline');
           assert.ok(i.tapH >= 28, `${via}:${x.id} tap height ${i.tapH}`);
           assert.ok(i.inside && !i.overflow, `${via}:${x.id}@${width} fits`);
-          assert.equal(i.links, 1);
+          assert.equal(i.links, 2);
           await close();
         }
         // 未登録(3施設)はリンクにせず従来どおり表示のみ
@@ -70,7 +70,7 @@ test('E2E: facility name in the detail view links to the official site (card and
           const i = await info();
           assert.equal(i.text, x.facility);
           assert.equal(i.isLink, false, `${via}:${x.id} stays plain text`);
-          assert.equal(i.links, 0);
+          assert.equal(i.links, 1);
           assert.equal(i.icon, false);
           await close();
         }

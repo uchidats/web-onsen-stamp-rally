@@ -213,13 +213,13 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
         await send('Input.dispatchMouseEvent', {type:'mouseReleased', ...point, button:'left', clickCount:1});
       }
       await new Promise(r => setTimeout(r, 350));
-      assert.ok(await evaluate("!!document.querySelector('.onsen-popup button')"), width + 'px: pointer opens popup');
+      assert.ok(await evaluate("document.getElementById('modalBg').style.display==='flex' && !document.querySelector('.leaflet-popup')"), width + 'px: pointer opens shared detail');
       const shot = await send('Page.captureScreenshot', {format:'png'});
       fs.writeFileSync('scratch/map-screenshots/individual-iwate-' + width + '.png', Buffer.from(shot.data,'base64'));
-      await evaluate("document.querySelector('.leaflet-popup-close-button').click()");
+      await evaluate("document.getElementById('modalClose').click()");
     }
 
-    // Unified view: verified markers, status sync, popup history, return and every prefecture.
+    // Unified view: verified markers, status sync, detail history, return and every prefecture.
     await evaluate(`document.getElementById('resetPref').click(); document.querySelector('.pref[data-pref="青森県"]').click()`);
     for(let attempt=0;attempt<50;attempt++){
       if(await evaluate(`!!document.querySelector('#mapCanvas .leaflet-marker-icon')`))break;
@@ -237,9 +237,9 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
       fs.writeFileSync(`scratch/map-screenshots/unified-${width}.png`,Buffer.from(shot.data,'base64'));
     }
     await evaluate(`document.querySelector('#mapCanvas .onsen-map-marker').click()`);
-    assert.equal(await evaluate(`document.querySelector('.onsen-popup').textContent.includes('訪問 0回')`),true);
-    assert.equal(await evaluate(`document.querySelector('.onsen-popup a').href.startsWith('https://')`),true);
-    await evaluate(`document.querySelector('.onsen-popup button').click(); document.getElementById('detailStamp').click(); document.getElementById('modalClose').click()`);
+    assert.equal(await evaluate(`document.getElementById('visitSummary').textContent.includes('訪問0回')`),true);
+    assert.equal(await evaluate(`document.querySelector('#detailMap').href.startsWith('https://')`),true);
+    await evaluate(`document.getElementById('detailStamp').click(); document.getElementById('modalClose').click()`);
     assert.equal(await evaluate(`document.querySelectorAll('#mapCanvas .onsen-map-marker.is-visited').length`),1);
     await evaluate(`document.getElementById('mapStatus').value='visited';document.getElementById('mapStatus').dispatchEvent(new Event('change'))`);
     assert.equal(await evaluate(`document.getElementById('statusSelect').value`),'visited');

@@ -50,11 +50,11 @@ test('E2E: Aomori facility positions and marker projection on desktop/mobile', a
       for(const id of ['onsen-002','onsen-003','onsen-004','onsen-005']){
         await evaluate(`(()=>{const x=ONSEN_DATA.find(x=>x.id==='${id}');qaMap.setView([x.latitude,x.longitude],17,{animate:false});document.getElementById('mapCanvas').scrollIntoView()})()`);
         await waitFor(`!!document.querySelector('.onsen-map-marker[data-onsen-id="${id}"]') && [...document.querySelectorAll('#mapCanvas img.leaflet-tile')].every(t=>t.complete&&t.naturalWidth===256)`);
-        const result=await evaluate(`(()=>{const x=ONSEN_DATA.find(x=>x.id==='${id}'),marker=document.querySelector('.onsen-map-marker[data-onsen-id="${id}"]'),r=marker.querySelector('span').getBoundingClientRect(),base=document.getElementById('mapCanvas').getBoundingClientRect(),p=qaMap.latLngToContainerPoint([x.latitude,x.longitude]);marker.click();return {id:x.id,facility:x.facility,latitude:x.latitude,longitude:x.longitude,pixelError:Math.hypot(r.left+r.width/2-base.left-p.x,r.top+r.height/2-base.top-p.y),popup:document.querySelector('.onsen-popup')?.textContent,unvisited:marker.classList.contains('is-unvisited')}})()`);
+        const result=await evaluate(`(()=>{const x=ONSEN_DATA.find(x=>x.id==='${id}'),marker=document.querySelector('.onsen-map-marker[data-onsen-id="${id}"]'),r=marker.querySelector('span').getBoundingClientRect(),base=document.getElementById('mapCanvas').getBoundingClientRect(),p=qaMap.latLngToContainerPoint([x.latitude,x.longitude]);marker.click();return {id:x.id,facility:x.facility,latitude:x.latitude,longitude:x.longitude,pixelError:Math.hypot(r.left+r.width/2-base.left-p.x,r.top+r.height/2-base.top-p.y),detail:document.getElementById('modalSubtitle').textContent,unvisited:marker.classList.contains('is-unvisited')}})()`);
         assert.ok(result.pixelError<1.5,JSON.stringify(result));
-        await waitFor(`document.querySelector('.onsen-popup')?.textContent.includes(${JSON.stringify(result.facility)})`);
+        await waitFor(`document.getElementById('modalSubtitle').textContent.includes(${JSON.stringify(result.facility)})`);
         assert.equal(result.unvisited,true);results.push({...result,width});
-        await evaluate('qaMap.closePopup();void 0');
+        await evaluate("document.getElementById('modalClose').click();void 0");
         await new Promise(r=>setTimeout(r,250));
         fs.mkdirSync('scratch/coordinate-audit/screenshots',{recursive:true});const shot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(`scratch/coordinate-audit/screenshots/${id}-${width}.png`,Buffer.from(shot.data,'base64'));
       }

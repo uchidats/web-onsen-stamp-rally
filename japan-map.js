@@ -265,38 +265,9 @@
     }
     updateView();
 
-    // Keep the centers geographically exact. Resolve overlapping screen dots
-    // through a facility chooser instead of moving their geographic positions.
+    // Open the shared detail panel without changing geographic positions or view state.
     function activateAt(clientX, clientY, preferredId) {
-      if (!onDetail) return;
-      if (!Number.isFinite(clientX) || !Number.isFinite(clientY)) {
-        onDetail(preferredId);
-        return;
-      }
-      const nearby = markerNodes.filter(function(node) {
-        const r = node.getBoundingClientRect();
-        return r.width && Math.hypot(clientX-r.left-r.width/2, clientY-r.top-r.height/2) <= Math.max(8,r.width/2+2);
-      });
-      if (nearby.length <= 1) { onDetail(preferredId); return; }
-      detailBar.replaceChildren();
-      const title = document.createElement('strong');
-      title.textContent = '近接する温泉を選択';
-      detailBar.appendChild(title);
-      const choices = document.createElement('div');
-      choices.className = 'japan-map-choices';
-      nearby.forEach(function(node) {
-        const id = node.getAttribute('data-onsen-id');
-        const item = data.find(function(x) { return x.id === id; });
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'stamp';
-        button.setAttribute('data-map-candidate',id);
-        button.textContent = item.facility + '（' + item.prefecture + '）';
-        button.addEventListener('click',function() { onDetail(id); });
-        choices.appendChild(button);
-      });
-      detailBar.appendChild(choices);
-      detailBar.scrollIntoView({block:'nearest'});
+      if (onDetail) onDetail(preferredId);
     }
 
     function positionTooltip(clientX, clientY) {

@@ -74,10 +74,10 @@ test('E2E: warm monochrome tiles, comparison screenshots and isolated UI', async
         const point=await evaluate(`(() => {const r=document.querySelector('#mapCanvas .onsen-map-marker.is-visited span').getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}})()`);
         if(width===390){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
         else {await send('Input.dispatchMouseEvent',{type:'mousePressed',...point,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...point,button:'left',clickCount:1});}
-        await waitFor("!!document.querySelector('.onsen-popup')");
+        await waitFor("document.getElementById('modalBg').style.display==='flex'");
         assert.equal(await evaluate("getComputedStyle(document.querySelector('.leaflet-popup-pane')).filter"),'none');
-        assert.ok(await evaluate("document.querySelector('.onsen-popup button') && document.querySelector('.onsen-popup a').href.startsWith('https://')"));
-        await evaluate("document.querySelector('.leaflet-popup-close-button').click()");
+        assert.ok(await evaluate("!document.querySelector('.leaflet-popup') && document.querySelector('#detailMap').href.startsWith('https://')"));
+        await evaluate("document.getElementById('modalClose').click()");
         const zoomBefore=await evaluate("document.querySelector('.leaflet-tile-container').style.transform");
         await evaluate("document.querySelector('.leaflet-control-zoom-in').click()");
         await new Promise(r=>setTimeout(r,500));
@@ -87,7 +87,7 @@ test('E2E: warm monochrome tiles, comparison screenshots and isolated UI', async
         fs.writeFileSync(`scratch/map-tones/${slug}-${width}-after-zoom.png`,Buffer.from(detail.data,'base64'));
         await evaluate("document.querySelector('.leaflet-control-zoom-out').click()");
         await new Promise(r=>setTimeout(r,400));
-        results.push({pref,width,...state,popup:true,zoom:true});
+        results.push({pref,width,...state,detail:true,zoom:true});
         await evaluate("document.getElementById('mapReset').click()");
         assert.equal(await evaluate("!document.getElementById('japanMap').hidden && getComputedStyle(document.querySelector('.geolonia-svg-map')).filter==='none'"),true);
       }

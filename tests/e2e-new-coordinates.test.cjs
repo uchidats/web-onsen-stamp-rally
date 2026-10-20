@@ -5,7 +5,7 @@ const {spawn}=require('node:child_process');
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 const added=Array.from({length:67},(_,i)=>'onsen-'+String(i+1).padStart(3,'0'));
 
-test('E2E: 67 exact projected national markers, overlap choices, regional selection and preserved visit storage',async t=>{
+test('E2E: 67 exact projected national markers, direct marker details, regional selection and preserved visit storage',async t=>{
  const browser=['C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe','C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'].find(fs.existsSync);
  if(!browser){t.skip('Chrome/Edge not installed');return;}
  const server=http.createServer((req,res)=>{
@@ -53,12 +53,11 @@ test('E2E: 67 exact projected national markers, overlap choices, regional select
     const error=await evaluate(`(()=>{const m=document.querySelector('.japan-map-marker[data-onsen-id="${id}"]'),r=m.getBoundingClientRect(),x=ONSEN_DATA.find(x=>x.id==='${id}'),p=JapanPrefMap.project(x.longitude,x.latitude),q=new DOMPoint(...p).matrixTransform(document.querySelector('.geolonia-svg-map').getScreenCTM());return Math.hypot(q.x-r.left-r.width/2,q.y-r.top-r.height/2)})()`);
     assert.ok(error<.1,'Marker and outline use the same SVG matrix '+id);
     await click({x:point.x,y:point.y},mobile);
-    if(await evaluate("document.getElementById('modalBg').style.display!=='flex'")){
-      await waitFor(`!!document.querySelector('[data-map-candidate="${id}"]')`);
-      const choice=await evaluate(`(()=>{const b=document.querySelector('[data-map-candidate="${id}"]');b.scrollIntoView({block:'center'});const r=b.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}})()`);
-      await click(choice,mobile);
-    }
-    await expectDetail(id,width+'px national');results.push({width,id,view:'national',selected:true,pixelError:error});
+    await expectDetail(point.hit,width+'px national pointer');
+    // Overlapping markers keep exact coordinates: a pointer selects the marker actually hit.
+    // Every facility remains individually accessible from its keyboard target.
+    await evaluate(`document.querySelector('.japan-map-marker[data-onsen-id="${id}"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}))`);
+    await expectDetail(id,width+'px national keyboard');results.push({width,id,hit:point.hit,view:'national',selected:true,pixelError:error});
    }
    assert.equal(await evaluate('document.documentElement.scrollWidth>innerWidth'),false);
    if(mobile){
@@ -90,9 +89,9 @@ test('E2E: 67 exact projected national markers, overlap choices, regional select
     await evaluate(`(()=>{qaMap.stop();qaMap.closePopup();document.getElementById('mapCanvas').scrollIntoView({block:'center'});qaMap.invalidateSize({pan:false});const x=ONSEN_DATA.find(x=>x.id==='${id}');qaMap.setView([x.latitude,x.longitude],13,{animate:false});})()`);await delay(450);
     const point=await evaluate(`(()=>{const marker=document.querySelector('#mapCanvas .onsen-map-marker[data-onsen-id="${id}"]'),r=marker.querySelector('span').getBoundingClientRect();const candidates=[{x:r.left+r.width/2,y:r.top+r.height/2}];for(let y=r.top+1;y<r.bottom;y++)for(let x=r.left+1;x<r.right;x++)candidates.push({x,y});return candidates.find(p=>Math.hypot(p.x-r.left-r.width/2,p.y-r.top-r.height/2)<r.width/2-0.75&&document.elementFromPoint(p.x,p.y)?.closest('.onsen-map-marker')?.dataset.onsenId==='${id}')||null})()`);
     if(!point){const diagnostic=await evaluate(`(()=>{const m=document.querySelector('#mapCanvas .onsen-map-marker[data-onsen-id="${id}"]'),r=m.querySelector('span').getBoundingClientRect(),b=document.getElementById('mapCanvas').getBoundingClientRect();return {dot:r.toJSON(),map:b.toJSON(),hit:document.elementFromPoint(r.left+r.width/2,r.top+r.height/2)?.outerHTML.slice(0,250),center:qaMap.getCenter(),zoom:qaMap.getZoom()}})()`);assert.fail(width+'px regional '+id+' '+JSON.stringify(diagnostic));}
-    await click(point,mobile);await waitFor("!!document.querySelector('.onsen-popup')");
-    assert.equal(await evaluate("document.querySelector('.onsen-popup > div').textContent"),await evaluate(`ONSEN_DATA.find(x=>x.id==='${id}').facility`));
-    await evaluate("document.querySelector('.onsen-popup button').click()");await expectDetail(id);
+    await click(point,mobile);await waitFor("document.getElementById('modalBg').style.display==='flex'");
+    assert.equal(await evaluate("document.querySelector('#modalSubtitle .facility-name').textContent"),await evaluate(`ONSEN_DATA.find(x=>x.id==='${id}').facility`));
+    await expectDetail(id);
     assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 0施設')"),true);
     assert.equal(await evaluate("document.querySelector('.leaflet-control-attribution').textContent.includes('OpenStreetMap')"),true);
     results.push({width,id,view:'regional',count:expected.length,selected:true});
@@ -103,6 +102,6 @@ test('E2E: 67 exact projected national markers, overlap choices, regional select
   assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'Map selection must preserve every stored visit byte');
   assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設を訪問済み');
   fs.writeFileSync(output+'/results.json',JSON.stringify(results,null,2));
-  t.diagnostic('PASS: 134 national and 150 regional mouse/touch selections; exact shared projection, overlap chooser, 67 verified; synthetic 3/67 progress and storage preserved');
+  t.diagnostic('PASS: 134 national and 150 regional mouse/touch selections; exact shared projection, direct pointer and keyboard details, 67 verified; synthetic 3/67 progress and storage preserved');
  }finally{await session.close();server.closeAllConnections();server.close();}
 });
