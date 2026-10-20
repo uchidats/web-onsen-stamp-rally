@@ -40,6 +40,12 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
     assert.equal(layout.headings, 0);
     assert.equal(await evaluate("document.getElementById('regionalHeading').textContent"), '都道府県別の♨達成度');
     assert.equal(await evaluate("document.querySelector('#regional-progress .section-kicker').textContent"), 'REGIONAL PROGRESS');
+    for (const [section,text] of [['regional-progress','REGIONAL PROGRESS'],['onsens','THE ONSEN COLLECTION']]) {
+      const heading=await evaluate(`(()=>{const section=document.getElementById('${section}'),e=section.querySelector('.section-kicker'),s=getComputedStyle(e),h=section.querySelector('h2'),before=getComputedStyle(h).fontSize;e.style.fontSize='10px';const original=getComputedStyle(h).fontSize;e.style.fontSize='';const r=e.getBoundingClientRect(),j=h.getBoundingClientRect();return {text:e.textContent,size:s.fontSize,color:s.color,spacing:s.letterSpacing,margin:s.marginBottom,japaneseUnchanged:before===original,fits:r.left>=0&&r.right<=innerWidth,gap:j.top-r.bottom}})()`);
+      assert.deepEqual(heading,{text,size:'12px',color:'rgb(118, 103, 68)',spacing:'2.04px',margin:'10px',japaneseUnchanged:true,fits:true,gap:10});
+      await evaluate(`document.getElementById('${section}').querySelector('.section-kicker').scrollIntoView({block:'center',behavior:'instant'})`);
+      fs.writeFileSync(path.join(browser.profile, `${section}-${width}.png`),Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
+    }
     assert.equal(await evaluate("document.querySelector('.pref-progress-toggle strong').textContent"), '都道府県別の♨達成度');
     assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"), '12都道府県・67施設の訪問進捗');
     assert.equal(await evaluate("document.getElementById('prefProgressMeta').getClientRects().length"), 0);
