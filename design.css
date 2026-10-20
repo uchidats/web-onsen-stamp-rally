@@ -885,12 +885,12 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .bath-color:hover .bath-color-tip, .bath-color:focus-visible .bath-color-tip, .bath-color.is-open .bath-color-tip,
 .kake-icon:hover .bath-color-tip, .kake-icon:focus-visible .bath-color-tip, .kake-icon.is-open .bath-color-tip,
 .gensei-icon:hover .bath-color-tip, .gensei-icon:focus-visible .bath-color-tip, .gensei-icon.is-open .bath-color-tip { visibility: visible; opacity: 1; }
-/* 源泉かけ流しの波アイコン(16px・深緑)。湯色の丸の右、無ければ施設名のすぐ右。 */
+/* 源泉かけ流しの三本波アイコン(16px・深緑)。湯色の丸の右、無ければ施設名のすぐ右。 */
 .kake-wrap { display: inline-flex; align-items: center; vertical-align: middle; margin-inline-start: 6px; }
 .bath-colors + .kake-wrap { margin-inline-start: 0; }
 .kake-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--moss); cursor: pointer; font: inherit; }
-.kake-svg { display: block; width: 16px; height: 16px; }
-/* 源生の湯: 深緑の波の右に並べる金色の波(同じ形・色だけ違う。装飾やアニメーションなし)。波どうしの間隔は4px */
+.kake-svg, .gensei-svg { display: block; width: 16px; height: 16px; }
+/* 源生の湯: 深緑の三本波の右に並べる金色の塗りつぶし水滴。16px・装飾やアニメーションなし。アイコン間隔は4px */
 .gensei-wrap { display: inline-flex; align-items: center; vertical-align: middle; margin-inline-start: 0; }
 .gensei-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--gensei); cursor: pointer; font: inherit; }
 .gensei-icon:focus-visible { outline: 2px solid var(--gensei); outline-offset: 0; }

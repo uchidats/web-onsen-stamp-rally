@@ -74,10 +74,11 @@ function bathColorDots(x){return bathColorButtons(bathColorEntry(x))}
 // 詳細画面: その湯について確認された色だけ(施設全体の色は個々の湯へ適用しない)
 function bathColorDotsFor(x,bathName){return bathColorButtons(bathColorEntry(x).filter(c=>c.scope==='bath'&&Array.isArray(c.scopeNames)&&c.scopeNames.includes(bathName)))}
 // 源泉かけ流しの波アイコン。データは kakenagashi.js(かけ流しを明記した記述だけ)。ツールチップ・操作は湯色の丸と共通。
-const KAKE_WAVE='<svg class="kake-svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M1.5 5.5c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4 0"/><path d="M1.5 10.5c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4 0"/></svg>';
+const KAKE_WAVE='<svg class="kake-svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M1.5 3.5c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4 0"/><path d="M1.5 8c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4 0"/><path d="M1.5 12.5c1.5-1.8 3-1.8 4.5 0s3 1.8 4.5 0 3-1.8 4 0"/></svg>';
+const GENSEI_DROP='<svg class="gensei-svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M8 1C6.8 2.9 3 6.8 3 10a5 5 0 0 0 10 0C13 6.8 9.2 2.9 8 1Z"/></svg>';
 function kakeButton(text){return '<span class="kake-wrap"><button type="button" class="kake-icon" aria-label="'+esc(text)+'">'+KAKE_WAVE+'<span class="bath-color-tip" role="tooltip" aria-hidden="true">'+esc(text)+'</span></button></span>'}
-// 「源生の湯」(源泉かけ流し・加水なし・加温なし)の金色の波。認定は kakenagashi.js の表から自動計算(ONSEN_GENSEI)。深緑の波の右に並べる。
-function genseiButton(text){return '<span class="gensei-wrap"><button type="button" class="gensei-icon" aria-label="'+esc(text)+'">'+KAKE_WAVE+'<span class="bath-color-tip" role="tooltip" aria-hidden="true">'+esc(text)+'</span></button></span>'}
+// 「源生の湯」(源泉かけ流し・加水なし・加温なし)の金色の水滴。認定は kakenagashi.js の表から自動計算(ONSEN_GENSEI)。深緑の波の右に並べる。
+function genseiButton(text){return '<span class="gensei-wrap"><button type="button" class="gensei-icon" aria-label="'+esc(text)+'">'+GENSEI_DROP+'<span class="bath-color-tip" role="tooltip" aria-hidden="true">'+esc(text)+'</span></button></span>'}
 function genseiBaths(x){const g=window.ONSEN_GENSEI;return g?g.certifiedBaths(kakeEntry(x)):[]}
 function genseiForFacility(x){return genseiBaths(x).length?genseiButton('源生の湯の浴槽あり'):''}
 function genseiForBath(x,bathName){return genseiBaths(x).includes(bathName)?genseiButton('源生の湯｜源泉かけ流し・加水なし・加温なし'):''}

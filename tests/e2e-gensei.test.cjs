@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 
-test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表的な湯 (order, gap, tooltips, links, no overflow)', async (t) => {
+test('E2E: 源生の湯 gold drop next to the green wave on cards and in 代表的な湯 (order, gap, tooltips, links, no overflow)', async (t) => {
   const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
   if (!fs.existsSync(edgePath)) { t.skip('Edge not installed at standard path'); return; }
   const server = require('node:http').createServer((req, res) => {
@@ -30,7 +30,7 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
     fs.mkdirSync('scratch/gensei-qa', { recursive: true });
 
     const GOLD = ['onsen-007', 'onsen-009', 'onsen-031', 'onsen-034', 'onsen-035', 'onsen-041', 'onsen-066'];
-    // 深緑の波はあるが、源生の湯の根拠が足りない/非該当の施設には金色の波を付けない
+    // 深緑の波はあるが、源生の湯の根拠が足りない/非該当の施設には金色の水滴を付けない
     const GREEN_ONLY = ['onsen-001', 'onsen-003', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-032', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039', 'onsen-040', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-065', 'onsen-067'];
     const DETAIL_GOLD = { 'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'], 'onsen-009': ['大湯', '滝の湯', '真湯'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'], 'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], 'onsen-035': ['大気の湯(東・西)'], 'onsen-041': ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'], 'onsen-066': ['男女別の展望内湯'] };
     const TIP_CARD = '源生の湯の浴槽あり', TIP_BATH = '源生の湯｜源泉かけ流し・加水なし・加温なし';
@@ -47,27 +47,40 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
         size:gs.width+'x'+gs.height,gap:Math.round((gs.left-ks.right)*10)/10,sameRow:Math.abs((gs.top+gs.height/2)-(ks.top+ks.height/2))<=1,inside:gs.right<=cr.right&&gs.left>=cr.left,delta:h1-h2,
         overflow:document.documentElement.scrollWidth>innerWidth,inLink:!!g.closest('a'),color:getComputedStyle(g).color,kcolor:getComputedStyle(k).color,label:g.getAttribute('aria-label')}})()`;
 
+    const checkShapes = async selector => {
+      const icons=await evaluate(`[...document.querySelectorAll('${selector} .kake-icon, ${selector} .gensei-icon')].map(b=>{const s=b.querySelector('svg'),r=s.getBoundingClientRect(),br=b.getBoundingClientRect(),box=s.getBBox();return{gold:b.classList.contains('gensei-icon'),paths:s.querySelectorAll('path').length,children:[...s.children].map(n=>n.tagName),fill:s.getAttribute('fill'),stroke:s.getAttribute('stroke'),hidden:s.getAttribute('aria-hidden'),focusable:s.getAttribute('focusable'),size:[r.width,r.height],buttonSize:[br.width,br.height],color:getComputedStyle(b).color,bounds:[box.x,box.y,box.x+box.width,box.y+box.height]}})`);
+      for(const icon of icons){
+        assert.deepEqual(icon.size,[16,16]);assert.deepEqual(icon.buttonSize,[20,20]);
+        assert.equal(icon.paths,icon.gold?1:3);assert.ok(icon.children.every(tag=>tag==='path'));
+        assert.equal(icon.fill,icon.gold?'currentColor':'none');assert.equal(icon.stroke,icon.gold?'none':'currentColor');
+        assert.equal(icon.color,icon.gold?'rgb(165, 131, 47)':'rgb(52, 79, 67)');
+        assert.equal(icon.hidden,'true');assert.equal(icon.focusable,'false');
+        assert.ok(icon.bounds[0]>=0&&icon.bounds[1]>=0&&icon.bounds[2]<=16&&icon.bounds[3]<=16);
+      }
+    };
+
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile: width < 400 });
       await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
       await delay(150);
+      await checkShapes('#cards');
       assert.equal(await evaluate("document.querySelectorAll('#cards .gensei-icon').length"), GOLD.length);
-      for (const id of GREEN_ONLY) assert.equal(await evaluate(`${entry(id)}.querySelectorAll('.gensei-icon').length`), 0, id + ' must not get the gold wave');
+      for (const id of GREEN_ONLY) assert.equal(await evaluate(`${entry(id)}.querySelectorAll('.gensei-icon').length`), 0, id + ' must not get the gold drop');
       for (const id of GOLD) {
         const L = await evaluate(probe(id));
         assert.equal(L.n, 1, id);
-        assert.ok(L.order, `${id}: the gold wave directly follows the green wave`);
+        assert.ok(L.order, `${id}: the gold drop directly follows the green wave`);
         assert.ok(L.nameBefore && L.dotsBeforeKake, `${id}: name -> color dots -> green -> gold`);
         assert.equal(L.size, '16x16');
-        assert.ok(L.gap >= 3.5 && L.gap <= 4.5, `${id}@${width}: gap between the waves ${L.gap}px (expected about 4)`);
-        assert.ok(L.sameRow, `${id}@${width}: gold wave is on the green wave's line`);
+        assert.ok(L.gap >= 3.5 && L.gap <= 4.5, `${id}@${width}: gap between the icons ${L.gap}px (expected about 4)`);
+        assert.ok(L.sameRow, `${id}@${width}: gold drop is on the green wave's line`);
         assert.ok(L.inside && !L.inLink, id);
         assert.ok(L.delta <= 1, `${id}@${width}: card grew by ${L.delta}px`);
         assert.equal(L.overflow, false);
         assert.equal(L.label, TIP_CARD);
         assert.notEqual(L.color, L.kcolor, 'gold differs from the green wave');
         assert.equal(L.color, 'rgb(165, 131, 47)');
-        // the green wave stays as it was
+        // the green icon keeps its button and labels
         assert.equal(await evaluate(`${entry(id)}.querySelectorAll('.kake-icon').length`), 1);
         assert.equal(await evaluate(`${entry(id)}.querySelector('.kake-icon').getAttribute('aria-label')`), '源泉かけ流しの浴槽あり');
       }
@@ -87,7 +100,7 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
         await send('Input.dispatchMouseEvent', { type: 'mousePressed', x: p.x, y: p.y, button: 'left', clickCount: 1 });
         await send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: p.x, y: p.y, button: 'left', clickCount: 1 });
         await delay(300);
-        assert.deepEqual(await pagesNow(), before, 'clicking the gold wave must not open the official site');
+        assert.deepEqual(await pagesNow(), before, 'clicking the gold drop must not open the official site');
         assert.equal(await evaluate("document.getElementById('modalBg').style.display==='flex'"), false);
         await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 5, y: 5 });
         await send('Input.dispatchMouseEvent', { type: 'mousePressed', x: 5, y: 5, button: 'left', clickCount: 1 });
@@ -111,10 +124,10 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
         await delay(150);
         assert.equal((await tip('onsen-031')).visible, false);
       }
-      // keyboard: the green wave, then the gold wave
+      // keyboard: the green wave, then the gold drop
       await evaluate(`${entry('onsen-009')}.scrollIntoView({block:'center'});${entry('onsen-009')}.querySelector('.kake-icon').focus()`);
       await key('Tab', 'Tab', 9);
-      assert.equal(await evaluate("document.activeElement.classList.contains('gensei-icon')"), true, 'Tab moves from the green wave to the gold wave');
+      assert.equal(await evaluate("document.activeElement.classList.contains('gensei-icon')"), true, 'Tab moves from the green wave to the gold drop');
       await key('Enter', 'Enter', 13, '\r');
       await delay(100);
       assert.ok((await tip('onsen-009')).visible, 'Enter opens the explanation');
@@ -123,7 +136,7 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
       assert.equal(await evaluate("document.querySelectorAll('.gensei-icon.is-open, .kake-icon.is-open, .bath-color.is-open').length"), 0);
     }
 
-    // ---- detail view: only certified baths get the gold wave, right after the green wave ----
+    // ---- detail view: only certified baths get the gold drop, right after the green wave ----
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       const NONE = ['onsen-003', 'onsen-006', 'onsen-018', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039', 'onsen-040', 'onsen-042', 'onsen-043', 'onsen-045', 'onsen-065', 'onsen-067'];
@@ -133,6 +146,7 @@ test('E2E: 源生の湯 gold wave next to the green wave on cards and in 代表�
         const D = await evaluate(`(()=>{const m=document.querySelector('.modal').getBoundingClientRect();return[...document.querySelectorAll('#featureBathList .feature-bath')].map(li=>{const h=li.querySelector('h4').getBoundingClientRect(),k=li.querySelector('.kake-icon'),g=li.querySelector('.gensei-icon'),
           ks=k&&k.querySelector('svg').getBoundingClientRect(),gs=g&&g.querySelector('svg').getBoundingClientRect();
           return{name:li.querySelector('h4').textContent,kake:!!k,gold:!!g,order:g?k.parentElement.nextElementSibling===g.parentElement:null,gap:g?Math.round((gs.left-ks.right)*10)/10:null,centered:g?Math.abs((gs.top+gs.height/2)-(h.top+h.height/2))<=4:null,inside:g?gs.right<=m.right&&gs.left>=m.left:true,label:g?g.getAttribute('aria-label'):null,tip:g?g.querySelector('.bath-color-tip').textContent:null}})})()`);
+        await checkShapes('#featureBathList');
         const want = DETAIL_GOLD[id] || [];
         assert.deepEqual(D.filter(b => b.gold).map(b => b.name).sort(), [...want].sort(), `${id}@${width}`);
         for (const b of D.filter(x => x.gold)) {
