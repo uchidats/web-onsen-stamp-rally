@@ -51,19 +51,17 @@ test('E2E: compact progress summary states and backup restore', async (t) => {
         await evaluate("document.getElementById('progress').scrollIntoView({block:'center'})");
         const pct=Math.round(count/67*1000)/10;
         assert.equal(await evaluate("document.getElementById('totalPercent').textContent"),pct+'%');
-        assert.equal(await evaluate("document.getElementById('nextCount').textContent"),`未訪問 ${67-count} 施設`);
         assert.equal(await evaluate("document.getElementById('totalBar').style.width"),pct+'%');
         assert.equal(await evaluate("document.getElementById('progressScope').value"),'all');
         const scopeDone=await evaluate(`ONSEN_DATA.slice(0,${count}).filter(x=>['現・旧','現（新規）','旧（掲載終了）'].includes(x.category)).length`);
         await evaluate("document.getElementById('progressScope').value='chi';document.getElementById('progressScope').dispatchEvent(new Event('change'))");
         assert.equal(await evaluate("document.getElementById('totalText').textContent"),`${scopeDone} / 43 施設を訪問済み`);
         assert.equal(await evaluate("document.getElementById('totalPercent').textContent"),Math.round(scopeDone/43*1000)/10+'%');
-        assert.equal(await evaluate("document.getElementById('nextCount').textContent"),`未訪問 ${43-scopeDone} 施設`);
         assert.equal(await evaluate("document.getElementById('totalBar').style.width"),Math.round(scopeDone/43*1000)/10+'%');
         await evaluate("document.getElementById('progressScope').value='all';document.getElementById('progressScope').dispatchEvent(new Event('change'))");
         const layout=await evaluate(`(()=>{
           const panel=document.querySelector('.progress-summary'),r=panel.getBoundingClientRect();
-          const boxes=['.progress-total .stathead','#progressScope','#totalPercent','#nextCount','#totalText'].map(s=>{const e=panel.querySelector(s);if(s==='#totalPercent'){const range=document.createRange();range.selectNodeContents(e);return range.getBoundingClientRect();}return e.getBoundingClientRect();});
+          const boxes=['.progress-total .stathead','#progressScope','#totalPercent','#totalText'].map(s=>{const e=panel.querySelector(s);if(s==='#totalPercent'){const range=document.createRange();range.selectNodeContents(e);return range.getBoundingClientRect();}return e.getBoundingClientRect();});
           return {panels:document.querySelectorAll('#progress .panel').length,height:r.height,overflow:document.documentElement.scrollWidth>innerWidth,contained:boxes.every(b=>b.left>=r.left&&b.right<=r.right&&b.top>=r.top&&b.bottom<=r.bottom),overlap:boxes.some((a,i)=>boxes.slice(i+1).some(b=>Math.min(a.right,b.right)-Math.max(a.left,b.left)>1&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>1))};
         })()`);
         assert.equal(layout.panels,1);assert.equal(layout.overflow,false);assert.equal(layout.contained,true);assert.equal(layout.overlap,false);

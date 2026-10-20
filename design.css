@@ -159,25 +159,23 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .dashboard { margin-top: -30px; position: relative; scroll-margin-top: 28px; }
 .beta-badge { display: inline-block; flex: none; padding: 2px 6px; border: 1px solid #c5ad7c; border-radius: 3px; color: #785b2f; background: #eee7d8; font-size: 10px; font-weight: 600; line-height: 1.5; letter-spacing: .08em; vertical-align: middle; }
 .beta-badge-header { margin-left: 6px; color: var(--gold); background: transparent; border-color: #c5ad7c80; font-size: 9px; }
-.beta-notice { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
-.beta-notice > .beta-badge { margin-top: 3px; }
+.beta-notice { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding: 10px 18px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
+.beta-notice > .beta-badge { margin-top: 0; }
 .beta-copy { min-width: 0; overflow-wrap: anywhere; }
-.beta-notice h2 { margin: 0; color: var(--deep); font-family: inherit; font-size: 14px; font-weight: 600; line-height: 1.7; }
-.beta-notice p { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
-@media (max-width: 600px) { .beta-notice { gap: 10px; padding: 14px; } }
-.progress-summary { display: grid; grid-template-columns: minmax(200px, auto) minmax(0, 1fr); align-items: center; gap: 12px 28px; padding: 20px 24px; }
+.beta-notice h2 { margin: 0; color: var(--deep); font-family: inherit; font-size: 13.5px; font-weight: 600; line-height: 1.5; }
+@media (max-width: 600px) { .beta-notice { gap: 8px; padding: 9px 14px; } }
+.progress-summary { display: grid; grid-template-columns: minmax(180px, auto) minmax(0, 1fr); align-items: center; gap: 10px 24px; padding: 16px 22px; }
 .progress-total, .progress-counts { min-width: 0; }
 .progress-summary .progress-total { display: contents; }
-.progress-summary { row-gap: 4px; }
+.progress-summary { row-gap: 2px; }
 .progress-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; min-width: 0; }
 .progress-head .stathead { min-width: 0; }
 #progressScope { width: 170px; flex: none; min-height: 32px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--moss); font: inherit; font-size: 12px; }
 #progressScope:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
 @media (max-width: 600px) { .progress-head { gap: 8px; } .progress-head .stathead { flex: 1; font-size: 10px; letter-spacing: .04em; } #progressScope { width: 140px; } }
 .progress-summary .big { font-size: 48px; margin: 0; }
-.progress-counts strong { display: block; color: var(--moss); font-size: 18px; font-weight: 500; line-height: 1.6; }
-.progress-counts .sub { margin-top: 4px; line-height: 1.7; }
-.progress-summary .bar { height: 4px; margin: 10px 0 0; }
+.progress-counts .sub { margin: 0; color: var(--moss); font-size: 15px; font-weight: 500; line-height: 1.5; }
+.progress-summary .bar { height: 5px; margin: 8px 0 0; }
 .progress-summary > .migration-panel, .progress-summary > #migrationNote { grid-column: 1 / -1; margin: 0; }
 .stathead { font-size: 11px; letter-spacing: .1em; color: var(--muted); font-weight: 600; line-height: 1.7; }
 .big { font-size: 58px; line-height: 1.2; font-weight: 500; letter-spacing: -.035em; color: var(--moss); margin: 14px 0 10px; font-variant-numeric: tabular-nums; }
@@ -399,12 +397,11 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   .logo small { font-size: 10.6px; }
   .login { padding: 9px 12px; font-size: 11px; }
   .dashboard { margin-top: -24px; }
-  .progress-summary { grid-template-columns: minmax(108px, .65fr) minmax(0, 1fr); padding: 20px; gap: 12px; }
+  .progress-summary { grid-template-columns: minmax(96px, .55fr) minmax(0, 1fr); padding: 14px 16px; gap: 10px; }
   .progress-total { display: contents; }
   .progress-total .stathead { grid-column: 1 / -1; }
-  .progress-summary .big { font-size: 40px; margin: 0; }
+  .progress-summary .big { font-size: 38px; margin: 0; }
   .progress-counts { grid-column: 2; grid-row: 2; }
-  .progress-counts strong { font-size: 16px; }
   .big { font-size: 50px; }
   .heading { margin-top: 52px; gap: 16px; margin-bottom: 22px; align-items: center; }
   h2 { font-size: 24px; }

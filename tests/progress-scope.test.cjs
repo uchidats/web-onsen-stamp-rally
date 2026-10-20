@@ -18,7 +18,7 @@ test('Achievement scopes count facility IDs, retired listings and independent gr
       const done=rows.filter(x=>ids.includes(x.id)).length,percent=Math.round(done/rows.length*1000)/10;
       const cards=el('cards').innerHTML,stored=JSON.stringify([...saved]);el('search').value='乳頭温泉郷';el('prefSelect').value='秋田県';el('progressScope').value=scope;el('progressScope').onchange();
       assert.equal(el('totalText').textContent,`${done} / ${rows.length} 施設を訪問済み`);
-      assert.equal(el('nextCount').textContent,`未訪問 ${rows.length-done} 施設`);assert.equal(el('totalBar').style.width,percent+'%');
+      assert.equal(el('totalBar').style.width,percent+'%');
       assert.equal(el('cards').innerHTML,cards);assert.equal(el('search').value,'乳頭温泉郷');assert.equal(el('prefSelect').value,'秋田県');assert.equal(JSON.stringify([...saved]),stored);
     }
     start();assert.equal(el('progressScope').value,'all');
