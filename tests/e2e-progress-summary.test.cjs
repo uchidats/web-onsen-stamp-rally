@@ -63,7 +63,7 @@ test('E2E: compact progress summary states and backup restore', async (t) => {
         await evaluate("document.getElementById('progressScope').value='all';document.getElementById('progressScope').dispatchEvent(new Event('change'))");
         const layout=await evaluate(`(()=>{
           const panel=document.querySelector('.progress-summary'),r=panel.getBoundingClientRect();
-          const boxes=['.progress-total .stathead','#progressScope','#totalPercent','#nextCount','#totalText','#exportBtn','#importBtn'].map(s=>{const e=panel.querySelector(s);if(s==='#totalPercent'){const range=document.createRange();range.selectNodeContents(e);return range.getBoundingClientRect();}return e.getBoundingClientRect();});
+          const boxes=['.progress-total .stathead','#progressScope','#totalPercent','#nextCount','#totalText'].map(s=>{const e=panel.querySelector(s);if(s==='#totalPercent'){const range=document.createRange();range.selectNodeContents(e);return range.getBoundingClientRect();}return e.getBoundingClientRect();});
           return {panels:document.querySelectorAll('#progress .panel').length,height:r.height,overflow:document.documentElement.scrollWidth>innerWidth,contained:boxes.every(b=>b.left>=r.left&&b.right<=r.right&&b.top>=r.top&&b.bottom<=r.bottom),overlap:boxes.some((a,i)=>boxes.slice(i+1).some(b=>Math.min(a.right,b.right)-Math.max(a.left,b.left)>1&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>1))};
         })()`);
         assert.equal(layout.panels,1);assert.equal(layout.overflow,false);assert.equal(layout.contained,true);assert.equal(layout.overlap,false);

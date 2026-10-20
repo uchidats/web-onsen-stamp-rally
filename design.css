@@ -104,6 +104,11 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .account-panel .account-sync-actions { display: flex; flex-wrap: wrap; gap: 0 8px; }
 .account-panel .account-sync-actions .sync-btn { width: auto; color: #c5ad7c; font-size: 12px; }
 .account-panel .account-delete { color: #d2bd81; font-size: 11px; min-height: 28px; padding-bottom: 0; }
+.account-subheading { margin: 8px 0 6px; color: var(--gold); font: inherit; font-size: 11.5px; font-weight: 600; letter-spacing: .06em; }
+.account-backup-tools { display: flex; flex-direction: column; gap: 6px; }
+.account-panel .account-backup-btn { display: inline-flex; align-items: center; gap: 8px; width: 100%; min-height: 40px; padding: 7px 10px; border: 1px solid #5a7064; border-radius: 4px; background: #243830; color: #e5e9e0; text-align: left; font-size: 12.5px; }
+.account-panel .account-backup-btn:hover { background: #344f43; border-color: #c5ad7ca0; color: #f3f0e7; }
+.account-panel .account-backup-btn svg { flex: none; color: var(--gold); }
 .account-panel button:hover, .account-cloud-info summary:hover { background: #c5ad7c0a; }
 .account-panel button:focus-visible, .account-panel summary:focus-visible { outline: 2px solid #c5ad7c; outline-offset: 2px; }
 @media (max-width: 360px) {
@@ -160,8 +165,8 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .beta-notice h2 { margin: 0; color: var(--deep); font-family: inherit; font-size: 14px; font-weight: 600; line-height: 1.7; }
 .beta-notice p { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
 @media (max-width: 600px) { .beta-notice { gap: 10px; padding: 14px; } }
-.progress-summary { display: grid; grid-template-columns: minmax(240px, .85fr) minmax(0, 1fr) auto; align-items: center; gap: 24px; padding: 20px 24px; }
-.progress-total, .progress-counts, .progress-actions { min-width: 0; }
+.progress-summary { display: grid; grid-template-columns: minmax(200px, auto) minmax(0, 1fr); align-items: center; gap: 12px 28px; padding: 20px 24px; }
+.progress-total, .progress-counts { min-width: 0; }
 .progress-summary .progress-total { display: contents; }
 .progress-summary { row-gap: 4px; }
 .progress-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; min-width: 0; }
@@ -173,8 +178,6 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .progress-counts strong { display: block; color: var(--moss); font-size: 18px; font-weight: 500; line-height: 1.6; }
 .progress-counts .sub { margin-top: 4px; line-height: 1.7; }
 .progress-summary .bar { height: 4px; margin: 10px 0 0; }
-.progress-actions .note { font-size: 11px; line-height: 1.8; margin: 8px 0 0; }
-.progress-actions .tools button span { display: inline-block; }
 .progress-summary > .migration-panel, .progress-summary > #migrationNote { grid-column: 1 / -1; margin: 0; }
 .stathead { font-size: 11px; letter-spacing: .1em; color: var(--muted); font-weight: 600; line-height: 1.7; }
 .big { font-size: 58px; line-height: 1.2; font-weight: 500; letter-spacing: -.035em; color: var(--moss); margin: 14px 0 10px; font-variant-numeric: tabular-nums; }
@@ -381,9 +384,7 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 @media (max-width: 900px) {
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .prefgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .progress-summary { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 24px; }
-  .progress-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
-  .progress-actions .note { margin: 0; }
+  .progress-summary { grid-template-columns: auto minmax(0, 1fr); gap: 16px 24px; }
 }
 @media (max-width: 600px) {
   .wrap { padding-inline: 20px; }
@@ -404,10 +405,6 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   .progress-summary .big { font-size: 40px; margin: 0; }
   .progress-counts { grid-column: 2; grid-row: 2; }
   .progress-counts strong { font-size: 16px; }
-  .progress-actions { display: block; }
-  .progress-actions .tools { gap: 8px; }
-  .progress-actions .tools button { flex: 1 1 0; min-width: 0; padding-inline: 6px; }
-  .progress-actions .note { margin-top: 8px; }
   .big { font-size: 50px; }
   .heading { margin-top: 52px; gap: 16px; margin-bottom: 22px; align-items: center; }
   h2 { font-size: 24px; }
