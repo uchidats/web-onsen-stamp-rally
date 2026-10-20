@@ -17,7 +17,7 @@ function device(cloud, name, uid = 'user-1', storage = mem()) {
   d.engine = E.create({ repo, getState: () => d.state, setState: s => { d.state = s; }, storage, uid, projectId: 'test', adapter, debounceMs: 0, afterStale: async () => { await settle(); }, isOnline: () => cloud.online, onStatus: s => d.statuses.push(s) });
   d.add = (fid, date) => { d.state = repo.addVisit(d.state, fid, date); d.engine.notifyLocalChange('change'); };
   d.remove = (fid, i) => { d.state = repo.deleteVisit(d.state, fid, d.state.userData.visits[fid].records[i].id); d.engine.notifyLocalChange('change'); };
-  d.edit = (fid, i, date) => { d.state = repo.editVisit(d.state, fid, d.state.userData.visits[fid].records[i].id, date); d.engine.notifyLocalChange('change'); };
+  d.edit = (fid, i, date, visitType) => { d.state = repo.editVisit(d.state, fid, d.state.userData.visits[fid].records[i].id, date, visitType); d.engine.notifyLocalChange('change'); };
   d.note = (fid, text) => { d.state = repo.setNotes(d.state, fid, text); d.engine.notifyLocalChange('change'); };
   d.visits = fid => (d.state.userData.visits[fid]?.records || []).map(r => r.date);
   d.count = () => Object.values(d.state.userData.visits).reduce((n, v) => n + v.records.length, 0);
@@ -27,6 +27,87 @@ function device(cloud, name, uid = 'user-1', storage = mem()) {
   return d;
 }
 const flush = async (...ds) => { for (let i = 0; i < 3; i++) { for (const d of ds) await d.engine.syncNow(); await settle(); } };
+
+test('automatic pre-sync backup is read back; quota, denied reads and silent writes block all cloud writes and can be retried',async t=>{
+ for(const failure of ['quota','silent','read']){
+  const cloud=new FakeCloud(),pc=device(cloud,failure);t.after(()=>pc.engine.stop());pc.add('onsen-001',null);await pc.begin();
+  const before=pc.storage.getItem(R.KEY),set=pc.storage.setItem,get=pc.storage.getItem;
+  pc.storage.setItem=(k,v)=>{if(k===E.SAFE_KEY){if(failure==='quota')throw Object.assign(Error('quota'),{name:'QuotaExceededError'});if(failure==='silent')return;}return set(k,v)};
+  pc.storage.getItem=k=>{if(failure==='read'&&k===E.SAFE_KEY)throw Object.assign(Error('denied'),{name:'SecurityError'});return get(k)};
+  await assert.rejects(()=>pc.engine.consent(),{code:'backup-failed'});assert.equal(pc.last().backupFailed,true);assert.equal(cloud.writes,0);assert.equal(get(R.KEY),before);
+  pc.storage.setItem=set;pc.storage.getItem=get;await pc.engine.retry();assert.equal(pc.last().state,'consent');await pc.engine.consent();await flush(pc);assert.equal(pc.last().state,'synced');assert.equal(JSON.parse(get(E.SAFE_KEY)).raw,before);
+ }
+});
+
+test('consent is single-flight and offline or permission errors keep records safe until explicit retry',async t=>{
+ const cloud=new FakeCloud(),pc=device(cloud,'pc');t.after(()=>pc.engine.stop());pc.add('onsen-001',null);await pc.begin();const raw=pc.storage.getItem(R.KEY);
+ cloud.online=false;await assert.rejects(()=>pc.engine.consent(),{code:'unavailable'});assert.equal(pc.last().state,'offline');assert.equal(cloud.root,null);assert.equal(pc.storage.getItem(R.KEY),raw);
+ cloud.online=true;const original=pc.adapter.ensureRoot;pc.adapter.ensureRoot=async()=>{throw {code:'permission-denied'}};await assert.rejects(()=>pc.engine.consent(),{code:'permission-denied'});assert.equal(pc.last().state,'error');assert.equal(cloud.root,null);
+ let release,calls=0;pc.adapter.ensureRoot=async options=>{calls++;await new Promise(r=>release=r);return original(options)};
+ const first=pc.engine.consent(),second=pc.engine.consent();assert.equal(first,second);release();await Promise.all([first,second]);await flush(pc);assert.equal(calls,1);assert.equal(pc.last().state,'synced');assert.equal(pc.count(),1);
+});
+
+test('a terminated listener needs resubscription, not just another diff pass; retry resumes without reload and preserves deletion gates',async t=>{
+ const cloud=new FakeCloud(),pc=device(cloud,'pc'),other=device(cloud,'other');t.after(()=>{pc.engine.stop();other.engine.stop()});await pc.join();await other.join();
+ pc.engine.stop();const original=pc.adapter.subscribe;let subscriptions=0;
+ pc.adapter.subscribe=(data,error)=>{subscriptions++;if(subscriptions===1){queueMicrotask(()=>error({code:'permission-denied'}));return ()=>{}}return original(data,error)};
+ await pc.engine.start();await settle();assert.equal(pc.last().state,'error');other.add('onsen-006',null);await flush(other);
+ await pc.engine.syncNow();assert.equal(pc.count(),0,'A diff pass cannot revive a terminated subscription');assert.equal(pc.last().state,'error');await pc.engine.retry();await settle();await flush(pc);assert.equal(subscriptions,2);assert.equal(pc.count(),1);assert.equal(pc.last().state,'synced');
+ await other.adapter.deleteAll();await settle();await pc.engine.retry();await settle();assert.equal(pc.last().state,'cloudReset');assert.equal(cloud.visits.size,0);assert.equal(pc.count(),1);
+});
+
+test('a successful write cannot hide a simultaneous terminated-listener error; retry verifies and finishes without reload',async t=>{
+ const cloud=new FakeCloud(),pc=device(cloud,'pc');t.after(()=>pc.engine.stop());let fail;const subscribe=pc.adapter.subscribe,push=pc.adapter.push;
+ pc.adapter.subscribe=(data,error)=>{fail=error;return subscribe(data,error)};await pc.join();
+ pc.adapter.push=async op=>{const result=await push(op);fail({code:'permission-denied'});return result};pc.add('onsen-001',null);await flush(pc);
+ assert.equal(cloud.visits.size,1,'The record was actually committed');assert.equal(pc.count(),1);assert.equal(pc.last().state,'error','The connection error must not be replaced by synced');
+ pc.adapter.push=push;await pc.engine.retry();await settle();await flush(pc);assert.equal(pc.last().state,'synced');assert.equal(cloud.visits.size,1);
+});
+
+test('known cloud deletion survives removing sync bookkeeping; renewed upload still requires explicit backed-up consent',async t=>{
+ const cloud=new FakeCloud(),storage=mem(),pc=device(cloud,'pc','user-1',storage);t.after(()=>pc.engine.stop());await pc.join();pc.add('onsen-001',null);await flush(pc);await pc.adapter.deleteAll();await settle();
+ E.rememberDeletion(storage,'user-1','test');pc.engine.forgetSyncState();const again=device(cloud,'again','user-1',storage);t.after(()=>again.engine.stop());await again.begin();
+ assert.equal(again.last().state,'consent');assert.equal(again.last().summary.restart,true);assert.equal(cloud.root,null);assert.equal(cloud.visits.size,0);
+ await again.engine.consent();await flush(again);assert.equal(again.count(),1);assert.equal(cloud.visits.size,1);assert.ok(storage.getItem(E.SAFE_KEY));
+ const stranger=device(new FakeCloud(),'stranger','other-user',storage);t.after(()=>stranger.engine.stop());await stranger.begin();assert.equal(stranger.last().summary.restart,false);
+});
+
+test('visit type survives bidirectional sync, offline reload/retry, backup restore and independent date edits',async t=>{
+ const cloud=new FakeCloud(),pc=device(cloud,'pc'),android=device(cloud,'android');t.after(()=>{pc.engine.stop();android.engine.stop()});
+ await pc.join();await android.join();pc.add('onsen-020','2026-10-21');pc.add('onsen-020',null);await flush(pc,android);
+ const id=pc.state.userData.visits['onsen-020'].records[0].id;
+ pc.edit('onsen-020',0,'2026-10-21','day');android.edit('onsen-020',0,'2026-10-20');await flush(pc,android,pc);
+ for(const d of [pc,android]){const r=d.state.userData.visits['onsen-020'].records[0];assert.equal(r.id,id);assert.equal(r.visitType,'day');assert.equal(r.date,'2026-10-20');assert.equal(d.engine.openConflicts().length,0)}
+ cloud.online=false;android.edit('onsen-020',1,null,'stay');await flush(android);assert.equal(android.state.userData.visits['onsen-020'].records[1].visitType,'stay');
+ android.engine.stop();const restarted=device(cloud,'restarted','user-1',android.storage);t.after(()=>restarted.engine.stop());
+ assert.equal(restarted.state.userData.visits['onsen-020'].records[1].visitType,'stay');cloud.online=true;cloud.loseNextResponse=true;await restarted.engine.start();await flush(restarted,pc,restarted);
+ assert.equal(pc.state.userData.visits['onsen-020'].records[1].visitType,'stay');assert.equal(cloud.visits.size,2);
+ const backup=restarted.repo.backup(restarted.state),next=restarted.repo.prepareImport(JSON.parse(JSON.stringify(backup)),restarted.state);
+ restarted.state=restarted.repo.replace(next,restarted.state,true);restarted.engine.notifyLocalChange('replace');await flush(restarted,pc);
+ assert.deepEqual(restarted.state.userData.visits['onsen-020'].records,pc.state.userData.visits['onsen-020'].records);
+ restarted.edit('onsen-020',1,null,'');await flush(restarted,pc);assert.equal(pc.state.userData.visits['onsen-020'].records[1].visitType,undefined);
+});
+
+test('restoring a pre-feature backup holds the newer cloud visit type as a conflict instead of erasing it',async t=>{
+ const cloud=new FakeCloud(),pc=device(cloud,'pc');t.after(()=>pc.engine.stop());await pc.join();pc.add('onsen-020','2026-10-21');await flush(pc);
+ const backup=pc.repo.backup(pc.state),id=pc.state.userData.visits['onsen-020'].records[0].id;
+ pc.edit('onsen-020',0,'2026-10-21','stay');await flush(pc);
+ pc.state=pc.repo.replace(pc.repo.prepareImport(backup,pc.state),pc.state,true);pc.engine.notifyLocalChange('replace');await flush(pc);
+ const c=pc.engine.openConflicts()[0];assert.ok(c.field.includes('visitType'));assert.equal(JSON.parse(c.remote).visitType,'stay');
+ assert.equal(cloud.visits.get(id).visitType,'stay');await pc.engine.resolveConflict(c.id,'remote');await flush(pc);assert.equal(pc.state.userData.visits['onsen-020'].records[0].visitType,'stay');
+});
+
+for(const choice of ['local','remote'])test('different visit types keep both choices until explicit '+choice+' resolution',async t=>{
+ const cloud=new FakeCloud(),pc=device(cloud,'pc'),android=device(cloud,'android');t.after(()=>{pc.engine.stop();android.engine.stop()});
+ await pc.join();await android.join();pc.add('onsen-020',null);await flush(pc,android);
+ pc.engine.stop();android.engine.stop();pc.edit('onsen-020',0,null,'day');android.edit('onsen-020',0,null,'stay');
+ await pc.engine.start();await flush(pc);await android.engine.start();await flush(android,pc);
+ const c=android.engine.openConflicts()[0];assert.ok(c.field.split(',').includes('visitType'));assert.equal(JSON.parse(c.local).visitType,'stay');assert.equal(JSON.parse(c.remote).visitType,'day');
+ assert.equal(android.state.userData.visits['onsen-020'].records[0].visitType,'stay');
+ await assert.rejects(()=>android.engine.resolveConflict(c.id,'merge'),/訪問形態/);
+ await android.engine.resolveConflict(c.id,choice);await flush(android,pc,android);
+ for(const d of [pc,android])assert.equal(d.state.userData.visits['onsen-020'].records[0].visitType,choice==='local'?'stay':'day');
+});
 
 test('stopping while a conflict write is pending cannot apply queued cloud changes to local records', async () => {
   const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');

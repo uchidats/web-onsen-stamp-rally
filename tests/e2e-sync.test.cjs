@@ -32,7 +32,9 @@ test('E2E: cloud sync UI - consent, status, offline, conflict resolution, logout
     fs.createReadStream(file).on('error', () => res.writeHead(404).end()).pipe(res);
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-  const htmlUrl = `http://127.0.0.1:${server.address().port}/web-onsen-stamp-rally/index.html`;
+  const remote=process.env.ONSEN_SYNC_QA_URL;
+  if(remote&&!['https://my-onsen-journey-staging.web.app/','https://uchidats.github.io/web-onsen-stamp-rally/'].includes(remote))throw Error('Only the staging or production site is allowed');
+  const htmlUrl = remote||`http://127.0.0.1:${server.address().port}/web-onsen-stamp-rally/index.html`;
   let browser;
   t.after(async () => { await browser?.close(); server.closeAllConnections(); server.close(); });
   browser = await require('./helpers/browser.cjs').startBrowser(edgePath, htmlUrl);
@@ -44,14 +46,23 @@ test('E2E: cloud sync UI - consent, status, offline, conflict resolution, logout
     await waitFor("document.querySelectorAll('#cards .card').length>0");
 
     // ---- A. 同期が有効でない環境(既定)では同期は何も起動しない ----
-    assert.equal(await evaluate('typeof OnsenSync'), 'undefined');
+    if(!remote)assert.equal(await evaluate('typeof OnsenSync'), 'undefined');
+    else{
+      await waitFor("window.OnsenAuth && document.getElementById('accountCompactStatus').textContent==='ログイン'");
+      assert.equal(await evaluate('OnsenAuth.enabled()'),true);
+      assert.equal(await evaluate('ONSEN_DATA.length'),67);
+      assert.equal(await evaluate('OnsenAuth.controller.getSession().uid'),null);
+    }
     assert.equal(await evaluate("document.getElementById('syncStatus').hidden"), true);
 
     // ---- B. 同期有効の環境(偽の認証・偽のクラウド) ----
     await evaluate(`(()=>{const R=OnsenRecords.create(localStorage);let s=R.load();s=R.addVisit(s,'onsen-001','2024-02-29');s=R.addVisit(s,'onsen-001','2024-02-29');s=R.addVisit(s,'onsen-006',null);})()`);
     const rawBefore = await evaluate("localStorage.getItem('onsen-rally-user-v3')");
-    await send('Page.addScriptToEvaluateOnNewDocument', { source: INJECT });
-    for (const width of [1280, 390]) {
+    const injection=INJECT+(remote?`\nONSEN_FIREBASE.environments.local.hosts.push(${JSON.stringify(new URL(remote).hostname)});`:'');
+    await send('Page.addScriptToEvaluateOnNewDocument', { source: injection });
+    await send('Network.enable');
+    await send('Network.setBlockedURLs',{urls:['https://*.googleapis.com/*','https://*.gstatic.com/*','https://*.openstreetmap.org/*']});
+    for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       await send('Page.reload');
       await waitFor("document.readyState==='complete' && document.getElementById('accountRow').hidden===false && typeof OnsenSync==='object'");
@@ -62,7 +73,11 @@ test('E2E: cloud sync UI - consent, status, offline, conflict resolution, logout
       const summary = await evaluate("document.getElementById('syncSummary').textContent");
       assert.match(await evaluate("document.querySelector('.account-note').textContent"), /同期を開始すると/);
       assert.doesNotMatch(await evaluate("document.querySelector('.account-note').textContent"), /同期はまだありません/);
-      assert.match(summary, /テスト 太郎/); assert.match(summary, /訪問 3件/); assert.match(summary, /同じ日に複数 1組/); assert.match(summary, /日付なし 1件/);
+      assert.match(summary, /この端末: 訪問 3件/);assert.match(summary,/クラウド: 訪問 0件/);
+      assert.equal(await evaluate("document.getElementById('syncHeading').textContent"),'訪問記録を同期しますか？');
+      assert.equal(await evaluate("document.getElementById('syncConfirm').textContent"),'同期を開始');
+      assert.equal(await evaluate("document.getElementById('syncCancel').textContent"),'今はしない');
+      assert.equal(await evaluate("document.getElementById('syncBackup').hidden"),true);
       assert.equal(await evaluate('__cloud.visits.size'), 0, 'nothing sent before consent');
       assert.equal(await evaluate("localStorage.getItem('onsen-rally-user-v3')"), rawBefore, 'records untouched by login');
       assert.match(await evaluate("document.getElementById('syncStatus').textContent"), /同期は未開始/);
@@ -72,10 +87,24 @@ test('E2E: cloud sync UI - consent, status, offline, conflict resolution, logout
       assert.equal(await evaluate("document.getElementById('syncStart').hidden"), false);
       await evaluate("document.getElementById('syncStart').click()");
       assert.equal(await evaluate("document.getElementById('syncDialog').open"), true);
+      assert.equal(await evaluate("(()=>{const d=document.getElementById('syncDialog'),r=d.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&d.scrollWidth<=d.clientWidth})()"),true);
+      fs.writeFileSync(path.join(browser.profile,`consent-${width}.png`),Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
+      // Failure is visible in the dialog, and JSON download never bypasses automatic backup.
+      await evaluate("window.__saveSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='onsen-rally-before-sync-v1')throw new DOMException('quota','QuotaExceededError');return __saveSet.call(this,k,v)};document.getElementById('syncConfirm').click()");
+      await waitFor("!document.getElementById('syncConsentError').hidden && !document.getElementById('syncConfirm').disabled");
+      assert.match(await evaluate("document.getElementById('syncConsentError').textContent"),/保存領域が不足/);
+      assert.equal(await evaluate('__cloud.visits.size'),0);assert.equal(await evaluate('__cloud.root'),null);
+      assert.equal(await evaluate("localStorage.getItem('onsen-rally-user-v3')"),rawBefore);
+      assert.equal(await evaluate("document.getElementById('syncBackup').hidden"),false);
+      fs.writeFileSync(path.join(browser.profile,`consent-backup-error-${width}.png`),Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
+      await evaluate("document.getElementById('syncCancel').click();Storage.prototype.setItem=__saveSet;document.getElementById('syncRetry').click()");
+      await waitFor("document.getElementById('syncDialog').open");
       // 開始 → 退避コピーを保存してから統合。同日2件も日付なしも全件アップロード
       await evaluate("document.getElementById('syncConfirm').click()");
       await waitFor("document.getElementById('syncStatus').dataset.state==='synced'");
       assert.match(await evaluate("document.getElementById('syncStatus').textContent"), /同期: 同期済み/);
+      assert.equal(await evaluate("document.getElementById('syncDialog').open"),false);
+      await waitFor("document.getElementById('accountSyncText').textContent==='同期済み'");
       assert.equal(await evaluate('__cloud.visits.size'), 3);
       assert.equal(JSON.parse(await evaluate("localStorage.getItem('onsen-rally-before-sync-v1')")).raw, rawBefore, 'a pre-sync copy of the records is kept');
       assert.equal(await evaluate('document.documentElement.scrollWidth>innerWidth'), false);
@@ -94,6 +123,7 @@ test('E2E: cloud sync UI - consent, status, offline, conflict resolution, logout
       await evaluate("__ad.offline=true");
       await evaluate("document.querySelector('[data-detail=\"onsen-009\"]').click();document.getElementById('visitAdd').click();document.getElementById('visitDate').value='2026-05-06';document.getElementById('visitForm').requestSubmit()");
       await waitFor("document.getElementById('syncStatus').dataset.state==='offline'");
+      assert.equal(await evaluate("document.getElementById('syncRetry').hidden"),false,'Connection recovery remains available even when the browser still reports online');
       assert.equal(await evaluate('__cloud.visits.size'), cloudBefore, 'offline visit is not in the cloud yet');
       assert.match(await evaluate("localStorage.getItem('onsen-rally-user-v3')"), /2026-05-06/);
       await evaluate("__ad.offline=false;__cloud.emit()");
@@ -119,6 +149,32 @@ test('E2E: cloud sync UI - consent, status, offline, conflict resolution, logout
       assert.ok(merged.includes('この端末の変更') && merged.includes('クラウドの変更'));
       assert.ok([...(await evaluate('[...__cloud.notes.values()].map(n=>n.notes)'))].some(n => n.includes('この端末の変更') && n.includes('クラウドの変更')), 'merged note reached the cloud');
 
+      // 訪問形態の競合は両方を表示し、一方を明示的に採用する(曖昧な結合は出さない)。
+      await evaluate(`(()=>{__ad.offline=true;const h=OnsenHost,r=h.getState().userData.visits['onsen-001'].records[0];h.setState(h.store.editVisit(h.getState(),'onsen-001',r.id,r.date,'day'));const c=[...__cloud.visits.values()].find(v=>v.sourceVisitId===r.id);c.visitType='stay';c.revision++;c.lastOpId='other-type';__ad.offline=false;__cloud.emit()})()`);
+      await waitFor("document.getElementById('syncStatus').dataset.state==='conflicts'");
+      await evaluate("document.getElementById('syncConflictsBtn').click()");
+      await waitFor("document.getElementById('syncConflictDialog').open");
+      const typeText=await evaluate("document.getElementById('syncConflictList').textContent");
+      assert.ok(typeText.includes('日帰り')&&typeText.includes('宿泊'));assert.ok(!typeText.includes('両方を結合'));
+      await evaluate("[...document.querySelectorAll('#syncConflictList button')].find(b=>b.textContent==='クラウドを採用').click()");
+      await waitFor("document.getElementById('syncStatus').dataset.state==='synced'");
+      assert.equal(await evaluate("OnsenHost.getState().userData.visits['onsen-001'].records[0].visitType"),'stay');
+      await evaluate("document.getElementById('syncConflictClose').click()");
+
+      // Cloud deletion never auto-uploads; the distinct restart dialog requires another explicit action.
+      const restartCount=await evaluate('__cloud.visits.size');
+      await evaluate("__ad.deleteAll()");
+      await waitFor("document.getElementById('syncStatus').dataset.state==='cloudReset'");
+      assert.equal(await evaluate('__cloud.visits.size'),0);
+      await evaluate("document.getElementById('syncStart').click()");
+      assert.match(await evaluate("document.getElementById('syncHeading').textContent"),/以前削除したクラウドデータ/);
+      assert.equal(await evaluate("document.getElementById('syncConfirm').textContent"),'新しく保存して同期');
+      fs.writeFileSync(path.join(browser.profile,`consent-restart-${width}.png`),Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
+      await evaluate("document.getElementById('syncCancel').click()");assert.equal(await evaluate('__cloud.root'),null);
+      await evaluate("document.getElementById('syncStart').click();document.getElementById('syncConfirm').click()");
+      await waitFor("document.getElementById('syncStatus').dataset.state==='synced' && !document.getElementById('syncDialog').open");
+      assert.equal(await evaluate('__cloud.visits.size'),restartCount);
+
       // ログアウト: 同期は止まるが、この端末の記録はそのまま残る
       const before = await evaluate("localStorage.getItem('onsen-rally-user-v3')");
       await evaluate("document.getElementById('loginBtn').click()");
@@ -128,8 +184,9 @@ test('E2E: cloud sync UI - consent, status, offline, conflict resolution, logout
       assert.ok(JSON.parse(before).userData.visits['onsen-001'].records.length >= 2);
 
       // 次の幅の確認のため、クラウドとローカルを初期状態に戻す
-      await evaluate(`(()=>{localStorage.removeItem('onsen-rally-sync-v1');localStorage.removeItem('onsen-rally-before-sync-v1');localStorage.setItem('onsen-rally-user-v3',${JSON.stringify(JSON.stringify(JSON.parse(rawBefore)))})})()`);
+      await evaluate(`(()=>{localStorage.removeItem('onsen-rally-sync-v1');localStorage.removeItem('onsen-rally-cloud-deleted-v1');localStorage.removeItem('onsen-rally-before-sync-v1');localStorage.setItem('onsen-rally-user-v3',${JSON.stringify(JSON.stringify(JSON.parse(rawBefore)))})})()`);
     }
+    t.diagnostic('URL: '+htmlUrl+'; isolated fake-auth/cloud screenshots: '+browser.profile);
     ws.close();
   } finally { await browser.close(); server.closeAllConnections(); server.close(); }
 });

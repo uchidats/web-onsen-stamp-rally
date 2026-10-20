@@ -29,6 +29,19 @@ test('Firestore rules (emulator)', { skip }, async (t) => {
   const seedRoot = async (uid, over = {}) => seed(async d => setDoc(rref(d, uid), { schemaVersion: 1, createdAt: Timestamp.now(), epoch: EP, status: 'active', deletingAt: null, ...over }));
   const T = (name, fn) => t.test(name, async () => { await env.clearFirestore(); await fn(); });
 
+  await T('visit type is an optional enum; old documents and old-style partial updates retain typed records',async()=>{
+    await seedRoot(A);const a=db(A);
+    for(const [i,type] of ['', 'day','stay'].entries())await assertSucceeds(setDoc(vref(a,A,'typed-000'+i),visit({visitType:type})));
+    for(const type of ['hotel',null,true,1,{},['day']])await assertFails(setDoc(vref(a,A,'badtype-0001'),visit({visitType:type})));
+    await assertSucceeds(setDoc(vref(a,A,EID),visit()));
+    await assertSucceeds(updateDoc(vref(a,A,EID),{visitType:'stay',revision:2,lastOpId:'type-add',updatedAt:serverTimestamp()}));
+    // The current production adapter updates date/notes/extra, leaving new fields intact.
+    await assertSucceeds(updateDoc(vref(a,A,EID),{date:null,notes:'旧端末の編集',extra:'',revision:3,lastOpId:'old-edit',updatedAt:serverTimestamp()}));
+    assert.equal((await getDoc(vref(a,A,EID))).data().visitType,'stay');
+    await assertFails(updateDoc(vref(db(B),A,EID),{visitType:'day',revision:4,lastOpId:'other-user',updatedAt:serverTimestamp()}));
+    await assertSucceeds(updateDoc(vref(a,A,EID),{visitType:'',revision:4,lastOpId:'unset',updatedAt:serverTimestamp()}));
+  });
+
   await T('unauthenticated users can read and write nothing', async () => {
     await seedRoot(A);
     await seed(async d => { await setDoc(vref(d, A, EID), visit({ createdAt: Timestamp.now(), updatedAt: Timestamp.now() })); });
@@ -93,14 +106,14 @@ test('Firestore rules (emulator)', { skip }, async (t) => {
     await assertFails(updateDoc(vref(a, A, EID), edit({ revision: 3 })));          // 飛ばしたrevision
     await assertFails(updateDoc(vref(a, A, EID), edit({ facilityId: 'onsen-002' })));
     await assertFails(updateDoc(vref(a, A, EID), edit({ sourceVisitId: 'other' })));
-    await assertFails(updateDoc(vref(a, A, EID), edit({ createdAt: Timestamp.now() })));
-    await assertFails(updateDoc(vref(a, A, EID), edit({ updatedAt: Timestamp.now() })));
+    await assertFails(updateDoc(vref(a, A, EID), edit({ createdAt: Timestamp.fromMillis(0) })));
+    await assertFails(updateDoc(vref(a, A, EID), edit({ updatedAt: Timestamp.fromMillis(0) })));
     await assertFails(updateDoc(vref(a, A, EID), edit({ deletedAt: serverTimestamp() })));     // activeのまま削除印は付けられない
     await assertFails(updateDoc(vref(a, A, EID), edit({ date: 'bad' })));
     await assertFails(updateDoc(vref(a, A, EID), edit({ epoch: 'epoch-9999' })));              // 世代IDの不一致
     await assertSucceeds(updateDoc(vref(a, A, EID), edit()));
     // 削除(tombstone): deletedAt はサーバー時刻。通常の同期中は物理deleteを禁止
-    await assertFails(updateDoc(vref(a, A, EID), { status: 'deleted', revision: 3, lastOpId: 'op-3', updatedAt: serverTimestamp(), deletedAt: Timestamp.now() }));
+    await assertFails(updateDoc(vref(a, A, EID), { status: 'deleted', revision: 3, lastOpId: 'op-3', updatedAt: serverTimestamp(), deletedAt: Timestamp.fromMillis(0) }));
     await assertSucceeds(updateDoc(vref(a, A, EID), { status: 'deleted', revision: 3, lastOpId: 'op-3', updatedAt: serverTimestamp(), deletedAt: serverTimestamp() }));
     await assertFails(deleteDoc(vref(a, A, EID)));
     // 削除済みは通常の更新で復活しない(古い端末の編集・古いバックアップによる復活を防ぐ)

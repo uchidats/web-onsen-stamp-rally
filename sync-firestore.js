@@ -13,7 +13,7 @@
     const rootRef = () => doc(db, 'accounts', uid);
     const col = name => collection(db, 'accounts', uid, name);
     const ref = (name, id) => doc(db, 'accounts', uid, name, id);
-    const visit = (id, d) => ({ eventId: id, facilityId: d.facilityId, sourceVisitId: d.sourceVisitId, date: d.date === undefined ? null : d.date, notes: d.notes || '', extra: d.extra || '', status: d.status, revision: d.revision, lastOpId: d.lastOpId });
+    const visit = (id, d) => ({ eventId: id, facilityId: d.facilityId, sourceVisitId: d.sourceVisitId, date: d.date === undefined ? null : d.date, notes: d.notes || '', extra: d.extra || '', visitType: d.visitType || '', status: d.status, revision: d.revision, lastOpId: d.lastOpId });
     const note = (id, d) => ({ facilityId: d.facilityId || id, notes: d.notes || '', revision: d.revision, lastOpId: d.lastOpId });
     const conflict = (id, d) => ({ id, kind: d.kind, key: d.key, facilityId: d.facilityId, eventId: d.eventId, field: d.field, base: d.base, remote: d.remote, local: d.local, status: d.status });
 
@@ -76,16 +76,16 @@
         const s = await tx.get(r), cur = s.exists() ? s.data() : null;
         if (op.type === 'create') {
           if (cur) return { status: 'exists' };
-          tx.set(r, { schemaVersion: 1, epoch: op.epoch, facilityId: op.facilityId, sourceVisitId: op.sourceVisitId, sourceDatasetId: op.datasetId, date: op.fields.date, notes: op.fields.notes, extra: op.fields.extra, status: 'active', revision: 1, lastOpId: op.opId, createdAt: serverTimestamp(), updatedAt: serverTimestamp(), deletedAt: null, restoredAt: null });
+          tx.set(r, { schemaVersion: 1, epoch: op.epoch, facilityId: op.facilityId, sourceVisitId: op.sourceVisitId, sourceDatasetId: op.datasetId, date: op.fields.date, notes: op.fields.notes, extra: op.fields.extra, visitType: op.fields.visitType || '', status: 'active', revision: 1, lastOpId: op.opId, createdAt: serverTimestamp(), updatedAt: serverTimestamp(), deletedAt: null, restoredAt: null });
           return { status: 'ok', revision: 1 };
         }
         if (!cur) return { status: 'missing' };
         if (cur.lastOpId === op.opId) return { status: 'ok', revision: cur.revision };   // 応答を受け取れなかった再送
         if (cur.revision !== op.baseRevision) return { status: 'stale' };
         const common = { epoch: op.epoch, revision: cur.revision + 1, lastOpId: op.opId, updatedAt: serverTimestamp() };
-        if (op.type === 'update') { if (cur.status !== 'active') return { status: 'stale' }; tx.update(r, { date: op.fields.date, notes: op.fields.notes, extra: op.fields.extra, ...common }); }
+        if (op.type === 'update') { if (cur.status !== 'active') return { status: 'stale' }; tx.update(r, { date: op.fields.date, notes: op.fields.notes, extra: op.fields.extra, visitType: op.fields.visitType || '', ...common }); }
         else if (op.type === 'delete') { tx.update(r, { status: 'deleted', deletedAt: serverTimestamp(), ...common }); }
-        else if (op.type === 'restore') { if (cur.status !== 'deleted') return { status: 'stale' }; tx.update(r, { status: 'active', deletedAt: null, restoredAt: serverTimestamp(), date: op.fields.date, notes: op.fields.notes, extra: op.fields.extra, ...common }); }
+        else if (op.type === 'restore') { if (cur.status !== 'deleted') return { status: 'stale' }; tx.update(r, { status: 'active', deletedAt: null, restoredAt: serverTimestamp(), date: op.fields.date, notes: op.fields.notes, extra: op.fields.extra, visitType: op.fields.visitType || '', ...common }); }
         else throw Error('unknown op ' + op.type);
         return { status: 'ok', revision: cur.revision + 1 };
       });

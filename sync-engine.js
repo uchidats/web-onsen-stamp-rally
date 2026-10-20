@@ -8,6 +8,10 @@
 (function(root){'use strict';
   const Core = root.OnsenSyncCore;
   const META_KEY = 'onsen-rally-sync-v1', SAFE_KEY = 'onsen-rally-before-sync-v1';
+  const DELETED_KEY = 'onsen-rally-cloud-deleted-v1';
+  const deletionKey=(uid,projectId)=>projectId+':'+uid;
+  function wasDeleted(storage,uid,projectId){try{return JSON.parse(storage.getItem(DELETED_KEY)||'{}')[deletionKey(uid,projectId)]===true}catch(_){return false}}
+  function rememberDeletion(storage,uid,projectId){const history=JSON.parse(storage.getItem(DELETED_KEY)||'{}');history[deletionKey(uid,projectId)]=true;storage.setItem(DELETED_KEY,JSON.stringify(history));}
   const clone = x => JSON.parse(JSON.stringify(x));
   const errCode = e => String((e && e.code) || '').replace(/^firestore\//, '');
   const OFFLINE_CODES = ['unavailable', 'deadline-exceeded', 'network-request-failed', 'cancelled'];
@@ -16,7 +20,7 @@
   function create(o) {
     const storage = o.storage, metaKey = o.metaKey || META_KEY, safeKey = o.safeKey || SAFE_KEY;
     const genId = o.genId || Core.uuid, debounceMs = o.debounceMs === undefined ? 1200 : o.debounceMs;
-    let meta = null, cloud = null, unsub = null, running = null, again = false, stopped = false, timer = null, applying = false, ownerChanged = false, status = { state: 'idle', detail: '', conflicts: 0 };
+    let meta = null, cloud = null, unsub = null, running = null, again = false, stopped = false, timer = null, applying = false, ownerChanged = false, listenerFailed = false, subscription = 0, consenting = null, status = { state: 'idle', detail: '', conflicts: 0 };
 
     function loadMeta() {
       try { const m = JSON.parse(storage.getItem(metaKey)); if (m && m.v === 1 && typeof m.uid === 'string') return m; } catch (e) { /* 壊れていれば作り直す(記録そのものは別の保存領域にある) */ }
@@ -43,7 +47,7 @@
       let n = 0; const lp = Core.projectLocal(o.getState(), clone(meta.idMap), () => 'preview-' + (++n) + '-xxxxxxxx'), res = Core.reconcile({ local: lp, cloud, base: { events: {}, notes: {} }, frozen: new Set() });
       let cloudDeleted = 0; for (const d of cloud.visits.values()) if (d.status === 'deleted') cloudDeleted++;
       return { local: Core.summarize(o.getState(), meta.idMap), cloud: { visits: Core.countCloudActive(cloud.visits), deleted: cloudDeleted, conflictsOpen: openConflicts().length },
-        willUpload: res.pushes.filter(p => p.type === 'create').length, willDownload: res.changes.filter(c => c.type === 'add').length, conflicts: res.conflicts.length, otherAccount: ownerChanged };
+        willUpload: res.pushes.filter(p => p.type === 'create').length, willDownload: res.changes.filter(c => c.type === 'add').length, conflicts: res.conflicts.length, otherAccount: ownerChanged, restart: wasDeleted(storage,o.uid,o.projectId) };
     }
 
     async function writeConflicts(list) {
@@ -96,13 +100,14 @@
 
     async function once() {
       if (stopped) return;
+      if (listenerFailed) return; // Keep the actionable error visible until a fresh subscription is established.
       if (!meta.initialized) { setStatus('consent', '', { summary: cloud && cloud.serverReady ? preview() : null }); return; }
       if (!cloud || !cloud.serverReady) { setStatus(o.isOnline && !o.isOnline() ? 'offline' : 'syncing', 'クラウドの状態を確認しています'); return; }
       if (o.repo.needsMigration && o.repo.needsMigration()) { setStatus('error', '旧記録の移行を確認してから同期します'); return; }
       // クラウド側の世代ID・状態の確認(削除中・削除済み・作り直しを検出したら、何も送らずに止める)
       const rs = rootState();
       if (rs === 'deleting') { setStatus('deleting', 'クラウドのデータを削除中です。完了するまで同期を止めています'); return; }
-      if (rs === 'missing' || rs === 'mismatch') { setStatus('cloudReset', RESET_DETAIL, { summary: preview() }); return; }
+      if (rs === 'missing' || rs === 'mismatch') { try{rememberDeletion(storage,o.uid,o.projectId)}catch(_){}setStatus('cloudReset', RESET_DETAIL, { summary: preview() }); return; }
       if (rs === 'adopt') { const epoch = cloud.root.epoch || (await o.adapter.ensureRoot()).epoch; if (stopped) return; meta.epoch = epoch; saveMeta(); }   // 欠落時は自動作成しない
       setStatus('syncing');
       const mode = meta.needsReconcile;
@@ -128,6 +133,7 @@
         let stale = false;
         for (const p of res.pushes) { if (stopped) return; if (!await pushOne(p)) { stale = true; break; } saveMeta(); }
         if (!stale) {
+          if(listenerFailed)return; // A completed write is not a healthy live connection after a listener error.
           meta.needsReconcile = false; meta.lastSyncAt = o.now ? o.now() : Date.now(); saveMeta();
           const n = openConflicts().length + res.conflicts.length;
           setStatus(n ? 'conflicts' : 'synced', '', { conflicts: n });
@@ -154,6 +160,14 @@
       return running;
     }
 
+    function subscribeCloud(){
+      const token=++subscription;if(unsub)unsub();cloud=null;listenerFailed=false;
+      setStatus('syncing','クラウドの状態を確認しています');
+      unsub=o.adapter.subscribe(snap=>{if(stopped||token!==subscription)return;cloud=snap;if(!snap.serverReady)return;if(!meta.initialized)once().catch(()=>{});else run();},err=>{
+        if(stopped||token!==subscription)return;listenerFailed=true;cloud=null;const c=errCode(err);setStatus(OFFLINE_CODES.includes(c)?'offline':'error',OFFLINE_CODES.includes(c)?'オフラインです。オンラインに戻ると自動で同期します':'同期の接続が停止しました。再試行してください。('+c+')',{code:c});
+      });
+    }
+
     return {
       get applying() { return applying; },
       status: () => status, meta: () => meta, openConflicts, preview: () => (meta && cloud && cloud.serverReady ? preview() : null),
@@ -162,22 +176,28 @@
         if (meta && meta.uid !== o.uid) { ownerChanged = true; meta = { ...fresh(), idMap: meta.idMap }; }
         if (!meta) { meta = fresh(); }
         if (!meta.initialized || ownerChanged) saveMeta();
-        setStatus('syncing', 'クラウドの状態を確認しています');
-        unsub = o.adapter.subscribe(snap => { if (stopped) return; cloud = snap; if (!snap.serverReady) return; if (!meta.initialized) once().catch(() => {}); else this.syncNow(); },
-          err => { if (stopped) return; const c = errCode(err); setStatus(OFFLINE_CODES.includes(c) ? 'offline' : 'error', OFFLINE_CODES.includes(c) ? 'オフラインです。オンラインに戻ると自動で同期します' : '同期できませんでした。記録は端末に残っています。(' + (c || 'unknown') + ')', { code: c }); });
+        subscribeCloud();
       },
       // 利用者が確認画面で「統合して同期を開始」を選んだ時。先にローカルの記録を退避(失敗したら始めない)
-      async consent() {
+      consent() {
+        if(consenting)return consenting;
+        consenting=(async()=>{
+        if(stopped)throw Error('同期が停止されています');
         if (!meta || !cloud || !cloud.serverReady) throw Error('クラウドの状態を確認できていません');
-        const raw = storage.getItem(o.recordsKey || 'onsen-rally-user-v3');
-        try { storage.setItem(safeKey, JSON.stringify({ savedAt: o.now ? o.now() : Date.now(), uid: o.uid, raw })); } catch (e) { setStatus('error', '記録の退避に失敗したため同期を始めません(記録は変更していません)'); throw e; }
+        try{
+          const raw=storage.getItem(o.recordsKey||'onsen-rally-user-v3'),saved=JSON.stringify({savedAt:o.now?o.now():Date.now(),uid:o.uid,raw});
+          storage.setItem(safeKey,saved);if(storage.getItem(safeKey)!==saved)throw Error('退避コピーを読み戻せませんでした');
+        }catch(e){const reason=e.name==='QuotaExceededError'?'端末の保存領域が不足しています':e.name==='SecurityError'?'ブラウザで保存が許可されていません':e.message||'保存できませんでした';const error=Error('退避コピーを保存できないため同期を開始しません。'+reason);error.code='backup-failed';setStatus('error',error.message,{code:error.code,backupFailed:true});throw error;}
+        if(stopped)return;
         const expectedRoot = { ...cloud.root };
-        const result = await o.adapter.ensureRoot({ allowCreate: true, expectedRoot });
+        let result;try{result=await o.adapter.ensureRoot({allowCreate:true,expectedRoot})}catch(e){const code=errCode(e);setStatus(OFFLINE_CODES.includes(code)?'offline':'error','同期を開始できませんでした。通信を確認して再試行してください。('+code+')',{code});throw e;}
         if (stopped) return;
         meta.epoch = result.epoch;
         meta.initialized = true; meta.needsReconcile = true; meta.base = { events: {}, notes: {} }; meta.uid = o.uid; meta.projectId = o.projectId; ownerChanged = false; saveMeta();
         return run();
+        })().finally(()=>{consenting=null});return consenting;
       },
+      retry(){if(stopped)return Promise.resolve();if(listenerFailed){subscribeCloud();return Promise.resolve()}if(meta&&!meta.initialized&&cloud&&cloud.serverReady)return once();return this.syncNow()},
       // 復元(JSON)後や件数減少で止まった時の「クラウドと照合」。削除はせず和集合にする
       reconcileNow() { if (!meta || !meta.initialized) return Promise.resolve(); meta.needsReconcile = true; saveMeta(); return run(); },
       syncNow() { if (!meta || !meta.initialized || stopped) return Promise.resolve(); return run(); },
@@ -191,6 +211,7 @@
         const c = cloud && cloud.conflicts.get(id); if (!c || c.status !== 'open') return;
         const parse = s => { try { return JSON.parse(s); } catch (e) { return null; } };
         const local = parse(c.local), remote = parse(c.remote), curDoc = cloud.visits.get(c.eventId), curNote = cloud.notes.get(c.facilityId);
+        if(choice==='merge'&&c.field.split(',').includes('visitType'))throw Error('訪問形態は、この端末かクラウドのどちらかを選んでください');
         if (c.kind === 'visit') {
           let f = choice === 'remote' ? remote : choice === 'local' ? local : { ...local };
           if (choice === 'merge' && local.notes !== remote.notes) f = { ...local, notes: remote.notes + '\n---\n' + local.notes };
@@ -215,10 +236,10 @@
         await o.adapter.resolveConflict(id, { resolution: choice });
         return run();
       },
-      stop() { stopped = true; clearTimeout(timer); if (unsub) unsub(); unsub = null; cloud = null; },
+      stop() { stopped = true; subscription++;clearTimeout(timer); if (unsub) unsub(); unsub = null; cloud = null; },
       // 同期の管理情報(この端末の対応表・基準)だけを消す。この端末の訪問記録は消さない
       forgetSyncState() { stopped = true; clearTimeout(timer); if (unsub) unsub(); unsub = null; cloud = null; try { storage.removeItem(metaKey); } catch (e) { /* 消せなくても記録には影響しない */ } meta = null; }
     };
   }
-  root.OnsenSyncEngine = { create, META_KEY, SAFE_KEY };
+  root.OnsenSyncEngine = { create, META_KEY, SAFE_KEY, DELETED_KEY, rememberDeletion };
 })(typeof window === 'undefined' ? globalThis : window);

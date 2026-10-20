@@ -4,7 +4,7 @@
 // ・メモなど同じ項目を両端末で変えた場合は、自動で上書きせず両方を競合として保持する。
 // ・同期の基準(base)=最後に同期できた値。ローカルの変更はローカル現在値とbaseの差、クラウドの変更はクラウド現在値とbaseの差で判定する。
 (function(root){'use strict';
-  const SCHEMA = 1, EXTRA_MAX = 20000, NOTES_MAX = 10000, FIELDS = ['date', 'notes', 'extra'];
+  const SCHEMA = 1, EXTRA_MAX = 20000, NOTES_MAX = 10000, FIELDS = ['date', 'notes', 'extra', 'visitType'];
   const EVENT_ID = /^[A-Za-z0-9_-]{8,100}$/;
   let seq = 0;
   const uuid = () => (root.crypto && root.crypto.randomUUID) ? root.crypto.randomUUID() : 'ev-' + Date.now().toString(36) + '-' + (++seq) + '-' + Math.random().toString(36).slice(2, 10);
@@ -17,7 +17,7 @@
     if (r.legacyDate !== undefined) e.legacyDate = r.legacyDate;
     return Object.keys(e).length ? JSON.stringify(e) : '';
   }
-  const fieldsOf = x => ({ date: x.date === undefined ? null : x.date, notes: x.notes || '', extra: x.extra || '' });
+  const fieldsOf = x => ({ date: x.date === undefined ? null : x.date, notes: x.notes || '', extra: x.extra || '', visitType: x.visitType || '' });
   const eq = (a, b) => FIELDS.every(f => (a[f] ?? (f === 'date' ? null : '')) === (b[f] ?? (f === 'date' ? null : '')));
 
   // ローカルの状態を、eventIdをキーにした一覧へ。旧移行の連番ID(legacy-…)や不正なIDは端末間で衝突し得るため、一度だけ新しいeventIdを採番してidMapに保存する
@@ -32,7 +32,7 @@
         const extra = extraOf(r);
         if (extra.length > EXTRA_MAX) problems.push({ kind: 'oversize', facilityId: fid, localId: r.id });
         if ((r.notes || '').length > NOTES_MAX) problems.push({ kind: 'oversize', facilityId: fid, localId: r.id });
-        events.set(id, { eventId: id, localId: r.id, facilityId: fid, sourceVisitId: r.id, date: r.date, notes: r.notes || '', extra });
+        events.set(id, { eventId: id, localId: r.id, facilityId: fid, sourceVisitId: r.id, date: r.date, notes: r.notes || '', extra, visitType: r.visitType || '' });
       }
     }
     return { events, notes, idMap: map, problems };
@@ -54,11 +54,11 @@
         const v = userData.visits[c.facilityId] || (userData.visits[c.facilityId] = { records: [], notes: '' });
         const lid = localIdOf(c.eventId);
         if (v.records.some(r => r.id === lid)) continue;
-        const r = { id: lid, date: c.date, notes: c.notes, photos: [], gpsStamp: null }; setExtra(r, c.extra); v.records.push(r); continue;
+        const r = { id: lid, date: c.date, notes: c.notes, photos: [], gpsStamp: null, ...(c.visitType?{visitType:c.visitType}:{}) }; setExtra(r, c.extra); v.records.push(r); continue;
       }
       const r = find(c.eventId, c.facilityId);
       if (!r) continue;
-      if (c.type === 'update') { r.date = c.date; r.notes = c.notes; setExtra(r, c.extra); }
+      if (c.type === 'update') { r.date = c.date; r.notes = c.notes; if(c.visitType)r.visitType=c.visitType;else delete r.visitType; setExtra(r, c.extra); }
       else if (c.type === 'delete') { const v = userData.visits[c.facilityId]; v.records.splice(v.records.indexOf(r), 1); }
     }
     return userData;

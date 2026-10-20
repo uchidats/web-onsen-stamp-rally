@@ -32,10 +32,10 @@ function referenced(files) {
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   for (const m of html.matchAll(/(?:src|href)="([^"#?]+)[^"]*"/g)) if (!/^(https?:)?\/\//.test(m[1]) && !m[1].startsWith('mailto:')) if (!set.has(m[1])) missing.push(m[1]);
   const css = fs.readFileSync(path.join(ROOT, 'design.css'), 'utf8');
-  for (const m of css.matchAll(/@import url\("([^"]+)"\)/g)) if (!set.has(m[1])) missing.push(m[1]);
+  for (const m of css.matchAll(/@import url\("([^"]+)"\)/g)) {const file=m[1].split(/[?#]/)[0];if (!set.has(file)) missing.push(file);}
   for (const c of ['assets/fonts/cards.css', 'assets/fonts/bathnames.css']) {
     const t = fs.readFileSync(path.join(ROOT, c), 'utf8');
-    for (const m of t.matchAll(/url\(([^)"']+)\)/g)) if (!m[1].startsWith('data:') && !set.has('assets/fonts/' + m[1])) missing.push('assets/fonts/' + m[1]);
+    for (const m of t.matchAll(/url\(([^)"']+)\)/g)) {const file=m[1].split(/[?#]/)[0];if (!file.startsWith('data:') && !set.has('assets/fonts/' + file)) missing.push('assets/fonts/' + file);}
   }
   return missing;
 }

@@ -32,7 +32,8 @@ service cloud.firestore {
       return ['schemaVersion', 'epoch', 'facilityId', 'sourceVisitId', 'sourceDatasetId', 'date', 'notes', 'extra', 'status', 'revision', 'lastOpId', 'createdAt', 'updatedAt', 'deletedAt', 'restoredAt'];
     }
     function validVisit(d, eventId) {
-      return d.keys().hasOnly(visitKeys()) && d.keys().hasAll(visitKeys())
+      return d.keys().hasOnly(visitKeys().concat(['visitType'])) && d.keys().hasAll(visitKeys())
+        && d.get('visitType', '') in ['', 'day', 'stay']
         && d.schemaVersion == 1
         && validEpoch(d.epoch)
         && eventId.matches('^[A-Za-z0-9_-]{8,100}$')

@@ -12,7 +12,7 @@
   const settings = root.ONSEN_FIREBASE || {};
   // 同期が有効な環境では、ヘッダーの説明を実態に合わせる(同期は「開始する」を選んだ時だけ始まる)
   { const note = doc.querySelector('.account-note'); if (note) note.textContent = 'β版の機能です。同期を開始すると、訪問記録とメモがあなたのGoogleアカウントのクラウドにも保存され、同じアカウントの他の端末と同期されます。ログアウトしても、この端末の記録は残ります。'; }
-  let engine = null, generation = 0, dismissedFor = null, lastStatus = null, fsModule = null;
+  let engine = null, generation = 0, dismissedFor = null, lastStatus = null, fsModule = null, consentBusy = false, consentRequested = false;
   const DELETE_KEY = 'onsen-rally-cloud-delete-v1';
   const pendingDelete = s => { try { const p = JSON.parse(root.localStorage.getItem(DELETE_KEY)); return p && p.uid === s.uid && p.projectId === s.projectId ? p : null; } catch (e) { return null; } };
 
@@ -23,7 +23,7 @@
     return root.OnsenFirestoreAdapter.create({ sdk: fsModule, db: fsModule.getFirestore(session.app), uid: session.uid });
   }
 
-  function stopEngine() { if (engine) { engine.stop(); engine = null; } }
+  function stopEngine() { if (engine) { engine.stop(); engine = null; }consentBusy=false;consentRequested=false;$('syncConfirm').disabled=false;$('syncCancel').disabled=false;if($('syncDialog').open)$('syncDialog').close(); }
   async function startFor(session, g) {
     stopEngine(); lastStatus = null; render(null);
     if (!session.uid) return;                       // ログアウト: 同期だけ止める。端末の記録は残る
@@ -42,6 +42,12 @@
   const LABEL = { synced: '同期済み', syncing: '同期中…', offline: 'オフライン', error: '同期エラー', conflicts: '同期済み(競合あり)', consent: '同期は未開始', cloudReset: '停止中(クラウドのデータが削除されています)', deleting: '停止中(クラウドのデータを削除中)' };
   function render(st) {
     const bar = $('syncStatus'); if (!bar) return;
+    if(st&&consentRequested&&['synced','conflicts'].includes(st.state)&&$('syncDialog').open){$('syncDialog').close();consentRequested=false;}
+    if(st&&$('syncDialog').open){
+      const failed=['error','offline'].includes(st.state),message=$('syncConsentError');
+      message.hidden=!failed;message.textContent=failed?st.detail:'';
+      $('syncBackup').hidden=!st.backupFailed;
+    }
     const show = !!st;
     bar.hidden = !show; if (!show) { for (const id of ['syncStart', 'syncConflictsBtn', 'syncReconcile', 'syncRetry']) $(id).hidden = true; return; }
     const offline = root.navigator.onLine === false && !['consent', 'cloudReset', 'deleting'].includes(st.state);
@@ -52,27 +58,27 @@
     $('syncStart').textContent = st.state === 'cloudReset' ? '同期を再開' : '同期を開始';
     $('syncConflictsBtn').hidden = !(st.conflicts > 0);
     $('syncReconcile').hidden = !(st.state === 'error' && st.safety);
-    $('syncRetry').hidden = !(st.state === 'error' && !st.safety);
+    $('syncRetry').hidden = !((st.state === 'error' && !st.safety)||st.state==='offline');
   }
   const li = (parent, text) => { const e = doc.createElement('li'); e.textContent = text; parent.appendChild(e); };
   function openConsent(st) {
     const s = st.summary; if (!s) return;
+    consentRequested=false;
     const box = $('syncSummary'); box.textContent = '';
-    $('syncHeading').textContent = st.state === 'cloudReset' ? 'クラウドのデータが削除されています。同期を再開しますか' : 'このアカウントで同期を始めますか';
-    const name = (Auth.controller.getState().user || {}).name || 'Googleアカウント';
-    const p = doc.createElement('p'); p.textContent = 'アカウント: ' + name; box.appendChild(p);
-    if (st.state === 'cloudReset') { const w = doc.createElement('p'); w.className = 'note'; w.textContent = 'このアカウントのクラウドのデータは削除されています(別の端末、またはこの端末での削除)。再開すると、この端末の記録が新しいクラウドデータとして保存されます。'; box.appendChild(w); }
+    const restart=st.state==='cloudReset'||s.restart;
+    $('syncHeading').innerHTML=restart?'以前削除したクラウドデータを、新しく保存し直しますか？':'<span class="sync-heading-phrase">訪問記録を</span><span class="sync-heading-phrase">同期しますか？</span>';
+    $('syncIntro').textContent=restart?'開始すると、この端末の訪問記録とメモをクラウドへ新しく保存します。端末内に退避コピーを自動保存してから開始します。':'訪問記録とメモを、同じGoogleアカウントの端末間で同期します。この端末の記録を残し、退避コピーを自動保存してから開始します。';
+    $('syncConfirm').textContent=restart?'新しく保存して同期':'同期を開始';
+    $('syncConsentError').hidden=true;$('syncConsentError').textContent='';$('syncBackup').hidden=true;
     if (s.otherAccount) { const w = doc.createElement('p'); w.className = 'note'; w.textContent = 'この端末の記録は、これまで別のアカウントで同期していました。続けると、この端末の記録がこのアカウントにも保存されます。'; box.appendChild(w); }
     const ul = doc.createElement('ul');
-    li(ul, 'この端末: 訪問 ' + s.local.visits + '件(' + s.local.facilities + '施設) / 日付なし ' + s.local.unknownDate + '件 / 同じ日に複数 ' + s.local.sameDayGroups + '組 / メモ ' + s.local.memos + '件');
-    li(ul, 'クラウド: 訪問 ' + s.cloud.visits + '件(削除済み ' + s.cloud.deleted + '件)');
-    li(ul, '統合の見込み: クラウドへ ' + s.willUpload + '件を追加 / この端末へ ' + s.willDownload + '件を追加 / 競合 ' + s.conflicts + '件');
+    li(ul, 'この端末: 訪問 ' + s.local.visits + '件');
+    li(ul, 'クラウド: 訪問 ' + s.cloud.visits + '件');
     box.appendChild(ul);
-    const n = doc.createElement('p'); n.className = 'note'; n.textContent = 'この端末の記録は消えません(追加のみ)。同じ日付でも別の訪問として残します。開始前に、この端末内へ退避コピーを保存します。'; box.appendChild(n);
     if (!$('syncDialog').open) $('syncDialog').showModal();
   }
   function maybeConsent(st) { if (st.state === 'consent' && st.summary && dismissedFor !== Auth.controller.getSession().uid && !$('syncDialog').open) openConsent(st); }
-  const describe = j => { try { const x = JSON.parse(j); if (!x) return '(なし)'; if (x.notes !== undefined && x.date === undefined) return x.notes === '' ? '(空)' : x.notes; return (x.date ? '日付: ' + x.date : '日付なし') + (x.notes ? ' / メモ: ' + x.notes : ''); } catch (e) { return ''; } };
+  const describe = j => { try { const x = JSON.parse(j); if (!x) return '(なし)'; if (x.notes !== undefined && x.date === undefined) return x.notes === '' ? '(空)' : x.notes; return (x.date ? '日付: ' + x.date : '日付なし') + (x.visitType ? ' / '+({day:'日帰り',stay:'宿泊'}[x.visitType]||'') : ' / 未設定') + (x.notes ? ' / メモ: ' + x.notes : ''); } catch (e) { return ''; } };
   const KIND = { visit: '訪問記録', facilityNote: '施設のメモ', deletedRemotely: '他の端末で削除された記録', editVsDelete: '削除された記録(編集内容)' };
   function renderConflicts() {
     const ul = $('syncConflictList'); ul.textContent = '';
@@ -81,7 +87,7 @@
       const h = doc.createElement('strong'); h.textContent = host.facilityName(c.facilityId) + ' — ' + (KIND[c.kind] || c.kind); item.appendChild(h);
       for (const [label, val] of [['この端末', c.local], ['クラウド', c.remote]]) { const p = doc.createElement('p'); p.textContent = label + ': ' + describe(val); item.appendChild(p); }
       const row = doc.createElement('div'); row.className = 'tools';
-      const choices = c.kind === 'deletedRemotely' ? [['delete', '削除を受け入れる'], ['restore', '復元する']] : c.kind === 'editVsDelete' ? [['restore', '復元する'], ['discard', '破棄する']] : [['local', 'この端末を採用'], ['remote', 'クラウドを採用'], ['merge', '両方を結合']];
+      const choices = c.kind === 'deletedRemotely' ? [['delete', '削除を受け入れる'], ['restore', '復元する']] : c.kind === 'editVsDelete' ? [['restore', '復元する'], ['discard', '破棄する']] : [['local', 'この端末を採用'], ['remote', 'クラウドを採用'], ...(c.field.split(',').includes('visitType')?[]:[['merge', '両方を結合']])];
       for (const [choice, text] of choices) { const b = doc.createElement('button'); b.type = 'button'; b.textContent = text; b.onclick = async () => { b.disabled = true; try { await engine.resolveConflict(c.id, choice); } catch (e) { host.toast(e.message || '解決できませんでした'); } setTimeout(renderConflicts, 400); }; row.appendChild(b); }
       item.appendChild(row); ul.appendChild(item);
     }
@@ -131,7 +137,7 @@
       progress('クラウドのデータを削除しています…');
       const res = await adapter.deleteAll((stage, c) => { if (sameSession(session) && stage === 'deleting') progress('クラウドのデータを削除しています…(訪問 ' + c.visits + '件 / メモ ' + c.facilityNotes + '件 / 競合 ' + c.conflicts + '件)'); }, undefined, () => sameSession(session));
       if (!sameSession(session)) throw Object.assign(Error('account changed'), { code: 'delete-session-changed' });
-      try { root.localStorage.removeItem(root.OnsenSyncEngine.META_KEY); } catch (e) { /* 同期の管理情報だけ。訪問記録には触れない */ }
+      try { root.OnsenSyncEngine.rememberDeletion(root.localStorage,session.uid,session.projectId);root.localStorage.removeItem(root.OnsenSyncEngine.META_KEY); } catch (e) { /* 退避できなければ古い世代の管理情報を残し、再アップロードを止める */ }
       const c = res.counts, what = res.status === 'nothing' ? 'クラウドに削除するデータはありませんでした。' : 'クラウドのデータを削除しました(訪問 ' + c.visits + '件 / メモ ' + c.facilityNotes + '件 / 競合 ' + c.conflicts + '件)。';
       completed = true;
       if (scope === 'account') {
@@ -172,16 +178,22 @@
 
   $('syncStart').onclick = () => { dismissedFor = null; if (lastStatus && lastStatus.summary) openConsent(lastStatus); };
   $('syncCancel').onclick = () => { dismissedFor = Auth.controller.getSession().uid; $('syncDialog').close(); };
+  $('syncDialog').addEventListener('cancel',e=>{if(consentBusy)e.preventDefault();else dismissedFor=Auth.controller.getSession().uid;});
   $('syncBackup').onclick = () => { try { host.download(host.backup(), '温泉の旅-同期前の記録.json'); } catch (e) { host.toast(e.message || 'バックアップを作成できませんでした'); } };
-  $('syncConfirm').onclick = async () => { try { await engine.consent(); $('syncDialog').close(); } catch (e) { host.toast(e.message || '同期を開始できませんでした(記録は変更していません)'); } };
+  $('syncConfirm').onclick=async()=>{
+    if(!engine||consentBusy)return;const active=engine,g=generation;consentBusy=true;consentRequested=true;$('syncConfirm').disabled=true;$('syncCancel').disabled=true;
+    try{await active.consent();if(g!==generation||active!==engine)return;const st=active.status();if(['synced','conflicts'].includes(st.state))$('syncDialog').close();else if(['error','offline'].includes(st.state))render(st);}
+    catch(e){if(g!==generation||active!==engine)return;consentRequested=false;$('syncConsentError').hidden=false;$('syncConsentError').textContent=(active.status().detail||e.message)+(active.status().backupFailed?' JSONをダウンロードして保管し、保存領域・ブラウザ設定を確認してから再試行してください。':'');$('syncBackup').hidden=!active.status().backupFailed;}
+    finally{if(g===generation&&active===engine){consentBusy=false;$('syncConfirm').disabled=false;$('syncCancel').disabled=false;}}
+  };
   $('syncConflictsBtn').onclick = () => { renderConflicts(); $('syncConflictDialog').showModal(); };
   $('syncConflictClose').onclick = () => $('syncConflictDialog').close();
   $('syncReconcile').onclick = () => { if (engine) engine.reconcileNow(); };
-  $('syncRetry').onclick = () => { if (engine) engine.syncNow(); };
+  $('syncRetry').onclick = () => { dismissedFor=null;if (engine) engine.retry(); };
 
   // ローカルの記録の変更(通常の編集/JSON復元/旧記録の移行)。エンジン自身の反映では送らない
   root.addEventListener('onsen-records-changed', e => { if (engine && !engine.applying) engine.notifyLocalChange((e.detail || {}).kind); });
-  root.addEventListener('online', () => { if (engine) engine.syncNow(); });
+  root.addEventListener('online', () => { if (engine) engine.retry(); });
   root.addEventListener('offline', () => { if (lastStatus) render(lastStatus); });
 
   Auth.controller.onSession(s => { if (!s.ready) return; if (del.running) { renderDeleteButton(); return; } generation++; startFor(s, generation); renderDeleteButton(); });

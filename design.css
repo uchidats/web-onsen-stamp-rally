@@ -258,6 +258,10 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .visit-row-actions button { min-width: 44px; min-height: 44px; border: 0; border-radius: 4px; background: transparent; color: var(--moss); font-size: 12px; }
 .visit-form { background: #f1f3e9; border: 1px solid var(--line); border-radius: 6px; padding: 18px; margin-top: 16px; }
 .visit-form > label { display: block; font-size: 13px; }
+.visit-form select { display: block; width: 100%; min-height: 44px; margin: 8px 0 16px; padding: 8px; border: 1px solid #cecec1; border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; font-size: 14px; }
+.visit-type { display: inline-block; margin-left: 8px; color: var(--muted); font-size: 12px; white-space: nowrap; }
+.sync-consent-error { color: #8b452f; overflow-wrap: anywhere; }
+.sync-heading-phrase { display: inline-block; }
 .visit-form input[type=date] { display: block; width: 100%; min-width: 0; min-height: 44px; margin: 8px 0; padding: 8px; border: 1px solid #cecec1; border-radius: 4px; background: var(--surface); color: var(--ink); }
 .visit-form .unknown-date { display: flex; gap: 8px; align-items: center; min-height: 44px; margin-bottom: 12px; }
 .unknown-date input { width: 18px; height: 18px; accent-color: var(--moss); }

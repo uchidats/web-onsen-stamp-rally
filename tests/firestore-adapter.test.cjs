@@ -41,6 +41,36 @@ test('sync engine + Firestore adapter + rules on the emulator (two devices, same
   const pc = device('pc'), android = device('android');
   await pc.join(); await android.join();
 
+  await t.test('visit type: actual Firestore round trip, independent date merge, conflicting types, unset and legacy writes',async()=>{
+    pc.state=pc.repo.addVisit(pc.state,'onsen-020','2026-10-21','day');pc.engine.notifyLocalChange('change');
+    await until(()=>android.state.userData.visits['onsen-020']?.records[0]?.visitType==='day','typed visit downloads');
+    const id=pc.state.userData.visits['onsen-020'].records[0].id;
+    await fsdk.disableNetwork(android.db);
+    android.state=android.repo.editVisit(android.state,'onsen-020',id,'2026-10-21','stay');android.engine.notifyLocalChange('change');
+    assert.equal(android.repo.load().userData.visits['onsen-020'].records[0].visitType,'stay');
+    assert.equal(pc.state.userData.visits['onsen-020'].records[0].visitType,'day');
+    await fsdk.enableNetwork(android.db);await android.engine.syncNow();
+    await until(()=>pc.state.userData.visits['onsen-020'].records[0].visitType==='stay'&&android.last().state==='synced','offline type resends through real SDK');
+    pc.engine.stop();android.engine.stop();
+    pc.state=pc.repo.editVisit(pc.state,'onsen-020',id,'2026-10-20');
+    android.state=android.repo.editVisit(android.state,'onsen-020',id,'2026-10-21','day');
+    await pc.engine.start();await android.engine.start();
+    await until(()=>[pc,android].every(d=>{const r=d.state.userData.visits['onsen-020'].records[0];return r.date==='2026-10-20'&&r.visitType==='day'}),'date and type merge');
+    pc.engine.stop();android.engine.stop();
+    pc.state=pc.repo.editVisit(pc.state,'onsen-020',id,'2026-10-20','stay');
+    android.state=android.repo.editVisit(android.state,'onsen-020',id,'2026-10-20','');
+    await pc.engine.start();await until(()=>pc.last().state==='synced','pc publishes day');await android.engine.start();
+    await until(()=>android.engine.openConflicts().some(c=>c.field.includes('visitType')),'type conflict retained');
+    const c=android.engine.openConflicts().find(c=>c.field.includes('visitType'));assert.equal(JSON.parse(c.remote).visitType,'stay');assert.equal(JSON.parse(c.local).visitType,'');
+    await android.engine.resolveConflict(c.id,'local');
+    await until(()=>[pc,android].every(d=>!d.state.userData.visits['onsen-020'].records[0].visitType),'unset resolved and synced');
+    const cloud=await fsdk.getDoc(fsdk.doc(pc.db,'accounts',UID,'visits',id));assert.equal(cloud.data().visitType,'');
+    const backup=android.repo.backup(android.state);assert.equal(backup.userData.visits['onsen-020'].records[0].id,id);
+    // Remove this fixture through the real repository, so subsequent count tests remain unchanged.
+    pc.state=pc.repo.deleteVisit(pc.state,'onsen-020',id);pc.engine.notifyLocalChange('change');
+    await until(()=>!android.state.userData.visits['onsen-020'].records.length,'typed fixture deleted');
+  });
+
   await t.test('PC adds -> Android receives it; Android adds -> PC receives it (real Firestore listeners, transactions and rules)', async () => {
     pc.add('onsen-001', '2026-01-10');
     await until(() => android.visits('onsen-001').includes('2026-01-10'), 'android gets PC visit');
@@ -60,7 +90,7 @@ test('sync engine + Firestore adapter + rules on the emulator (two devices, same
     pc.remove('onsen-001', '2026-01-10');
     await until(() => !android.visits('onsen-001').includes('2026-01-10'), 'android sees deletion');
     const snap = await fsdk.getDocs(fsdk.collection(pc.db, 'accounts', UID, 'visits'));
-    assert.equal([...snap.docs].filter(d => d.data().status === 'deleted').length, 1);
+    assert.equal([...snap.docs].filter(d => d.data().status === 'deleted'&&d.data().facilityId==='onsen-001').length, 1);
     await new Promise(r => setTimeout(r, 600));
     assert.ok(!pc.visits('onsen-001').includes('2026-01-10') && !android.visits('onsen-001').includes('2026-01-10'));
   });

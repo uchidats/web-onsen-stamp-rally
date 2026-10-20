@@ -36,6 +36,14 @@
 - **旧データの移行**: 世代IDの導入前に作られたクラウドのデータ(世代IDのないルート・訪問)は、最初の同期で世代IDが付与され、そのまま使い続けられます。削除もできます。
 - **Rulesの `get()` について**: 書き込み・削除のたびにルート文書を1回読みます(読み取り回数に数えられます)。無料枠に対して余裕のある量ですが、書き込みが多い場合は読み取りが増えます。
 
+## 訪問形態（2026-10-21、試験サイトでの検証対象）
+
+- 訪問ごとの任意項目 `visitType` は `day`（日帰り）・`stay`（宿泊）。項目なし・空文字は未設定。localStorageキー、schemaVersion、訪問ID、JSONのv3形式を維持し、一括移行は行わない。
+- 日付・メモとは独立して三者比較する。形態の同時編集は両案を保持し、明示的に一方を採用する。オフラインの変更は既存の差分・revision・再送処理を使う。
+- 旧本番クライアントは表示しないが、既存partial updateはクラウドの新項目を消さない。新Rulesは項目なしの作成・更新も許可する。新機能を使う端末は再読み込みする。
+- 入力中に日付・形態が別端末で更新された場合は古いフォームの保存を拒否する。日付を変えず形態だけ変える場合は元日付表記も維持する。
+- 詳細は [visit-types-validation.md](visit-types-validation.md)。本番GitHub Pagesへのcommit・pushは利用者の結果確認後に行う。
+
 ## Firestoreのデータ構造とルール
 - `accounts/{uid}`: ルート(本人だけが作成。世代ID `epoch` と状態 `status` を持つ)。`accounts/{uid}/visits/{eventId}`: 訪問1件(または削除tombstone)。`accounts/{uid}/facilityNotes/{facilityId}`: 施設メモ。`accounts/{uid}/conflicts/{id}`: 未解決の競合(両案)。`entitlements/{uid}`: 将来用(管理者のみ書込み)。
 - 施設マスター(67施設)はFirestoreに置きません(静的配信)。
