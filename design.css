@@ -1,5 +1,5 @@
 /* Quiet landscapes, warm paper, and clear controls. Fonts are served locally. */
-@import url("assets/fonts/cards.css");
+@import url("assets/fonts/cards.css?v=fukenoyu-1");
 @import url("assets/fonts/bathnames.css");
 :root {
   --paper: #f3f0e7;

@@ -17,7 +17,7 @@ const KNOWN_KEYS = ['name', 'kind', 'form', 'color', 'tags', 'note'];
 
 const AKITA = {
   'onsen-013': '新玉川温泉', 'onsen-014': '玉川温泉', 'onsen-015': '鶴の湯温泉', 'onsen-016': '妙乃湯', 'onsen-017': '元湯雄山閣', 'onsen-018': '後生掛温泉旅館',
-  'onsen-019': '鷹の湯温泉', 'onsen-020': '蒸ノ湯温泉', 'onsen-021': '奥山旅館', 'onsen-022': '川原毛大湯滝', 'onsen-023': '湯瀬ホテル'
+  'onsen-019': '鷹の湯温泉', 'onsen-020': '源泉・秘湯の宿 ふけの湯', 'onsen-021': '奥山旅館', 'onsen-022': '川原毛大湯滝', 'onsen-023': '湯瀬ホテル'
 };
 
 const AOMORI = {

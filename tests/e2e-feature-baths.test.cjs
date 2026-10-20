@@ -69,7 +69,7 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       'onsen-017': { facility: '元湯雄山閣', names: ['温泉露天浴場', '温泉大浴場'], colors: [], note: true },
       'onsen-018': { facility: '後生掛温泉旅館', names: ['神経痛の湯', '箱蒸し風呂', '火山風呂'], colors: ['湯の色 灰白色のにごり湯'], note: false },
       'onsen-019': { facility: '鷹の湯温泉', names: ['大浴場', '河原野天風呂', '混浴半露天風呂'], colors: [], note: true },
-      'onsen-020': { facility: '蒸ノ湯温泉', names: ['混浴野天風呂'], colors: [], note: false },
+      'onsen-020': { facility: '源泉・秘湯の宿 ふけの湯', names: ['混浴野天風呂'], colors: [], note: false },
       'onsen-021': { facility: '奥山旅館', names: ['大露天風呂', '混浴露天風呂', '女性専用露天風呂'], colors: [], note: true },
       'onsen-022': { facility: '川原毛大湯滝', names: ['川原毛大湯滝'], colors: [], note: false },
       'onsen-023': { facility: '湯瀬ホテル', names: ['仙人の湯', '美人の湯', '瞑想 森の湯'], colors: [], note: false }

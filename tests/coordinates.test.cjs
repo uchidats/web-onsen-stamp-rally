@@ -1,5 +1,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const c={window:{}};vm.runInNewContext(fs.readFileSync('data.js','utf8'),c);const data=c.window.ONSEN_DATA;
+// Historical coordinate fixtures retain the former display name; only this name was corrected.
+const historicalValue=(row,key)=>row.id==='onsen-020'&&key==='facility'?'源泉・秘湯の宿 ふけの湯':row[key];
 require('../map.js');const M=globalThis.OnsenMap,audit=JSON.parse(fs.readFileSync('assets/coordinates.json','utf8'));
 assert.equal(data.length,67);assert.equal(new Set(data.map(x=>x.id)).size,67);assert.equal(audit.rows.length,67);
 const additions={
@@ -19,11 +21,11 @@ const currentAdditions=JSON.parse(fs.readFileSync('tests/fixtures/verified-coord
 assert.equal(original49.length,49);assert.equal(currentAdditions.length,18);
 const beforeFinal=JSON.parse(fs.readFileSync('tests/fixtures/verified-coordinates-before-ishizuka-2026-10-14.json','utf8'));
 assert.equal(beforeFinal.length,66);
-for(const original of beforeFinal){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],original[key],original.id+' remains unchanged by final addition');}
-for(const original of original49){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],original[key],original.id+' preserves '+key);}
+for(const original of beforeFinal){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],historicalValue(original,key),original.id+' remains unchanged by final addition');}
+for(const original of original49){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],historicalValue(original,key),original.id+' preserves '+key);}
 for(const expected of currentAdditions){const x=data.find(x=>x.id===expected.id);for(const key of ['id','facility','latitude','longitude','coordinateSource','coordinateVerified','coordinateCheckedAt','coordinateLicense'])assert.equal(x[key],expected[key]);if(expected.sourceId)assert.equal(x.coordinateSourceId,expected.sourceId);if(expected.sourceRelease)assert.equal(x.coordinateSourceRelease,expected.sourceRelease);}
 assert.equal(original40.length,40);
-for(const original of original40){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],original[key],original.id+' preserves '+key);assert.equal(x.coordinateVerified,true);}
+for(const original of original40){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],historicalValue(original,key),original.id+' preserves '+key);assert.equal(x.coordinateVerified,true);}
 for(const [id,[name,lat,lon]] of Object.entries(additions)){const x=data.find(x=>x.id===id);assert.equal(x.facility,name);assert.equal(x.latitude,lat);assert.equal(x.longitude,lon);assert.equal(x.coordinateVerified,true);assert.match(x.coordinateSource,/^https:\/\/www\.openstreetmap\.org\/(node|way)\/\d+$/);}
 function inside(p,ring){let result=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])result=!result;}return result;}
 for(const [i,x] of data.entries()){

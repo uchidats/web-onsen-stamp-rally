@@ -6,7 +6,7 @@ test('Detail onsen name uses the bath heading Mincho family, remains subordinate
  await send('Page.enable');await send('Network.enable');await send('Network.setBlockedURLs',{urls:['https://*']});
  for(let i=0;i<100;i++){if(await evaluate('!!window.OnsenHost'))break;await new Promise(r=>setTimeout(r,50));}
  await evaluate('document.fonts.ready');
- const ids=await evaluate(`['onsen-001',ONSEN_DATA.reduce((a,b)=>a.onsen.length>b.onsen.length?a:b).id]`);
+ const ids=await evaluate(`['onsen-001','onsen-020',ONSEN_DATA.reduce((a,b)=>a.onsen.length>b.onsen.length?a:b).id]`);
  for(const width of [1280,390,320]){
   await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<400});
   for(const id of ids){
@@ -18,5 +18,18 @@ test('Detail onsen name uses the bath heading Mincho family, remains subordinate
    await evaluate(`document.getElementById('modalClose').click()`);
   }
  }
+ await evaluate(`OnsenHost.setState(OnsenHost.store.addVisit(OnsenHost.getState(),'onsen-020',null))`);
+ for(const query of ['源泉・秘湯の宿 ふけの湯','ふけの湯','蒸ノ湯温泉']){
+  await evaluate(`document.getElementById('search').value=${JSON.stringify(query)};document.getElementById('search').dispatchEvent(new Event('input'))`);
+  assert.equal(await evaluate(`document.querySelectorAll('.facility-entry').length`),1);
+  assert.equal(await evaluate(`document.querySelector('.facility-entry').dataset.facilityId`),'onsen-020');
+  assert.equal(await evaluate(`document.querySelector('.facility-name').textContent`),'源泉・秘湯の宿 ふけの湯');
+  assert.equal(await evaluate(`!!document.querySelector('.conquered-badge')`),true);
+ }
+ await evaluate(`document.querySelector('[data-detail="onsen-020"]').click()`);
+ assert.equal(await evaluate(`document.querySelector('#modalSubtitle .facility-name').textContent`),'源泉・秘湯の宿 ふけの湯');
+ assert.equal(await evaluate(`document.querySelector('#modalSubtitle .facility-name-link').href`),'https://r.goope.jp/fukenoyu/');
+ assert.equal(await evaluate(`document.getElementById('modalTitle').textContent`),'蒸ノ湯温泉');
+ assert.equal(await evaluate(`OnsenHost.getState().userData.visits['onsen-020'].records.length`),1);
  t.diagnostic('Screenshots: '+browser.profile);
 });

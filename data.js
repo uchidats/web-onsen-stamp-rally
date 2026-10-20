@@ -418,7 +418,7 @@ window.ONSEN_DATA = [
     "area": "北東北",
     "prefecture": "秋田県",
     "onsen": "蒸ノ湯温泉",
-    "facility": "蒸ノ湯温泉",
+    "facility": "源泉・秘湯の宿 ふけの湯",
     "latitude": 39.9775021,
     "longitude": 140.8180704,
     "coordinateSource": "https://www.openstreetmap.org/way/438254247",
