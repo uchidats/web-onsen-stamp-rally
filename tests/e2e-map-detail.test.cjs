@@ -33,9 +33,9 @@ test('E2E: shared map detail, registered links, view preservation and local edit
   };
   const links=async()=>{
     await evaluate("document.querySelector('.modal').scrollTop=0");
-    const result=await evaluate(`(()=>{const a=document.getElementById('detailMap'),r=a.getBoundingClientRect(),m=document.querySelector('.modal').getBoundingClientRect();return{href:a.getAttribute('href'),label:a.getAttribute('aria-label'),target:a.target,rel:a.rel,tooltip:a.querySelector('[role=tooltip]').textContent,icon:!!a.querySelector('svg circle'),width:r.width,height:r.height,fits:r.left>=m.left&&r.right<=m.right,overflow:document.documentElement.scrollWidth>innerWidth,popup:!!document.querySelector('.leaflet-popup')}})()`);
+    const result=await evaluate(`(()=>{const a=document.getElementById('detailMap'),r=a.getBoundingClientRect(),m=document.querySelector('.modal').getBoundingClientRect();return{href:a.getAttribute('href'),label:a.getAttribute('aria-label'),title:a.title,border:getComputedStyle(a).borderTopWidth,background:getComputedStyle(a).backgroundColor,svgWidth:a.querySelector('svg').getBoundingClientRect().width,svgHeight:a.querySelector('svg').getBoundingClientRect().height,target:a.target,rel:a.rel,tooltip:a.querySelector('[role=tooltip]').textContent,icon:!!a.querySelector('svg circle'),width:r.width,height:r.height,fits:r.left>=m.left&&r.right<=m.right,overflow:document.documentElement.scrollWidth>innerWidth,popup:!!document.querySelector('.leaflet-popup')}})()`);
     assert.equal(result.href,await evaluate("ONSEN_DATA.find(x=>x.id==='onsen-001').mapUrl"));
-    assert.equal(result.label,'Google Mapsで開く');assert.equal(result.tooltip,result.label);
+    assert.equal(result.label,'Google Mapsで開く');assert.equal(result.title,result.label);assert.equal(result.tooltip,result.label);assert.equal(result.border,'0px');assert.equal(result.background,'rgba(0, 0, 0, 0)');assert.equal(result.svgWidth,18);assert.equal(result.svgHeight,18);
     assert.equal(result.target,'_blank');assert.match(result.rel,/noopener/);assert.match(result.rel,/noreferrer/);
     assert.ok(result.icon&&result.width>=44&&result.height>=44&&result.fits&&!result.overflow);
     assert.equal(result.popup,false);

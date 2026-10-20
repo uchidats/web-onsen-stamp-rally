@@ -896,6 +896,6 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 /* Shared facility detail: registered map link, beside the official facility name. */
 #modalSubtitle .facility { flex-wrap:wrap; }
 #modalSubtitle .facility-name { flex:0 1 auto; }
-#modalSubtitle .map-link { flex:none; width:44px; min-height:44px; color:#967637; border:1px solid rgba(150,118,55,.35); }
+#modalSubtitle .map-link { flex:none; width:44px; min-height:44px; color:#967637; border:0; background:transparent; }
 #modalSubtitle .map-link:focus-visible { outline:2px solid currentColor; outline-offset:3px; }
 .regional-map-choices { margin-top:12px; padding:12px; border:1px solid var(--line); border-radius:4px; font-size:13px; }
