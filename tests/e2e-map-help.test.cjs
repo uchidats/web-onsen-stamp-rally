@@ -40,7 +40,7 @@ test('Map help opens, closes and preserves legends and prefecture navigation at 
     await send('Emulation.setTouchEmulationEnabled', { enabled: mobile });
     assert.equal(await evaluate('document.getElementById("japanMapHelpDialog").open'), false);
     assert.equal(await evaluate('document.getElementById("japanMapDetailBar").hidden'), true);
-    assert.deepEqual(await evaluate('[...document.querySelectorAll(".japan-map-legend .legend-item")].map(e=>e.textContent)'), ['100%', '50〜99%', '1〜49%', '0%', '登録施設なし', '訪問済み', '未訪問']);
+    assert.deepEqual(await evaluate('[...document.querySelectorAll(".japan-map-legend .legend-item")].map(e=>e.textContent)'), ['100%', '50〜99%', '1〜49%', '0%', '訪問済み', '未訪問']);
     assert.equal(await evaluate('document.querySelectorAll(".japan-map-marker").length'), 67);
     await click('#japanMapHelp', mobile);
     assert.equal(await evaluate('document.getElementById("japanMapHelpDialog").open'), true);
@@ -68,6 +68,6 @@ test('Map help opens, closes and preserves legends and prefecture navigation at 
     await evaluate('document.getElementById("resetPref").click()');
     assert.equal(await evaluate('document.getElementById("japanMap").hidden'), false);
     assert.equal(await evaluate('JSON.stringify(localStorage)'), stored);
-    console.log(JSON.stringify({ width, fits, legends: 7, prefectureNavigation: true, screenshots: browser.profile }));
+    console.log(JSON.stringify({ width, fits, legends: 6, prefectureNavigation: true, screenshots: browser.profile }));
   }
 });

@@ -154,7 +154,6 @@
               '<div class="legend-item"><span class="legend-swatch status-mid"></span>50〜99%</div>' +
               '<div class="legend-item"><span class="legend-swatch status-low"></span>1〜49%</div>' +
               '<div class="legend-item"><span class="legend-swatch status-zero"></span>0%</div>' +
-              '<div class="legend-item"><span class="legend-swatch status-empty"></span>登録施設なし</div>' +
             '</div>' +
             '<div class="legend-group marker-legend" aria-label="温泉マーカーの訪問状況">' +
               '<div class="legend-item"><span class="legend-marker is-visited"></span>訪問済み</div>' +
