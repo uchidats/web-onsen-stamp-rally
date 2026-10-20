@@ -17,20 +17,19 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
     await send('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile: width < 400 });
     const layout = await evaluate(`(() => {
       const rect = s => document.querySelector(s).getBoundingClientRect();
-      const label = rect('.progress-head .stathead'), select = rect('#progressScope');
       const badge = rect('.beta-badge-header'), account = rect('.account-tools');
       const panel = rect('.progress-summary'), hero = rect('.hero');
       return {
         badge: document.querySelector('.beta-badge-header').textContent,
-        heading: document.querySelector('.progress-head .stathead').textContent,
+        heading: document.querySelector('.progress-heading').textContent,
         notices: document.querySelectorAll('.beta-notice').length,
         overflow: document.documentElement.scrollWidth > innerWidth,
-        selectRight: select.left >= label.right && Math.abs(select.top + select.height / 2 - label.top - label.height / 2) < 1,
+        cardCount: document.querySelectorAll('.progress-card').length,
         badgeFits: badge.left >= 0 && badge.right <= innerWidth && (badge.right <= account.left || badge.top >= account.bottom),
         panelFits: panel.left >= 0 && panel.right <= innerWidth,
         overlap: hero.bottom - panel.top,
         percent: document.getElementById('totalPercent').textContent,
-        options: [...document.getElementById('progressScope').options].map(o => o.value)
+        labels: [...document.querySelectorAll('.progress-card h3')].map(e => e.textContent)
       };
     })()`);
     assert.equal(layout.badge, 'β版 公開中');
@@ -47,12 +46,12 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
     await evaluate("document.getElementById('prefProgress').open=false");
     assert.equal(layout.notices, 0);
     assert.equal(layout.overflow, false, JSON.stringify({ width, layout }));
-    assert.equal(layout.selectRight, true);
+    assert.equal(layout.cardCount, 4);
     assert.equal(layout.badgeFits, true);
     assert.equal(layout.panelFits, true);
     assert.equal(layout.overlap, width < 400 ? 24 : 30);
-    assert.equal(layout.percent, '0%');
-    assert.deepEqual(layout.options, ['all', 'chi', 'kake', 'gensei']);
+    assert.equal(layout.percent, '0.0%');
+    assert.deepEqual(layout.labels, ['全施設', '地♨', 'かけ流しの湯', '源生の湯']);
     const screenshot = await send('Page.captureScreenshot', { format: 'png' });
     fs.writeFileSync(path.join(browser.profile, `heading-${width}.png`), Buffer.from(screenshot.data, 'base64'));
     console.log(JSON.stringify({ width, ...layout, screenshot: path.join(browser.profile, `heading-${width}.png`) }));

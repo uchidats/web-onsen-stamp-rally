@@ -100,7 +100,7 @@ test('E2E: 67 exact projected national markers, direct marker details, regional 
   }
   await evaluate("document.getElementById('mapReset').click()");
   assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'Map selection must preserve every stored visit byte');
-  assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設を訪問済み');
+  assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設');
   fs.writeFileSync(output+'/results.json',JSON.stringify(results,null,2));
   t.diagnostic('PASS: 134 national and 150 regional mouse/touch selections; exact shared projection, direct pointer and keyboard details, 67 verified; synthetic 3/67 progress and storage preserved');
  }finally{await session.close();server.closeAllConnections();server.close();}
