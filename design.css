@@ -34,10 +34,10 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background-image: var(--hero-bg-shade, linear-gradient(90deg, #102a23b8 0%, #17342ba8 70%, #17342b94 100%)), linear-gradient(0deg, #102a2366, transparent 65%), url("assets/hero-onsen-bg.webp");
+  background-image: var(--hero-bg-shade, linear-gradient(90deg, #102a23d1 0%, #102a239e 38%, #102a236b 62%, #102a231a 80%, #102a2305 100%)), url("assets/hero-onsen-bg.webp");
   background-repeat: no-repeat;
-  background-size: cover, cover, var(--hero-bg-size, 115% auto);
-  background-position: center, center, var(--hero-bg-position, 0% 15%);
+  background-size: cover, var(--hero-bg-size, 115% auto);
+  background-position: center, var(--hero-bg-position, 0% 15%);
 }
 :root[data-hero-background="mist"] { --hero-bg-size: 115% auto; --hero-bg-position: 0% 15%; }
 :root[data-hero-background="ridge"] { --hero-bg-size: 140% auto; --hero-bg-position: 35% 0%; }
@@ -45,7 +45,8 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 :root[data-hero-background="ryokan"] { --hero-bg-size: 125% auto; --hero-bg-position: 100% 35%; }
 :root[data-hero-background="lantern"] { --hero-bg-size: 155% auto; --hero-bg-position: 100% 60%; }
 @media (max-width: 900px) {
-  :root { --hero-bg-shade: linear-gradient(90deg, #102a23db 0%, #102a23db 70%, #102a23d6 100%); }
+  :root { --hero-bg-shade: linear-gradient(90deg, #102a23d6 0%, #102a23c7 38%, #102a23ab 62%, #102a2326 82%, #102a230a 100%); }
+  .hero .hero-main::before { inset: 32px -24px 100px; background: radial-gradient(ellipse 85% 95% at 42% 48%, #081e18f2 0%, #081e18e6 62%, transparent 100%); }
   :root[data-hero-background="mist"] { --hero-bg-size: auto 115%; --hero-bg-position: 25% 15%; }
   :root[data-hero-background="ridge"] { --hero-bg-size: auto 140%; --hero-bg-position: 47% 0%; }
   :root[data-hero-background="water"] { --hero-bg-size: auto 185%; --hero-bg-position: 50% 100%; }
@@ -138,7 +139,8 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .memo-section { margin-top: 18px; }
 .memo-section h3 { margin: 0 0 8px; }
 .memo-section textarea { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; font-size: 14px; resize: vertical; }
-.hero-main { padding: 76px 0 32px; }
+.hero-main { position: relative; isolation: isolate; padding: 76px 0 32px; }
+.hero-main::before { content: ""; position: absolute; inset: 60px 10% 100px -32px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 90% 75% at 30% 50%, #081e18c7 0%, #081e18ad 55%, transparent 100%); filter: blur(20px); }
 .eyebrow { color: var(--gold); font-size: 11px; letter-spacing: .19em; line-height: 1.6; font-weight: 600; }
 .hero-main > .eyebrow { font-size: 13.2px; letter-spacing: .16em; line-height: 1.7; }
 .hero h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(25.5px, 4.08vw, 51px); letter-spacing: .015em; line-height: 1.5; min-height: 1.5em; margin: 22px 0 26px; text-wrap: balance; line-break: strict; }

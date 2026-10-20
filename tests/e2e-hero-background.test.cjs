@@ -58,10 +58,11 @@ test('All five hero backgrounds fit three widths, preserve layout and contrast, 
       shots.push(screenshot.data);
       // Sample the rendered background behind the text, without the text itself.
       const text = await evaluate(`['#heroCopy span','.hero-main > p','.hero-actions .outline','.hero-main > .eyebrow','.logo small','.beta-badge-header'].flatMap(s=>[...document.querySelectorAll(s)].map(e=>{const range=document.createRange();range.selectNodeContents(e);const r=range.getBoundingClientRect();return {selector:s,color:getComputedStyle(e).color,x:r.x,y:r.y,width:r.width,height:r.height}}))`);
-      await evaluate("document.querySelector('.hero > .wrap').style.visibility='hidden'");
+      // Keep the local text-backdrop overlay visible while hiding foreground content.
+      await evaluate("document.querySelectorAll('.top,.hero-main > *').forEach(e=>e.style.visibility='hidden')");
       const background = await send('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width, height, scale: 1 } });
       const contrast = await evaluate(`new Promise(resolve=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');c.width=i.width;c.height=i.height;const ctx=c.getContext('2d');ctx.drawImage(i,0,0);const pixels=ctx.getImageData(0,0,c.width,c.height).data;const lum=rgb=>rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((s,v,j)=>s+v*[.2126,.7152,.0722][j],0);resolve(${JSON.stringify(text)}.map(t=>{const fg=lum(t.color.match(/[0-9.]+/g).slice(0,3).map(Number));let min=100;for(let y=Math.max(0,Math.ceil(t.y));y<Math.min(c.height,t.y+t.height);y+=3)for(let x=Math.max(0,Math.ceil(t.x));x<Math.min(c.width,t.x+t.width);x+=3){const k=(y*c.width+x)*4,bg=lum([...pixels.slice(k,k+3)]);min=Math.min(min,(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05))}return {selector:t.selector,min}}))};i.src='data:image/png;base64,${background.data}'})`);
-      await evaluate("document.querySelector('.hero > .wrap').style.visibility=''");
+      await evaluate("document.querySelectorAll('.top,.hero-main > *').forEach(e=>e.style.visibility='')");
       for (const result of contrast) assert.ok(result.min >= (result.selector === '#heroCopy span' ? 3 : 4.5), JSON.stringify({ width, pattern, ...result }));
       assert.equal(await evaluate('document.documentElement.dataset.heroBackground'), pattern, 'No automatic switching');
       assert.equal(await evaluate('JSON.stringify(localStorage)'), fixed);
