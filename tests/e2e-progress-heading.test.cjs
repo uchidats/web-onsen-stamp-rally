@@ -34,7 +34,9 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
       };
     })()`);
     assert.equal(layout.badge, 'β版 公開中');
-    assert.equal(layout.heading, '♨ 達成率');
+    assert.equal(layout.heading, '♨達成度');
+    assert.equal(await evaluate("document.getElementById('regionalHeading').textContent"), '都道府県別の♨達成度');
+    assert.equal(await evaluate("document.querySelector('#regional-progress .section-kicker').textContent"), 'REGIONAL PROGRESS');
     assert.equal(layout.notices, 0);
     assert.equal(layout.overflow, false, JSON.stringify({ width, layout }));
     assert.equal(layout.selectRight, true);
