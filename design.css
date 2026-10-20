@@ -187,7 +187,6 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .pref-progress-toggle::-webkit-details-marker { display: none; }
 .pref-progress-toggle::marker { content: ""; }
 .pref-progress-toggle strong { font-size: 16px; font-weight: 500; line-height: 1.6; }
-.pref-progress-meta { display: block; color: var(--muted); font-size: 12px; line-height: 1.8; margin-top: 4px; }
 .pref-progress-chevron { flex: none; color: var(--muted); }
 .pref-progress[open] .pref-progress-chevron { transform: rotate(180deg); }
 .pref-progress .prefgrid { padding: 0 16px 16px; }
@@ -431,6 +430,8 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   --pref-stroke-hover: #506152;
   --pref-accent: #a17b3f;   /* 黄土・金茶（選択・フォーカス） */
 }
+
+#regional-progress > .heading { margin-bottom: 20px; }
 
 .pref-section-body {
   display: grid;

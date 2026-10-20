@@ -37,6 +37,14 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
     assert.equal(layout.heading, '♨達成度');
     assert.equal(await evaluate("document.getElementById('regionalHeading').textContent"), '都道府県別の♨達成度');
     assert.equal(await evaluate("document.querySelector('#regional-progress .section-kicker').textContent"), 'REGIONAL PROGRESS');
+    assert.equal(await evaluate("document.querySelector('.pref-progress-toggle strong').textContent"), '都道府県別の♨達成度');
+    assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"), '12都道府県・67施設の訪問進捗');
+    assert.equal(await evaluate("document.getElementById('prefProgressMeta').getClientRects().length"), 0);
+    await evaluate("document.getElementById('prefProgress').open=true");
+    assert.equal(await evaluate("document.querySelectorAll('#prefgrid .pref').length"), 12);
+    assert.equal(await evaluate("document.getElementById('prefProgressMeta').getClientRects().length"), 0);
+    assert.equal(await evaluate("document.documentElement.scrollWidth<=innerWidth"), true);
+    await evaluate("document.getElementById('prefProgress').open=false");
     assert.equal(layout.notices, 0);
     assert.equal(layout.overflow, false, JSON.stringify({ width, layout }));
     assert.equal(layout.selectRight, true);
