@@ -476,7 +476,6 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .japan-map-zoom-controls .stamp { min-width: 44px; min-height: 44px; padding: 8px; font-size: 12px; }
 .japan-map-zoom-controls #japanMapZoomIn, .japan-map-zoom-controls #japanMapZoomOut { font-size: 20px; }
 .japan-map-zoom-controls .stamp:disabled { opacity: .4; cursor: default; }
-.japan-map-gesture-hint { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
 
 .geolonia-svg-map .prefecture {
   cursor: pointer;
@@ -597,7 +596,6 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   stroke-width: 2.5px;
 }
 
-.japan-map-inset-note { margin: 0; color: var(--muted); font-size: 12px; }
 
 .japan-map-tooltip {
   position: absolute;
@@ -735,6 +733,13 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   padding: 10px 14px;
   min-height: 48px;
 }
+
+.japan-map-detail-bar[hidden] { display: none; }
+.japan-map-help-row { display: flex; justify-content: flex-end; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 8px; }
+.japan-map-help-link { min-height: 44px; padding: 6px 0 6px 12px; border: 0; background: transparent; color: #876d3d; font-size: 12px; }
+.japan-map-help-link:hover { text-decoration: underline; }
+.privacy-dialog.japan-map-help-dialog { width: min(440px, calc(100% - 32px)); }
+.japan-map-help-dialog #japanMapHelpClose { display: block; min-height: 44px; margin: 18px 0 0 auto; }
 
 .japan-map-detail-bar .detail-info {
   display: flex;

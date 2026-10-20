@@ -144,8 +144,6 @@
           '<div id="japanMapTooltip" class="japan-map-tooltip" role="tooltip" aria-hidden="true" hidden></div>' +
         '</div>' +
         '<div class="japan-map-controls">' +
-          '<p class="japan-map-gesture-hint">ドラッグ・1本指で移動、2本指で拡大・縮小。<span class="japan-map-wheel-hint">ホイール拡大はCtrl／⌘を押しながら。</span>ページのスクロールは地図の外側で行えます。</p>' +
-          '<p class="japan-map-inset-note">輪郭と温泉位置は、同じ地理座標変換で表示しています。地図上の丸は位置確認済みの温泉を示します。</p>' +
           '<div class="japan-map-legend" aria-label="地図の凡例">' +
             '<div class="legend-group pref-legend" aria-label="都道府県の達成率">' +
               '<div class="legend-item"><span class="legend-swatch status-complete"></span>100%</div>' +
@@ -159,6 +157,14 @@
               '<div class="legend-item"><span class="legend-marker is-unvisited"></span>未訪問</div>' +
             '</div>' +
           '</div>' +
+          '<div class="japan-map-help-row"><button type="button" id="japanMapHelp" class="japan-map-help-link" aria-haspopup="dialog" aria-controls="japanMapHelpDialog">ⓘ 地図の使い方</button></div>' +
+          '<dialog id="japanMapHelpDialog" class="privacy-dialog japan-map-help-dialog" aria-labelledby="japanMapHelpHeading">' +
+            '<h2 id="japanMapHelpHeading">地図の使い方</h2>' +
+            '<p>ドラッグ・1本指で移動、2本指で拡大・縮小。ホイールでの拡大・縮小はCtrl／⌘を押しながら。＋・－ボタンでも操作できます。ページのスクロールは地図の外側で行えます。</p>' +
+            '<p>「全体表示」で全国へ、「関東・東北」で最初の表示範囲へ戻ります。都道府県を選ぶと、その県の地図と温泉一覧を表示します。「全国へ戻る」で選択を解除できます。</p>' +
+            '<p>輪郭と温泉位置は、同じ地理座標変換で表示しています。丸は位置確認済みの温泉です。同じ座標に複数の温泉がある場合、マーカーは重なって表示されます。各施設は温泉一覧から選べます。</p>' +
+            '<button type="button" id="japanMapHelpClose" class="stamp">閉じる</button>' +
+          '</dialog>' +
           '<div id="japanMapDetailBar" class="japan-map-detail-bar" aria-live="polite"></div>' +
         '</div>' +
       '</div>';
@@ -167,6 +173,13 @@
     const svgElem = container.querySelector('.geolonia-svg-map');
     const tooltip = container.querySelector('#japanMapTooltip');
     const detailBar = container.querySelector('#japanMapDetailBar');
+    const helpButton = container.querySelector('#japanMapHelp');
+    const helpDialog = container.querySelector('#japanMapHelpDialog');
+    const helpClose = container.querySelector('#japanMapHelpClose');
+    if (helpButton && helpDialog && helpClose) {
+      helpButton.onclick = function() { helpDialog.showModal(); };
+      helpClose.onclick = function() { helpDialog.close(); };
+    }
     const prefNodes = container.querySelectorAll('.prefecture[data-pref]');
 
     // Dynamically insert onsen markers layer into the SVG map
@@ -327,12 +340,9 @@
 
     function renderDetailBar(selectedPref) {
       if (!detailBar) return;
+      detailBar.hidden = !selectedPref;
       if (!selectedPref) {
-        detailBar.innerHTML =
-          '<div class="detail-info">' +
-            '<span class="detail-title">全国</span>' +
-            '<span class="detail-desc">都道府県を選ぶと県の地図と温泉一覧を表示します</span>' +
-          '</div>';
+        detailBar.innerHTML = '';
         return;
       }
       const stats = getPrefStats(selectedPref, data, isVisited);
