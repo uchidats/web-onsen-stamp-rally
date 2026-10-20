@@ -199,8 +199,10 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .pref .mini { height: 3px; background: #e3e4d9; overflow: hidden; border-radius: 1px; margin-top: 16px; }
 .mini i { display: block; background: #597461; height: 100%; }
 .pref.selected { border-color: #748774; background: #e9eee3; }
-.filters { padding: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 16px; align-items: end; }
-.filters > .filter:first-child { grid-column: 1 / -1; }
+.filters { padding: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: end; }
+.filters .search-row { grid-column: 1 / -1; display: flex; align-items: end; gap: 12px; min-width: 0; }
+.search-row .filter { flex: 1; }
+.filters .search-clear { flex: none; height: 46px; padding: 10px 16px; border-color: var(--line); background: transparent; color: var(--moss); }
 @media (min-width: 601px) {
   .filters { padding: 18px; gap: 12px; }
   .filters .filter label { margin-bottom: 4px; }
@@ -368,10 +370,6 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   .card:hover { border-color: #bfc7b8; box-shadow: 0 4px 14px #30383208; }
   .btn:hover, .stamp:hover, .tools button:hover { filter: brightness(.96); }
 }
-@media (max-width: 800px) {
-  .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .filter:first-child { grid-column: 1 / -1; }
-}
 @media (max-width: 900px) {
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .prefgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -399,10 +397,10 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   .prefgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .pref { padding: 18px 16px; }
   .cards { grid-template-columns: minmax(0, 1fr); gap: 14px; }
-  .filters { padding: 20px; gap: 16px 12px; }
-  .filter { grid-column: 1 / -1; }
-  .filter:nth-child(3), .filter:nth-child(4) { grid-column: auto; }
-  .filter:last-child .btn { width: 100%; }
+  .filters { padding: 16px; gap: 16px 12px; grid-template-columns: minmax(0, 1fr); }
+  .filters .search-row { gap: 8px; }
+  .filters .search-clear { padding-inline: 10px; font-size: 12px; }
+  .search-row label { font-size: 11px; }
   .details { grid-template-columns: 96px minmax(0, 1fr); gap: 10px 14px; margin: 16px 0; }
   .feature-baths { margin-top: 16px; }
   .feature-baths:not([hidden]) + .details { margin-top: 16px; padding-top: 16px; }
