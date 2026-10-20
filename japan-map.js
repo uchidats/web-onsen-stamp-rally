@@ -131,10 +131,14 @@
       '<div class="japan-map-wrapper">' +
         '<div class="japan-map-svg-frame" role="region" aria-label="47都道府県の達成度地図">' +
           '<div class="japan-map-zoom-controls" role="group" aria-label="全国地図の表示範囲">' +
-            '<button type="button" class="stamp" id="japanMapZoomIn" aria-label="全国地図を拡大">＋</button>' +
-            '<button type="button" class="stamp" id="japanMapZoomOut" aria-label="全国地図を縮小">－</button>' +
+            '<div class="map-zoom-controls" role="group" aria-label="全国地図のズーム">' +
+              '<button type="button" id="japanMapZoomIn" aria-label="全国地図を拡大">+</button>' +
+              '<button type="button" id="japanMapZoomOut" aria-label="全国地図を縮小">−</button>' +
+            '</div>' +
+            '<div class="japan-map-region-controls">' +
             '<button type="button" class="stamp" id="japanMapResetView">全体表示</button>' +
             '<button type="button" class="stamp" id="japanMapRegionView">関東・東北</button>' +
+            '</div>' +
           '</div>' +
           SVG_MARKUP +
           '<div class="japan-map-attribution">' +
