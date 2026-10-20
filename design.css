@@ -244,7 +244,7 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .map-link svg { flex: none; }
 .map-tooltip { position: absolute; right: 0; bottom: calc(100% + 6px); width: max-content; padding: 6px 10px; border-radius: 4px; background: var(--deep); color: var(--surface); font-size: 11px; line-height: 1.6; white-space: nowrap; visibility: hidden; opacity: 0; pointer-events: none; z-index: 2; }
 .map-link:focus-visible .map-tooltip { visibility: visible; opacity: 1; }
-#modalTitle { margin: 12px 0 6px; color: var(--muted); font-size: 13px; font-weight: 400; line-height: 1.5; }
+#modalTitle { margin: 12px 0 6px; color: var(--muted); font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: 16px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
 #modalSubtitle .facility { margin: 0 0 20px; font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif; font-size: 24px; font-weight: 600; line-height: 1.45; color: #866329; }
 .visit-count { font-size: 11px; color: var(--muted); }
 .visit-section { border-top: 1px solid var(--line); padding-top: 20px; margin: 22px 0; }
