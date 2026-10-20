@@ -81,6 +81,17 @@ test('Shared map zoom controls fit and work at desktop and phone widths', async 
     const nationalGroup = await evaluate("(()=>{const s=getComputedStyle(document.querySelector('.map-zoom-controls'));return [s.border,s.borderRadius,s.padding,s.backgroundColor]})()");
     await evaluate("document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'start',behavior:'instant'})");
     await shot('national-controls-' + width);
+    await evaluate("document.querySelector('.japan-map-attribution').scrollIntoView({block:'center',behavior:'instant'})");
+    const credit = await evaluate(`(()=>{
+      const a=document.querySelector('.japan-map-attribution'),r=a.getBoundingClientRect(),svg=document.querySelector('.geolonia-svg-map').getBoundingClientRect(),frame=document.querySelector('.japan-map-svg-frame').getBoundingClientRect(),legend=document.querySelector('.japan-map-legend').getBoundingClientRect(),zoom=document.querySelector('.map-zoom-controls').getBoundingClientRect(),info=a.querySelector('.japan-map-credit-info'),ir=info.getBoundingClientRect(),hit=document.elementFromPoint(r.left-12,r.bottom-12);
+      return {text:a.textContent,href:a.querySelector('a').href,infoHref:info.getAttribute('href'),right:Math.abs(r.right-svg.right),bottom:Math.abs(r.bottom-svg.bottom),noExtraRow:Math.abs(frame.height-svg.height)<1,inside:r.left>=svg.left&&r.top>=svg.top,legendClear:legend.top>=svg.bottom,zoomClear:r.left>=zoom.right||r.top>=zoom.bottom,infoTap:ir.width>=44&&ir.height>=44,mapInteractive:!!hit?.closest('.geolonia-svg-map'),position:getComputedStyle(a).position};
+    })()`);
+    assert.equal(credit.text,'© OpenStreetMapⓘ');
+    assert.equal(credit.href,'https://www.openstreetmap.org/copyright');
+    assert.equal(credit.infoHref,'assets/coordinate-credits.html');
+    assert.ok(credit.right<1&&credit.bottom<1&&credit.noExtraRow&&credit.inside&&credit.legendClear&&credit.zoomClear&&credit.infoTap&&credit.mapInteractive,JSON.stringify({width,credit}));
+    assert.equal(credit.position,'absolute');
+    await shot('national-attribution-' + width);
     await click('#japanMapZoomIn', mobile);
     assert.notEqual(await view(), region, 'Change the view before selecting a prefecture');
     await evaluate("document.querySelector('.japan-map-marker[data-onsen-id=\"onsen-004\"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}))");

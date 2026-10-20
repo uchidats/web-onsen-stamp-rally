@@ -770,6 +770,14 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 }
 
 .japan-map-attribution {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  max-width: 100%;
+  padding-left: 6px;
+  border-radius: 4px 0 0 0;
+  background: #fbf9f3e6;
   display: flex;
   justify-content: flex-end;
   align-items: center;
