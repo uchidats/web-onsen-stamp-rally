@@ -19,7 +19,7 @@ function fakeSdk(behavior = {}) {
   const mod = {
     log,
     initializeApp: cfg => { log.push(['initializeApp', cfg.projectId]); return {}; },
-    getAuth: () => ({}),
+    getAuth: () => ({ get currentUser() { return user; } }),
     onAuthStateChanged: (auth, ok) => { cb = ok; Promise.resolve().then(() => ok(user)); },
     setPersistence: async (auth, p) => { log.push(['setPersistence', p]); },
     browserSessionPersistence: 'session',
@@ -30,47 +30,61 @@ function fakeSdk(behavior = {}) {
       user = { displayName: 'テスト 太郎', email: 'secret@example.com', uid: 'uid-1', photoURL: 'https://example.com/p.png' };
       cb(user);
     },
-    signOut: async () => { if (behavior.signOutError) throw Error('x'); user = null; cb(null); }
+    signOut: async () => { if (behavior.signOutError) throw Error('x'); user = null; cb(null); },
+    reauthenticateWithPopup: async u => { log.push(['reauth', u.uid]); },
+    deleteUser: async u => { log.push(['delete', u.uid]); if (behavior.recent) throw Object.assign(Error('recent required'), { code: 'auth/requires-recent-login' }); user = null; cb(null); }
   };
   return mod;
 }
 const settingsWith = sdk => ({ sdkVersion: '10.14.1', loadSdk: async () => sdk, environments: { staging: { hosts: ['stg.example.io'], config: GOOD } } });
 
-test('auth: repo config enables the staging project on localhost and the staging Hosting site only; production and every other host stay disabled', () => {
-  const STAGING = { apiKey: 'AIzaSyDPzEQLDtgeuRt47OKf5HejcenwGMliY_s', authDomain: 'my-onsen-journey-staging.firebaseapp.com', projectId: 'my-onsen-journey-staging', appId: '1:183881233571:web:08b2a48f63f748338b7b16' };
+test('account deletion and reauthentication refuse a different UID; recent-login errors retain the user for a retry', async () => {
+  const sdk = fakeSdk({ recent: true }), { c } = controllerFor(sdk, guard());
+  await c.signIn(false);
+  await assert.rejects(c.deleteAccount('other-uid'), { code: 'auth/user-mismatch' });
+  await assert.rejects(c.reauthenticate('other-uid'), { code: 'auth/user-mismatch' });
+  assert.ok(!sdk.log.some(x => x[0] === 'delete' || x[0] === 'reauth'));
+  await assert.rejects(c.deleteAccount('uid-1'), { code: 'auth/requires-recent-login' });
+  assert.equal(c.getSession().uid, 'uid-1');
+  await c.reauthenticate('uid-1');
+  assert.ok(sdk.log.some(x => x[0] === 'reauth' && x[1] === 'uid-1'));
+});
+
+test('auth: production (GitHub Pages), the staging Hosting site and localhost share ONE Firebase project; every other host stays disabled', () => {
+  const PROJECT = { apiKey: 'AIzaSyDPzEQLDtgeuRt47OKf5HejcenwGMliY_s', authDomain: 'my-onsen-journey-staging.firebaseapp.com', projectId: 'my-onsen-journey-staging', appId: '1:183881233571:web:08b2a48f63f748338b7b16' };
   const cfg = load({}, 'localhost').ONSEN_FIREBASE;
   const plain = x => JSON.parse(JSON.stringify(x));
-  assert.equal(cfg.environments.production.config, null);
-  assert.deepEqual(plain(cfg.environments.staging.config), STAGING);
-  assert.deepEqual(plain(cfg.environments.local.config), STAGING);
-  assert.deepEqual(Object.keys(cfg.environments.local.config).sort(), ['apiKey', 'appId', 'authDomain', 'projectId']); // Web設定だけ(秘密鍵などは無い)
-  assert.deepEqual(plain(cfg.environments.local.hosts), ['localhost']);
-  assert.deepEqual(plain(cfg.environments.staging.hosts), ['my-onsen-journey-staging.web.app']);
+  for (const env of ['production', 'staging', 'local']) {
+    assert.deepEqual(plain(cfg.environments[env].config), PROJECT, env);                                       // 同じプロジェクト(同じAuth・Firestore・Rules)
+    assert.deepEqual(Object.keys(cfg.environments[env].config).sort(), ['apiKey', 'appId', 'authDomain', 'projectId']); // Web設定だけ(秘密鍵などは無い)
+    assert.equal(cfg.environments[env].sync, true, env);
+  }
   assert.deepEqual(plain(cfg.environments.production.hosts), ['uchidats.github.io']);
-  // 有効になるのは localhost と試験サイト(Firebase Hosting)だけ
-  const local = load({}, 'localhost').OnsenAuth, stg = load({}, 'my-onsen-journey-staging.web.app').OnsenAuth;
-  assert.equal(local.enabled(), true); assert.equal(local.environmentName(), 'local');
-  assert.equal(stg.enabled(), true); assert.equal(stg.environmentName(), 'staging');
-  // 本番サイト・自動テストのサーバー(127.0.0.1)・firebaseapp.com側・紛らわしいホスト名では無効で、コントローラも作られない
-  for (const host of ['uchidats.github.io', '127.0.0.1', 'example.com', 'my-onsen-journey-staging.firebaseapp.com', 'my-onsen-journey-staging.web.app.evil.example', 'evil-my-onsen-journey-staging.web.app', 'uchidats.github.io.evil.example']) {
+  assert.deepEqual(plain(cfg.environments.staging.hosts), ['my-onsen-journey-staging.web.app']);
+  assert.deepEqual(plain(cfg.environments.local.hosts), ['localhost']);
+  for (const [host, env] of [['uchidats.github.io', 'production'], ['my-onsen-journey-staging.web.app', 'staging'], ['localhost', 'local']]) {
+    const a = load({}, host).OnsenAuth;
+    assert.equal(a.enabled(), true, host); assert.equal(a.environmentName(), env, host); assert.equal(a.syncEnabled(), true, host);
+  }
+  // 自動テストのサーバー(127.0.0.1)・firebaseapp.com側・その他・紛らわしいホスト名では無効で、コントローラも作られない
+  for (const host of ['127.0.0.1', 'example.com', 'my-onsen-journey-staging.firebaseapp.com', 'my-onsen-journey-staging.web.app.evil.example', 'evil-my-onsen-journey-staging.web.app', 'uchidats.github.io.evil.example', 'evil-uchidats.github.io', 'github.io']) {
     const w = load({}, host);
     assert.equal(w.OnsenAuth.enabled(), false, host);
     assert.equal(w.OnsenAuth.controller, undefined, host);
   }
 });
 
-test('auth: production can never be enabled by editing the Firebase settings alone', () => {
-  const full = { ...GOOD, projectId: 'prod-project' };
-  // 本番ホストに本番の完全な設定を渡しても無効(ホストの固定ブロック)
-  const prod = load({ ONSEN_FIREBASE: { sdkVersion: '10.14.1', environments: { production: { hosts: ['uchidats.github.io'], config: full } } } }, 'uchidats.github.io');
-  assert.equal(prod.OnsenAuth.enabled(), false);
-  // 本番ホストを別の名前の環境に入れ替えても無効
-  const sneaky = load({ ONSEN_FIREBASE: { sdkVersion: '10.14.1', environments: { local: { hosts: ['uchidats.github.io'], config: full }, staging: { hosts: ['uchidats.github.io'], config: full } } } }, 'uchidats.github.io');
-  assert.equal(sneaky.OnsenAuth.enabled(), false);
-  // 有効にできる環境は auth.js の固定リスト(production を含まない)
-  assert.deepEqual(Array.from(load({}, 'localhost').OnsenAuth.enabledEnvironments()), ['local', 'staging']);
-  // 設定ファイルの production は null のまま(本番へ設定値を入れていない)
-  assert.equal(load({}, 'localhost').ONSEN_FIREBASE.environments.production.config, null);
+test('auth: only the fixed environment names and exact host names can enable login; editing the settings cannot add other hosts or names', () => {
+  const full = { ...GOOD, projectId: 'other-project' };
+  assert.deepEqual(Array.from(load({}, 'localhost').OnsenAuth.enabledEnvironments()), ['local', 'staging', 'production']);
+  // 固定リストにない環境名は、ホスト・設定が完全でも無効
+  const odd = load({ ONSEN_FIREBASE: { sdkVersion: '10.14.1', environments: { preview: { hosts: ['preview.example.io'], sync: true, config: full }, dev: { hosts: ['dev.example.io'], config: full } } } }, 'preview.example.io');
+  assert.equal(odd.OnsenAuth.enabled(), false);
+  assert.equal(load({ ONSEN_FIREBASE: { sdkVersion: '10.14.1', environments: { dev: { hosts: ['dev.example.io'], config: full } } } }, 'dev.example.io').OnsenAuth.enabled(), false);
+  // ホスト名は完全一致のみ(部分一致・サブドメイン・大文字小文字違いは対象外)
+  for (const host of ['sub.uchidats.github.io', 'uchidats.github.io:8080', 'UCHIDATS.github.io']) assert.equal(load({}, host).OnsenAuth.enabled(), false, host);
+  // 試験用プロジェクトの設定は staging/production/local だけ。他の環境が増えていない
+  assert.deepEqual(Object.keys(load({}, 'localhost').ONSEN_FIREBASE.environments).sort(), ['local', 'production', 'staging']);
 });
 
 test('auth: environment resolution is per host; incomplete or placeholder settings stay disabled', () => {
@@ -176,14 +190,15 @@ test('auth: no secrets or storage APIs in the auth code and config; Firestore an
   assert.ok(!/addScope/.test(src.replace(/\/\/.*$/gm, '')));
 });
 
-test('cloud sync: enabled only where the environment sets sync:true (localhost / staging site); never on production, 127.0.0.1 or any other host, even if the settings are edited', () => {
+test('cloud sync: enabled only where the environment sets sync:true (production / staging site / localhost); never on 127.0.0.1 or any other host', () => {
   const fs2 = require('node:fs'), vm2 = require('node:vm');
   const syncSrc = fs2.readFileSync('sync.js', 'utf8');
   const runSync = (win) => { win.document = { getElementById: () => { throw Error('sync must not touch the page here'); }, querySelector: () => { throw Error('sync must not touch the page here'); } }; win.OnsenSyncEngine = {}; win.OnsenHost = {}; vm2.runInNewContext(syncSrc, win); return win; };
-  assert.equal(load({}, 'localhost').OnsenAuth.syncEnabled(), true);
-  assert.equal(load({}, 'my-onsen-journey-staging.web.app').OnsenAuth.syncEnabled(), true);
-  const sneaky = { sdkVersion: '10.14.1', environments: { production: { hosts: ['uchidats.github.io'], sync: true, config: GOOD }, local: { hosts: ['uchidats.github.io'], sync: true, config: GOOD } } };
-  for (const [host, extra] of [['uchidats.github.io', {}], ['uchidats.github.io', { ONSEN_FIREBASE: sneaky }], ['127.0.0.1', {}], ['example.com', {}], ['my-onsen-journey-staging.firebaseapp.com', {}]]) {
+  for (const host of ['uchidats.github.io', 'my-onsen-journey-staging.web.app', 'localhost']) assert.equal(load({}, host).OnsenAuth.syncEnabled(), true, host);
+  // sync:true が付いていない環境(設定を差し替えた場合)では、ホストが合っていても同期は起動しない
+  const noSync = { sdkVersion: '10.14.1', environments: { production: { hosts: ['uchidats.github.io'], config: GOOD } } };
+  assert.equal(load({ ONSEN_FIREBASE: noSync }, 'uchidats.github.io').OnsenAuth.syncEnabled(), false);
+  for (const [host, extra] of [['uchidats.github.io', { ONSEN_FIREBASE: noSync }], ['127.0.0.1', {}], ['example.com', {}], ['my-onsen-journey-staging.firebaseapp.com', {}]]) {
     const w = load(extra, host);
     assert.equal(w.OnsenAuth.syncEnabled(), false, host);
     const after = runSync(w);   // 例外なく即座に戻り、ページにも触れず、同期は起動しない

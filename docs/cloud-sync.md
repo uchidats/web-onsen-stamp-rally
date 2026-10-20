@@ -1,6 +1,6 @@
 # クラウド同期(Phase 2): Googleアカウントで訪問履歴・メモを端末間同期
 
-試験環境(`my-onsen-journey-staging`)だけで有効です。**GitHub Pagesの本番サイトでは有効になりません**(認証が無効で、`sync` 設定も付いていません)。ログインしない場合は、従来どおりブラウザのlocalStorageだけで動作します。
+本番(`https://uchidats.github.io/web-onsen-stamp-rally/`)・試験サイト(`https://my-onsen-journey-staging.web.app/`)・localhost は、**同じFirebaseプロジェクト `my-onsen-journey-staging`(同じAuthentication・Firestore・Security Rules)を使い、同じクラウドデータを共有します。**同じGoogleアカウントなら、どのサイトでも同じ訪問履歴・メモが同期されます(試験用の架空データは別のGoogleアカウントで)。ログインしない場合は、従来どおりブラウザのlocalStorageだけで動作します(localStorageはサイトごとに別で、サイト間では共有されません)。
 
 ## できること
 - Googleログイン後、「同期を開始」を選ぶと、訪問履歴(日付・日付なし・複数回・同じ日の重複)と施設メモがFirestoreに保存され、同じアカウントの他の端末と同期されます。
@@ -20,24 +20,42 @@
 - **JSON復元後**: 「統合モード」で照合します。復元で消えた最近の記録はクラウドから戻り、削除済みの記録は復活せず競合として確認に回ります。
 - **認証と同期は分離**: 同期(`sync*.js`)は認証の内部セッション(uid・世代)だけを使います。アカウントが変わる/ログアウトした時点でエンジンを止め、遅れて届いた応答は捨てます。将来、クラウド同期だけを有料にする場合は、`firestore.rules` の `syncAllowed()` で `entitlements/{uid}`(管理者だけが書き込む)を参照できます(今は本人であれば許可。決済は未実装)。
 
+## クラウドデータの削除(セルフサービス。運営者への連絡は不要)
+ログイン中に出る「クラウドデータの削除…」から、利用者自身が削除できます。**Cloud Functions等の追加サービスは使いません(Sparkプランのまま)**。クライアントとSecurity Rulesだけで完結します。
+
+- **削除の範囲**: 「クラウドのデータだけ」または「クラウドのデータ + ログイン用アカウント(Firebase Authentication)」。Googleアカウント自体は削除されません。
+- **削除されるもの**: `accounts/{uid}` 配下の訪問(tombstoneを含む)・施設メモ・競合情報、同期の管理データ(ルート文書)。
+- **削除されないもの**: この端末のブラウザの記録・同期開始前の退避コピー、他の端末のブラウザの記録、ダウンロード済みのJSONバックアップ、アクセス解析のデータ。
+- **確認**: 対象と影響を表示し、バックアップのダウンロードを案内し、チェック + 「削除」の入力の二重確認が揃うまで実行できません。
+- **順序(途中で失敗しても残らない・消せなくならない)**: ①この端末からの送信を止める → ②ルート `accounts/{uid}` を `deleting` にする(**以後、すべての端末のこの世代への書き込みがRulesで拒否される**)→ ③配下の文書を20件ずつ削除 → ④空を確認してルートを削除 → ⑤(選んだ場合だけ)Authenticationのアカウントを削除。**データを先、アカウントを後**にするのは、アカウントを先に消すと認証できなくなり、クラウドのデータを消せなくなるためです。
+  - ②の後で通信が切れても、ルートは `deleting` のまま残り、全端末の書き込みは止まったままです。「削除する」をもう一度押すと続きから完了します(何度実行しても安全)。
+  - ⑤で「最近のログインが必要」と返った場合は、データは削除済みのまま、再ログイン(Googleの確認)をしてアカウント削除を続けます。⑤が失敗してもクラウドのデータは既に消えているため、データが残ることはありません。
+- **世代ID(epoch)による再アップロードの防止(サーバー側で検証)**: ルートに `epoch`(世代ID)と `status`(`active` / `deleting`)があり、すべての書き込みに `epoch` が必要です。Rules が「ルートが存在し、`active` で、`epoch` が一致」する時だけ書き込みを許可します。削除が始まった後・削除された後・作り直されて世代が変わった後は、オフラインで溜めた変更や古いバージョンのページ(世代IDを持たない)からの書き込みは、**サーバー側で必ず拒否**されます(エミュレータで検証)。
+- **他の端末の動作**: 削除を検知すると同期を止め(「停止中(クラウドのデータが削除されています)」)、その端末の記録は残します。何もアップロードしません。「同期を再開」を選ぶと、その端末の記録が新しい世代のクラウドデータとして保存されます(確認画面で件数を表示)。
+- **同じアカウントで再ログインした時**: 自動ではアップロードしません。確認画面(「同期を開始」)を経た時だけ、この端末の記録が新しいクラウドデータになります。
+- **旧データの移行**: 世代IDの導入前に作られたクラウドのデータ(世代IDのないルート・訪問)は、最初の同期で世代IDが付与され、そのまま使い続けられます。削除もできます。
+- **Rulesの `get()` について**: 書き込み・削除のたびにルート文書を1回読みます(読み取り回数に数えられます)。無料枠に対して余裕のある量ですが、書き込みが多い場合は読み取りが増えます。
+
 ## Firestoreのデータ構造とルール
-- `accounts/{uid}`: ルート(本人だけが一度作成)。`accounts/{uid}/visits/{eventId}`: 訪問1件(または削除tombstone)。`accounts/{uid}/facilityNotes/{facilityId}`: 施設メモ。`accounts/{uid}/conflicts/{id}`: 未解決の競合(両案)。`entitlements/{uid}`: 将来用(管理者のみ書込み)。
+- `accounts/{uid}`: ルート(本人だけが作成。世代ID `epoch` と状態 `status` を持つ)。`accounts/{uid}/visits/{eventId}`: 訪問1件(または削除tombstone)。`accounts/{uid}/facilityNotes/{facilityId}`: 施設メモ。`accounts/{uid}/conflicts/{id}`: 未解決の競合(両案)。`entitlements/{uid}`: 将来用(管理者のみ書込み)。
 - 施設マスター(67施設)はFirestoreに置きません(静的配信)。
-- `firestore.rules`: 自分のUIDの領域だけ読み書き可。型・長さ・形式を検証。物理deleteは全面禁止。revisionは+1ずつ。deleted→activeは明示復元のみ。他人・未ログイン・その他のパスは全面拒否。
+- `firestore.rules`: 自分のUIDの領域だけ読み書き可。型・長さ・形式を検証。書き込みはルートが存在し active で世代ID(epoch)が一致する時だけ。物理deleteは、ルートが deleting の間(セルフサービス削除中)だけ許可し、通常の同期中は禁止。revisionは+1ずつ。deleted→activeは明示復元のみ。他人・未ログイン・その他のパスは全面拒否。
 - `firestore.indexes.json`: 追加のインデックスは不要です(単一コレクションの全件購読のみ)。
-- 無料枠への配慮: 常時のリスナーは3つ(訪問・メモ・競合)だけで、変更分だけ読み取ります。書き込みは差分のみで、変更がなければ書き込みません(テストで確認)。
+- 無料枠への配慮: 常時のリスナーは4つ(訪問・メモ・競合・ルート)だけで、変更分だけ読み取ります。書き込みは差分のみで、変更がなければ書き込みません(テストで確認)。
 
 ## テスト
 - `npm run test:quick`: 同期ロジック(`sync-engine.test.cjs`、`sync-core` を含む)、画面(`e2e-sync.test.cjs`)ほか。
 - `npm run test:rules`: Firestore Emulator上で Security Rules(`firestore-rules.test.cjs`)と、本物のFirestoreアダプタ+Rules+エンジンの通し試験(`firestore-adapter.test.cjs`)。Java と Emulator が必要です。実際のクラウドには接続しません。
 
-## Firebase側で必要な設定(まだ未実施)
-1. **Firestoreデータベースの作成**(Firebase Console > Build > Firestore Database)。ネイティブモード、**ロケーションは作成後に変更できません**(例: `asia-northeast1`=東京)。Sparkプランの無料枠の範囲で使えます。※ロケーションと料金プランの選択は利用者の判断です。
-2. **Rulesの適用**: `firebase deploy --only firestore:rules --project my-onsen-journey-staging`(インデックスも `--only firestore` で一緒に適用できます)。
-3. **試験サイトの再deploy**: `npm run staging:build` → `firebase deploy --only hosting --project my-onsen-journey-staging`。
-4. 動作確認後、Authentication の Users と Firestore の `accounts/{uid}` にデータが作られていることを確認。
+## Firebase側の設定(適用済み)と確認方法
+- Firestore: `(default)`、Standard、`asia-northeast1`(東京)、本番環境モード、Sparkプラン。Authentication: Google有効、承認済みドメインに `uchidats.github.io` ほか4件。
+- Rules・インデックスの適用: `firebase deploy --only firestore --project my-onsen-journey-staging`(既存のデータは削除・初期化されません)。
+- クラウドのRulesが手元の `firestore.rules` と一致していることの確認: Firebase Console の Firestore > ルール の内容と `firestore.rules` を比較する。コマンドで確認する場合は、Rules REST API(`firebaserules.googleapis.com/v1/projects/my-onsen-journey-staging/releases/cloud.firestore`)の release が指す ruleset のソースを取得して比較する。
+- 試験サイトの更新: `npm run staging:build` → `firebase deploy --only hosting --project my-onsen-journey-staging`。本番はGitHub Pages(`main` への push)。
+- **公開の順序(世代IDの導入時)**: 新しいRulesは世代ID(`epoch`)のない書き込みを拒否します(古いクライアントは安全側に倒れて書き込めなくなります)。そのため、**①Rulesの適用 → ②試験サイトのdeploy → ③GitHub Pagesへのpush** をまとめて行ってください。①と②/③の間は、古いページからの同期の書き込みだけが一時的に失敗します(端末の記録は消えません。新しいページを読み込めば自動で再開)。既存のクラウドのデータは、最初の同期で世代IDが付与されて引き続き使えます。
+- **本番と試験サイトは同じデータ**を共有するため、Rulesの変更は両方に即時に影響します。変更前に `npm run test:rules`(Emulator)で検証してください。
 
-## PC・Androidでの確認手順(試験サイト `https://my-onsen-journey-staging.web.app/`)
+## PC・Androidでの確認手順(本番または試験サイト。同じアカウントなら同じデータ)
 1. PCで開き、Googleでログイン → 確認画面で件数を確認し「バックアップをダウンロード」→「統合して同期を開始」。ヘッダーが「同期: 同期済み」になる。
 2. PCで訪問を1件追加(同じ施設・同じ日にもう1件、日付なしも1件)→ 数秒で同期済みに戻る。
 3. Android Chromeで同じURLを開き、同じアカウントでログイン →(端末の記録が空なら確認画面で統合)→ PCの記録が表示される。
@@ -49,10 +67,23 @@
 9. Firebase Console の Firestore で、自分のUID配下だけにデータがあること、Authentication の Users にアカウントがあること。
 
 ## 残る制約
+
+### セルフサービス削除の公開ゲート（2026-10-20）
+
+- 新しいルート作成は `creationVersion:2` が必須。旧キャッシュのensureRootはRulesで拒否する。既存ルートは読み取り・移行・削除できる。新adapterのensureRootは既定では作成せず、確認後の `allowCreate:true` と比較時のroot状態によって作成する。Rulesは人間のクリックを認証する仕組みではない。
+- 削除中断の管理キー `onsen-rally-cloud-delete-v1` はUID/project/scopeのみを端末へ保存する。ログアウト・再読込み後も同期を止め、同じ対象で削除を再開する。訪問履歴キーとJSON形式は変更しない。
+- 削除時はserverからの読み取りを使い、3種類の既存サブコレクション（visitsのtombstoneを含む、facilityNotes、conflicts）を消してからrootを消す。今後サブコレクションを増やす変更には削除対象・テスト追加も必須。未知の管理者作成コレクションを自動探索・削除する機能ではない。
+- アカウント削除・再認証は対象UIDを固定し、アカウント切替後の続行を拒否する。停止後に届いた同期応答は端末へ適用しない。
+- auth/config/syncのscript queryを `cloud-delete-2` へ更新。旧/新JS混在は作成失敗または同期エラーとして停止し、localStorageの正本を消さない。長く開いた旧タブは再読込みが必要。
+- 2026-10-20の本番公開指示時点で、削除後にFirestoreの通常のデータ一覧が空になったことは利用者確認済み。サブコレクションの削除は実装とEmulatorで検証済み。Authentication Usersの対象UID消失、再認証、中断復帰、古い実端末からの全削除後の復活防止は、個別の実機成功報告がないため未確認として扱う。既存ユーザーの記録で破壊的な試験をしない。
+- 実機のログイン・双方向/オフライン/メモ/記録単位の削除同期は利用者報告により確認済み。上記の未確認事項を明示したうえで、利用者の本番公開指示に従う。
+
 - 端末の記録が**写真・GPS・ランキング等**を持つ場合: 写真・GPSの内容は訪問記録に付随して同期されますが(サイズ上限20KB)、`rankings` `gpsStamps` `favoriteOnsenIds` `legacyBaseline` など訪問記録以外の項目は同期しません(端末に残ります)。上限を超える記録があると同期を止めます(記録は端末に残ります)。
 - 訪問ごとのメモは同期しますが、画面から編集できるのは施設メモだけです(訪問ごとのメモの編集画面は未実装)。
 - 同期バックアップ形式(tombstoneや競合を含む完全版)は未実装です。JSONバックアップは従来のv3(現在の記録のスナップショット)です。
 - 複数タブの同時使用では、各タブがそれぞれ同期します(最終的なずれはrevisionの確認とクラウド側の記録で吸収されますが、同時の大量編集は想定していません)。
 - 共有端末: ログアウトしても記録を端末に残す仕様のため、共有端末では「ログアウト=記録の消去」ではありません。別アカウントでログインした時は、確認画面を経るまで送受信しません。
-- Firestoreのデータ削除・アカウント削除の画面は未実装です(試験運用中はコンソールから削除します)。
-- 実際のFirestore(クラウド)と実機(Android)での同期は、データベース作成後の確認が必要です(自動テストはEmulatorと偽クラウドで検証済み)。
+- クラウドデータの削除はクライアントから行うため、ネットワークが途中で切れると完了まで時間がかかることがあります(その間もルートが `deleting` のため書き込みは止まったままで、再実行で完了します)。大量のデータ(数千件)では削除に時間がかかります。
+- 削除の記録(いつ・誰が削除したか)はサーバー側に残りません(個人データを残さないため)。ルートが削除された後の古い世代の書き込みはRulesが拒否しますが、「世代ID」自体の履歴は保持しません(作り直した新しい世代は別のランダムなIDです)。
+- Authenticationのアカウント削除は、Firebaseの仕様で「最近のログイン」が必要です(古いログインの場合は再ログインを求めます)。
+- 本番URLでの実Googleログイン後の確認画面・セルフサービス削除の実操作は、未ログイン表示の公開後チェックや偽SDKのE2Eと区別して記録する。

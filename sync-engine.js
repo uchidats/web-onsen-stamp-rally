@@ -11,6 +11,7 @@
   const clone = x => JSON.parse(JSON.stringify(x));
   const errCode = e => String((e && e.code) || '').replace(/^firestore\//, '');
   const OFFLINE_CODES = ['unavailable', 'deadline-exceeded', 'network-request-failed', 'cancelled'];
+  const RESET_DETAIL = 'クラウドのデータが削除された(または作り直された)ため、同期を止めました。この端末の記録は残っています。同期を再開するまで、何もアップロードしません';
 
   function create(o) {
     const storage = o.storage, metaKey = o.metaKey || META_KEY, safeKey = o.safeKey || SAFE_KEY;
@@ -22,12 +23,20 @@
       return null;
     }
     function saveMeta() { storage.setItem(metaKey, JSON.stringify(meta)); }
-    function fresh() { return { v: 1, uid: o.uid, projectId: o.projectId, datasetId: genId(), initialized: false, needsReconcile: true, idMap: {}, base: { events: {}, notes: {} }, seen: {}, applied: {}, lastSyncAt: null }; }
+    function fresh() { return { v: 1, uid: o.uid, projectId: o.projectId, datasetId: genId(), epoch: null, initialized: false, needsReconcile: true, idMap: {}, base: { events: {}, notes: {} }, seen: {}, applied: {}, lastSyncAt: null }; }
     function setStatus(state, detail, extra) {
       status = { state, detail: detail || '', conflicts: cloud ? [...cloud.conflicts.values()].filter(c => c.status === 'open').length : 0, ...(extra || {}) };
       if (o.onStatus) o.onStatus(status);
     }
     const openConflicts = () => cloud ? [...cloud.conflicts.values()].filter(c => c.status === 'open') : [];
+    // ルートの状態: ok | adopt(世代ID未記録) | missing(削除済み) | deleting | mismatch(別の世代に作り直された)
+    function rootState() {
+      const r = cloud && cloud.root;
+      if (!r || !r.exists) return 'missing';
+      if (r.status === 'deleting') return 'deleting';
+      if (!meta.epoch) return 'adopt';
+      return r.epoch === meta.epoch ? 'ok' : 'mismatch';
+    }
 
     // ---- 初回・復元後の確認用の要約(何も書き換えない) ----
     function preview() {
@@ -38,7 +47,7 @@
     }
 
     async function writeConflicts(list) {
-      for (const c of list) await o.adapter.createConflict({ id: c.id, kind: c.kind, key: c.key, facilityId: c.facilityId, eventId: c.eventId || '', field: c.field, base: JSON.stringify(c.base), remote: JSON.stringify(c.remote), local: JSON.stringify(c.local) });
+      for (const c of list) { if (stopped) return; await o.adapter.createConflict({ id: c.id, epoch: meta.epoch, kind: c.kind, key: c.key, facilityId: c.facilityId, eventId: c.eventId || '', field: c.field, base: JSON.stringify(c.base), remote: JSON.stringify(c.remote), local: JSON.stringify(c.local) }); }
     }
     function applyLocal(changes) {
       if (!changes.length) return;
@@ -72,8 +81,9 @@
     }
 
     async function pushOne(p, tries) {
-      const op = { ...p, opId: genId(), datasetId: meta.datasetId };
+      const op = { ...p, opId: genId(), datasetId: meta.datasetId, epoch: meta.epoch };
       const r = await o.adapter.push(op);
+      if (stopped) return false;
       if (r.status === 'ok') {
         if (p.type === 'delete') delete meta.base.events[p.eventId];
         else if (p.type === 'note') meta.base.notes[p.facilityId] = { rev: r.revision, notes: p.notes };
@@ -89,6 +99,11 @@
       if (!meta.initialized) { setStatus('consent', '', { summary: cloud && cloud.serverReady ? preview() : null }); return; }
       if (!cloud || !cloud.serverReady) { setStatus(o.isOnline && !o.isOnline() ? 'offline' : 'syncing', 'クラウドの状態を確認しています'); return; }
       if (o.repo.needsMigration && o.repo.needsMigration()) { setStatus('error', '旧記録の移行を確認してから同期します'); return; }
+      // クラウド側の世代ID・状態の確認(削除中・削除済み・作り直しを検出したら、何も送らずに止める)
+      const rs = rootState();
+      if (rs === 'deleting') { setStatus('deleting', 'クラウドのデータを削除中です。完了するまで同期を止めています'); return; }
+      if (rs === 'missing' || rs === 'mismatch') { setStatus('cloudReset', RESET_DETAIL, { summary: preview() }); return; }
+      if (rs === 'adopt') { const epoch = cloud.root.epoch || (await o.adapter.ensureRoot()).epoch; if (stopped) return; meta.epoch = epoch; saveMeta(); }   // 欠落時は自動作成しない
       setStatus('syncing');
       const mode = meta.needsReconcile;
       for (let attempt = 0; attempt < 5; attempt++) {
@@ -106,6 +121,7 @@
           saveMeta(); setStatus('error', '記録の件数が大きく減るため同期を止めました。端末の記録を確認し、「クラウドと照合して復元」を実行してください', { safety: true }); return;
         }
         if (res.conflicts.length) await writeConflicts(res.conflicts);
+        if (stopped) return;
         applyLocal(res.changes);
         applyBase(res.baseNow);
         saveMeta();
@@ -127,8 +143,10 @@
       running = (async () => {
         try { do { again = false; await once(); } while (again && !stopped); }
         catch (e) {
+          if (stopped) return;
           const c = errCode(e);
           if (OFFLINE_CODES.includes(c) || (o.isOnline && !o.isOnline())) setStatus('offline', 'オフラインです。オンラインに戻ると自動で同期します');
+          else if (c === 'permission-denied' && ['deleting', 'missing', 'mismatch'].includes(rootState())) setStatus(rootState() === 'deleting' ? 'deleting' : 'cloudReset', rootState() === 'deleting' ? 'クラウドのデータを削除中です。完了するまで同期を止めています' : RESET_DETAIL);
           else if (c === 'permission-denied') setStatus('error', 'クラウドへの保存が許可されていません(ルール・権限を確認してください)', { code: c });
           else setStatus('error', '同期できませんでした。記録は端末に残っています。(' + (c || 'unknown') + ')', { code: c });
         } finally { running = null; }
@@ -153,7 +171,10 @@
         if (!meta || !cloud || !cloud.serverReady) throw Error('クラウドの状態を確認できていません');
         const raw = storage.getItem(o.recordsKey || 'onsen-rally-user-v3');
         try { storage.setItem(safeKey, JSON.stringify({ savedAt: o.now ? o.now() : Date.now(), uid: o.uid, raw })); } catch (e) { setStatus('error', '記録の退避に失敗したため同期を始めません(記録は変更していません)'); throw e; }
-        await o.adapter.ensureRoot();
+        const expectedRoot = { ...cloud.root };
+        const result = await o.adapter.ensureRoot({ allowCreate: true, expectedRoot });
+        if (stopped) return;
+        meta.epoch = result.epoch;
         meta.initialized = true; meta.needsReconcile = true; meta.base = { events: {}, notes: {} }; meta.uid = o.uid; meta.projectId = o.projectId; ownerChanged = false; saveMeta();
         return run();
       },
@@ -194,7 +215,9 @@
         await o.adapter.resolveConflict(id, { resolution: choice });
         return run();
       },
-      stop() { stopped = true; clearTimeout(timer); if (unsub) unsub(); unsub = null; cloud = null; }
+      stop() { stopped = true; clearTimeout(timer); if (unsub) unsub(); unsub = null; cloud = null; },
+      // 同期の管理情報(この端末の対応表・基準)だけを消す。この端末の訪問記録は消さない
+      forgetSyncState() { stopped = true; clearTimeout(timer); if (unsub) unsub(); unsub = null; cloud = null; try { storage.removeItem(metaKey); } catch (e) { /* 消せなくても記録には影響しない */ } meta = null; }
     };
   }
   root.OnsenSyncEngine = { create, META_KEY, SAFE_KEY };

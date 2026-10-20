@@ -28,6 +28,39 @@ function device(cloud, name, uid = 'user-1', storage = mem()) {
 }
 const flush = async (...ds) => { for (let i = 0; i < 3; i++) { for (const d of ds) await d.engine.syncNow(); await settle(); } };
 
+test('stopping while a conflict write is pending cannot apply queued cloud changes to local records', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-01-10'); await flush(pc, android);
+  pc.engine.stop(); android.engine.stop();
+  pc.note('onsen-001', 'PC'); android.note('onsen-001', 'Android');
+  await pc.engine.start(); await flush(pc);
+  let release, entered;
+  const enteredPromise = new Promise(r => { entered = r; });
+  const orig = android.adapter.createConflict;
+  android.adapter.createConflict = async c => { entered(); await new Promise(r => { release = r; }); return orig(c); };
+  await android.engine.start(); await enteredPromise;
+  const before = android.storage.getItem(R.KEY);
+  android.engine.stop(); release(); await settle();
+  assert.equal(android.storage.getItem(R.KEY), before);
+  assert.equal(android.state.userData.visits['onsen-001'].notes, 'Android');
+});
+
+test('cached client rejected by new Rules keeps local visits, same-day duplicates and notes for a reload', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join();
+  pc.engine.stop();
+  pc.add('onsen-001', '2026-01-10'); pc.add('onsen-001', '2026-01-10'); pc.add('onsen-006', null); pc.note('onsen-001', '端末のメモ');
+  pc.adapter.push = async () => { throw Object.assign(Error('new Rules reject old protocol'), { code: 'permission-denied' }); };
+  const before = pc.storage.getItem(R.KEY);
+  await pc.engine.start(); await flush(pc);
+  assert.equal(pc.last().state, 'error');
+  assert.equal(pc.storage.getItem(R.KEY), before);
+  assert.equal(pc.count(), 3);
+  assert.equal(pc.repo.backup(pc.state).userData.visits['onsen-001'].notes, '端末のメモ');
+  pc.engine.stop();
+});
+
 test('PC adds a visit -> it appears on Android; Android adds -> PC (both directions, same account)', async () => {
   const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
   await pc.join(); await android.join();
@@ -274,4 +307,125 @@ test('core: reconcile classifies add / update / delete / conflicts from base, lo
   assert.equal(C.unnaturalDecrease({ before: 100, deletesLocal: 31, deletesRemote: 0 }), true);
   assert.equal(C.unnaturalDecrease({ before: 100, deletesLocal: 30, deletesRemote: 3 }), false);
   assert.equal(C.unnaturalDecrease({ before: 2, deletesLocal: 3, deletesRemote: 0 }), false);
+});
+
+// ---------------- クラウドデータのセルフサービス削除(世代ID・削除中の遮断) ----------------
+test('deleting the cloud data from one device stops the other device (cloudReset); its local records stay and nothing is re-uploaded', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-01-10'); android.add('onsen-006', '2026-02-02'); await flush(pc, android, pc);
+  assert.equal(pc.count(), 2); assert.equal(android.count(), 2);
+  const r = await pc.adapter.deleteAll();
+  assert.equal(r.status, 'deleted'); assert.deepEqual(r.counts, { visits: 2, facilityNotes: 0, conflicts: 0 });
+  assert.equal(cloud.visits.size, 0); assert.equal(cloud.root, null);
+  await flush(android);
+  assert.equal(android.last().state, 'cloudReset');                // 他の端末は停止
+  assert.equal(android.count(), 2);                                 // この端末の記録は残る
+  android.add('onsen-009', '2026-03-03'); await flush(android, android);
+  assert.equal(cloud.visits.size, 0, 'nothing is re-uploaded');     // 勝手に再アップロードしない
+  assert.equal(cloud.root, null);
+  assert.equal(android.last().state, 'cloudReset'); assert.equal(android.count(), 3);
+});
+
+test('offline queue: edits made offline before the deletion are rejected after reconnecting (the cloud stays empty)', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-01-10'); await flush(pc, android);
+  android.adapter.offline = true;
+  android.add('onsen-006', '2026-05-05'); android.note('onsen-001', 'オフラインのメモ');       // Androidが圏外で溜めた変更
+  await pc.adapter.deleteAll();                                                                  // その間にPCがクラウドを削除
+  android.adapter.offline = false; cloud.emit(); await flush(android, android);
+  assert.equal(android.last().state, 'cloudReset');
+  assert.equal(cloud.visits.size, 0); assert.equal(cloud.notes.size, 0); assert.equal(cloud.root, null);
+  assert.equal(android.count(), 2);                                                               // ローカルの変更は残る
+});
+
+test('the server-side check (epoch) rejects a client that ignores the status: old-epoch writes fail even after the account is re-created', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join();
+  const oldEpoch = pc.engine.meta().epoch;
+  await pc.adapter.deleteAll();
+  const fresh = cloud.adapter(); const { epoch } = await fresh.ensureRoot({ allowCreate: true });
+  assert.notEqual(epoch, oldEpoch);
+  const op = { type: 'create', eventId: 'event-stale-0001', facilityId: 'onsen-001', sourceVisitId: 's', datasetId: 'd', opId: 'op', fields: { date: null, notes: '', extra: '' } };
+  await assert.rejects(fresh.push({ ...op, epoch: oldEpoch }), { code: 'permission-denied' });
+  await assert.rejects(fresh.push({ ...op }), { code: 'permission-denied' });                    // 世代IDなし(旧クライアント)も拒否
+  assert.deepEqual(await fresh.push({ ...op, epoch }), { status: 'ok', revision: 1 });
+});
+
+test('after a deletion every device needs an explicit consent to sync again; re-syncing merges the devices\' records without duplicates', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-01-10'); pc.add('onsen-001', '2026-01-10'); android.add('onsen-006', null); await flush(pc, android, pc);
+  await pc.adapter.deleteAll(); await flush(pc, android);
+  assert.equal(pc.last().state, 'cloudReset'); assert.equal(android.last().state, 'cloudReset');
+  assert.ok(pc.last().summary && pc.last().summary.willUpload === 3);                              // 確認画面に出す要約(再開すると何がアップロードされるか)
+  await pc.engine.consent(); await settle(); await flush(pc, android);
+  assert.equal(cloud.visits.size, 3);
+  assert.equal(android.last().state, 'cloudReset', 'the other device still waits for its own consent');
+  await android.engine.consent(); await settle(); await flush(android, pc, android);
+  assert.equal(cloud.visits.size, 3, 'union of identical records: no duplicates');
+  assert.equal(pc.count(), 3); assert.equal(android.count(), 3);
+  assert.equal(pc.last().state, 'synced'); assert.equal(android.last().state, 'synced');
+});
+
+test('a partial deletion leaves the account in "deleting": every device stays stopped, nothing is written, and re-running completes it', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  for (const d of ['2026-01-01', '2026-01-02', '2026-01-03']) pc.add('onsen-001', d);
+  pc.note('onsen-001', 'メモ'); await flush(pc, android);
+  cloud.deleteFailAfter = 2;
+  await assert.rejects(pc.adapter.deleteAll(), { code: 'unavailable' });                            // 通信エラーで途中失敗
+  assert.equal(cloud.root.status, 'deleting');
+  assert.ok(cloud.visits.size + cloud.notes.size > 0, 'some data remains');
+  cloud.emit(); await flush(android, pc);
+  assert.equal(android.last().state, 'deleting'); assert.equal(pc.last().state, 'deleting');
+  const w = cloud.writes;
+  android.add('onsen-009', '2026-09-09'); await flush(android, android);
+  assert.equal(cloud.writes, w, 'no writes while deleting');
+  const done = await pc.adapter.deleteAll();                                                         // 再実行で完了
+  assert.equal(done.status, 'deleted'); assert.equal(cloud.visits.size, 0); assert.equal(cloud.notes.size, 0); assert.equal(cloud.root, null);
+  assert.equal(android.count(), 4); assert.equal(pc.count(), 3);                                    // 端末の記録は残る
+  assert.deepEqual(await pc.adapter.deleteAll(), { status: 'nothing', counts: { visits: 0, facilityNotes: 0, conflicts: 0 } });   // 何度実行しても安全
+});
+
+test('deleting while another device is syncing: nothing reappears in the cloud', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc'), android = device(cloud, 'android');
+  await pc.join(); await android.join();
+  pc.add('onsen-001', '2026-01-10'); await flush(pc, android);
+  android.add('onsen-006', '2026-02-02');                    // Androidの同期(デバウンス)が走る直前
+  const deleting = pc.adapter.deleteAll();                   // 同時にPCが削除
+  await Promise.all([deleting, flush(android)]);
+  await flush(android, pc);
+  assert.equal(cloud.visits.size, 0); assert.equal(cloud.root, null);
+  assert.equal(android.last().state, 'cloudReset');
+  assert.equal(android.count(), 2);
+});
+
+test('forgetSyncState (used after the user deletes their cloud data) removes only the sync bookkeeping; a later login starts at the consent step', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join(); pc.add('onsen-001', '2026-01-10'); pc.note('onsen-001', 'メモ'); await flush(pc);
+  const rawRecords = pc.storage.getItem('onsen-rally-user-v3');
+  await pc.adapter.deleteAll();
+  pc.engine.forgetSyncState();
+  assert.equal(pc.storage.getItem('onsen-rally-sync-v1'), null);
+  assert.equal(pc.storage.getItem('onsen-rally-user-v3'), rawRecords, 'local records are untouched');
+  const again = device(cloud, 'pc', 'user-1', pc.storage); await again.begin();
+  assert.equal(again.last().state, 'consent');
+  assert.equal(again.last().summary.willUpload, 1);
+  assert.equal(cloud.visits.size, 0, 'nothing is uploaded without consent');
+});
+
+test('records synced before epochs existed (legacy root + legacy sync state) keep working: the device adopts or upgrades the epoch', async () => {
+  const cloud = new FakeCloud(), pc = device(cloud, 'pc');
+  await pc.join(); pc.add('onsen-001', '2026-01-10'); await flush(pc);
+  // 世代ID導入前の状態を再現: ルートの epoch なし、端末の同期状態にも epoch なし
+  cloud.root.epoch = null; cloud.root.legacy = true;
+  const meta = JSON.parse(pc.storage.getItem('onsen-rally-sync-v1')); delete meta.epoch; pc.storage.setItem('onsen-rally-sync-v1', JSON.stringify(meta));
+  pc.engine.stop();
+  const again = device(cloud, 'pc', 'user-1', pc.storage); await again.begin();
+  again.add('onsen-006', '2026-02-02'); await flush(again, again);
+  assert.ok(cloud.root.epoch, 'the root got an epoch'); assert.equal(cloud.root.legacy, false);
+  assert.equal(cloud.visits.size, 2); assert.equal(again.last().state, 'synced');
+  assert.equal(again.engine.meta().epoch, cloud.root.epoch);
 });

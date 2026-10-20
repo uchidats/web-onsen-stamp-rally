@@ -20,8 +20,8 @@ test('sync engine + Firestore adapter + rules on the emulator (two devices, same
   const { OnsenRecords: R, OnsenSyncEngine: E } = globalThis;
   const UID = 'user-aaaaaaaa';
   const devices = [];
-  const device = (name, uid = UID) => {
-    const db = env.authenticatedContext(uid).firestore(), storage = mem(), repo = R.create(storage);
+  const device = (name, uid = UID, storage = mem()) => {
+    const db = env.authenticatedContext(uid).firestore(), repo = R.create(storage);
     const d = { name, db, storage, repo, uid, statuses: [] };
     d.state = repo.load();
     d.adapter = Adapter.create({ sdk: fsdk, db, uid });
@@ -35,6 +35,7 @@ test('sync engine + Firestore adapter + rules on the emulator (two devices, same
     devices.push(d); return d;
   };
   t.after(() => devices.forEach(d => d.engine.stop()));
+  const count = async (uid, name) => (await fsdk.getDocs(fsdk.collection(env.authenticatedContext(uid).firestore(), 'accounts', uid, name))).size;
 
   await env.clearFirestore();
   const pc = device('pc'), android = device('android');
@@ -78,7 +79,8 @@ test('sync engine + Firestore adapter + rules on the emulator (two devices, same
 
   await t.test('adapter: same opId is applied once; a stale revision is rejected; deleted docs cannot be edited back', async () => {
     const a = Adapter.create({ sdk: fsdk, db: env.authenticatedContext(UID).firestore(), uid: UID });
-    const base = { eventId: 'event-idem-0001', facilityId: 'onsen-002', sourceVisitId: 's', datasetId: 'd', fields: { date: '2026-05-05', notes: '', extra: '' } };
+    const { epoch } = await a.ensureRoot();
+    const base = { eventId: 'event-idem-0001', facilityId: 'onsen-002', sourceVisitId: 's', datasetId: 'd', epoch, fields: { date: '2026-05-05', notes: '', extra: '' } };
     assert.deepEqual(await a.push({ ...base, type: 'create', opId: 'op-create' }), { status: 'ok', revision: 1 });
     assert.equal((await a.push({ ...base, type: 'create', opId: 'op-create-2' })).status, 'exists');
     const edit = { ...base, type: 'update', baseRevision: 1, opId: 'op-edit', fields: { date: '2026-05-06', notes: 'x', extra: '' } };
@@ -92,7 +94,78 @@ test('sync engine + Firestore adapter + rules on the emulator (two devices, same
 
   await t.test('another account cannot read or write this account\'s records through the adapter', async () => {
     const other = Adapter.create({ sdk: fsdk, db: env.authenticatedContext('user-bbbbbbbb').firestore(), uid: UID });
-    await assert.rejects(other.push({ type: 'create', eventId: 'event-hack-0001', facilityId: 'onsen-001', sourceVisitId: 's', datasetId: 'd', opId: 'op', fields: { date: null, notes: '', extra: '' } }));
+    await assert.rejects(other.push({ type: 'create', eventId: 'event-hack-0001', facilityId: 'onsen-001', sourceVisitId: 's', datasetId: 'd', opId: 'op', epoch: 'epoch-hack-1', fields: { date: null, notes: '', extra: '' } }));
     await assert.rejects(fsdk.getDocs(fsdk.collection(env.authenticatedContext('user-bbbbbbbb').firestore(), 'accounts', UID, 'visits')));
+    await assert.rejects(other.deleteAll());
+  });
+
+  // ---- セルフサービス削除(実Firestore Emulator・実Rules・実アダプタ) ----
+  await t.test('self-service deletion: stops the other device, deletes visits/notes/conflicts/root completely (more docs than one batch), and leaves other accounts untouched', async () => {
+    await env.clearFirestore();
+    const other = Adapter.create({ sdk: fsdk, db: env.authenticatedContext('user-cccccccc').firestore(), uid: 'user-cccccccc' });
+    const oe = (await other.ensureRoot({ allowCreate: true })).epoch;
+    await other.push({ type: 'create', eventId: 'event-other-0001', facilityId: 'onsen-001', sourceVisitId: 's', datasetId: 'd', epoch: oe, opId: 'o', fields: { date: null, notes: '', extra: '' } });
+    const a = device('a'), b = device('b');
+    await a.join(); await b.join();
+    for (let i = 1; i <= 47; i++) a.add('onsen-' + String(1 + (i % 9)).padStart(3, '0'), '2026-04-' + String((i % 28) + 1).padStart(2, '0'));
+    a.note('onsen-001', 'メモ1'); a.note('onsen-002', 'メモ2');
+    await until(() => b.state.userData.visits && Object.values(b.state.userData.visits).reduce((n, v) => n + v.records.length, 0) === 47, 'b has 47 visits', 20000);
+    await until(() => a.last().state === 'synced', 'a synced', 20000);
+    // 競合も1件作っておく
+    await a.adapter.createConflict({ id: 'visit-x-r1', epoch: a.engine.meta().epoch, kind: 'visit', key: 'visit:x', facilityId: 'onsen-001', eventId: 'x', field: 'notes', base: '{}', remote: '{}', local: '{}' });
+    await until(async () => (await count(UID, 'visits')) === 47 && (await count(UID, 'conflicts')) === 1, 'cloud has the data');
+    const progress = [];
+    const res = await a.adapter.deleteAll((s, c) => progress.push(s));
+    assert.equal(res.status, 'deleted'); assert.deepEqual(res.counts, { visits: 47, facilityNotes: 2, conflicts: 1 });
+    assert.ok(progress.includes('stopped') && progress.includes('deleting') && progress.at(-1) === 'done');
+    for (const n of ['visits', 'facilityNotes', 'conflicts']) assert.equal(await count(UID, n), 0, n);
+    assert.equal((await fsdk.getDoc(fsdk.doc(a.db, 'accounts', UID))).exists(), false, 'root is gone');
+    assert.equal(await count('user-cccccccc', 'visits'), 1, 'another account is untouched');
+    // もう一方の端末は止まる(記録は端末に残る)。再アップロードされない
+    await until(() => b.last().state === 'cloudReset', 'b stops with cloudReset');
+    b.add('onsen-009', '2026-12-12'); await new Promise(r => setTimeout(r, 500));
+    assert.equal(await count(UID, 'visits'), 0, 'nothing is re-uploaded');
+    assert.equal(Object.values(b.state.userData.visits).reduce((n, v) => n + v.records.length, 0), 48);
+    // 明示的に再開すると新しい世代で全件が戻る(和集合)
+    await b.engine.consent();
+    await until(async () => (await count(UID, 'visits')) === 48, 'b re-uploads after consent', 20000);
+  });
+
+  await t.test('stale clients are rejected by the real rules: old epoch, no epoch, deleting account, deleted account', async () => {
+    await env.clearFirestore();
+    const adapter = device('s').adapter, { epoch } = await adapter.ensureRoot({ allowCreate: true });
+    const op = { type: 'create', eventId: 'event-stale-0001', facilityId: 'onsen-001', sourceVisitId: 's', datasetId: 'd', opId: 'op1', fields: { date: null, notes: '', extra: '' } };
+    assert.deepEqual(await adapter.push({ ...op, epoch }), { status: 'ok', revision: 1 });
+    await assert.rejects(adapter.push({ ...op, eventId: 'event-stale-0002', epoch: 'epoch-old-0001' }), { code: 'permission-denied' });
+    await assert.rejects(adapter.push({ ...op, eventId: 'event-stale-0003' }));   // 世代IDなし(旧クライアント)は書けない(SDKが拒否、もしくはRulesが拒否)
+    // 削除の途中(ルートが deleting)で止めた状態: 書き込みはすべて拒否、再実行で完了
+    let n = 0;
+    await assert.rejects(adapter.deleteAll(s => { if (s === 'deleting' && ++n === 1) throw Object.assign(new Error('simulated failure'), { code: 'unavailable' }); }));
+    assert.equal((await fsdk.getDoc(fsdk.doc(env.authenticatedContext(UID).firestore(), 'accounts', UID))).data().status, 'deleting');
+    await assert.rejects(adapter.push({ ...op, eventId: 'event-stale-0004', epoch }), { code: 'permission-denied' });
+    await assert.rejects(adapter.ensureRoot(), { code: 'cloud-deleting' });
+    assert.equal((await adapter.deleteAll()).status, 'deleted');
+    await assert.rejects(adapter.push({ ...op, eventId: 'event-stale-0005', epoch }), { code: 'permission-denied' });     // ルートなし
+    assert.deepEqual(await adapter.deleteAll(), { status: 'nothing', counts: { visits: 0, facilityNotes: 0, conflicts: 0 } });
+    // 作り直し: 新しい世代。古い世代の再送は拒否される
+    await assert.rejects(adapter.ensureRoot(), { code: 'cloud-reset' }); // 自動再作成は不可
+    await assert.rejects(adapter.ensureRoot({ allowCreate: true, expectedRoot: { exists: true, epoch } }), { code: 'cloud-reset' }); // 削除前の古い確認も不可
+    const again = (await adapter.ensureRoot({ allowCreate: true, expectedRoot: { exists: false, epoch: null } })).epoch; assert.notEqual(again, epoch);
+    await assert.rejects(adapter.push({ ...op, eventId: 'event-stale-0006', epoch }), { code: 'permission-denied' });
+    assert.deepEqual(await adapter.push({ ...op, eventId: 'event-stale-0007', epoch: again }), { status: 'ok', revision: 1 });
+  });
+
+  await t.test('legacy data created before epochs: the adapter upgrades the root, existing records stay editable, and the account can be deleted', async () => {
+    await env.clearFirestore();
+    await env.withSecurityRulesDisabled(async ctx => {
+      const d = ctx.firestore(), ts = fsdk.Timestamp.now();
+      await fsdk.setDoc(fsdk.doc(d, 'accounts', UID), { schemaVersion: 1, createdAt: ts });
+      await fsdk.setDoc(fsdk.doc(d, 'accounts', UID, 'visits', 'event-legacy-0001'), { schemaVersion: 1, facilityId: 'onsen-001', sourceVisitId: 's', sourceDatasetId: 'd', date: '2026-01-01', notes: '', extra: '', status: 'active', revision: 1, lastOpId: 'old', createdAt: ts, updatedAt: ts, deletedAt: null, restoredAt: null });
+    });
+    const adapter = device('legacy').adapter;
+    const { epoch, upgraded } = await adapter.ensureRoot(); assert.ok(epoch && upgraded);
+    assert.deepEqual(await adapter.push({ type: 'update', eventId: 'event-legacy-0001', facilityId: 'onsen-001', baseRevision: 1, opId: 'op', epoch, fields: { date: '2026-01-02', notes: '', extra: '' } }), { status: 'ok', revision: 2 });
+    assert.equal((await adapter.deleteAll()).status, 'deleted');
+    assert.equal(await count(UID, 'visits'), 0);
   });
 });

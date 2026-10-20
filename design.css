@@ -80,6 +80,13 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .sync-conflict-list { list-style: none; padding: 0 !important; }
 .sync-conflict { border-top: 1px solid var(--line); padding: 12px 0; }
 .sync-conflict p { margin: 6px 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.cloud-delete-scope { border: 1px solid var(--line); border-radius: 6px; margin: 12px 0; padding: 8px 12px; }
+.cloud-delete-scope label, .cloud-delete-ack { display: flex; gap: 8px; align-items: flex-start; margin: 6px 0; }
+.cloud-delete-word { display: block; margin: 10px 0; }
+.cloud-delete-word input { display: block; margin-top: 6px; padding: 10px; width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 4px; font: inherit; background: var(--surface); color: var(--ink); }
+.sync-dialog h3 { margin: 14px 0 4px; font-size: 14px; }
+.sync-dialog .danger { background: #8a3d2f; border-color: #8a3d2f; color: #fffaf0; }
+.sync-dialog .danger:disabled { opacity: .45; }
 .memo-section { margin-top: 18px; }
 .memo-section h3 { margin: 0 0 8px; }
 .memo-section textarea { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; font-size: 14px; resize: vertical; }

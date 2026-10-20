@@ -2,8 +2,15 @@ rules_version = '2';
 
 // 温泉の旅: クラウド同期(訪問履歴・個人メモ)のSecurity Rules。
 // ・自分(request.auth.uid)の accounts/{uid}/ 以下だけ読み書きできる。他のユーザーのデータは読み書きとも不可。未ログインも不可。
-// ・訪問(visits)は eventId 単位。削除は物理削除ではなく status:'deleted'(tombstone)。物理deleteはすべて禁止。
-//   revision は必ず +1 ずつ(古い版からの上書きを防ぐ)。deleted → active は、明示的な復元(restoredAt == request.time)だけ許可。
+// ・訪問(visits)は eventId 単位。通常の削除は物理削除ではなく status:'deleted'(tombstone)。revision は必ず +1 ずつ。
+//   deleted → active は、明示的な復元(restoredAt == request.time)だけ許可。
+// ・【世代ID(epoch)とアカウントの状態】 accounts/{uid} には epoch(世代ID)と status('active' | 'deleting')がある。
+//   書き込みは「ルートが存在し、status が active で、書き込む文書の epoch がルートの epoch と一致する」時だけ許可する。
+//   → 削除が始まった(deleting)後・削除されてルートがなくなった後・削除後に作り直されて世代が変わった後は、
+//     古い端末(オフラインで溜めた変更、古いバージョンのページ)からの書き込みは、サーバー側のRulesで必ず拒否される。
+// ・【セルフサービス削除】 利用者本人が、①ルートを deleting にする(書き込みを止める)→ ②配下の文書を削除 → ③ルートを削除、の順で
+//   自分のクラウドデータを完全に削除できる。物理deleteは、ルートが deleting の間だけ許可する(通常の同期中は全面禁止)。
+//   途中で失敗しても、ルートが deleting のまま残るので、再度実行すれば続きから完了できる(書き込みは止まったまま)。
 // ・フィールドの型・長さ・形式を検証し、想定外のフィールドを拒否する。時刻は request.time(サーバー時刻)と一致を要求する。
 // ・施設マスター(67施設)はFirestoreに置かない(静的配信)。個人記録だけを保存する。
 // ・将来クラウド同期を有料機能にする時は syncAllowed() で entitlements/{uid}(管理者だけが書き込む)を参照する。今は本人であれば許可。
@@ -13,12 +20,21 @@ service cloud.firestore {
     function isOwner(uid) { return signedIn() && request.auth.uid == uid; }
     function syncAllowed(uid) { return isOwner(uid); }
 
+    function rootPath(uid) { return /databases/$(database)/documents/accounts/$(uid); }
+    function rootStatus(uid) { return get(rootPath(uid)).data.get('status', 'active'); }
+    function rootActive(uid) { return exists(rootPath(uid)) && rootStatus(uid) == 'active'; }
+    function rootDeleting(uid) { return exists(rootPath(uid)) && rootStatus(uid) == 'deleting'; }
+    // 書き込む文書の世代ID(epoch)が、ルートの現在の世代IDと一致しているか(古い世代・世代のない旧クライアントは不一致)
+    function epochMatches(uid, d) { return rootActive(uid) && get(rootPath(uid)).data.get('epoch', '') != '' && d.epoch == get(rootPath(uid)).data.epoch; }
+    function validEpoch(e) { return e is string && e.size() >= 8 && e.size() <= 100; }
+
     function visitKeys() {
-      return ['schemaVersion', 'facilityId', 'sourceVisitId', 'sourceDatasetId', 'date', 'notes', 'extra', 'status', 'revision', 'lastOpId', 'createdAt', 'updatedAt', 'deletedAt', 'restoredAt'];
+      return ['schemaVersion', 'epoch', 'facilityId', 'sourceVisitId', 'sourceDatasetId', 'date', 'notes', 'extra', 'status', 'revision', 'lastOpId', 'createdAt', 'updatedAt', 'deletedAt', 'restoredAt'];
     }
     function validVisit(d, eventId) {
       return d.keys().hasOnly(visitKeys()) && d.keys().hasAll(visitKeys())
         && d.schemaVersion == 1
+        && validEpoch(d.epoch)
         && eventId.matches('^[A-Za-z0-9_-]{8,100}$')
         && d.facilityId is string && d.facilityId.matches('^onsen-[a-zA-Z0-9-]+$') && d.facilityId.size() <= 40
         && d.sourceVisitId is string && d.sourceVisitId.size() >= 1 && d.sourceVisitId.size() <= 200
@@ -33,10 +49,11 @@ service cloud.firestore {
         && (d.deletedAt == null || d.deletedAt is timestamp)
         && (d.restoredAt == null || d.restoredAt is timestamp);
     }
-    function noteKeys() { return ['schemaVersion', 'facilityId', 'notes', 'revision', 'lastOpId', 'updatedAt']; }
+    function noteKeys() { return ['schemaVersion', 'epoch', 'facilityId', 'notes', 'revision', 'lastOpId', 'updatedAt']; }
     function validNote(d, facilityId) {
       return d.keys().hasOnly(noteKeys()) && d.keys().hasAll(noteKeys())
         && d.schemaVersion == 1
+        && validEpoch(d.epoch)
         && facilityId.matches('^onsen-[a-zA-Z0-9-]+$') && d.facilityId == facilityId
         && d.notes is string && d.notes.size() <= 10000
         && d.revision is int && d.revision >= 1
@@ -44,11 +61,12 @@ service cloud.firestore {
         && d.updatedAt is timestamp;
     }
     function conflictKeys() {
-      return ['schemaVersion', 'kind', 'key', 'facilityId', 'eventId', 'field', 'base', 'remote', 'local', 'status', 'createdAt', 'resolvedAt', 'resolution'];
+      return ['schemaVersion', 'epoch', 'kind', 'key', 'facilityId', 'eventId', 'field', 'base', 'remote', 'local', 'status', 'createdAt', 'resolvedAt', 'resolution'];
     }
     function validConflict(d) {
       return d.keys().hasOnly(conflictKeys()) && d.keys().hasAll(conflictKeys())
         && d.schemaVersion == 1
+        && validEpoch(d.epoch)
         && d.kind in ['visit', 'facilityNote', 'deletedRemotely', 'editVsDelete']
         && d.key is string && d.key.size() <= 150
         && d.facilityId is string && d.facilityId.matches('^onsen-[a-zA-Z0-9-]+$')
@@ -62,19 +80,39 @@ service cloud.firestore {
         && (d.resolvedAt == null || d.resolvedAt is timestamp)
         && d.resolution is string && d.resolution.size() <= 20;
     }
+    function rootKeys() { return ['schemaVersion', 'createdAt', 'epoch', 'status', 'deletingAt', 'creationVersion']; }
+    function validRootShape(d) {
+      return d.keys().hasOnly(rootKeys()) && d.keys().hasAll(['schemaVersion', 'createdAt', 'epoch', 'status', 'deletingAt'])
+        && (!('creationVersion' in d) || d.creationVersion == 2) && d.schemaVersion == 1 && validEpoch(d.epoch);
+    }
 
     match /accounts/{uid} {
       allow read: if isOwner(uid);
-      allow create: if syncAllowed(uid)
-        && request.resource.data.keys().hasOnly(['schemaVersion', 'createdAt'])
-        && request.resource.data.schemaVersion == 1
-        && request.resource.data.createdAt == request.time;
-      allow update, delete: if false;
+      // 新規作成: 世代ID(epoch)を付けて active で作る
+      allow create: if syncAllowed(uid) && validRootShape(request.resource.data)
+        // 旧クライアントのルート再作成を拒否。v2は確認ボタン経由のみ作成する。
+        // Rules自体が人間のクリックを証明するものではない。
+        && request.resource.data.creationVersion == 2
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.status == 'active' && request.resource.data.deletingAt == null;
+      allow update: if syncAllowed(uid) && validRootShape(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && (
+          // 旧形式のルート(epochなし)を、世代IDのある形式へ移行する
+          (!('epoch' in resource.data) && request.resource.data.status == 'active' && request.resource.data.deletingAt == null)
+          // 削除の開始(active → deleting): 以後この世代への書き込みはすべて拒否される。世代IDは変えない
+          || (resource.data.get('status', 'active') == 'active' && request.resource.data.status == 'deleting'
+              && request.resource.data.deletingAt == request.time
+              && request.resource.data.epoch == resource.data.get('epoch', request.resource.data.epoch))
+        );
+      // ルートの削除は、削除が始まっている(deleting)時だけ。最後に行う
+      allow delete: if isOwner(uid) && resource.data.get('status', 'active') == 'deleting';
 
       match /visits/{eventId} {
         allow read: if isOwner(uid);
         allow create: if syncAllowed(uid)
           && validVisit(request.resource.data, eventId)
+          && epochMatches(uid, request.resource.data)
           && request.resource.data.revision == 1
           && request.resource.data.status == 'active'
           && request.resource.data.createdAt == request.time
@@ -83,6 +121,7 @@ service cloud.firestore {
           && request.resource.data.restoredAt == null;
         allow update: if syncAllowed(uid)
           && validVisit(request.resource.data, eventId)
+          && epochMatches(uid, request.resource.data)
           && request.resource.data.revision == resource.data.revision + 1
           && request.resource.data.facilityId == resource.data.facilityId
           && request.resource.data.sourceVisitId == resource.data.sourceVisitId
@@ -100,38 +139,43 @@ service cloud.firestore {
             || (resource.data.status == 'deleted' && request.resource.data.status == 'active'
               && request.resource.data.deletedAt == null && request.resource.data.restoredAt == request.time)
           );
-        allow delete: if false;
+        // 物理削除は、アカウントのクラウドデータ削除中(ルートが deleting)だけ
+        allow delete: if isOwner(uid) && rootDeleting(uid);
       }
 
       match /facilityNotes/{facilityId} {
         allow read: if isOwner(uid);
         allow create: if syncAllowed(uid)
           && validNote(request.resource.data, facilityId)
+          && epochMatches(uid, request.resource.data)
           && request.resource.data.revision == 1
           && request.resource.data.updatedAt == request.time;
         allow update: if syncAllowed(uid)
           && validNote(request.resource.data, facilityId)
+          && epochMatches(uid, request.resource.data)
           && request.resource.data.revision == resource.data.revision + 1
           && request.resource.data.updatedAt == request.time;
-        allow delete: if false;
+        allow delete: if isOwner(uid) && rootDeleting(uid);
       }
 
       match /conflicts/{conflictId} {
         allow read: if isOwner(uid);
         allow create: if syncAllowed(uid)
           && validConflict(request.resource.data)
+          && epochMatches(uid, request.resource.data)
           && request.resource.data.status == 'open'
           && request.resource.data.createdAt == request.time
           && request.resource.data.resolvedAt == null
           && request.resource.data.resolution == '';
-        // 解決(open → resolved)だけ可能。内容(両案)は変更できない
+        // 解決(open → resolved)だけ可能。内容(両案)は変更できない。ルートが active の間だけ
         allow update: if syncAllowed(uid)
+          && rootActive(uid)
           && resource.data.status == 'open'
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'resolvedAt', 'resolution'])
           && request.resource.data.status == 'resolved'
           && request.resource.data.resolvedAt == request.time
           && request.resource.data.resolution in ['local', 'remote', 'merge', 'delete', 'restore', 'discard'];
-        allow delete: if false;
+        allow delete: if isOwner(uid) && rootDeleting(uid);
       }
     }
 

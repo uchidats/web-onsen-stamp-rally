@@ -8,14 +8,13 @@
   if(root.OnsenAuth)return;
   const PLACEHOLDER=/^(your|change|todo|xxx|replace)/i;
   const REQUIRED=['apiKey','authDomain','projectId','appId'];
-  // ログインを有効にできる環境(設定ファイルとは別に、コードで固定)。Phase 1 では本番を含めない。
-  // 設定ファイルに config を足しても本番では有効にならない。本番で有効にするにはこのリストの変更(コード変更・レビュー)が必要。
-  const ENABLED_ENVIRONMENTS=['local','staging'];
-  const BLOCKED_HOSTS=['uchidats.github.io'];
+  // ログインを有効にできる環境(設定ファイルとは別に、コードで固定)。本番(production)と試験(staging)は同じFirebaseプロジェクトを共有する。
+  // 環境名がこのリストにない設定・ホスト名が hosts に一致しない設定は、設定ファイルを変えても有効にならない(完全一致のホスト名だけ)。
+  const ENABLED_ENVIRONMENTS=['local','staging','production'];
   const validConfig=c=>!!c&&typeof c==='object'&&REQUIRED.every(k=>typeof c[k]==='string'&&c[k].trim()!==''&&!PLACEHOLDER.test(c[k].trim()));
   // ページのホスト名に合う環境の設定を返す。どれにも当てはまらない/設定が不完全なら null(=ログイン無効)
   function resolveEnvironment(settings,hostname){
-    const envs=settings&&settings.environments;if(!envs||typeof envs!=='object'||typeof hostname!=='string'||BLOCKED_HOSTS.includes(hostname))return null;
+    const envs=settings&&settings.environments;if(!envs||typeof envs!=='object'||typeof hostname!=='string')return null;
     for(const [name,env] of Object.entries(envs)){
       if(ENABLED_ENVIRONMENTS.includes(name)&&env&&Array.isArray(env.hosts)&&env.hosts.includes(hostname)&&validConfig(env.config))return {name,config:env.config,sync:env.sync===true};
     }
@@ -30,7 +29,8 @@
     const urls=sdkUrls(settings.sdkVersion);if(!urls)throw Error('invalid-sdk-version');
     const [app,auth]=await Promise.all([import(urls.app),import(urls.auth)]);
     return {initializeApp:app.initializeApp,getAuth:auth.getAuth,GoogleAuthProvider:auth.GoogleAuthProvider,signInWithPopup:auth.signInWithPopup,signOut:auth.signOut,
-      onAuthStateChanged:auth.onAuthStateChanged,setPersistence:auth.setPersistence,browserSessionPersistence:auth.browserSessionPersistence,browserLocalPersistence:auth.browserLocalPersistence};
+      onAuthStateChanged:auth.onAuthStateChanged,setPersistence:auth.setPersistence,browserSessionPersistence:auth.browserSessionPersistence,browserLocalPersistence:auth.browserLocalPersistence,
+      reauthenticateWithPopup:auth.reauthenticateWithPopup,deleteUser:auth.deleteUser};
   }
   // エラーは利用者向けの短い文言にする(エラー本文・メールアドレス等は出さない)。記録の利用には影響しないことを添える。
   const NOTE='記録は引き続きこの端末で利用できます。';
@@ -42,6 +42,8 @@
     if(code==='auth/unauthorized-domain')return {code,message:'このURLではログインを利用できません。'+NOTE};
     if(code==='auth/operation-not-allowed')return {code,message:'ログインは現在準備中です。'+NOTE};
     if(code==='auth/too-many-requests')return {code,message:'試行回数が多すぎます。しばらくしてからお試しください。'+NOTE};
+    if(code==='auth/requires-recent-login')return {code,message:'セキュリティのため、もう一度Googleで確認(再ログイン)してから続けてください。'};
+    if(code==='auth/user-mismatch'||code==='auth/user-not-found')return {code,message:'ログイン中とは別のアカウントが選ばれました。同じアカウントで確認してください。'};
     return {code:code||'unknown',message:'ログインできませんでした。時間をおいてもう一度お試しください。'+NOTE};
   }
   function create(options){
@@ -83,6 +85,19 @@
         set({busy:false,message:errorInfo(sdk?error:{code:'auth/network-request-failed'}).message,status:state.status==='signedIn'?'signedIn':'signedOut'});
       }
     }
+    // アカウントの削除(Firebase Authentication)。クラウドのデータを先に削除してから呼ぶこと(削除後は認証できず、データを消せなくなるため)。
+    // 最近のログインが必要な操作のため、auth/requires-recent-login が返ったら reauthenticate() してからもう一度呼ぶ。
+    async function reauthenticate(expectedUid){
+      const mod=await ensureSdk();const u=auth.currentUser;if(!u)throw Object.assign(Error('not signed in'),{code:'auth/user-not-found'});
+      if(expectedUid&&u.uid!==expectedUid)throw Object.assign(Error('account changed'),{code:'auth/user-mismatch'});
+      const provider=new mod.GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});
+      await mod.reauthenticateWithPopup(u,provider);
+    }
+    async function deleteAccount(expectedUid){
+      const mod=await ensureSdk();const u=auth.currentUser;if(!u)throw Object.assign(Error('not signed in'),{code:'auth/user-not-found'});
+      if(expectedUid&&u.uid!==expectedUid)throw Object.assign(Error('account changed'),{code:'auth/user-mismatch'});
+      await mod.deleteUser(u);
+    }
     async function signOut(){
       if(!env||!sdk||state.busy)return;
       set({busy:true,message:''});
@@ -90,7 +105,7 @@
       catch(error){set({busy:false,message:'ログアウトできませんでした。時間をおいてもう一度お試しください。'})}
     }
     return {init,signIn,signOut,getState:()=>state,subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn)},enabled:()=>!!env,
-      getSession:apiSession,onSession:fn=>{sessionListeners.add(fn);return()=>sessionListeners.delete(fn)},syncEnabled:()=>!!env&&env.sync===true};
+      reauthenticate,deleteAccount,getSession:apiSession,onSession:fn=>{sessionListeners.add(fn);return()=>sessionListeners.delete(fn)},syncEnabled:()=>!!env&&env.sync===true};
   }
   // 画面: ヘッダーの既存ボタン(#loginBtn)を使い、ログイン設定がある時だけ小さな行(#accountRow)を表示する。
   function bind(controller,doc){

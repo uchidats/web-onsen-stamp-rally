@@ -60,12 +60,14 @@ test('staging hosting: the built directory matches the list byte for byte and co
       assert.ok(fs.readFileSync(path.join(out, f)).equals(fs.readFileSync(f)), f + ' is an exact copy');
       if (/\.(js|html|css|json)$/.test(f)) assert.ok(!/BEGIN (RSA |EC )?PRIVATE KEY|"private_key"|client_secret|firebase-adminsdk/i.test(read(path.join(out, f))), f);
     }
-    // 認証設定は Web設定だけ(公開してよい値)で、本番の設定は入っていない
-    assert.match(read(path.join(out, 'firebase-config.js')), /config: null \/\/ 本番/);
+    // 認証設定は Web設定だけ(公開してよい値)。本番・試験・localhost が同じプロジェクトの設定を共有する
+    const builtConfig = read(path.join(out, 'firebase-config.js'));
+    assert.equal((builtConfig.match(/config: FIREBASE_WEB_CONFIG/g) || []).length, 3);
+    assert.ok(!/config: null/.test(builtConfig));
   } finally { fs.rmSync(out, { recursive: true, force: true }); }
 });
 
-test('cloud sync: Firestore is used only by the sync adapter, only on staging/local (never production), and nothing else from Firebase (Functions/Storage/Analytics) is used', () => {
+test('cloud sync: Firestore is used only by the sync adapter on the three configured hosts sharing one project, and nothing else from Firebase (Functions/Storage/Analytics) is used', () => {
   const strip = f => read(f).replace(/\/\/.*$/gm, '');
   const all = ['auth.js', 'firebase-config.js', 'app.js', 'records.js', 'sync.js', 'sync-core.js', 'sync-engine.js', 'sync-firestore.js'].map(strip).join('\n');
   assert.ok(!/firebase-functions|firebase-storage|firebase-database|firebase-analytics|firebase-messaging|firebase-app-check|firebase-performance|firebase-remote-config/.test(all));
@@ -77,13 +79,15 @@ test('cloud sync: Firestore is used only by the sync adapter, only on staging/lo
   assert.ok(!/import\(/.test(strip('sync-firestore.js')) && !/import\(/.test(strip('sync-engine.js')));
   // 認証コードは訪問記録の保存領域・記録APIを使わない
   assert.ok(!/OnsenRecords|onsen-rally-/.test(read('auth.js') + read('firebase-config.js')));
-  // クラウド同期は sync:true の環境(staging・local)だけ。本番には付かず、sync.js は無効な環境では即座に何もしない
+  // 本番(uchidats.github.io)・試験サイト・localhost は同じFirebaseプロジェクトの設定を共有し、クラウド同期は sync:true の環境だけ
   const sb = { window: {} }; require('node:vm').runInNewContext(read('firebase-config.js'), sb);
   const envs = JSON.parse(JSON.stringify(sb.window.ONSEN_FIREBASE.environments));
-  assert.equal(envs.production.sync, undefined); assert.equal(envs.production.config, null);
-  assert.equal(envs.staging.sync, true); assert.equal(envs.local.sync, true);
+  assert.deepEqual(Object.keys(envs).sort(), ['local', 'production', 'staging']);
+  for (const e of Object.values(envs)) { assert.equal(e.sync, true); assert.equal(e.config.projectId, 'my-onsen-journey-staging'); }
+  assert.deepEqual(envs.production.config, envs.staging.config); assert.deepEqual(envs.production.config, envs.local.config);
+  assert.deepEqual(envs.production.hosts, ['uchidats.github.io']);
   assert.match(strip('sync.js'), /!Auth\.syncEnabled\(\)[^;]*\) return;/);
-  assert.match(strip('auth.js'), /ENABLED_ENVIRONMENTS=\['local','staging'\]/);
+  assert.match(strip('auth.js'), /ENABLED_ENVIRONMENTS=\['local','staging','production'\]/);
 });
 
 test('staging hosting: the built site loads from its own directory (every published file is served, cards and 67 map markers render, auth stays off on 127.0.0.1)', async (t) => {
