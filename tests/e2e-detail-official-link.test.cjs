@@ -43,7 +43,7 @@ test('E2E: facility name in the detail view links to the official site (card and
     assert.deepEqual(without.map(x => x.id), ['onsen-005', 'onsen-022', 'onsen-025']);
     assert.equal(withUrl.length, 64);
 
-    for (const width of [1280, 390]) {
+    for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       for (const via of ['card', 'map']) {
         // 公式サイト登録あり: 全64施設で、施設名がそのURLへのリンク(新しいタブ・noopener)
@@ -58,7 +58,7 @@ test('E2E: facility name in the detail view links to the official site (card and
           assert.match(i.rel, /noopener/);
           assert.match(i.label, /公式サイト（新しいタブで開く）/);
           assert.equal(i.icon, true);
-          assert.equal(i.underline, 'underline');
+          assert.equal(i.underline, 'none');
           assert.ok(i.tapH >= 28, `${via}:${x.id} tap height ${i.tapH}`);
           assert.ok(i.inside && !i.overflow, `${via}:${x.id}@${width} fits`);
           assert.equal(i.links, 2);
@@ -76,6 +76,23 @@ test('E2E: facility name in the detail view links to the official site (card and
         }
       }
     }
+
+    // 主見出し全体のリンク: 下線を使わず、ホバー色とキーボードのフォーカス枠で示す。
+    await send('Emulation.setDeviceMetricsOverride', {width:1280,height:900,deviceScaleFactor:1,mobile:false});
+    await open.card('onsen-001');
+    await evaluate("document.querySelector('.modal').scrollTop=0");
+    const normalColor=await evaluate("getComputedStyle(document.querySelector('#modalSubtitle .facility-name-link')).color");
+    const point=await evaluate("(()=>{const r=document.querySelector('#modalSubtitle .facility-name-link').getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}})()");
+    await send('Input.dispatchMouseEvent',{type:'mouseMoved',...point});
+    assert.notEqual(await evaluate("getComputedStyle(document.querySelector('#modalSubtitle .facility-name-link')).color"),normalColor);
+    await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:0,y:0});
+    await evaluate("document.getElementById('modalClose').focus()");
+    await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});
+    await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});
+    assert.equal(await evaluate("document.activeElement.matches('#modalSubtitle .facility-name-link')"),true);
+    assert.equal(await evaluate("getComputedStyle(document.activeElement).outlineStyle"),'solid');
+    assert.equal(await evaluate("getComputedStyle(document.activeElement).textDecorationLine"),'none');
+    await close();
 
     // リンクのクリックで詳細は閉じず、アプリ側が既定動作を取り消さない(遷移だけテスト内で止める)
     await open.card('onsen-001');
