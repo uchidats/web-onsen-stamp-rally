@@ -156,9 +156,8 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .beta-badge { display: inline-block; flex: none; white-space: nowrap; padding: 2px 6px; border: 1px solid #c5ad7c; border-radius: 3px; color: #785b2f; background: #eee7d8; font-size: 10px; font-weight: 600; line-height: 1.5; letter-spacing: .08em; vertical-align: middle; }
 .beta-badge-header { margin-left: 6px; color: var(--gold); background: transparent; border-color: #c5ad7c80; font-size: 9px; }
 .progress-summary { padding: 16px; background: var(--paper); box-shadow: none; }
-.progress-heading { margin: 0 0 14px; color: var(--moss); font-family: inherit; font-size: 16px; font-weight: 600; line-height: 1.5; text-wrap: initial; }
 .progress-rings { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.progress-card { --ring-color: var(--moss); min-width: 0; padding: 16px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); text-align: center; }
+.progress-card { --ring-color: var(--moss); min-width: 0; padding: 12px 10px; text-align: center; }
 .progress-card-chi { --ring-color: #a58a52; }
 .progress-card-kake { --ring-color: #567864; }
 .progress-card-gensei { --ring-color: var(--gensei); }
@@ -382,7 +381,7 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   .dashboard { margin-top: -24px; }
   .progress-summary { padding: 12px; }
   .progress-rings { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .progress-card { padding: 14px 8px; }
+  .progress-card { padding: 12px 8px; }
   .progress-card h3 { font-size: 13px; }
   .progress-ring { width: 88px; height: 88px; }
   .progress-percent { font-size: 20px; }

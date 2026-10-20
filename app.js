@@ -20,8 +20,8 @@ function facilityName(x,context='card'){
 // Extend this registry with an ID, label and facility predicate for future scopes.
 const PROGRESS_SCOPES = [
   {id:'all',label:'全施設',includes:()=>true},
-  {id:'chi',label:'地♨',includes:x=>['現・旧','現（新規）','旧（掲載終了）'].includes(x.category)},
-  {id:'kake',label:'かけ流しの湯',includes:x=>!!kakeEntry(x)},
+  {id:'chi',label:'♨地・温泉',includes:x=>['現・旧','現（新規）','旧（掲載終了）'].includes(x.category)},
+  {id:'kake',label:'源泉かけ流し',includes:x=>!!kakeEntry(x)},
   {id:'gensei',label:'源生の湯',includes:x=>genseiBaths(x).length>0}
 ];
 function renderDashboard(){
