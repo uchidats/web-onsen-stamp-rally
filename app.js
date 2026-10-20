@@ -20,7 +20,9 @@ function facilityName(x,context='card'){
 // Extend this registry with an ID, label and facility predicate for future scopes.
 const PROGRESS_SCOPES = [
   {id:'all',label:'全施設',includes:()=>true},
-  {id:'chi',label:'地・温泉',includes:x=>['現・旧','現（新規）','旧（掲載終了）'].includes(x.category)}
+  {id:'chi',label:'地♨ 地・温泉',includes:x=>['現・旧','現（新規）','旧（掲載終了）'].includes(x.category)},
+  {id:'kake',label:'源泉かけ流し',includes:x=>!!kakeEntry(x)},
+  {id:'gensei',label:'源生の湯',includes:x=>genseiBaths(x).length>0}
 ];
 function renderDashboard(){const scope=PROGRESS_SCOPES.find(s=>s.id===$('progressScope').value)||PROGRESS_SCOPES[0],facilities=DATA.filter(scope.includes),done=facilities.filter(visited).length,tot=facilities.length,p=tot?Math.round(done/tot*1000)/10:0;$('totalPercent').innerHTML=p+'<small>%</small>';$('totalText').textContent=`${done} / ${tot} 施設を訪問済み`;$('totalBar').style.width=p+'%'}
 

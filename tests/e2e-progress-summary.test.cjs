@@ -58,6 +58,21 @@ test('E2E: compact progress summary states and backup restore', async (t) => {
         assert.equal(await evaluate("document.getElementById('totalText').textContent"),`${scopeDone} / 43 施設を訪問済み`);
         assert.equal(await evaluate("document.getElementById('totalPercent').textContent"),Math.round(scopeDone/43*1000)/10+'%');
         assert.equal(await evaluate("document.getElementById('totalBar').style.width"),Math.round(scopeDone/43*1000)/10+'%');
+        const kakeDone=await evaluate(`ONSEN_DATA.slice(0,${count}).filter(x=>!!(window.ONSEN_KAKENAGASHI||{})[x.id]).length`);
+        await evaluate("document.getElementById('progressScope').value='kake';document.getElementById('progressScope').dispatchEvent(new Event('change'))");
+        assert.equal(await evaluate("document.getElementById('totalText').textContent"),`${kakeDone} / 51 施設を訪問済み`);
+        assert.equal(await evaluate("document.getElementById('totalPercent').textContent"),Math.round(kakeDone/51*1000)/10+'%');
+        const genseiDone=await evaluate(`ONSEN_DATA.slice(0,${count}).filter(x=>(window.ONSEN_GENSEI?.certifiedBaths((window.ONSEN_KAKENAGASHI||{})[x.id])||[]).length>0).length`);
+        await evaluate("document.getElementById('progressScope').value='gensei';document.getElementById('progressScope').dispatchEvent(new Event('change'))");
+        assert.equal(await evaluate("document.getElementById('totalText').textContent"),`${genseiDone} / 7 施設を訪問済み`);
+        assert.equal(await evaluate("document.getElementById('totalPercent').textContent"),Math.round(genseiDone/7*1000)/10+'%');
+        const scopeOptions=await evaluate("[...document.getElementById('progressScope').options].map(o=>({value:o.value,text:o.text}))");
+        assert.deepEqual(scopeOptions,[
+          {value:'all',text:'全施設'},
+          {value:'chi',text:'地♨ 地・温泉'},
+          {value:'kake',text:'源泉かけ流し'},
+          {value:'gensei',text:'源生の湯'}
+        ]);
         await evaluate("document.getElementById('progressScope').value='all';document.getElementById('progressScope').dispatchEvent(new Event('change'))");
         const layout=await evaluate(`(()=>{
           const panel=document.querySelector('.progress-summary'),r=panel.getBoundingClientRect();
