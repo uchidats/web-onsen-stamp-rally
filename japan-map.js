@@ -135,7 +135,7 @@
               '<button type="button" id="japanMapZoomIn" aria-label="全国地図を拡大">+</button>' +
               '<button type="button" id="japanMapZoomOut" aria-label="全国地図を縮小">−</button>' +
             '</div>' +
-            '<div class="japan-map-region-controls">' +
+            '<div class="japan-map-region-controls" hidden>' +
             '<button type="button" class="stamp" id="japanMapResetView">全体表示</button>' +
             '<button type="button" class="stamp" id="japanMapRegionView">関東・東北</button>' +
             '</div>' +
@@ -165,7 +165,7 @@
           '<dialog id="japanMapHelpDialog" class="privacy-dialog japan-map-help-dialog" aria-labelledby="japanMapHelpHeading">' +
             '<h2 id="japanMapHelpHeading">地図の使い方</h2>' +
             '<p>ドラッグ・1本指で移動、2本指で拡大・縮小。ホイールでの拡大・縮小はCtrl／⌘を押しながら。＋・－ボタンでも操作できます。ページのスクロールは地図の外側で行えます。</p>' +
-            '<p>「全体表示」で全国へ、「関東・東北」で最初の表示範囲へ戻ります。都道府県を選ぶと、その県の地図と温泉一覧を表示します。「全国へ戻る」で選択を解除できます。</p>' +
+            '<p>初期表示は関東・東北を中心とした範囲です。都道府県を選ぶと、その県の地図と温泉一覧を表示します。「全体表示へ戻る」で選択を解除し、初期表示へ戻ります。全国へは縮小やドラッグで移動できます。</p>' +
             '<p>輪郭と温泉位置は、同じ地理座標変換で表示しています。丸は位置確認済みの温泉です。同じ座標に複数の温泉がある場合、マーカーは重なって表示されます。各施設は温泉一覧から選べます。</p>' +
             '<button type="button" id="japanMapHelpClose" class="stamp">閉じる</button>' +
           '</dialog>' +
@@ -229,11 +229,12 @@
       if(zoomIn)zoomIn.disabled=v.zoom>=8;if(zoomOut)zoomOut.disabled=v.zoom<=1;
       hideTooltip();
     }
+    function resetToInitialView() { viewport.region(); updateView(); }
     if(zoomIn)zoomIn.onclick=()=>{viewport.zoomAt(viewport.get().zoom*1.5);updateView();};
     if(zoomOut)zoomOut.onclick=()=>{viewport.zoomAt(viewport.get().zoom/1.5);updateView();};
     const resetView=container.querySelector('#japanMapResetView'),regionView=container.querySelector('#japanMapRegionView');
     if(resetView)resetView.onclick=()=>{viewport.reset();updateView();};
-    if(regionView)regionView.onclick=()=>{viewport.region();updateView();};
+    if(regionView)regionView.onclick=resetToInitialView;
     if(svgElem){
       const pointers=new Map();let first=null,last=null,pinch=null,moved=false,suppressUntil=0,touchGesture=null;
       const point=e=>({x:e.clientX,y:e.clientY});
@@ -505,6 +506,7 @@
 
     return {
       refresh: refresh,
+      resetToInitialView: resetToInitialView,
       getPrefStats: function(name) { return getPrefStats(name, data, isVisited); },
       getMarkerCount: function() { return markerNodes.length; },
       getViewState: viewport.get,

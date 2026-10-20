@@ -168,6 +168,21 @@ test('Viewport: zoom anchor, bounded pan, preset and reset preserve shared coord
   v.reset();assert.equal(v.get().zoom,1);assert.equal(v.get().size,1000);
 });
 
+test('Initial regional viewport and return API preserve full-Japan zoom access', () => {
+  const MapModule=loadJapanMap(),container=createMockElement('div'),plus=createMockElement('button'),minus=createMockElement('button');
+  const query=container.querySelector.bind(container);
+  container.querySelector=selector=>selector==='#japanMapZoomIn'?plus:selector==='#japanMapZoomOut'?minus:query(selector);
+  const map=MapModule.create({container,data:[]});
+  const initial=MapModule.createViewport().region();
+  assert.deepEqual(map.getViewState(),initial);
+  plus.onclick();assert.ok(map.getViewState().zoom>initial.zoom);
+  map.resetToInitialView();assert.deepEqual(map.getViewState(),initial);
+  for(let i=0;i<7;i++)minus.onclick();
+  assert.equal(map.getViewState().size,1000);
+  assert.equal(map.getViewState().x,0);assert.equal(map.getViewState().y,0);
+  map.resetToInitialView();assert.deepEqual(map.getViewState(),initial);
+});
+
 test('JapanPrefMap: 47 prefectures defined and master data valid', () => {
   const MapModule = loadJapanMap();
   assert.ok(MapModule, 'JapanPrefMap should be defined');
