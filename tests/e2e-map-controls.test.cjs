@@ -53,11 +53,12 @@ test('Shared map zoom controls fit and work at desktop and phone widths', async 
     const mobile = width < 400;
     await send('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile });
     await send('Emulation.setTouchEmulationEnabled', { enabled: mobile });
+    await evaluate("document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'start',behavior:'instant'})");
     const region = await view();
     const expectedRegion = await evaluate("(()=>{const v=JapanPrefMap.createViewport().region();return [v.x,v.y,v.size,v.size].join(' ')})()");
     assert.equal(region, expectedRegion);
     const svgSize = await evaluate("document.querySelector('.geolonia-svg-map').getBoundingClientRect().width");
-    assert.equal(await evaluate(`(() => {const z=document.querySelector('.map-zoom-controls').getBoundingClientRect(),f=document.querySelector('.japan-map-svg-frame').getBoundingClientRect();return z.left===f.left&&z.top===f.top&&document.documentElement.scrollWidth<=innerWidth&&['japanMapResetView','japanMapRegionView'].every(id=>document.getElementById(id).getClientRects().length===0)})()`), true);
+    assert.equal(await evaluate(`(() => {const z=document.querySelector('.map-zoom-controls').getBoundingClientRect(),f=document.querySelector('.japan-map-svg-frame').getBoundingClientRect(),s=document.querySelector('.geolonia-svg-map').getBoundingClientRect(),hit=document.elementFromPoint(z.right+20,z.top+20);return z.left===f.left+10&&z.top===f.top+10&&s.top===f.top&&z.width<s.width/2&&!!hit?.closest('.geolonia-svg-map')&&document.documentElement.scrollWidth<=innerWidth&&['japanMapResetView','japanMapRegionView'].every(id=>document.getElementById(id).getClientRects().length===0)})()`), true, 'SVG starts at the frame top; only the inset zoom buttons intercept map input');
     assert.equal(await evaluate("document.getElementById('resetPref').textContent"), '全体表示へ戻る');
     assert.equal(await evaluate("document.getElementById('mapReset').textContent"), '全体表示へ戻る');
     await click('#japanMapZoomIn', mobile);

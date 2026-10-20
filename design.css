@@ -464,7 +464,7 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 
 .geolonia-svg-map:active { cursor: grabbing; }
 .japan-map-svg-frame { overflow: hidden; }
-.japan-map-zoom-controls { position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.japan-map-zoom-controls { position: absolute; top: 10px; left: 10px; z-index: 2; display: flex; align-items: flex-start; gap: 8px; }
 .map-zoom-controls, #mapCanvas .leaflet-control-zoom { font-family: "Segoe UI", "Yu Gothic", sans-serif; display: flex; flex: none; flex-direction: column; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); box-shadow: 0 2px 8px #3038320c; }
 .map-zoom-controls button, #mapCanvas .leaflet-control-zoom a { display: block; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 0; border-radius: 0; background: var(--surface); color: var(--moss); font-family: inherit; font-size: 20px; font-weight: 500; line-height: 44px; text-align: center; text-decoration: none; }
 .map-zoom-controls button:first-child, #mapCanvas .leaflet-control-zoom a:first-child { border-bottom: 1px solid var(--line); border-radius: 5px 5px 0 0; }
