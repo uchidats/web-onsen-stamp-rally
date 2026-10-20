@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const html = fs.readFileSync('index.html', 'utf8');
 const dialog = html.match(/<dialog id="privacyDialog"[\s\S]*?<\/dialog>/)[0];
 const footer = html.match(/<footer[^>]*>([\s\S]*?)<\/footer>/)[1];
+const about = html.match(/<dialog id="aboutDialog"[\s\S]*?<\/dialog>/)[0];
 
 test('privacy text says that Google login + sync stores visit history and memos in the cloud, tied to the account, and that login is optional', () => {
   const cloud = dialog.match(/<p id="cloudPrivacy">([\s\S]*?)<\/p>/)[1];
@@ -21,11 +22,14 @@ test('privacy text says that Google login + sync stores visit history and memos 
   assert.ok(dialog.includes('180日間'));
 });
 
-test('footer no longer lists Google login as a future item and explains where records are stored', () => {
+test('compact footer opens site information; original explanations and privacy entry remain available', () => {
   assert.ok(!footer.includes('Googleログインは今後の開発対象'));
-  assert.ok(footer.includes('ログインしない場合はこのブラウザ内にだけ保存されます'));
-  assert.ok(footer.includes('クラウドにも保存されます'));
-  assert.ok(footer.includes('プライバシー・アクセス解析の設定'));
+  assert.ok(footer.includes('このサイトについて'));
+  assert.ok(footer.includes('© 2026'));
+  assert.ok(!footer.includes('<br>'));
+  assert.ok(about.includes('ログインしない場合はこのブラウザ内にだけ保存されます'));
+  assert.ok(about.includes('クラウドにも保存されます'));
+  assert.ok(about.includes('プライバシー・アクセス解析の設定'));
 });
 
 test('public UI strings do not call the cloud sync a staging/test-only feature any more', () => {

@@ -34,12 +34,12 @@ test('staging hosting: firebase.json publishes only dist-staging, adds noindex, 
 test('staging hosting: the published file list is a small allowlist with no repo, research, test, doc, backup or secret files', () => {
   const files = collect();
   assert.deepEqual(check(files), []);
-  assert.equal(files.length, 40);
+  assert.equal(files.length, 41);
   assert.ok(files.includes('account-menu.js'));
   for (const f of ['sync-core.js', 'sync-engine.js', 'sync-firestore.js', 'sync.js']) assert.ok(files.includes(f), f);
   // 公開物にRules・エミュレータ・テストは含めない(Rulesはfirebase deploy --only firestore で別に適用する)
   assert.ok(!files.some(f => /firestore\.rules|firestore\.indexes|firebase\.json/.test(f)));
-  for (const f of ['index.html', 'design.css', 'app.js', 'auth.js', 'firebase-config.js', 'data.js', 'records.js', 'map.js', 'japan-map.js', 'vendor/leaflet/leaflet.js']) assert.ok(files.includes(f), f);
+  for (const f of ['index.html', 'design.css', 'about-site.js', 'app.js', 'auth.js', 'firebase-config.js', 'data.js', 'records.js', 'map.js', 'japan-map.js', 'vendor/leaflet/leaflet.js']) assert.ok(files.includes(f), f);
   for (const f of files) {
     for (const re of FORBIDDEN) assert.ok(!re.test(f), f + ' matched ' + re);
     assert.ok(!/^(\.git|scratch|GitHub|tests|scripts|docs|node_modules)(\/|$)/.test(f), f);

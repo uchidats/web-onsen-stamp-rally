@@ -41,8 +41,8 @@ test('Settings keep explanations off the homepage and allow closing without choo
   let cancelled=false;r.nodes.privacyDialog.oncancel({preventDefault(){cancelled=true;}});assert.equal(cancelled,true);assert.equal(r.nodes.privacyDialog.open,false);assert.equal(r.nodes.analyticsNotice.hidden,false);assert.equal(r.scripts.length,0);
   const local=run('http://localhost:5500/');local.nodes.analyticsSettings.onclick();assert.equal(local.nodes.privacyDialog.open,true);assert.equal(local.nodes.analyticsControls.hidden,true);assert.equal(local.scripts.length,0);assert.equal(local.reads.length,0);
   const html=fs.readFileSync('index.html','utf8'),footer=html.match(/<footer[^>]*>([\s\S]*?)<\/footer>/)[1];
-  assert.ok(footer.includes('プライバシー・アクセス解析の設定'));assert.ok(!footer.includes('analyticsChoice'));assert.ok(!html.includes('<section id="privacy-notice"'));
-  const dialog=html.match(/<dialog[^>]*>([\s\S]*?)<\/dialog>/)[1];assert.ok(dialog.includes('180日間'));assert.ok(dialog.includes('https://policies.google.com/privacy'));assert.ok(dialog.includes('https://policies.google.com/technologies/partner-sites'));
+  assert.ok(footer.includes('このサイトについて'));assert.ok(!footer.includes('analyticsChoice'));assert.ok(!html.includes('<section id="privacy-notice"'));
+  const dialog=html.match(/<dialog id="privacyDialog"[^>]*>([\s\S]*?)<\/dialog>/)[1];assert.ok(dialog.includes('180日間'));assert.ok(dialog.includes('https://policies.google.com/privacy'));assert.ok(dialog.includes('https://policies.google.com/technologies/partner-sites'));
   const start=Date.now();r.nodes.analyticsNoticeDecline.onclick();assert.ok(JSON.parse(r.writes.at(-1)[1]).expiresAt>=start+180*86400000);
 });
 test('Load failure does not send page views or interfere with the application; head has one initializer',()=>{

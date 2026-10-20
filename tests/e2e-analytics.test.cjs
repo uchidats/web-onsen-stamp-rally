@@ -82,7 +82,7 @@ test('E2E: production consent, GA4 loading, page view deduplication and app isol
       await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<400});
       assert.equal(await evaluate("document.documentElement.scrollWidth<=innerWidth"),true);
       fs.mkdirSync('scratch/analytics-qa',{recursive:true});const shot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync('scratch/analytics-qa/consent-'+width+'.png',Buffer.from(shot.data,'base64'));
-      await evaluate("document.getElementById('analyticsSettings').focus();document.getElementById('analyticsSettings').click()");
+      await evaluate("if(!document.getElementById('aboutDialog').open)document.getElementById('aboutOpen').click();document.getElementById('analyticsSettings').focus();document.getElementById('analyticsSettings').click()");
       const dialogLayout=await evaluate("(()=>{const d=document.getElementById('privacyDialog'),r=d.getBoundingClientRect();return {open:d.open,inside:r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight,overflow:d.scrollWidth>d.clientWidth}})()");
       assert.equal(dialogLayout.open,true);assert.equal(dialogLayout.inside,true);assert.equal(dialogLayout.overflow,false);
       const settingsShot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync('scratch/analytics-qa/settings-'+width+'.png',Buffer.from(settingsShot.data,'base64'));
