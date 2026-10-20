@@ -68,8 +68,13 @@ assert.equal(html.includes('conquered-badge'),false);
 assert.equal(html.includes('facility-status'),false);
 const conquered=render(data,{},['onsen-001','onsen-015']);
 assert.equal((conquered.match(/class="conquered-badge"/g)||[]).length,2);
-assert.ok(conquered.includes('<span class="conquered-badge" aria-hidden="true"><svg'));
-assert.ok(!conquered.includes('制覇'));
+assert.ok(conquered.includes('<span class="conquered-badge">制覇</span>'));
+assert.equal((conquered.match(/class="onsen-stamp"/g)||[]).length,1);
+for(const ids of [['onsen-015','onsen-016'],['onsen-034','onsen-035'],['onsen-041','onsen-042'],['onsen-048','onsen-049'],['onsen-050','onsen-051']]){
+  assert.equal((render(data,{},[ids[0]]).match(/class="onsen-stamp"/g)||[]).length,0);
+  assert.equal((render(data,{statusSelect:'visited'},[ids[0]]).match(/class="onsen-stamp"/g)||[]).length,0);
+  assert.equal((render(data,{},ids).match(/class="onsen-stamp"/g)||[]).length,1);
+}
 assert.ok(conquered.includes('知内温泉旅館: 訪問済み'));
 assert.equal((render(data,{statusSelect:'visited'},['onsen-001','onsen-015']).match(/data-facility-id=/g)||[]).length,2);
 assert.equal((render(data,{statusSelect:'unvisited'},['onsen-001','onsen-015']).match(/data-facility-id=/g)||[]).length,65);

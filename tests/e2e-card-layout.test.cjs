@@ -101,7 +101,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
     }
     assert.equal(await evaluate("document.querySelectorAll('[data-group=nyuto] .facility-entry').length"),2);
     await evaluate("document.querySelector('[data-detail=onsen-015]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click()");
-    assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-015] .conquered-badge').textContent"),'');
+    assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-015] .conquered-badge').textContent"),'制覇');
     assert.equal(await evaluate("!!document.querySelector('[data-facility-id=onsen-016] .conquered-badge')"),false);
     for(const status of ['visited','unvisited']){
       await evaluate(`document.getElementById('statusSelect').value='${status}';document.getElementById('statusSelect').dispatchEvent(new Event('change'))`);
