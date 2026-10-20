@@ -89,9 +89,10 @@ const KAKE_WAVE='<svg class="kake-svg" width="16" height="16" viewBox="0 0 16 16
 const GENSEI_DROP='<svg class="gensei-svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><path d="M8 1C6.8 2.9 3 6.8 3 10a5 5 0 0 0 10 0C13 6.8 9.2 2.9 8 1Z"/></svg>';
 // Progress labels share the exact SVG artwork used by facility cards.
 $('progress-kake-label').innerHTML='<span class="progress-label">源泉かけ流し'+KAKE_WAVE+'</span>';
+$('progress-chi-label').innerHTML='<span class="progress-label progress-help">♨地・温泉<button type="button" id="progressChiHelp" class="progress-help-button" aria-label="地・温泉の説明" aria-expanded="false" aria-controls="progressChiTip" aria-describedby="progressChiTip"><span aria-hidden="true">ⓘ</span></button><span id="progressChiTip" class="progress-help-tip" role="tooltip" hidden>JR東日本の『地・温泉』に、過去または現在、一度でも紹介されたことのある施設を対象としています。</span></span>';
 $('progress-gensei-label').innerHTML='<span class="progress-label progress-help">源生の湯<button type="button" id="progressGenseiHelp" class="progress-help-button" aria-label="源生の湯の説明" aria-expanded="false" aria-controls="progressGenseiTip" aria-describedby="progressGenseiTip">'+GENSEI_DROP+'<span aria-hidden="true">ⓘ</span></button><span id="progressGenseiTip" class="progress-help-tip" role="tooltip" hidden>源泉かけ流しで、加水・加温なしが確認された湯。当サイト独自の分類です。</span></span>';
-{
-  const button=$('progressGenseiHelp'),tip=$('progressGenseiTip'),wrap=$('progress-gensei-label');
+for(const [labelId,helpId,tipId] of [['progress-chi-label','progressChiHelp','progressChiTip'],['progress-gensei-label','progressGenseiHelp','progressGenseiTip']]){
+  const button=$(helpId),tip=$(tipId),wrap=$(labelId);
   const show=open=>{tip.hidden=!open;button.setAttribute('aria-expanded',String(open))};
   button.addEventListener('click',()=>show(tip.hidden));
   wrap.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')show(true)});
