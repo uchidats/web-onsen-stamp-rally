@@ -28,6 +28,10 @@ test('account settings: 1280/390/320px, keyboard/outside/Esc, status/errors, dis
   await send('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:width<400});await send('Emulation.setTouchEmulationEnabled',{enabled:width<400});await send('Page.reload');
   await wait("window.OnsenSync && document.getElementById('accountPanel').parentElement===document.body && document.getElementById('accountSettings').getAttribute('aria-expanded')==='false' && OnsenAuth.controller.getSession().ready");
   assert.equal(await evaluate("document.getElementById('accountPanel').hidden"),true);
+  const buttonSize=await evaluate(`(()=>{const e=document.getElementById('accountCompactStatus'),r=e.getBoundingClientRect(),g=document.getElementById('accountSettings').getBoundingClientRect();e.style.minHeight='44px';e.style.paddingBlock='8px';const old=e.getBoundingClientRect();e.style.minHeight='';e.style.paddingBlock='';return {height:r.height,width:r.width,oldHeight:old.height,oldWidth:old.width,centerOffset:Math.abs(r.top+r.height/2-g.top-g.height/2)}})()`);
+  assert.equal(buttonSize.width,buttonSize.oldWidth,'Header login keeps its width');
+  assert.ok(buttonSize.oldHeight-buttonSize.height>=6&&buttonSize.oldHeight-buttonSize.height<=8,JSON.stringify(buttonSize));
+  assert.ok(buttonSize.centerOffset<1,'Login and gear remain vertically centered');
   fs.writeFileSync(`${output}/${width}-signed-out.png`,Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
   await evaluate("document.getElementById('accountSettings').focus()");await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',text:'\r',unmodifiedText:'\r',windowsVirtualKeyCode:13});await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
   t.diagnostic(await evaluate("JSON.stringify({width:innerWidth,active:document.activeElement.id,expanded:document.getElementById('accountSettings').getAttribute('aria-expanded'),hidden:document.getElementById('accountPanel').hidden})"));
