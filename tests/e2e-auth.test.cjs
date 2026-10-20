@@ -77,6 +77,7 @@ test('E2E: Google login (Phase 1) - disabled without config; sign-in/out and fai
       assert.match(await evaluate("document.querySelector('.account-note').textContent"), /クラウド保存・端末間の同期はまだありません/, 'login must not imply cloud saving');
       assert.equal(await evaluate("document.getElementById('accountRemember').hidden"), false);
       // レイアウト: 横あふれなし、ボタンはタップしやすい高さ、行は画面内
+      await evaluate("document.getElementById('accountSettings').click()");
       const layout = JSON.parse(await evaluate(`(()=>{const b=document.getElementById('loginBtn').getBoundingClientRect(),r=document.getElementById('accountRow').getBoundingClientRect();return JSON.stringify({h:b.height,overflow:document.documentElement.scrollWidth>innerWidth,rowInside:r.left>=0&&r.right<=innerWidth})})()`));
       assert.ok(layout.h >= 44 && !layout.overflow && layout.rowInside, JSON.stringify({ width, ...layout }));
       // 記録は読み込み・再読込でも変わらない(ログインしていなくても)

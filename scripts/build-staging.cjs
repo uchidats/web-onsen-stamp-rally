@@ -10,7 +10,7 @@ const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
 // 公開してよいファイル・ディレクトリ(これ以外は含めない)
-const FILES = ['index.html', 'design.css', 'analytics.js', 'app.js', 'auth.js', 'bath-colors.js', 'data.js', 'feature-baths.js', 'firebase-config.js',
+const FILES = ['index.html', 'design.css', 'account-menu.js', 'analytics.js', 'app.js', 'auth.js', 'bath-colors.js', 'data.js', 'feature-baths.js', 'firebase-config.js',
   'hero-copy.js', 'hitou-membership.js', 'japan-map.js', 'kakenagashi.js', 'map.js', 'records.js', 'sync-core.js', 'sync-engine.js', 'sync-firestore.js', 'sync.js', 'assets/coordinate-credits.html'];
 const DIRS = ['assets/fonts', 'assets/licenses', 'vendor/leaflet', 'vendor/markercluster'];
 // 公開物に入ってはいけないもの(名前・拡張子)。ホワイトリストが誤って広がった時の安全網
