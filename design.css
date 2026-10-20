@@ -66,12 +66,14 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .login:disabled { opacity: .6; cursor: default; }
 /* Compact account header; the panel changes presentation only. */
 .top { flex-wrap: nowrap; }
-.account-tools { display: flex; align-items: center; gap: 12px; flex: none; }
-.account-compact-status { max-width: 110px; color: #c5ad7c; font-size: 11.5px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.account-tools { position: relative; display: flex; align-items: center; gap: 8px; flex: none; }
+.account-compact-status { min-height: 44px; padding: 8px 10px; border: 1px solid #c5ad7c80; border-radius: 4px; background: transparent; color: var(--gold); font-size: 11.5px; line-height: 1.5; white-space: nowrap; }
+.account-compact-status:disabled { opacity: .6; cursor: default; }
+.account-header-notice { position: absolute; top: calc(100% + 4px); right: 0; color: #e5c78c; font-size: 10.5px; line-height: 1.5; white-space: nowrap; }
 .account-compact-status[data-state="synced"] { color: #d1dbc9; }
 .account-compact-status[data-state="error"], .account-compact-status[data-state="conflicts"], .account-compact-status[data-state="cloudReset"] { color: #e5c78c; }
-.account-settings { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; padding: 0; color: #e7e3d6; background: transparent; border: 1px solid #c5ad7c70; border-radius: 5px; }
-.account-settings[aria-expanded="true"] { background: #c5ad7c12; border-color: #c5ad7ca0; }
+.account-settings { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; padding: 0; color: #e7e3d6; background: transparent; border: 0; }
+.account-settings[aria-expanded="true"] { color: var(--gold); }
 .account-panel { position: fixed; z-index: 1200; width: min(246px, calc(100vw - 32px)); margin: 0; padding: 12px; overflow-y: auto; color: #e5e9e0; background: #2d453b; border: 1px solid #5a7064; border-radius: 8px; font-size: 13px; line-height: 1.7; }
 .account-panel[hidden], .account-panel [hidden] { display: none !important; }
 .account-panel-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 5px; }
@@ -109,8 +111,8 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .account-panel button:focus-visible, .account-panel summary:focus-visible { outline: 2px solid #c5ad7c; outline-offset: 2px; }
 @media (max-width: 360px) {
   .top { gap: 8px; }
-  .account-tools { gap: 7px; }
-  .account-compact-status { max-width: 70px; font-size: 10.5px; }
+  .account-tools { gap: 4px; }
+  .account-compact-status { padding-inline: 6px; font-size: 10px; }
   .hero .logo small { font-size: 9px; letter-spacing: .09em; }
   .hero .beta-badge-header { margin-left: 3px; font-size: 8px; padding: 1px 4px; }
 }
