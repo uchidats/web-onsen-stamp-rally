@@ -271,7 +271,8 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .stamp.done { background: var(--moss); color: var(--surface); border-color: var(--moss); }
 .link { font-size: 12px; font-weight: 500; color: var(--moss); min-height: 44px; padding: 8px 0; }
 .more { display: flex; margin: 32px auto 0; min-width: 190px; }
-.footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px 16px; margin:72px 0 24px; padding:7px 16px; min-height:58px; border-radius:8px; background:var(--deep); color:var(--paper); font-size:12px; line-height:1.6; }
+.footer { margin:72px 0 0; padding:0; padding-bottom:env(safe-area-inset-bottom); border-top:1px solid #c5ad7c80; background:var(--deep); color:var(--paper); }
+.footer-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px 16px; min-height:58px; padding-block:7px; font-size:12px; line-height:1.6; }
 .footer-brand { font-family:var(--serif); font-size:14px; white-space:nowrap; }
 .footer-copy { margin-left:4px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:11px; opacity:.8; }
 .footer-about { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:44px; padding:0; border:0; background:transparent; color:var(--gold); font:inherit; white-space:nowrap; }
@@ -279,7 +280,7 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .footer-about:hover { color:var(--paper); }
 .footer-about:focus-visible { outline:2px solid var(--gold); outline-offset:4px; border-radius:2px; }
 .about-brand { font-family:var(--serif); font-size:16px; }
-@media (max-width:400px) { .footer { padding:7px 12px; gap:8px; } .footer-brand { font-size:13px; } .footer-copy { font-size:10px; } .footer-about { font-size:11px; gap:4px; } }
+@media (max-width:400px) { .footer-inner { gap:8px; } .footer-brand { font-size:13px; } .footer-copy { font-size:10px; } .footer-about { font-size:11px; gap:4px; } }
 .empty { grid-column: 1 / -1; text-align: center; padding: 56px 20px; color: var(--muted); }
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--deep); color: var(--surface); padding: 14px 20px; border-radius: 6px; box-shadow: 0 4px 16px #0002; z-index: 10; max-width: 90%; font-size: 13px; display: none; }
 .modal-bg { position: fixed; inset: 0; background: #16261fd0; z-index: 20; display: none; align-items: center; justify-content: center; padding: 24px; }
