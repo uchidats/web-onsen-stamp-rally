@@ -202,9 +202,16 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .filters { padding: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: end; }
 .filters .search-row { grid-column: 1 / -1; display: flex; align-items: end; gap: 12px; min-width: 0; }
 .search-row .filter { flex: 1; }
-.filters .search-clear { flex: none; height: 46px; padding: 10px 16px; border-color: var(--line); background: transparent; color: var(--moss); }
+.filters .search-clear, .filters .stay-save { flex: none; height: 46px; padding: 10px 16px; border-color: var(--line); background: transparent; color: var(--moss); }
 @media (min-width: 601px) {
   .filters { padding: 18px; gap: 12px; }
+  /* PC・タブレット: 検索欄と宿泊条件は必要な幅だけ使い、左揃え(余った幅を埋めない) */
+  .filters .search-row { justify-content: flex-start; }
+  .search-row .filter { flex: 0 1 420px; max-width: 420px; }
+  .stay-form { justify-content: flex-start; }
+  .stay-form .stay-field.stay-date { flex: 0 1 190px; }
+  .stay-form .stay-field.stay-nights { flex: 0 1 100px; }
+  .stay-form .stay-field.stay-adults { flex: 0 1 110px; }
   .filters .filter label { margin-bottom: 4px; }
   .filters input, .filters select, .filters .btn { height: 46px; }
 }
@@ -213,7 +220,7 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .filter input, .filter select { width: 100%; border: 1px solid #cecec1; padding: 11px 12px; border-radius: 4px; background: #fdfbf6; min-height: 46px; color: var(--ink); font-size: 14px; }
 .filter input::placeholder { color: #687167; opacity: 1; }
 .collection-picker { position: relative; font-size: 14px; }
-.collection-picker summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 46px; padding: 11px 12px; border: 1px solid #cecec1; border-radius: 4px; background: #fdfbf6; cursor: pointer; list-style: none; }
+.collection-picker summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 46px; padding: 0 12px; border: 1px solid #cecec1; border-radius: 4px; background: #fdfbf6; cursor: pointer; list-style: none; }
 .collection-picker summary::-webkit-details-marker { display: none; }
 .collection-picker summary { -webkit-tap-highlight-color: transparent; user-select: none; }
 .collection-picker summary::after { content: '⌄'; color: var(--moss); }
@@ -260,6 +267,8 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 #modalSubtitle .facility { margin: 0 0 20px; font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif; font-size: 24px; font-weight: 600; line-height: 1.45; color: #866329; }
 .visit-count { font-size: 11px; color: var(--muted); }
 .visit-section { border-top: 1px solid var(--line); padding-top: 20px; margin: 22px 0; }
+.visit-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 4px; }
+.visit-actions > * { min-width: 0; min-height: 46px; }
 .visit-section h3 { font-family: var(--serif); font-weight: 500; font-size: 21px; margin: 0; }
 .visit-summary { font-size: 12px; color: var(--muted); line-height: 1.9; }
 .visit-list { list-style: none; padding: 0; margin: 16px 0; }
@@ -327,6 +336,20 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .tools button { border: 1px solid #cbd1c3; border-radius: 4px; background: transparent; color: var(--moss); padding: 10px 12px; font-size: 12px; min-height: 44px; line-height: 1.5; }
 .note { font-size: 12px; line-height: 1.9; }
+/* 検索パネル内の宿泊条件(施設の絞り込みではない独立セクション) */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.stay-search[hidden] { display: none !important; }
+.filters .stay-search { grid-column: 1 / -1; margin-top: 0; padding-top: 10px; border-top: 1px solid var(--line); min-width: 0; }
+.stay-form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 10px; }
+.stay-field { flex: 0 1 104px; min-width: 88px; }
+.stay-field.stay-date { flex: 1 1 150px; }
+.stay-field label { display: block; margin-bottom: 4px; font-size: 12px; white-space: nowrap; }
+.filters .stay-field input, .filters .stay-field select { display: block; width: 100%; min-width: 0; height: 46px; padding: 8px; border: 1px solid #cecec1; border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; font-size: 14px; }
+/* 施設カードのベッドアイコン: 地図ピン(.map-link)と同じ大きさ・色。タップ領域だけ余白で広げる */
+.facility-meta .map-link:not(.stay-link) + .stay-link { margin-left: -6px; } /* 地図ピンのすぐ右(アイコン同士の間隔を詰める) */
+.card .stay-link::before { content: ''; position: absolute; inset: -8px -2px; }
+@media (max-width: 600px) {
+}
 .hide { display: none !important; }
 #onsens { scroll-margin-top: 28px; }
 #onsen-map { scroll-margin-top: 28px; }
@@ -415,7 +438,8 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
   .cards { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .filters { padding: 16px; gap: 16px 12px; grid-template-columns: minmax(0, 1fr); }
   .filters .search-row { gap: 8px; }
-  .filters .search-clear { padding-inline: 10px; font-size: 12px; }
+  .filters input { height: 46px; }
+  .filters .search-clear, .filters .stay-save { padding-inline: 10px; font-size: 12px; }
   .search-row label { font-size: 11px; }
   .details { grid-template-columns: 96px minmax(0, 1fr); gap: 10px 14px; margin: 16px 0; }
   .feature-baths { margin-top: 16px; }

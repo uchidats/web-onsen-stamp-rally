@@ -55,7 +55,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
       const layout=await evaluate(`(() => {
         const cards=[...document.querySelectorAll('#cards .card')];
         return {overflow:document.documentElement.scrollWidth>innerWidth,cards:cards.map((card,i)=>{
-          const row=card.querySelector('.facility'),meta=card.querySelector('.facility-meta'),name=row.querySelector('.facility-name'),pin=meta.querySelector('.map-link');
+          const row=card.querySelector('.facility'),meta=card.querySelector('.facility-meta'),name=row.querySelector('.facility-name'),pin=meta.querySelector('.map-link:not(.stay-link)');
           const r=row.getBoundingClientRect(),m=meta.getBoundingClientRect(),n=name.getBoundingClientRect(),p=pin?.getBoundingClientRect();
           return {id:row.parentElement.dataset.facilityId,official:name.tagName==='A',map:!!pin,name:name.textContent,
             officialUrl:name.href,mapLabel:pin?.getAttribute('aria-label'),safe:!pin||(pin.target==='_blank'&&pin.rel.includes('noopener')),
@@ -64,7 +64,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
             grouped:Math.abs(m.left-r.left)<1&&Math.abs(m.top-r.bottom-5)<1&&(!p||Math.abs(p.left-m.left)<1),
             noSeparateOfficial:!row.querySelector('.facility-link'),direct:!pin||pin.parentElement===meta,
             leftAligned:getComputedStyle(meta).justifyContent==='flex-start',
-            order:[...meta.children].map(e=>e.classList.contains('map-link')?'map':e.classList.contains('facility-detail')?'detail':'tag'),
+            order:[...meta.children].map(e=>e.classList.contains('stay-link')?'stay':e.classList.contains('map-link')?'map':e.classList.contains('facility-detail')?'detail':'tag'),
             metadataContained:[...meta.children].every(e=>{const b=e.getBoundingClientRect();return b.left>=m.left-1&&b.right<=m.right+1}),
             badge:!!row.querySelector('.conquered-badge'),badgeFits:!row.querySelector('.conquered-badge')||row.querySelector('.conquered-badge').getBoundingClientRect().right<=r.right+1,
             badgeOutsideLink:!row.querySelector('a .conquered-badge'),noOldStatus:!card.querySelector('.facility-status')&&!/訪問済み|未訪問/.test(card.textContent)};
@@ -72,12 +72,13 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
       })()`);
       assert.equal(layout.overflow,false,`${width}px: no page overflow`);
       assert.equal(layout.cards.length,7);
+      const STAY=(()=>{const c={btoa:x=>Buffer.from(x,'latin1').toString('base64')};require('node:vm').runInNewContext(fs.readFileSync('stay-search.js','utf8'),Object.assign(c,{globalThis:c}));return c.OnsenStaySearch})();
       for(const c of layout.cards){
         const i=fixtures.findIndex(x=>x.id===c.id);
         assert.equal(c.official,!!fixtures[i].officialUrl);
         assert.equal(c.map,!!fixtures[i].mapUrl);
         assert.equal(c.name,fixtures[i].facility);
-        assert.deepEqual(c.order,[...(c.map?['map']:[]),'detail','tag',...(HITOU_IDS.includes(c.id)?['tag']:[]),...(fixtures[i].springType?['tag']:[])]); // 加盟宿は「秘♨」が分類ラベルの右に並ぶ
+        assert.deepEqual(c.order,[...(c.map?['map']:[]),...(STAY.googleVerified(c.id)&&fixtures[i].category!=='日帰り旅名湯'?['stay']:[]),'detail','tag',...(HITOU_IDS.includes(c.id)?['tag']:[]),...(fixtures[i].springType?['tag']:[])]); // 加盟宿は「秘♨」が分類ラベルの右に並ぶ
         assert.equal(c.badge,['onsen-015','onsen-005'].includes(c.id));
         if(c.official)assert.equal(c.officialUrl,fixtures[i].officialUrl);
         if(c.map)assert.ok(c.mapLabel.includes('Google Maps')&&c.mapLabel.includes(fixtures[i].facility));
@@ -126,11 +127,17 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
           nyuto:nyuto.map(r=>({id:r.dataset.facilityId,official:r.querySelector('.facility-name').href,map:r.querySelector('.map-link').href,detail:r.querySelector('[data-detail]').dataset.detail}))};
       })()`);
       assert.equal(layout.overflow,false);assert.equal(layout.contained,true);assert.equal(layout.columns,width>600?2:1);
-      const filters=await evaluate(`(()=>{const panel=document.querySelector('.filters'),controls=[...panel.querySelectorAll('input,select,button')];return{items:controls.map(c=>{const r=c.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height}}),padding:getComputedStyle(panel).paddingTop,labelGap:getComputedStyle(panel.querySelector('label')).marginBottom}})()`);
-      if(width>600)assert.ok(filters.items.every(c=>Math.abs(c.height-46)<1),'search controls have matching heights');
-      if(width>800){const [search,...rest]=filters.items;assert.ok(rest.every(c=>c.y===rest[0].y&&c.y>search.y));assert.ok(Math.abs(rest[0].width-rest[1].width)<1&&Math.abs(rest[1].width-rest[2].width)<1);assert.ok(rest[3].x>rest[2].x);assert.equal(filters.padding,'18px');assert.equal(filters.labelGap,'4px');}
-      else if(width>600){assert.equal(filters.items[1].y,filters.items[2].y);assert.ok(filters.items[3].y>filters.items[2].y);}
-      else{assert.equal(filters.padding,'20px');assert.equal(filters.labelGap,'8px');assert.equal(filters.items[2].y,filters.items[3].y);}
+      // 検索欄=表示中の入力・選択・ボタン・コレクション選択の見出し(宿泊の検索条件は施設の絞り込みではない別セクションなので除く。その配置は e2e-stay-search で検証)。閉じた選択肢のボタンと非表示のselect(categorySelect)は数えない(下で非表示であることも確認する)。
+      const filters=await evaluate(`(()=>{const panel=document.querySelector('.filters'),controls=[...panel.querySelectorAll('input,select,button,summary')].filter(c=>c.offsetParent!==null&&!c.closest('.collection-options')&&!c.closest('.stay-search'));const hidden=document.getElementById('categorySelect'),picker=panel.querySelector('details.collection-picker')||panel.querySelector('.collection-picker');return{ids:controls.map(c=>c.id||c.tagName.toLowerCase()),items:controls.map(c=>{const r=c.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height}}),padding:getComputedStyle(panel).paddingTop,labelGap:getComputedStyle(panel.querySelector('label')).marginBottom,hiddenSelect:hidden.hidden&&hidden.offsetParent===null,pickerClosed:!picker.open,optionsClosed:[...panel.querySelectorAll('.collection-options button')].every(b=>!b.checkVisibility())}})()`);
+      assert.deepEqual(filters.ids,['search','clearFilter','prefSelect','statusSelect','collectionSummary'],'the five visible search controls');
+      assert.equal(filters.hiddenSelect,true);assert.equal(filters.pickerClosed,true);assert.equal(filters.optionsClosed,true,'closed picker options are not on screen');
+      const [search,clear,pref,status,collection]=filters.items;
+      assert.ok(filters.items.every(c=>Math.abs(c.height-46)<1),'search controls have matching heights at every width (phones included)');
+      // 1行目: 検索欄+条件クリア(同じ行)。2行目: 都道府県・訪問状況・コレクション。
+      assert.equal(search.y,clear.y);assert.ok(clear.x>search.x);
+      if(width>800){assert.ok([pref,status,collection].every(c=>c.y===pref.y&&c.y>search.y));assert.ok(Math.abs(pref.width-status.width)<1&&Math.abs(status.width-collection.width)<1);assert.ok(status.x>pref.x&&collection.x>status.x);assert.equal(filters.padding,'18px');assert.equal(filters.labelGap,'4px');}
+      else if(width>600){assert.ok([pref,status,collection].every(c=>c.y===pref.y&&c.y>search.y));assert.ok(status.x>pref.x&&collection.x>status.x);}
+      else{assert.equal(filters.padding,'16px');assert.equal(filters.labelGap,'8px');assert.ok(pref.y>search.y&&status.y>pref.y&&collection.y>status.y,'stacked on phones');assert.ok([pref,status,collection].every(c=>Math.abs(c.width-pref.width)<1&&Math.abs(c.x-pref.x)<1));}
       const filterBounds=await evaluate("(()=>{const r=document.querySelector('.filters').getBoundingClientRect();return{x:r.left+scrollX,y:r.top+scrollY,width:r.width,height:r.height,scale:1}})()");
       const filterShot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:filterBounds});fs.writeFileSync('scratch/card-layout-qa/filters-'+width+'.png',Buffer.from(filterShot.data,'base64'));
       assert.ok(await evaluate(`(()=>{const links=[document.querySelector('.hero-actions .primary'),...document.querySelectorAll('.facility-detail')];return links.filter(link=>link.getClientRects().length).every(link=>{const icon=link.querySelector('.external-link-icon'),style=getComputedStyle(link);return icon&&icon.getAttribute('aria-hidden')==='true'&&Math.abs(icon.getBoundingClientRect().width-14)<0.1&&Math.abs(icon.getBoundingClientRect().height-14)<0.1&&['flex','inline-flex'].includes(style.display)&&style.alignItems==='center'&&style.whiteSpace==='nowrap'&&style.gap==='6px';})&&links[0].getAttribute('href')==='#onsens'&&links[0].querySelector('svg').innerHTML===links[1].querySelector('svg').innerHTML;})()`),'matching SVG icons and aligned unbroken labels');

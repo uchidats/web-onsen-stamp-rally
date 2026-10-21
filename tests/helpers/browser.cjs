@@ -73,7 +73,8 @@ async function startBrowser(executable, url) {
       if (spawnError) throw spawnError;
       if (child.exitCode !== null) throw Error('Browser exited before CDP startup: ' + stderr);
       const activePort = path.join(profile, 'DevToolsActivePort');
-      if (fs.existsSync(activePort)) port = Number(fs.readFileSync(activePort, 'utf8').split('\n')[0]);
+      // Windowsでは起動直後のブラウザーがこのファイルを掴んでいてEBUSYになることがある。読めるまで待つ(それ以外のエラーは投げ、読めないままなら下の期限切れでエラーになる)。
+      try { if (fs.existsSync(activePort)) port = Number(fs.readFileSync(activePort, 'utf8').split('\n')[0]); } catch (error) { if (error.code !== 'EBUSY' && error.code !== 'EPERM') throw error; }
       if (port) {
         try {
           const response = await fetch(`http://127.0.0.1:${port}/json`, { signal: AbortSignal.timeout(1000) });

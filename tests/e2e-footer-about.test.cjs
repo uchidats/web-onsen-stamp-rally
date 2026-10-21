@@ -17,6 +17,8 @@ test('E2E: compact footer, site information, privacy entry and keyboard return a
   const waitFor=async expr=>{for(let i=0;i<100;i++){if(await evaluate(expr))return;await delay(100);}assert.fail(expr);};
   const key=async(key,code=key,windowsVirtualKeyCode=27,modifiers=0)=>{for(const type of ['keyDown','keyUp'])await send('Input.dispatchKeyEvent',{type,key,code,windowsVirtualKeyCode,modifiers,text:key==='Enter'&&type==='keyDown'?'\r':''});};
   const click=async(selector,touch)=>{
+    // 直前のスクリーンショット(captureBeyondViewport)でスクロール位置が戻ることがあるため、実利用と同じく押す前に対象を表示範囲へ入れる
+    await evaluate(`document.querySelector(${JSON.stringify(selector)}).scrollIntoView({block:'center',behavior:'instant'})`);await delay(100);
     const point=await evaluate(`(()=>{const r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}})()`);
     if(touch){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
     else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...point,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...point,button:'left',clickCount:1});}
