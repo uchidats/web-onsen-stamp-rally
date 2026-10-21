@@ -138,8 +138,9 @@ button, a, input, select { -webkit-tap-highlight-color: transparent; }
 .sync-dialog .danger:disabled { opacity: .45; }
 .memo-section { margin-top: 18px; }
 .modal .memo-section { margin: 0 0 6px; padding-top: 20px; border-top: 1px solid var(--line); } /* 詳細画面の最後(施設情報 → 訪問記録 → 施設メモ) */
-.memo-section h3 { margin: 0 0 8px; }
-.memo-section textarea { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; font-size: 14px; resize: vertical; }
+.memo-section textarea::placeholder { color: var(--ink); opacity: .4; }
+@media (max-width: 600px) { .memo-section textarea { min-height: 72px; } } /* 狭い画面ではプレースホルダーが2行になるため、切れないように少し高くする */
+.memo-section textarea { margin-top: 8px; width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; font-size: 14px; resize: vertical; }
 .hero-main { position: relative; isolation: isolate; padding: 76px 0 32px; }
 .hero-main::before { content: ""; position: absolute; inset: 60px 10% 100px -32px; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 90% 75% at 30% 50%, #081e18c7 0%, #081e18ad 55%, transparent 100%); filter: blur(20px); }
 .eyebrow { color: var(--gold); font-size: 11px; letter-spacing: .19em; line-height: 1.6; font-weight: 600; }
@@ -270,7 +271,7 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .visit-section { border-top: 1px solid var(--line); padding-top: 20px; margin: 22px 0; }
 .visit-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 4px; }
 .visit-actions > * { min-width: 0; min-height: 46px; }
-.visit-section h3 { font-family: var(--serif); font-weight: 500; font-size: 21px; margin: 0; }
+.visit-section h3, .memo-section h3 { font-family: var(--serif); font-weight: 500; font-size: 21px; margin: 0; }
 .visit-summary { font-size: 12px; color: var(--muted); line-height: 1.9; }
 .visit-list { list-style: none; padding: 0; margin: 16px 0; }
 .visit-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); padding: 8px 0; font-size: 13px; }
@@ -326,7 +327,7 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .feature-baths[hidden] { display: none; }
 /* 「代表的な湯」の見出しは、どの施設でも太字(700)にそろえ、端末の明朝1種類で描く。各浴場名(.feature-bath h4)は施設名(#modalSubtitle .facility)と同じ Noto Sans JP・太さ600。cards.css のWebフォントは施設名などの固定文字しか持たないため、浴場名の全ての字を収めた別のサブセット(assets/fonts/bathnames.css。scripts/build-bath-name-font.cjs で生成、tests/bath-name-fonts.test.cjs で字の不足を検出)を読み込み、一部の字だけ端末の代替フォント(Androidでは細く見える)になるのを防ぐ。 */
 .modal .feature-baths h3 { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-weight: 700; font-size: 22px; line-height: 1.4; margin: 0 0 10px; }
-.modal .visit-section h3 { font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif; font-weight: 600; font-size: 18px; line-height: 1.4; }
+.modal .visit-section h3, .modal .memo-section h3 { font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif; font-weight: 600; font-size: 18px; line-height: 1.4; }
 .feature-bath-section-note { margin: -4px 0 10px; font-size: 12px; line-height: 1.8; color: var(--muted); }
 .feature-bath-list { list-style: none; margin: 0; padding: 0; }
 .feature-bath + .feature-bath { margin-top: 16px; }
