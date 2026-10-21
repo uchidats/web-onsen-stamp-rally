@@ -77,7 +77,7 @@ test('E2E: compact Grid cards, natural heights, ordering, filters and independen
       const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:bounds});
       fs.writeFileSync(`scratch/card-compact-qa/${phase}-${width}.png`,Buffer.from(shot.data,'base64'));
       await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");await settle();
-      const all=await measure();verify(all,width);assert.equal(all.cards.length,62);assert.equal(new Set(all.facilities).size,67);
+      const all=await measure();verify(all,width);assert.equal(all.cards.length,61);assert.equal(new Set(all.facilities).size,66);
       const scenarios=[];
       for(const [control,value] of [['prefSelect','秋田県'],['search','乳頭温泉郷'],['search','妙乃湯'],['search','存在しない温泉地']]){
         await evaluate(`document.getElementById('clearFilter').click();document.getElementById('${control}').value=${JSON.stringify(value)};document.getElementById('${control}').dispatchEvent(new Event('${control==='search'?'input':'change'}'))`);await settle();

@@ -32,7 +32,7 @@ test('Search form fits three widths, combines and clears filters, and derives pr
   await activate('#collectionSummary');
   await evaluate('document.getElementById("search").click()');
   assert.equal(await evaluate('document.getElementById("collectionPicker").open'),false);
-  for(const [scope,total] of [['chi',43],['kake',51],['gensei',7],['all',67]]){
+  for(const [scope,total] of [['chi',42],['kake',50],['gensei',7],['all',66]]){
    await activate('#collectionSummary');await activate('#collectionOptions [data-scope="'+scope+'"]');
    assert.equal(await evaluate('document.getElementById("collectionPicker").open'),false);
    assert.equal(await evaluate('document.getElementById("categorySelect").value'),scope==='all'?'':scope);
@@ -54,7 +54,7 @@ test('Search form fits three widths, combines and clears filters, and derives pr
   const p=await evaluate(`(()=>{const r=document.getElementById('clearFilter').getBoundingClientRect();return{x:r.x+r.width/2,y:r.y+r.height/2}})()`);
   if(width<400){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[p]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...p,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...p,button:'left',clickCount:1});}
   assert.deepEqual(await evaluate(`['search','prefSelect','statusSelect','categorySelect'].map(id=>document.getElementById(id).value)`),['','','','']);
-  assert.ok((await evaluate(`document.getElementById('resultCount').textContent`)).includes('67'));
+  assert.ok((await evaluate(`document.getElementById('resultCount').textContent`)).includes('66'));
   fs.writeFileSync(path.join(browser.profile,`search-${width}.png`),Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
  }
  // A future facility is a browser-only fixture; the source master remains intact.

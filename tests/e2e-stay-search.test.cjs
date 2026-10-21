@@ -66,7 +66,7 @@ test('Stay search: panel form, saved device-locally, bed icons on cards, detail 
     assert.match(bed.pinLabel, /Google Mapsで表示/, 'existing Google Maps link is unchanged');
     // 日帰り専用・未対応施設にはアイコンが無い
     const absent = await evaluate(`(()=>{const day=ONSEN_DATA.filter(x=>x.category==='日帰り旅名湯').map(x=>x.id),un=ONSEN_DATA.filter(x=>!OnsenStaySearch.googleVerified(x.id)).map(x=>x.id);return JSON.stringify({any:[...day,...un].filter(id=>document.querySelector('[data-facility-id="'+id+'"] [data-stay]')),unCount:un.length})})()`).then(JSON.parse);
-    assert.deepEqual(absent.any, []); assert.equal(absent.unCount, 67 - verifiedCount);
+    assert.deepEqual(absent.any, []); assert.equal(absent.unCount, (await evaluate('ONSEN_DATA.length')) - verifiedCount);
 
     // --- 日付が未保存のときアイコンは外部へ飛ばず、入力欄へ案内する(詳細も開かない)
     await evaluate(`window.__nav=0;document.addEventListener('click',e=>{if(e.target.closest('.stay-link'))e.preventDefault()},true)`);

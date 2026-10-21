@@ -20,7 +20,7 @@ test('E2E: shared map detail, registered links, view preservation and local edit
   const waitFor=async expr=>{for(let i=0;i<100;i++){if(await evaluate(expr))return;await delay(100);}assert.fail(expr);};
   const close=()=>evaluate("document.getElementById('modalClose').click()");
   await send('Page.enable');
-  await waitFor("document.querySelectorAll('.japan-map-marker').length===67");
+  await waitFor("document.querySelectorAll('.japan-map-marker').length===66");
   await evaluate("new Promise(resolve=>{const s=document.createElement('script');s.src='vendor/leaflet/leaflet.js';s.onload=resolve;document.head.append(s)})");
   await evaluate("const factory=L.map;L.map=function(...args){window.qaMap=factory.apply(this,args);return qaMap}");
   const pointer=async(selector,touch)=>{

@@ -41,7 +41,7 @@ test('Map help opens, closes and preserves legends and prefecture navigation at 
     assert.equal(await evaluate('document.getElementById("japanMapHelpDialog").open'), false);
     assert.equal(await evaluate('document.getElementById("japanMapDetailBar").hidden'), true);
     assert.deepEqual(await evaluate('[...document.querySelectorAll(".japan-map-legend .legend-item")].map(e=>e.textContent)'), ['100%', '50〜99%', '1〜49%', '0%', '訪問済み', '未訪問']);
-    assert.equal(await evaluate('document.querySelectorAll(".japan-map-marker").length'), 67);
+    assert.equal(await evaluate('document.querySelectorAll(".japan-map-marker").length'), 66);
     await click('#japanMapHelp', mobile);
     assert.equal(await evaluate('document.getElementById("japanMapHelpDialog").open'), true);
     const fits = await evaluate(`(() => {

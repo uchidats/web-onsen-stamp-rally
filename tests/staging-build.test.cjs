@@ -94,7 +94,7 @@ test('cloud sync: Firestore is used only by the sync adapter on the three config
   assert.match(strip('auth.js'), /ENABLED_ENVIRONMENTS=\['local','staging','production'\]/);
 });
 
-test('staging hosting: the built site loads from its own directory (every published file is served, cards and 67 map markers render, auth stays off on 127.0.0.1)', async (t) => {
+test('staging hosting: the built site loads from its own directory (every published file is served, cards and 66 map markers (one facility is temporarily hidden) render, auth stays off on 127.0.0.1)', async (t) => {
   const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
   if (!fs.existsSync(edgePath)) { t.skip('Edge not installed at standard path'); return; }
   const out = fs.mkdtempSync(path.join(os.tmpdir(), 'onsen-staging-'));
@@ -114,7 +114,7 @@ test('staging hosting: the built site loads from its own directory (every publis
   const { ws, send, evaluate } = browser;
   await send('Page.enable');
   const waitFor = async expr => { for (let i = 0; i < 100; i++) { if (await evaluate(expr)) return; await new Promise(r => setTimeout(r, 100)); } assert.fail('Timed out: ' + expr); };
-  await waitFor("document.querySelectorAll('#cards .card').length>0 && document.querySelectorAll('.japan-map-marker').length===67");
+  await waitFor("document.querySelectorAll('#cards .card').length>0 && document.querySelectorAll('.japan-map-marker').length===66");
   assert.equal(await evaluate('OnsenAuth.enabled()'), false);
   assert.equal(await evaluate("document.getElementById('loginBtn').textContent"), '記録はこの端末に保存');
   const bad = JSON.parse(await evaluate(`(async()=>{const r=[];for(const f of ${JSON.stringify(collect())}){const x=await fetch(f);if(!x.ok)r.push(f+' '+x.status)}return JSON.stringify(r)})()`));

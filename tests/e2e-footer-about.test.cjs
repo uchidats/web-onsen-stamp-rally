@@ -23,7 +23,7 @@ test('E2E: compact footer, site information, privacy entry and keyboard return a
     if(touch){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
     else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...point,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...point,button:'left',clickCount:1});}
   };
-  await send('Page.enable');await waitFor("document.readyState==='complete' && !!window.OnsenAnalytics && document.querySelectorAll('.japan-map-marker').length===67");
+  await send('Page.enable');await waitFor("document.readyState==='complete' && !!window.OnsenAnalytics && document.querySelectorAll('.japan-map-marker').length===66");
   await evaluate('document.fonts.ready');
   const originalStorage=await evaluate('JSON.stringify(localStorage)');
   const output='scratch/footer-about-ui';fs.mkdirSync(output,{recursive:true});

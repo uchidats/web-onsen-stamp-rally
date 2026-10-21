@@ -1458,3 +1458,9 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-10-11"
   }
 ];
+
+// 一時的に非公開(選定保留)の施設。マスター(上の一覧)と固定IDは残し、通常の一覧・地図・検索・集計・宿泊検索の対象から外す。
+// 訪問履歴・メモはIDで端末とクラウドに残り、ここから外すと元どおり表示・集計に戻る。理由は docs/archived-facilities.md(内部向け)。
+window.ONSEN_ARCHIVED = {
+  'onsen-029': { since: '2026-10-22' }
+};

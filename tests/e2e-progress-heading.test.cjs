@@ -47,7 +47,7 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
       fs.writeFileSync(path.join(browser.profile, `${section}-${width}.png`),Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
     }
     assert.equal(await evaluate("document.querySelector('.pref-progress-toggle strong').textContent"), '都道府県別の♨達成度');
-    assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"), '12都道府県・67施設の訪問進捗');
+    assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"), '12都道府県・66施設の訪問進捗');
     assert.equal(await evaluate("document.getElementById('prefProgressMeta').getClientRects().length"), 0);
     await evaluate("document.getElementById('prefProgress').open=true");
     assert.equal(await evaluate("document.querySelectorAll('#prefgrid .pref').length"), 12);
@@ -60,7 +60,7 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
     assert.equal(layout.badgeFits, true);
     assert.equal(layout.panelFits, true);
     assert.equal(layout.overlap, width < 400 ? 24 : 30);
-    assert.equal(layout.percent, '25.4%');
+    assert.equal(layout.percent, '25.8%');
     assert.deepEqual(layout.labels, ['全施設', '♨地・温泉', '源泉かけ流し', '源生の湯']);
     assert.equal(layout.cardsPlain, true);
     assert.equal(layout.columns, width === 1280 ? 4 : 2);

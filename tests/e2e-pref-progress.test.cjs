@@ -45,7 +45,7 @@ test('E2E: native prefecture progress disclosure and hidden record updates', asy
       await evaluate("localStorage.clear();location.reload()");
       await waitFor("document.readyState==='complete' && !!document.querySelector('#prefgrid .pref')");
       assert.equal(await evaluate("document.getElementById('prefProgress').open"),false);
-      assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"),'12都道府県・67施設の訪問進捗');
+      assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"),'12都道府県・66施設の訪問進捗');
       assert.equal(await evaluate("document.querySelectorAll('#prefgrid .pref').length"),12);
       // Native details may retain the hidden children's layout boxes; only summary is painted.
       assert.ok(await evaluate("document.getElementById('prefProgress').getBoundingClientRect().height<=document.querySelector('#prefProgress summary').getBoundingClientRect().height+3"));
