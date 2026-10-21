@@ -3,9 +3,9 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),http=require('node:http');
 const {spawn}=require('node:child_process');
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
-const added=Array.from({length:67},(_,i)=>'onsen-'+String(i+1).padStart(3,'0'));
+const added=Array.from({length:67},(_,i)=>'onsen-'+String(i+1).padStart(3,'0')).filter(id=>id!=='onsen-029'); // onsen-029は一時非公開(地図に出ない)
 
-test('E2E: 67 exact projected national markers, direct marker details, regional selection and preserved visit storage',async t=>{
+test('E2E: 66 exact projected national markers, direct marker details, regional selection and preserved visit storage',async t=>{
  const browser=['C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe','C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'].find(fs.existsSync);
  if(!browser){t.skip('Chrome/Edge not installed');return;}
  const server=http.createServer((req,res)=>{
@@ -24,11 +24,11 @@ test('E2E: 67 exact projected national markers, direct marker details, regional 
  try{
   const waitFor=async expression=>{for(let i=0;i<100;i++){if(await evaluate(expression))return;await delay(100);}assert.fail('Timed out: '+expression);};
   const click=async(point,mobile)=>{if(mobile){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...point,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...point,button:'left',clickCount:1});}};
-  await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===67");
+  await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===66");
   await evaluate("(()=>{const repo=OnsenRecords.create(localStorage);let state=repo.load();for(const id of ['onsen-001','onsen-006','onsen-026'])state=repo.setVisited(state,id,true);})()");
-  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===67 && document.getElementById('totalText').textContent.startsWith('3 / 67')");
+  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===66 && document.getElementById('totalText').textContent.startsWith('3 / 66')");
   const stored=await evaluate('JSON.stringify(localStorage)');
-  assert.equal(await evaluate("ONSEN_DATA.filter(OnsenMap.verified).length"),67);
+  assert.equal(await evaluate("ONSEN_DATA.filter(OnsenMap.verified).length"),66);
   assert.equal(await evaluate("ONSEN_DATA.filter(x=>!OnsenMap.verified(x)).length"),0);
   assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 0施設')"),true);
   assert.equal(await evaluate("!!document.querySelector('.japan-map-attribution a[href=\"https://www.openstreetmap.org/copyright\"]')"),true);
@@ -100,8 +100,8 @@ test('E2E: 67 exact projected national markers, direct marker details, regional 
   }
   await evaluate("document.getElementById('mapReset').click()");
   assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'Map selection must preserve every stored visit byte');
-  assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設');
+  assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 66 施設');
   fs.writeFileSync(output+'/results.json',JSON.stringify(results,null,2));
-  t.diagnostic('PASS: 134 national and 150 regional mouse/touch selections; exact shared projection, direct pointer and keyboard details, 67 verified; synthetic 3/67 progress and storage preserved');
+  t.diagnostic('PASS: 134 national and 150 regional mouse/touch selections; exact shared projection, direct pointer and keyboard details, 66 verified; synthetic 3/67 progress and storage preserved');
  }finally{await session.close();server.closeAllConnections();server.close();}
 });

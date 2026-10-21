@@ -40,7 +40,7 @@ test('E2E: 地♨ / 秘♨ labels on cards (same look, order, mobile layout, acc
       assert.equal(await evaluate(`${entry('onsen-033')}.querySelectorAll('.hitou-tag').length`), 1, 'Azumaya (Shin-Takayu) is a member');
       assert.equal(await evaluate(`${entry('onsen-037')}.querySelectorAll('.hitou-tag').length`), 0);
       // 「地♨」の表示条件は従来と同じ(分類のある43施設: 現行34 + 旧9)。旧認定も表示・読み上げ・ホバーとも「地♨」「地・温泉」で区別しない
-      assert.equal(await evaluate("document.querySelectorAll('#cards [role=img][aria-label=\"地・温泉\"]').length"), 43);
+      assert.equal(await evaluate("document.querySelectorAll('#cards [role=img][aria-label=\"地・温泉\"]').length"), 42);
       assert.equal(await evaluate("document.querySelectorAll('#cards [aria-label*=\"（旧）\"]').length"), 0);
       assert.equal(await evaluate("[...document.querySelectorAll('#cards [role=img].tag')].some(n=>n.textContent.includes('旧'))"), false);
       assert.equal(await evaluate("[...document.querySelectorAll('#cards [role=img][aria-label=\"地・温泉\"]')].every(n=>n.textContent==='地♨'&&n.title==='地・温泉')"), true);

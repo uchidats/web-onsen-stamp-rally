@@ -95,6 +95,7 @@ test('E2E: 代表的な湯 in the detail view (Akita and Iwate facilities, deskt
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
       for (const [id, want] of Object.entries(expected)) {
+        if (!(await evaluate(`ONSEN_DATA.some(x=>x.id==='${id}')`))) continue; // 一時非公開の施設(onsen-029)は画面に無い。代表的な湯のデータ自体は feature-baths.test.cjs が検証する
         await evaluate(`document.querySelector('[data-detail="${id}"]').click()`);
         const s = await evaluate(readSection);
         assert.equal(s.hidden, false, id);

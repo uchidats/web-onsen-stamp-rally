@@ -63,7 +63,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-026': ['湯の色: 無色透明（露天風呂付き大浴場(洞窟の湯)）。第三者資料の記載です。']
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
-    const NONE = ['onsen-040', 'onsen-042', 'onsen-045', 'onsen-037', 'onsen-038', 'onsen-024', 'onsen-025', 'onsen-027', 'onsen-028', 'onsen-029', 'onsen-033', 'onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-023'];
+    const NONE = ['onsen-040', 'onsen-042', 'onsen-045', 'onsen-037', 'onsen-038', 'onsen-024', 'onsen-025', 'onsen-027', 'onsen-028', 'onsen-033', 'onsen-003', 'onsen-005', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-016', 'onsen-019', 'onsen-023'];
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
     const center = async expr => { const r = await rect(expr); return { x: r.x + r.w / 2, y: r.y + r.h / 2 }; };
@@ -197,7 +197,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-061': { 'したの湯': 1, 'うえの湯': 1, 'おくの湯': 1 },
       'onsen-066': { '男女別の展望内湯': 1 }
     };
-    const NO_DETAIL_DOTS = ['onsen-041', 'onsen-043', 'onsen-044', 'onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-029', 'onsen-033', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-003', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014'];
+    const NO_DETAIL_DOTS = ['onsen-041', 'onsen-043', 'onsen-044', 'onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-033', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-003', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014'];
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       for (const [id, want] of Object.entries(DETAIL)) {
