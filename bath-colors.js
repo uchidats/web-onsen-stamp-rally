@@ -165,6 +165,14 @@ window.ONSEN_BATH_COLORS = {
     }],
     source: { url: 'https://www.yuzehotel.jp/index.html', checkedAt: '2026-10-23' }
   },
+  'onsen-024': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式サイト掲載の温泉分析書(2017年12月22日分析)の分析結果に「無色透明、無味無臭にして、中性である」。分析書は源泉の性状(採取時の外観)を示す記載で、浴槽の実際の湯色を直接書いたものではない。個人の訪問記には旧館の内風呂を「かすかに褐色」とするものもあるが、公開資料ではないため採用していない。施設全体の記述として登録し、個々の浴槽へは広げない' },
+      source: { url: 'https://gagaonsen.com/', checkedAt: '2026-10-23' }
+    }],
+    source: { url: 'https://gagaonsen.com/', checkedAt: '2026-10-23' }
+  },
   'onsen-026': {
     colors: [{
       color: 'colorless', expression: '無色透明', scope: 'bath', scopeNames: ['露天風呂付き大浴場(洞窟の湯)'],
