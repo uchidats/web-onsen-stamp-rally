@@ -263,6 +263,31 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       }
     }
 
+    // 湯の色フィルター: 9色+未確認、複数色はどの色でも該当、他の条件・検索との併用、条件クリアで初期値へ
+    {
+      const ids = async () => evaluate("(async()=>{const s=document.getElementById('showMore');while(s&&!s.classList.contains('hide'))s.click();return [...document.querySelectorAll('#cards [data-facility-id]')].map(e=>e.dataset.facilityId)})()");
+      const setSel = async (id, v) => { await evaluate(`(()=>{const e=document.getElementById('${id}');e.value='${v}';e.dispatchEvent(new Event('change'))})()`); await delay(150); };
+      const opts = await evaluate("[...document.querySelectorAll('#colorSelect option')].map(o=>o.value+':'+o.textContent)");
+      assert.deepEqual(opts, [':すべての色', 'colorless:無色透明', 'milky_white:乳白色', 'white:白', 'gray_white:灰白色', 'green:緑', 'blue:青', 'yellow:黄', 'brown:茶褐色', 'black:黒', 'other:その他', 'unknown:未確認']);
+      const all = await ids();
+      await setSel('colorSelect', 'green');
+      const green = await ids();
+      assert.ok(green.includes('onsen-010') && green.includes('onsen-017'), 'multi-color facilities match any of their colors');
+      await setSel('colorSelect', 'blue');
+      assert.ok((await ids()).includes('onsen-010'));
+      await setSel('colorSelect', 'unknown');
+      const unknown = await ids();
+      assert.equal(unknown.length, NONE.length);
+      assert.ok(NONE.every(id => unknown.includes(id)) && !unknown.includes('onsen-010'));
+      await setSel('statusSelect', 'visited');
+      assert.deepEqual(await ids(), []);
+      await setSel('statusSelect', '');
+      await evaluate("document.getElementById('clearFilter').click()");
+      await delay(150);
+      assert.equal(await evaluate("document.getElementById('colorSelect').value"), '');
+      assert.deepEqual(await ids(), all);
+    }
+
     // the dots never touch visit records or localStorage
     assert.equal(await evaluate('JSON.stringify(localStorage)'), '{}');
     ws.close();
