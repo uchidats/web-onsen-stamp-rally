@@ -362,6 +362,14 @@ window.ONSEN_BATH_COLORS = {
     }],
     source: { url: 'https://www.jreast.co.jp/the-onsen/takaragawa.html', checkedAt: '2026-10-22' }
   },
+  'onsen-049': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_photo', confidence: 'photo_inferred', note: '公式サイトの浴槽写真から無色透明と判断し、実際に入浴した利用者の経験でも無色透明であることを確認した(利用者の経験は個人の申告で、公開資料ではない)。浴槽の底・照明・撮影条件の色を湯色と混同していないことも確認した。公式の文章には湯色の記載がないため、文章による確認(確認済み)ではなく写真からの推定として扱う。施設全体の記述として登録し、個々の浴槽へは広げない' },
+      source: { url: 'https://www.sekizenkan.co.jp/', checkedAt: '2026-10-23' }
+    }],
+    source: { url: 'https://www.sekizenkan.co.jp/', checkedAt: '2026-10-23' }
+  },
   'onsen-051': {
     colors: [{
       color: 'milky_white', expression: '白濁', scope: 'facility', role: 'variant',
