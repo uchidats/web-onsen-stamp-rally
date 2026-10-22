@@ -157,6 +157,14 @@ window.ONSEN_BATH_COLORS = {
     }],
     source: { url: 'http://www.ubayuonsen.com/hotspring.html', checkedAt: '2026-10-18' }
   },
+  'onsen-023': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_photo', confidence: 'photo_inferred', note: '公式サイト掲載の浴槽写真で透明な湯を確認し、日帰り入浴した利用者の経験でも無色透明であることを確認した(利用者の経験は個人の申告で、公開資料ではない)。浴槽の底・照明・撮影条件の色を湯色と混同していないことも確認した。公式の文章には湯色の記載がないため、文章による確認(確認済み)ではなく「公式写真+入浴経験」にもとづく写真からの推定として扱う。施設全体の記述として登録し、個々の浴槽へは広げない' },
+      source: { url: 'https://www.yuzehotel.jp/index.html', checkedAt: '2026-10-23' }
+    }],
+    source: { url: 'https://www.yuzehotel.jp/index.html', checkedAt: '2026-10-23' }
+  },
   'onsen-026': {
     colors: [{
       color: 'colorless', expression: '無色透明', scope: 'bath', scopeNames: ['露天風呂付き大浴場(洞窟の湯)'],
