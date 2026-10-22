@@ -330,6 +330,14 @@ window.ONSEN_BATH_COLORS = {
     }],
     source: { url: 'https://www.shirabu-higashiya.com/', checkedAt: '2026-10-22' }
   },
+  'onsen-033': {
+    colors: [{
+      color: 'milky_white', expression: '乳白色の湯', scope: 'bath', scopeNames: ['根っこ風呂'],
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'テレビ東京「土曜スペシャル 芸能界女子温泉部～冬こそ行きたい!雪見の秘湯～」(2011-02-12放送)の番組紹介:「硫黄の香りが強い乳白色の湯…樹齢300年以上の栗の木をくり抜いた露天風呂「大根っこ風呂」」「乳白色の湯と一面銀世界の渓谷の絶景を楽しんだ」。番組は「大根っこ風呂」と表記し、施設の「根っこ風呂」と同じ浴槽とみなした。放送は2011年で、公式サイトに湯色の記載はない' },
+      source: { url: 'https://www.tv-tokyo.co.jp/sat/backnumber/20110212/', checkedAt: '2026-10-23' }
+    }],
+    source: { url: 'https://www.tv-tokyo.co.jp/sat/backnumber/20110212/', checkedAt: '2026-10-23' }
+  },
   'onsen-040': {
     colors: [{
       color: 'brown', expression: '茶褐色', scope: 'facility',
