@@ -346,6 +346,14 @@ window.ONSEN_BATH_COLORS = {
     }],
     source: { url: 'http://www.myogaya.com/', checkedAt: '2026-10-22' }
   },
+  'onsen-045': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの「源泉掛け流し」欄に「泉色 無色透明」。源泉(板室温泉)の泉色を示す記載で、浴槽ごとの色の記載ではない。公式の露天風呂の写真とも整合する。施設全体の記述として登録し、個々の浴槽へは広げない' },
+      source: { url: 'https://www.itamuro-daikokuya.com/onsen/', checkedAt: '2026-10-23' }
+    }],
+    source: { url: 'https://www.itamuro-daikokuya.com/onsen/', checkedAt: '2026-10-23' }
+  },
   'onsen-046': {
     colors: [{
       color: 'colorless', expression: '無色透明', scope: 'facility',
