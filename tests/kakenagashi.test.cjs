@@ -28,12 +28,12 @@ test('kakenagashi: every entry is keyed by an existing facility and records scop
   }
 });
 
-test('kakenagashi: the card icon facilities are exactly the confirmed ones (51); unconfirmed facilities get none', () => {
+test('kakenagashi: the card icon facilities are exactly the confirmed ones (52); unconfirmed facilities get none', () => {
   assert.deepEqual(Object.keys(kake).sort(), [
     'onsen-001', 'onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012',
     'onsen-015', 'onsen-016', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027',
     'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033',
-    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-040', 'onsen-041', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-048', 'onsen-054', 'onsen-055', 'onsen-056', 'onsen-057', 'onsen-058', 'onsen-060', 'onsen-061', 'onsen-065', 'onsen-066', 'onsen-067'
+    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-040', 'onsen-041', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-048', 'onsen-054', 'onsen-055', 'onsen-056', 'onsen-057', 'onsen-058', 'onsen-060', 'onsen-061', 'onsen-065', 'onsen-066', 'onsen-067', 'onsen-068'
   ]);
   // 酸ヶ湯・新玉川・玉川・川原毛は、かけ流しを明記した資料を確認できていない
   for (const id of ['onsen-002', 'onsen-013', 'onsen-014', 'onsen-022']) assert.equal(kake[id], undefined, id);

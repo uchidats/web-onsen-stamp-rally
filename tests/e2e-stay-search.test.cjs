@@ -113,7 +113,8 @@ test('Stay search: panel form, saved device-locally, bed icons on cards, detail 
     const dd = await evaluate(`(()=>{const q=id=>document.getElementById(id),m=q('modalBg'),a=q('visitAdd').getBoundingClientRect(),b=q('detailStamp').getBoundingClientRect(),memo=q('memoText').getBoundingClientRect(),modal=document.querySelector('.modal');
       return JSON.stringify({gone:['stayGoogle','stayGoogleNote','stayHint','stayLodgingNote','stayDetail','detailBook'].concat(modal.querySelector('#stayForm,#stayCheckIn,#staySave')?['stayFormInModal']:[]).filter(i=>i==='stayFormInModal'||q(i)),text:/宿泊料金|宿泊施設を探す|Google.*引き継|非公式/.test(modal.textContent),sameRow:Math.abs(a.top-b.top)<1,sameSize:Math.abs(a.width-b.width)<1&&Math.abs(a.height-b.height)<1,h:a.height,memoH:memo.height,memoResize:getComputedStyle(q('memoText')).resize,labels:[q('visitAdd').textContent,q('detailStamp').textContent],fit:b.right<=modal.getBoundingClientRect().right&&a.left>=modal.getBoundingClientRect().left,overflow:modal.scrollWidth>modal.clientWidth||document.documentElement.scrollWidth>innerWidth})})()`).then(JSON.parse);
     assert.deepEqual(dd.gone, []); assert.equal(dd.text, false); assert.equal(dd.sameRow, true); assert.equal(dd.sameSize, true); assert.ok(dd.h >= 44);
-    assert.ok(dd.memoH < 56 && dd.memoH > 30, 'memo starts at about half its former 93px height: ' + dd.memoH); assert.equal(dd.memoResize, 'vertical');
+    // 広い画面では元(93px)の約半分。狭い画面ではプレースホルダーが2行になるため72px(切れないための最小の高さ)
+    assert.ok(width > 600 ? dd.memoH < 56 && dd.memoH > 30 : dd.memoH >= 70 && dd.memoH <= 76, 'memo height: ' + dd.memoH); assert.equal(dd.memoResize, 'vertical');
     assert.deepEqual(dd.labels, ['訪問日を追加', '訪問済みにする']); assert.equal(dd.fit, true); assert.equal(dd.overflow, false);
     fs.writeFileSync(path.join(browser.profile, `detail-${width}.png`), Buffer.from((await send('Page.captureScreenshot', { format: 'png' })).data, 'base64'));
     await close();

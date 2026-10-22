@@ -278,7 +278,7 @@ test('JapanPrefMap: SVG markup contains all 47 prefecture paths/polygons with co
   }
 });
 
-test('Integration with actual data.js: verifies 67 onsens across prefectures', () => {
+test('Integration with actual data.js: verifies 68 onsens across prefectures', () => {
   const { PREFECTURES, getPrefStats } = loadJapanMap();
 
   // Load real data.js
@@ -286,7 +286,7 @@ test('Integration with actual data.js: verifies 67 onsens across prefectures', (
   const win = {};
   vm.runInNewContext(dataCode, { window: win });
   const DATA = win.ONSEN_DATA;
-  assert.equal(DATA.length, 67, 'Must preserve 67 facilities');
+  assert.equal(DATA.length, 68, 'Must preserve 68 facilities');
 
   // Check stats when no visits
   let totalWithFacilities = 0;
@@ -306,8 +306,8 @@ test('Integration with actual data.js: verifies 67 onsens across prefectures', (
     }
   }
 
-  assert.equal(totalWithFacilities, 12, '12 prefectures have facilities in dataset');
-  assert.equal(emptyPrefCount, 35, '35 prefectures have no facilities registered');
+  assert.equal(totalWithFacilities, 13, '13 prefectures have facilities in dataset');
+  assert.equal(emptyPrefCount, 34, '34 prefectures have no facilities registered');
 
   // Check stats when all visited
   for (const p of PREFECTURES) {
@@ -338,7 +338,7 @@ test('Geographic projection matches standard Mercator, preserves aspect and does
   assert.ok(Math.abs(project(140,40)[1]-project(140,41)[1]-(merc(41)-merc(40))*PROJECTION.scale)<1e-8);
 });
 
-test('JapanPrefMap: displays exactly 67 verified onsen markers and 0 unverified markers', () => {
+test('JapanPrefMap: displays exactly 68 verified onsen markers and 0 unverified markers', () => {
   const MapModule = loadJapanMap();
   const dataCode = fs.readFileSync('data.js', 'utf8');
   const win = {};
@@ -358,10 +358,10 @@ test('JapanPrefMap: displays exactly 67 verified onsen markers and 0 unverified 
   });
 
   assert.ok(instance, 'Map instance should be created');
-  assert.equal(instance.getMarkerCount(), 67, 'Must render exactly 67 verified markers');
+  assert.equal(instance.getMarkerCount(), 68, 'Must render exactly 68 verified markers');
 
   const markers = container.querySelectorAll('.japan-map-marker');
-  assert.equal(markers.length, 67, 'DOM should contain 67 marker elements');
+  assert.equal(markers.length, 68, 'DOM should contain 68 marker elements');
 
   // Verify none of the 0 unverified onsens have a marker
   const unverified = DATA.filter(x => !x.coordinateVerified);
@@ -371,9 +371,9 @@ test('JapanPrefMap: displays exactly 67 verified onsen markers and 0 unverified 
     assert.equal(found, undefined, `Unverified facility ${u.id} (${u.facility}) must NOT have a marker on the map`);
   }
 
-  // Verify all 67 verified facilities have a marker
+  // Verify all 68 verified facilities have a marker
   const verified = DATA.filter(x => x.coordinateVerified);
-  assert.equal(verified.length, 67, 'Should have 67 verified onsens');
+  assert.equal(verified.length, 68, 'Should have 68 verified onsens');
   for (const v of verified) {
     const found = markers.find(m => m.getAttribute('data-onsen-id') === v.id);
     assert.ok(found, `Verified facility ${v.id} (${v.facility}) must have a marker`);

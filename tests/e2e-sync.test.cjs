@@ -50,7 +50,7 @@ test('E2E: cloud sync UI - consent, status, offline, conflict resolution, logout
     else{
       await waitFor("window.OnsenAuth && document.getElementById('accountCompactStatus').textContent==='ログイン'");
       assert.equal(await evaluate('OnsenAuth.enabled()'),true);
-      assert.equal(await evaluate('ONSEN_DATA.length'),66);
+      assert.equal(await evaluate('ONSEN_DATA.length'),67);
       assert.equal(await evaluate('OnsenAuth.controller.getSession().uid'),null);
     }
     assert.equal(await evaluate("document.getElementById('syncStatus').hidden"), true);

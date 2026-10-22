@@ -64,7 +64,7 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
             const nodes = [...svg.querySelectorAll('.japan-map-marker')];
             const byId = id => svg.querySelector('.japan-map-marker[data-onsen-id="' + id + '"]');
             return {
-              count: nodes.length === data.length && data.length === 66,
+              count: nodes.length === data.length && data.length === 67,
               projected: data.every(x => { const m = byId(x.id), p = window.JapanPrefMap.project(x.longitude, x.latitude); return m && Math.abs(m.getAttribute('cx') - p[0]) < 0.01 && Math.abs(m.getAttribute('cy') - p[1]) < 0.01; }),
               reachable: nodes.every(m => m.getAttribute('cx') >= 0 && m.getAttribute('cx') <= 1000 && m.getAttribute('cy') >= 0 && m.getAttribute('cy') <= 1000),
               nearPref: nodes.every(m => { const b = svg.querySelector('.prefecture[data-pref="' + m.dataset.pref + '"]').getBBox(), k = 40, x = +m.getAttribute('cx'), y = +m.getAttribute('cy'); return x >= b.x - k && x <= b.x + b.width + k && y >= b.y - k && y <= b.y + b.height + k; })
@@ -77,7 +77,7 @@ test('E2E: Edge browser map interaction, synchronization, and accessibility', as
       assert.equal(layout.overflow, false, `${width}px: no horizontal overflow`);
       assert.equal(layout.stacked, true, `${width}px: cards below map`);
       assert.equal(layout.rendered, true, `${width}px: all 47 prefecture shapes are rendered (they may extend beyond the initial view)`);
-      assert.deepEqual(layout.markers, { count: true, projected: true, reachable: true, nearPref: true }, `${width}px: 66 markers use the shared projection, lie in the pannable area and near their own prefecture`);
+      assert.deepEqual(layout.markers, { count: true, projected: true, reachable: true, nearPref: true }, `${width}px: 67 markers use the shared projection, lie in the pannable area and near their own prefecture`);
       assert.equal(layout.separated, true, `${width}px: Hokkaido and Kyushu must not overlap`);
       assert.equal(layout.columns, width === 320 ? 1 : width === 390 ? 2 : width === 768 ? 3 : 4);
       const screenshot = await send('Page.captureScreenshot', { format: 'png' });

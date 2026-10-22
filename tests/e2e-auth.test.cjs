@@ -62,8 +62,8 @@ test('E2E: Google login (Phase 1) - disabled without config; sign-in/out and fai
     const dataHash = () => evaluate("JSON.stringify(ONSEN_DATA.map(x=>[x.id,x.latitude,x.longitude]))");
     const before = { storage: await snapshot(), backup: await backup(), data: await dataHash() };
     assert.ok(JSON.parse(before.storage).length >= 1);
-    assert.equal(await evaluate('ONSEN_DATA.length'), 66, 'public list excludes the temporarily hidden facility');
-    assert.equal(await evaluate('ONSEN_MASTER.length'), 67, 'master data and fixed IDs are kept');
+    assert.equal(await evaluate('ONSEN_DATA.length'), 67, 'public list excludes the temporarily hidden facility');
+    assert.equal(await evaluate('ONSEN_MASTER.length'), 68, 'master data and fixed IDs are kept');
 
     await send('Page.addScriptToEvaluateOnNewDocument', { source: FAKE });
     for (const width of [1280, 390, 320]) {

@@ -484,5 +484,13 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '混浴露天風呂', kind: '露天', form: '混浴', note: '運営者のページに、混浴(岩風呂)または予約による貸切との案内があります。予約の条件は確認できていません' }
     ],
     source: { url: 'https://shiriuchionsen.com/onsen.php', checkedAt: '2026-10-19' }
+  },
+  'onsen-068': {
+    baths: [
+      { name: '天然岩風呂', form: '混浴', tags: ['足元湧出', '宿泊者のみ'], note: '大岩に囲まれた岩風呂。底から常時ラジウム泉が湧いています。宿泊の方のみ利用でき、時間制(男女別・混浴あり)です' },
+      { name: '貸切ラジウム水晶風呂', form: '貸切', tags: ['水晶'], note: 'ラジウム泉の湧出口に水晶を並べた個室の浴槽です。予約制です' },
+      { name: '不老の湯', kind: '内湯', note: '地下から自然自噴するラジウム泉(不老閣2号源泉)を使う内湯です。日替わりの男女交代制です' }
+    ],
+    source: { url: 'https://www.furoukaku.jp/onsen.php', checkedAt: '2026-10-22' }
   }
 };

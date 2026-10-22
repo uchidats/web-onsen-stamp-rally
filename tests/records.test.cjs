@@ -3,7 +3,7 @@ require('../records.js');const R=globalThis.OnsenRecords;
 const memory=()=>{const m=new Map();return {getItem:k=>m.has(k)?m.get(k):null,setItem:(k,v)=>m.set(k,v)}};
 const ctx={window:{}};vm.runInNewContext(fs.readFileSync('data.js','utf8'),ctx);const data=ctx.window.ONSEN_DATA;
 const privatePath=process.env.ONSEN_PRIVATE_MIGRATION_FILE;const synthetic=Object.fromEntries(data.map((x,i)=>[x.id,{visited:i>=1&&i<=45,visitCount:i>=1&&i<=45?1:0,firstVisit:null,lastVisit:null,notes:''}]));const migration=privatePath&&fs.existsSync(privatePath)?JSON.parse(fs.readFileSync(privatePath,'utf8').replace(/^\uFEFF/,'')):{format:'onsen-stamp-rally-v2',userData:{schemaVersion:2,visits:synthetic,rankings:[],rankingVisibility:'private',gpsStamps:[]},legacyBaseline:synthetic,migration:true};
-assert.equal(data.length,67);assert.equal(data.some(x=>x.category==='マイベスト'),false);assert.equal(new Set(data.map(x=>x.id)).size,67);
+assert.equal(data.length,68);assert.equal(data.some(x=>x.category==='マイベスト'),false);assert.equal(new Set(data.map(x=>x.id)).size,68);
 assert.equal(JSON.stringify(data.map(x=>x.id)),JSON.stringify(Object.keys(migration.userData.visits)));
 for(const x of data)for(const k of ['sourceVisited','sourceFirstVisit','sourceLastVisit','sourceVisitCount','memo'])assert.equal(k in x,false);
 const storage=memory(),repo=R.create(storage);let state=repo.load();assert.equal(Object.keys(state.userData.visits).length,0);
@@ -25,7 +25,7 @@ const failing=R.create({getItem:()=>null,setItem:()=>{throw Error('quota')}});co
 const elements=new Map();function el(id){if(!elements.has(id))elements.set(id,{value:'',style:{},innerHTML:'',textContent:'',dataset:{},classList:{toggle(){}},querySelectorAll:()=>[],addEventListener(){},scrollIntoView(){}});return elements.get(id)}
 const uiStorage=memory();const window={ONSEN_DATA:data,OnsenRecords:R};const document={getElementById:el,querySelectorAll:()=>[],addEventListener(){}};
 const ui={window,document,localStorage:uiStorage,setTimeout:()=>0,clearTimeout(){},console};
-const app=fs.readFileSync('app.js','utf8');vm.runInNewContext(app,ui);assert.equal(el('totalText').textContent,'0 / 67 施設');
-let us=R.create(uiStorage);us.setVisited(us.load(),'onsen-001',true);vm.runInNewContext(app,ui);assert.equal(el('totalText').textContent,'1 / 67 施設');assert.match(el('prefgrid').innerHTML,/北海道<\/strong><span class="fraction">1 \/ 1 施設 · 100%/);
+const app=fs.readFileSync('app.js','utf8');vm.runInNewContext(app,ui);assert.equal(el('totalText').textContent,'0 / 68 施設');
+let us=R.create(uiStorage);us.setVisited(us.load(),'onsen-001',true);vm.runInNewContext(app,ui);assert.equal(el('totalText').textContent,'1 / 68 施設');assert.match(el('prefgrid').innerHTML,/北海道<\/strong><span class="fraction">1 \/ 1 施設 · 100%/);
 el('statusSelect').value='visited';vm.runInNewContext(app,ui);assert.equal(el('resultCount').textContent,'1 施設 · 1 温泉地');
 console.log('PASS: public data, IDs, fresh start, persistence, reload, prefectures, filters, v2 roundtrip, 45 legacy visits, overrides, invalid files, safety copy, storage failure');

@@ -23,7 +23,7 @@ test('E2E: facility name in the detail view links to the official site (card and
     const waitFor = async expr => { for (let i = 0; i < 100; i++) { if (await evaluate(expr)) return; await new Promise(r => setTimeout(r, 100)); } assert.fail('Timed out: ' + expr); };
     const delay = ms => new Promise(r => setTimeout(r, ms));
     await send('Page.enable');
-    await waitFor("document.querySelectorAll('#cards .card').length>0 && document.querySelectorAll('.japan-map-marker').length===66");
+    await waitFor("document.querySelectorAll('#cards .card').length>0 && document.querySelectorAll('.japan-map-marker').length===67");
     await evaluate('localStorage.clear()');
     await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
 
@@ -41,12 +41,12 @@ test('E2E: facility name in the detail view links to the official site (card and
     const data = JSON.parse(await evaluate('JSON.stringify(ONSEN_DATA.map(x=>({id:x.id,facility:x.facility,officialUrl:x.officialUrl,lat:x.latitude,lng:x.longitude})))'));
     const withUrl = data.filter(x => x.officialUrl), without = data.filter(x => !x.officialUrl);
     assert.deepEqual(without.map(x => x.id), ['onsen-005', 'onsen-022', 'onsen-025']);
-    assert.equal(withUrl.length, 63);
+    assert.equal(withUrl.length, 64);
 
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       for (const via of ['card', 'map']) {
-        // 公式サイト登録あり: 全63施設で、施設名がそのURLへのリンク(新しいタブ・noopener)
+        // 公式サイト登録あり: 全64施設で、施設名がそのURLへのリンク(新しいタブ・noopener)
         for (const x of withUrl) {
           await open[via](x.id);
           assert.equal(await modalOpen(), true, `${via}:${x.id} opens`);
@@ -110,7 +110,7 @@ test('E2E: facility name in the detail view links to the official site (card and
 
     // データ・保存形式は変えない(座標・公式URLは読み取るだけ)
     assert.equal(await evaluate('JSON.stringify(localStorage)'), '{}');
-    assert.equal(await evaluate('ONSEN_DATA.length'), 66);
+    assert.equal(await evaluate('ONSEN_DATA.length'), 67);
     ws.close();
   } finally { await browser.close(); server.closeAllConnections(); server.close(); }
 });

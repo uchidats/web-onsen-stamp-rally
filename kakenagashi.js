@@ -394,6 +394,12 @@ window.ONSEN_KAKENAGASHI = {
     perBathEvidence: { type: 'third_party', confidence: 'third_party_reported', note: '個別の湯(上の湯・下の湯・混浴露天風呂)は第三者資料による判定。青森県観光情報サイト「５つの源泉、２つの内風呂、そして露天風と計３つの異なる温泉があります。そのすべてが源泉かけ流し。」(北海道の知内温泉、住所・名称が一致)、JR東日本「すべての湯船で源泉かけ流し」(上の湯・下の湯・混浴露天風呂を紹介する知内温泉旅館のページ)。施設公式の浴槽別の記載ではない。上記3浴場以外へは広げない' },
     dilution: { water: 'unknown', note: '公式予約FAQ「加水等はお客様にお任せしていますので入りやすい温度で」と、入浴者による加水を容認している。常時加水とも無加水とも断定せず、浴槽別・季節別の加水は未確認。加温なしの明文もなく、高温の源泉・自噴・100%からは推定しない。循環・ろ過・消毒は未確認' },
     source: { url: 'https://siriuchionsen.booking.chillnn.com/', checkedAt: '2026-10-19' }
+  },
+  'onsen-068': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「５つの源泉」ページ「５つの源泉は全て天然ラジウム泉100％のかけ流しです」。施設の源泉全体についての記述で、浴槽名の列挙はないため、個々の湯(代表的な湯)へは広げない。' },
+    dilution: { water: 'unknown', note: '公式ページに加水の記載はない。湯窪の湯は泉温が低いため27〜32℃に加温すると明記。他の浴槽の加温の有無は記載がない。' },
+    source: { url: 'https://www.furoukaku.jp/onsen.php', checkedAt: '2026-10-22' }
   }
 };
 

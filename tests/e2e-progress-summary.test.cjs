@@ -34,7 +34,7 @@ test('Four progress rings: responsive layout, percentages, record edits, backup 
     }
     assert.fail('Timed out: ' + expr);
   };
-  await wait("document.readyState==='complete' && document.getElementById('totalText')?.textContent==='0 / 66 施設'");
+  await wait("document.readyState==='complete' && document.getElementById('totalText')?.textContent==='0 / 67 施設'");
   await evaluate('document.fonts.ready');
   const seed = count => evaluate(`(()=>{const h=OnsenHost;let state=h.store.replace(h.store.empty(),h.getState(),true);for(const x of ONSEN_DATA.slice(0,${count}))state=h.store.setVisited(state,x.id,true);h.setState(state)})()`);
   async function check() {
@@ -57,7 +57,7 @@ test('Four progress rings: responsive layout, percentages, record edits, backup 
   }
   for (const width of [1280, 390, 320]) {
     await send('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile: width < 400 });
-    for (const count of [0, 17, 66]) {
+    for (const count of [0, 17, 67]) {
       await seed(count);
       const rings = await check();
       const layout = await evaluate(`(()=>{
@@ -65,7 +65,7 @@ test('Four progress rings: responsive layout, percentages, record edits, backup 
         return {columns:new Set(rects.map(r=>Math.round(r.left))).size,rows:new Set(rects.map(r=>Math.round(r.top))).size,overflow:document.documentElement.scrollWidth>innerWidth,contained:cards.every(e=>{const r=e.getBoundingClientRect();return [...e.querySelectorAll('h3,.progress-ring,.progress-percent,.progress-count')].every(x=>{const b=x.getBoundingClientRect();return b.left>=r.left&&b.right<=r.right&&b.top>=r.top&&b.bottom<=r.bottom})}),controls:document.querySelectorAll('#progressRings button,#progressRings a,#progressRings select,#progressScope,#totalBar').length};
       })()`);
       assert.deepEqual(layout, { columns: width === 1280 ? 4 : 2, rows: width === 1280 ? 1 : 2, overflow: false, contained: true, controls: 2 });
-      assert.deepEqual(rings.map(r => r.total), [66, 42, 50, 7]);
+      assert.deepEqual(rings.map(r => r.total), [67, 42, 51, 7]);
       await evaluate("document.getElementById('progress').scrollIntoView({block:'center',behavior:'instant'})");
       await evaluate('new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))');
       const shot = await send('Page.captureScreenshot', { format: 'png' });
@@ -119,7 +119,7 @@ test('Four progress rings: responsive layout, percentages, record edits, backup 
     const doc = await send('DOM.getDocument');
     const node = await send('DOM.querySelector', { nodeId: doc.root.nodeId, selector: '#importFile' });
     await send('DOM.setFileInputFiles', { nodeId: node.nodeId, files: [file] });
-    await wait("document.getElementById('totalText').textContent==='17 / 66 施設'");
+    await wait("document.getElementById('totalText').textContent==='17 / 67 施設'");
     await check();
     await evaluate("document.getElementById('search').value='乳頭';document.getElementById('search').dispatchEvent(new Event('input'))");
     const before = await evaluate("JSON.stringify({search:document.getElementById('search').value,pref:document.getElementById('prefSelect').value,category:document.getElementById('categorySelect').value,cards:document.getElementById('cards').innerHTML,map:document.getElementById('mapPref').value,storage:JSON.stringify(localStorage)})");
@@ -127,6 +127,6 @@ test('Four progress rings: responsive layout, percentages, record edits, backup 
     assert.equal(await evaluate("JSON.stringify({search:document.getElementById('search').value,pref:document.getElementById('prefSelect').value,category:document.getElementById('categorySelect').value,cards:document.getElementById('cards').innerHTML,map:document.getElementById('mapPref').value,storage:JSON.stringify(localStorage)})"), before);
     await check();
     await evaluate("document.getElementById('search').value='';document.getElementById('search').dispatchEvent(new Event('input'))");
-    console.log(JSON.stringify({ width, states: [0, 17, 66], addDelete: true, repeatedVisits: true, restore: true, passive: true, screenshots: browser.profile }));
+    console.log(JSON.stringify({ width, states: [0, 17, 67], addDelete: true, repeatedVisits: true, restore: true, passive: true, screenshots: browser.profile }));
   }
 });

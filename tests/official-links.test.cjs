@@ -2,8 +2,8 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 require('../records.js');
 const ctx={window:{}};vm.runInNewContext(fs.readFileSync('data.js','utf8'),ctx);
 const data=ctx.window.ONSEN_DATA,app=fs.readFileSync('app.js','utf8');
-assert.equal(data.length,67);
-assert.deepEqual(Array.from(data,x=>x.id),Array.from({length:67},(_,i)=>'onsen-'+String(i+1).padStart(3,'0')));
+assert.equal(data.length,68);
+assert.deepEqual(Array.from(data,x=>x.id),Array.from({length:68},(_,i)=>'onsen-'+String(i+1).padStart(3,'0')));
 for(const x of data){assert.equal(typeof x.officialUrl,'string');if(x.officialUrl){const u=new URL(x.officialUrl);assert.ok(['http:','https:'].includes(u.protocol));assert.equal(u.username,'');assert.equal(u.password,'')}}
 function render(rows,filters={},visitedIds=[]){const elements=new Map(),saved=new Map();const el=id=>{if(!elements.has(id))elements.set(id,{value:'',style:{},innerHTML:'',textContent:'',dataset:{},classList:{toggle(){}},querySelectorAll:()=>[],addEventListener(){}});return elements.get(id)};
   const storage={getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)},repo=globalThis.OnsenRecords.create(storage);let state=repo.load();for(const id of visitedIds)state=repo.setVisited(state,id,true);
@@ -23,13 +23,13 @@ for(const filter of ['search','categorySelect']){
 }
 for(const [category,count] of [['現・旧',26],['現（新規）',8],['旧（掲載終了）',9]])assert.equal((render(data,{categorySelect:category}).match(/data-facility-id=/g)||[]).length,count);
 assert.equal((html.match(/class="facility-name facility-name-link"/g)||[]).length,data.filter(x=>x.officialUrl).length);
-assert.equal((html.match(/data-detail=/g)||[]).length,67);
+assert.equal((html.match(/data-detail=/g)||[]).length,68);
 assert.equal((html.match(/data-visit=/g)||[]).length,0);
-assert.equal((html.match(/<h3>/g)||[]).length,62);
+assert.equal((html.match(/<h3>/g)||[]).length,63);
 assert.ok(!/<h3>\s*<a/.test(html));
 for(const x of data){if(x.officialUrl){assert.ok(html.includes('href="'+x.officialUrl+'" target="_blank" rel="noopener noreferrer"'));}else{assert.ok(html.includes('<span class="facility-name">'+x.facility+'</span>'))}}
-assert.equal((html.match(/class="map-link"/g)||[]).length,67);
-assert.equal((html.match(/role="tooltip"/g)||[]).length,67);
+assert.equal((html.match(/class="map-link"/g)||[]).length,68);
+assert.equal((html.match(/role="tooltip"/g)||[]).length,68);
 assert.equal((html.match(/>公式<\/a>/g)||[]).length,0);
 for(const x of data){assert.ok(html.includes('href="'+x.mapUrl.replaceAll('&','&amp;')+'"'));assert.ok(html.includes('aria-describedby="card-map-'+x.id+'"'))}
 assert.ok(html.includes('aria-hidden="true" focusable="false"'));
@@ -48,10 +48,10 @@ for(const official of [false,true])for(const maps of [false,true]){
 const escaped=render([{...data[0],facility:'宿"<&>',officialUrl:'https://example.com/?q="&x=1'}]);
 assert.ok(escaped.includes('宿&quot;&lt;&amp;&gt;'));
 assert.ok(escaped.includes('href="https://example.com/?q=%22&amp;x=1"'));
-console.log('PASS: all 67 IDs, official/empty links, http(s) allowlist, malformed/unsafe URLs, escaping, external-tab attributes, unchanged names/detail/visit controls');
+console.log('PASS: all 68 IDs, official/empty links, http(s) allowlist, malformed/unsafe URLs, escaping, external-tab attributes, unchanged names/detail/visit controls');
 
 const ids=[...html.matchAll(/data-facility-id="([^"]+)"/g)].map(m=>m[1]);
-assert.equal(new Set(ids).size,67);assert.deepEqual(ids,Array.from(data,x=>x.id));
+assert.equal(new Set(ids).size,68);assert.deepEqual(ids,Array.from(data,x=>x.id));
 for(const [group,a,b] of [['nyuto','onsen-015','onsen-016'],['takayu','onsen-034','onsen-035'],['okukinu','onsen-041','onsen-042'],['shima','onsen-048','onsen-049'],['kusatsu','onsen-050','onsen-051']]){
  const card=html.split('data-group="'+group+'"')[1].split('</article>')[0];assert.ok(card.includes(a)&&card.includes(b));
 }
@@ -60,10 +60,10 @@ assert.equal((render(data,{search:data[15].facility}).match(/data-facility-id=/g
 assert.equal((render(data,{search:data[14].onsen}).match(/data-facility-id=/g)||[]).length,2);
 assert.equal((render(data,{prefSelect:data[14].prefecture}).match(/data-facility-id=/g)||[]).length,11);
 assert.equal((render(data,{statusSelect:'visited'}).match(/data-facility-id=/g)||[]).length,0);
-assert.equal((render(data,{statusSelect:'unvisited'}).match(/data-facility-id=/g)||[]).length,67);
+assert.equal((render(data,{statusSelect:'unvisited'}).match(/data-facility-id=/g)||[]).length,68);
 assert.equal((render(data,{search:data[14].onsen,categorySelect:data[15].category}).match(/data-facility-id=/g)||[]).length,1);
 assert.equal((render([{...data[0],onsen:data[14].onsen},data[14],data[15]]).match(/<h3>/g)||[]).length,2);
-console.log('PASS: explicit five groups, 62 cards, all 67 unique facilities, facility-level search/prefecture/status/category and singleton fallback');
+console.log('PASS: explicit five groups, 63 cards, all 68 unique facilities, facility-level search/prefecture/status/category and singleton fallback');
 assert.equal(html.includes('conquered-badge'),false);
 assert.equal(html.includes('facility-status'),false);
 const conquered=render(data,{},['onsen-001','onsen-015']);
@@ -77,5 +77,5 @@ for(const ids of [['onsen-015','onsen-016'],['onsen-034','onsen-035'],['onsen-04
 }
 assert.ok(conquered.includes('知内温泉旅館: 訪問済み'));
 assert.equal((render(data,{statusSelect:'visited'},['onsen-001','onsen-015']).match(/data-facility-id=/g)||[]).length,2);
-assert.equal((render(data,{statusSelect:'unvisited'},['onsen-001','onsen-015']).match(/data-facility-id=/g)||[]).length,65);
+assert.equal((render(data,{statusSelect:'unvisited'},['onsen-001','onsen-015']).match(/data-facility-id=/g)||[]).length,66);
 console.log('PASS: conquered badges only on visited facilities, no old status text, independent visited/unvisited filters');

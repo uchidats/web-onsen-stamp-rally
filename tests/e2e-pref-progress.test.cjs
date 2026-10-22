@@ -45,8 +45,8 @@ test('E2E: native prefecture progress disclosure and hidden record updates', asy
       await evaluate("localStorage.clear();location.reload()");
       await waitFor("document.readyState==='complete' && !!document.querySelector('#prefgrid .pref')");
       assert.equal(await evaluate("document.getElementById('prefProgress').open"),false);
-      assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"),'12都道府県・66施設の訪問進捗');
-      assert.equal(await evaluate("document.querySelectorAll('#prefgrid .pref').length"),12);
+      assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"),'13都道府県・67施設の訪問進捗');
+      assert.equal(await evaluate("document.querySelectorAll('#prefgrid .pref').length"),13);
       // Native details may retain the hidden children's layout boxes; only summary is painted.
       assert.ok(await evaluate("document.getElementById('prefProgress').getBoundingClientRect().height<=document.querySelector('#prefProgress summary').getBoundingClientRect().height+3"));
       const storageBefore=await evaluate('JSON.stringify(localStorage)');
@@ -98,7 +98,7 @@ test('E2E: native prefecture progress disclosure and hidden record updates', asy
       await evaluate("document.querySelector('#prefProgress summary').scrollIntoView({block:'center'})");
       const closedShot=await send('Page.captureScreenshot',{format:'png'});
       fs.writeFileSync(`scratch/pref-progress-qa/closed-${width}.png`,Buffer.from(closedShot.data,'base64'));
-      results.push({width,cards:12,closedByDefault:true,toggle:true,updatesHiddenAndOpen:true,reloadClosed:true,keyboard:true,mapNavigation:true});
+      results.push({width,cards:13,closedByDefault:true,toggle:true,updatesHiddenAndOpen:true,reloadClosed:true,keyboard:true,mapNavigation:true});
     }
     fs.writeFileSync('scratch/pref-progress-qa/results.json',JSON.stringify(results,null,2));
     ws.close();

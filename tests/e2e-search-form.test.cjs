@@ -7,7 +7,7 @@ test('Search form fits three widths, combines and clears filters, and derives pr
  const wait=async expr=>{for(let i=0;i<100;i++){if(await evaluate(expr))return;await new Promise(r=>setTimeout(r,50));}assert.fail(expr)};
  await wait('!!window.OnsenHost');await evaluate('document.fonts.ready');
  const candidates=async()=>evaluate(`(()=>{const actual=[...document.getElementById('prefSelect').options].map(o=>o.value);const expected=['',...JapanPrefMap.PREFECTURES.map(p=>p.name).filter(p=>ONSEN_DATA.some(x=>x.prefecture===p))];return {actual,expected}})()`);
- let options=await candidates();assert.deepEqual(options.actual,options.expected);assert.equal(options.actual.length,13);
+ let options=await candidates();assert.deepEqual(options.actual,options.expected);assert.equal(options.actual.length,14);
  for(const width of [1280,390,320]){
   await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<400});await send('Emulation.setTouchEmulationEnabled',{enabled:width<400});
   await evaluate(`document.getElementById('onsens').scrollIntoView({block:'start',behavior:'instant'})`);
@@ -32,7 +32,7 @@ test('Search form fits three widths, combines and clears filters, and derives pr
   await activate('#collectionSummary');
   await evaluate('document.getElementById("search").click()');
   assert.equal(await evaluate('document.getElementById("collectionPicker").open'),false);
-  for(const [scope,total] of [['chi',42],['kake',50],['gensei',7],['all',66]]){
+  for(const [scope,total] of [['chi',42],['kake',51],['gensei',7],['all',67]]){
    await activate('#collectionSummary');await activate('#collectionOptions [data-scope="'+scope+'"]');
    assert.equal(await evaluate('document.getElementById("collectionPicker").open'),false);
    assert.equal(await evaluate('document.getElementById("categorySelect").value'),scope==='all'?'':scope);
@@ -54,12 +54,12 @@ test('Search form fits three widths, combines and clears filters, and derives pr
   const p=await evaluate(`(()=>{const r=document.getElementById('clearFilter').getBoundingClientRect();return{x:r.x+r.width/2,y:r.y+r.height/2}})()`);
   if(width<400){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[p]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...p,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...p,button:'left',clickCount:1});}
   assert.deepEqual(await evaluate(`['search','prefSelect','statusSelect','categorySelect'].map(id=>document.getElementById(id).value)`),['','','','']);
-  assert.ok((await evaluate(`document.getElementById('resultCount').textContent`)).includes('66'));
+  assert.ok((await evaluate(`document.getElementById('resultCount').textContent`)).includes('67'));
   fs.writeFileSync(path.join(browser.profile,`search-${width}.png`),Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
  }
  // A future facility is a browser-only fixture; the source master remains intact.
  await send('Page.addScriptToEvaluateOnNewDocument',{source:`let qaRows;Object.defineProperty(window,'ONSEN_DATA',{configurable:true,get:()=>qaRows,set:v=>{qaRows=[...v,{...v[0],id:'qa-added-prefecture',prefecture:'沖縄県'}]}})`});
- await send('Page.reload');await wait(`!!window.OnsenHost&&window.ONSEN_DATA.length===68`);
- options=await candidates();assert.deepEqual(options.actual,options.expected);assert.equal(options.actual.at(-1),'沖縄県');assert.equal(options.actual.length,14);
+ await send('Page.reload');await wait(`!!window.OnsenHost&&window.ONSEN_DATA.length===69`);
+ options=await candidates();assert.deepEqual(options.actual,options.expected);assert.equal(options.actual.at(-1),'沖縄県');assert.equal(options.actual.length,15);
  t.diagnostic('Screenshots: '+browser.profile);
 });

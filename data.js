@@ -1456,6 +1456,30 @@ window.ONSEN_DATA = [
     "springType": "",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%9B%E3%83%86%E3%83%AB%E3%81%8A%E3%81%8C%E3%82%8F%20%E5%AF%8C%E5%B1%B1%E7%9C%8C",
     "coordinateCheckedAt": "2026-10-11"
+  },
+  {
+    "id": "onsen-068",
+    "number": 68,
+    "area": "関東・信越",
+    "prefecture": "山梨県",
+    "onsen": "増富温泉",
+    "facility": "不老閣",
+    "latitude": 35.865875244140625,
+    "longitude": 138.53541564941406,
+    "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+    "coordinateVerified": true,
+    "officialUrl": "https://www.furoukaku.jp/",
+    "category": "その他",
+    "bathing": "12:30-14:00（内風呂のみ・1回1時間まで）",
+    "station": "",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "ラジウム泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%8D%E8%80%81%E9%96%A3%20%E5%B1%B1%E6%A2%A8%E7%9C%8C",
+    "coordinateCheckedAt": "2026-10-22",
+    "coordinateLicense": "CDLA-Permissive-2.0",
+    "coordinateSourceId": "10969912-a396-49bc-b621-a8e02384699b",
+    "coordinateSourceRelease": "2026-09-23.1"
   }
 ];
 

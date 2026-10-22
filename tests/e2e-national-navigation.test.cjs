@@ -25,9 +25,9 @@ test('E2E: national SVG zoom, pan, pinch and selection',async t=>{
   const waitFor=async expression=>{for(let i=0;i<100;i++){if(await evaluate(expression))return;await delay(100);}assert.fail('Timed out: '+expression);};
   const click=async(point,mobile)=>{if(mobile){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...point,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...point,button:'left',clickCount:1});}};
   await send('Network.enable');await send('Network.setBlockedURLs',{urls:['https://*']});
-  await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===66");
+  await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===67");
   await evaluate("(()=>{const repo=OnsenRecords.create(localStorage);let state=repo.load();for(const id of ['onsen-001','onsen-006','onsen-026'])state=repo.setVisited(state,id,true);})()");
-  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===66 && document.getElementById('totalText').textContent.startsWith('3 / 66')");
+  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===67 && document.getElementById('totalText').textContent.startsWith('3 / 67')");
   const stored=await evaluate('JSON.stringify(localStorage)');
   const bounds=async()=>evaluate("(()=>{const r=document.querySelector('.geolonia-svg-map').getBoundingClientRect();return{x:r.left,y:r.top,width:r.width,height:r.height}})()");
   const view=()=>evaluate("document.querySelector('.geolonia-svg-map').getAttribute('viewBox').split(' ').map(Number)");
@@ -38,7 +38,7 @@ test('E2E: national SVG zoom, pan, pinch and selection',async t=>{
   const regionView=()=>evaluate("(()=>{const v=JapanPrefMap.createViewport().region();return[v.x,v.y,v.size,v.size]})()");
   for(const width of [1280,390]){
    const mobile=width===390;await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile});await send('Emulation.setTouchEmulationEnabled',{enabled:mobile});
-   await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===66");
+   await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===67");
    assert.deepEqual(await view(),await regionView(),'each reload starts at the unchanged Kanto/Tohoku preset');
    await wholeJapan(mobile);assert.deepEqual(await view(),[0,0,1000,1000],'zoom-out still exposes whole Japan from the initial region');
    await evaluate("document.getElementById('resetPref').click();for(let i=0;i<7;i++)document.getElementById('japanMapZoomOut').click();document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'center',behavior:'instant'})");await delay(100);
@@ -78,7 +78,7 @@ test('E2E: national SVG zoom, pan, pinch and selection',async t=>{
    await evaluate("document.querySelector('.prefecture[data-pref=\"青森県\"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}))");assert.equal(await evaluate("document.getElementById('prefSelect').value"),'青森県');await waitFor("document.querySelectorAll('#mapCanvas .onsen-map-marker').length===4");
    await evaluate("document.getElementById('resetPref').click();document.getElementById('japanMapZoomIn').click();document.querySelector('.japan-map-svg-frame').scrollIntoView({block:'center',behavior:'instant'})");
    for(let i=0;i<20;i++)await evaluate("document.getElementById('japanMapZoomIn').click()");assert.equal((await view())[2],125);assert.equal(await evaluate("document.getElementById('japanMapZoomIn').disabled"),true);
-   for(let i=0;i<20;i++)await evaluate("document.getElementById('japanMapZoomOut').click()");assert.deepEqual(await view(),[0,0,1000,1000]);assert.equal(await evaluate("document.querySelectorAll('.japan-map-marker').length"),66);
+   for(let i=0;i<20;i++)await evaluate("document.getElementById('japanMapZoomOut').click()");assert.deepEqual(await view(),[0,0,1000,1000]);assert.equal(await evaluate("document.querySelectorAll('.japan-map-marker').length"),67);
    await button('resetPref',mobile);const shot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(session.profile+'/preset-'+width+'.png',Buffer.from(shot.data,'base64'));
    await wholeJapan(mobile);assert.deepEqual(await view(),[0,0,1000,1000]);
    const credit=await evaluate("(()=>{const a=document.querySelector('.japan-map-attribution'),i=a.querySelector('.japan-map-credit-info'),r=a.getBoundingClientRect(),f=a.closest('.japan-map-svg-frame').getBoundingClientRect();i.scrollIntoView({block:'center',behavior:'instant'});const p=i.getBoundingClientRect();return{text:a.textContent,size:parseFloat(getComputedStyle(a).fontSize),right:Math.abs(r.right-f.right),width:p.width,height:p.height,x:p.left+p.width/2,y:p.top+p.height/2}})()");
@@ -87,8 +87,8 @@ test('E2E: national SVG zoom, pan, pinch and selection',async t=>{
    await click({x:credit.x,y:credit.y},mobile);await waitFor("document.title==='地理データの出典・利用条件'");
    assert.ok(await evaluate("document.body.textContent.includes('Foursquare')&&document.body.textContent.includes('Meta')&&document.body.textContent.includes('ODbL 1.0')"));
    for(const file of ['licenses/CDLA-Permissive-2.0.txt','licenses/Apache-2.0.txt','licenses/Foursquare-NOTICE.txt'])assert.ok(await evaluate(`fetch(${JSON.stringify(file)}).then(async r=>r.ok&&(await r.text()).length>1000)`));
-   await send('Page.navigate',{url});await waitFor("document.readyState==='complete'&&document.querySelectorAll('.japan-map-marker').length===66");
+   await send('Page.navigate',{url});await waitFor("document.readyState==='complete'&&document.querySelectorAll('.japan-map-marker').length===67");
   }
-  assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'view never saves or alters visits');await send('Page.reload');await waitFor("document.readyState==='complete'&&!!document.getElementById('japanMapZoomIn')");assert.deepEqual(await view(),await regionView());assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 66 施設');t.diagnostic('PASS: desktop/mobile initial region, whole Japan, buttons, preset, bounded zoom, drag, pinch, wheel policy, exact centers, coast selection, Leaflet, unchanged storage and reload region');
+  assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'view never saves or alters visits');await send('Page.reload');await waitFor("document.readyState==='complete'&&!!document.getElementById('japanMapZoomIn')");assert.deepEqual(await view(),await regionView());assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 67 施設');t.diagnostic('PASS: desktop/mobile initial region, whole Japan, buttons, preset, bounded zoom, drag, pinch, wheel policy, exact centers, coast selection, Leaflet, unchanged storage and reload region');
  }finally{await session.close();server.closeAllConnections();server.close();}
 });
