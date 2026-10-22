@@ -282,5 +282,100 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式温泉案内「白く濁る硫黄の香りの100%掛け流しのお湯が、1日の疲れを温かく癒してくれます。」男女別の展望内湯を特定した説明。「うす乳白色」などの同系の表現は別の色として載せない' }
     }],
     source: { url: 'https://mikuri.com/onsen/', checkedAt: '2026-10-19' }
+  },
+  'onsen-003': {
+    colors: [{
+      color: 'colorless', expression: '透明', scope: 'bath', scopeNames: ['久安の湯', '泉響の湯'],
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'JR東日本「地・温泉」の蔦温泉の紹介:「湯船の底板の下から直接湧き出る新鮮な温泉は、空気に触れることなく透明で滑らか。内湯「泉響の湯」と「久安の湯」では、湯底からぷくぷくと湧き上がる湯玉を眺めながら…」。公式サイトに湯色の記載は見つからなかった。貸切風呂・他の浴槽には広げない' },
+      source: { url: 'https://www.jreast.co.jp/the-onsen/tsuta.html', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'https://www.jreast.co.jp/the-onsen/tsuta.html', checkedAt: '2026-10-22' }
+  },
+  'onsen-008': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility', scopeLabel: '大沢温泉',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '東北観光推進機構「東北観光ナビ」の大沢温泉の紹介(冒頭の温泉全体の説明):「アルカリ性単純泉で、無色透明でつるつるとなめらかな肌触りです。」大沢温泉全体の記述で、山水閣の個々の浴槽を特定していない。山水閣の公式サイトは湯色を書いていない' },
+      source: { url: 'https://www.tohokukanko.jp/attractions/print_1541.html', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'https://www.tohokukanko.jp/attractions/print_1541.html', checkedAt: '2026-10-22' }
+  },
+  'onsen-016': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'bath', scopeNames: ['やわらぎの湯－銀の湯'],
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ:貸切風呂「やわらぎの湯-銀の湯」の源泉(単純泉)について「単純泉の特徴:無色透明、とろんとした中性の柔らかく優しい温泉」。もう一方の源泉(マグネシウム・カルシウム硫酸塩泉、金の湯)は「天候や酸化による色の変化がありますが、基本的に濁り湯」とあるが、具体的な色の記載がないため登録しない。8つの湯舟のどれがどの源泉かは公式に書かれていない' },
+      source: { url: 'https://taenoyu.com/bath/', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'https://taenoyu.com/bath/', checkedAt: '2026-10-22' }
+  },
+  'onsen-019': {
+    colors: [{
+      color: 'colorless', expression: '透明度が高く', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「鷹の湯温泉について」:「透明度が高く、さらりとしてやわらかな湯は、何度浸かっても浸かり飽きることがない」。JR東日本「地・温泉」も「透明でやわらかな湯」「透明度抜群の湯を全身で堪能」。色名の「無色」までは書かれていないが、透き通った湯を指す。個別の浴槽は特定されていない' },
+      source: { url: 'http://takanoyuonsen.com/%E9%B7%B9%E3%81%AE%E6%B9%AF%E6%B8%A9%E6%B3%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'http://takanoyuonsen.com/%E9%B7%B9%E3%81%AE%E6%B9%AF%E6%B8%A9%E6%B3%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/', checkedAt: '2026-10-22' }
+  },
+  'onsen-027': {
+    colors: [
+      { color: 'brown', expression: 'うすい紅茶色', scope: 'facility', scopeLabel: '自家源泉の湯', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉のご案内」:「当館の自家源泉はうすい紅茶色をしており」(純重曹泉)。どの浴槽が自家源泉かは公式に書かれていないため、施設の一部の範囲にとどめる' } },
+      { color: 'colorless', expression: '透明', scope: 'facility', scopeLabel: '共同源泉の湯', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉のご案内」:「共同源泉は透明な温泉で塩分を含んでおり」、「泉質・効能」ページ「色は透明で塩分を含む重曹泉」。どの浴槽が共同源泉かは書かれていない' } }
+    ],
+    source: { url: 'https://www.ohnuma.co.jp/hotspring/', checkedAt: '2026-10-22' }
+  },
+  'onsen-028': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップページ「標高900mから湧く豊富な硫酸塩泉は無色透明で毎分1500Lの湯量を誇ります。」白布温泉の源泉の説明で、東屋の個々の浴槽は特定されていない' },
+      source: { url: 'https://www.shirabu-higashiya.com/', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'https://www.shirabu-higashiya.com/', checkedAt: '2026-10-22' }
+  },
+  'onsen-040': {
+    colors: [{
+      color: 'brown', expression: '茶褐色', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップページ「お風呂は保温と保湿力に優れた、茶褐色のにごり湯でございます。」JR東日本「地・温泉」も「鉄分豊富でよく温まる黄褐色の源泉」(川岸露天風呂)。公式の分析書の「無色澄明」は採取時の源泉の外観で、浴槽の色の根拠にしていない。浴槽別の色は特定されていない' },
+      source: { url: 'http://www.myogaya.com/', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'http://www.myogaya.com/', checkedAt: '2026-10-22' }
+  },
+  'onsen-046': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'JR東日本「地・温泉」の宝川温泉の紹介:「泉質は弱アルカリ性の単純温泉で、無色透明の柔らかな湯は神経痛や冷え性…」。施設全体の記述で、個々の浴槽は特定されていない。公式サイトの本文での湯色の記載は確認できていない' },
+      source: { url: 'https://www.jreast.co.jp/the-onsen/takaragawa.html', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'https://www.jreast.co.jp/the-onsen/takaragawa.html', checkedAt: '2026-10-22' }
+  },
+  'onsen-051': {
+    colors: [{
+      color: 'milky_white', expression: '白濁', scope: 'facility', role: 'variant',
+      change: { kind: 'rare', note: '毎月第2・第4土曜日は「白濁の日」として、にごり湯を楽しめる(公式)。それ以外の日の色は公式に書かれていない' },
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップ・大滝乃湯ページ「毎月2回、第2・第4土曜日が白濁の日。極上のにごり湯を楽しめます！」「煮川源泉の『効能成分』たっぷりの極上のにごり湯」。通常日の色は未確認のため登録しない' }
+    }],
+    source: { url: 'https://onsen-kusatsu.com/ohtakinoyu/', checkedAt: '2026-10-22' }
+  },
+  'onsen-052': {
+    colors: [{
+      color: 'milky_white', expression: '乳白濁色', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページのタイトル「3つの湯処をめぐる、乳白色の硫黄温泉」、「硫黄濃度日本一の乳白濁色のにごり湯です」。貸切風呂「円満の湯」は「源泉かけ流しの白濁の温泉」。万座の湧水を温めた「真湯」は温泉ではないため、全浴槽に広げない' },
+      source: { url: 'https://www.manza.co.jp/spa/', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'https://www.manza.co.jp/spa/', checkedAt: '2026-10-22' }
+  },
+  'onsen-065': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'JR東日本「地・温泉」の大牧温泉の紹介:「温泉は塩化物泉と硫酸塩泉の2つの源泉が混ざったやわらかな湯が特徴で、無色透明の湯は体の芯まで温めてくれる」。施設全体の記述で、個々の浴槽は特定されていない。公式サイトの湯色の記載は確認できていない' },
+      source: { url: 'https://www.jreast.co.jp/the-onsen/oomaki.html', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'https://www.jreast.co.jp/the-onsen/oomaki.html', checkedAt: '2026-10-22' }
+  },
+  'onsen-067': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「小川温泉は無色透明の炭酸水素塩泉。」トップページにも「泉質は無色透明の炭酸水素塩泉」。施設の温泉全体の記述で、天然洞窟野天風呂など個々の浴槽は特定されていない' },
+      source: { url: 'https://www.ogawaonsen.co.jp/spa/', checkedAt: '2026-10-22' }
+    }],
+    source: { url: 'https://www.ogawaonsen.co.jp/spa/', checkedAt: '2026-10-22' }
   }
 };
