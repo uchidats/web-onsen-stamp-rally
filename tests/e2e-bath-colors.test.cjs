@@ -286,6 +286,22 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       await delay(150);
       assert.equal(await evaluate("document.getElementById('colorSelect').value"), '');
       assert.deepEqual(await ids(), all);
+      // 色付きの丸+色名のピッカー(カードの丸と同じ色定義)。キーボード(Escで閉じる)と選択
+      const labels = await evaluate("[...document.querySelectorAll('#colorOptions button')].map(b=>b.textContent+'|'+(b.querySelector('.bath-color-dot')?.style.getPropertyValue('--dot')||''))");
+      assert.equal(labels.length, 12);
+      assert.ok(labels[1].startsWith('無色透明|transparent') && labels[2].startsWith('乳白色|#f1e9d3') && labels[11].startsWith('未確認|'));
+      await evaluate("document.getElementById('colorSummary').click()");
+      assert.equal(await evaluate("document.getElementById('colorPicker').open"), true);
+      await evaluate("document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape'}))");
+      assert.equal(await evaluate("document.getElementById('colorPicker').open"), false);
+      await evaluate("document.getElementById('colorSummary').click();document.querySelector('#colorOptions button[data-color=\"green\"]').click()");
+      await delay(150);
+      assert.equal(await evaluate("document.getElementById('colorSelect').value"), 'green');
+      assert.ok((await evaluate("document.getElementById('colorSummary').textContent")).includes('緑'));
+      assert.ok((await ids()).includes('onsen-010'));
+      await evaluate("document.getElementById('clearFilter').click()");
+      await delay(150);
+      assert.ok((await evaluate("document.getElementById('colorSummary').textContent")).includes('すべての色'));
     }
 
     // the dots never touch visit records or localStorage
