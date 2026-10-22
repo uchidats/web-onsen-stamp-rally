@@ -110,7 +110,7 @@ test('Four progress rings: responsive layout, percentages, record edits, backup 
     await evaluate("document.getElementById('modalClose').click()");
     await seed(17);
     await send('Browser.setDownloadBehavior', { behavior: 'deny' });
-    await evaluate("(()=>{const original=URL.createObjectURL;URL.createObjectURL=blob=>{window.qaBackup=blob.text();return original.call(URL,blob)};document.getElementById('exportBtn').click()})()");
+    await evaluate("(()=>{HTMLAnchorElement.prototype.click=function(){if(!this.hasAttribute('download'))HTMLElement.prototype.click.call(this)};const original=URL.createObjectURL;URL.createObjectURL=blob=>{window.qaBackup=blob.text();return original.call(URL,blob)};document.getElementById('exportBtn').click()})()");
     const backup = JSON.parse(await evaluate('qaBackup'));
     assert.equal(backup.format, 'onsen-stamp-rally-v3');
     const file = path.join(browser.profile, `restore-${width}.json`);
