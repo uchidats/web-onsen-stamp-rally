@@ -9,6 +9,7 @@
 |環境|ホスト名|Firebaseプロジェクト|状態|
 |---|---|---|---|
 |production(本番)|`uchidats.github.io`|`my-onsen-journey-staging`|有効|
+|production(独自ドメイン)|`onsen.journeylab.jp`|`my-onsen-journey-staging`|有効(Firebaseの承認済みドメインへの追加が必要。authDomainとOAuthリダイレクトURIは変更なし)|
 |staging(試験サイト)|`my-onsen-journey-staging.web.app`(Firebase Hosting)|`my-onsen-journey-staging`|有効|
 |local|`localhost`|`my-onsen-journey-staging`|有効(手元での確認用)|
 

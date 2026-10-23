@@ -59,10 +59,10 @@ test('auth: production (GitHub Pages), the staging Hosting site and localhost sh
     assert.deepEqual(Object.keys(cfg.environments[env].config).sort(), ['apiKey', 'appId', 'authDomain', 'projectId']); // Web設定だけ(秘密鍵などは無い)
     assert.equal(cfg.environments[env].sync, true, env);
   }
-  assert.deepEqual(plain(cfg.environments.production.hosts), ['uchidats.github.io']);
+  assert.deepEqual(plain(cfg.environments.production.hosts), ['uchidats.github.io', 'onsen.journeylab.jp']);
   assert.deepEqual(plain(cfg.environments.staging.hosts), ['my-onsen-journey-staging.web.app']);
   assert.deepEqual(plain(cfg.environments.local.hosts), ['localhost']);
-  for (const [host, env] of [['uchidats.github.io', 'production'], ['my-onsen-journey-staging.web.app', 'staging'], ['localhost', 'local']]) {
+  for (const [host, env] of [['uchidats.github.io', 'production'], ['onsen.journeylab.jp', 'production'], ['my-onsen-journey-staging.web.app', 'staging'], ['localhost', 'local']]) {
     const a = load({}, host).OnsenAuth;
     assert.equal(a.enabled(), true, host); assert.equal(a.environmentName(), env, host); assert.equal(a.syncEnabled(), true, host);
   }

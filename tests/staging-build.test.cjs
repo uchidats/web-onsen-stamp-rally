@@ -89,7 +89,7 @@ test('cloud sync: Firestore is used only by the sync adapter on the three config
   assert.deepEqual(Object.keys(envs).sort(), ['local', 'production', 'staging']);
   for (const e of Object.values(envs)) { assert.equal(e.sync, true); assert.equal(e.config.projectId, 'my-onsen-journey-staging'); }
   assert.deepEqual(envs.production.config, envs.staging.config); assert.deepEqual(envs.production.config, envs.local.config);
-  assert.deepEqual(envs.production.hosts, ['uchidats.github.io']);
+  assert.deepEqual(envs.production.hosts, ['uchidats.github.io', 'onsen.journeylab.jp']);
   assert.match(strip('sync.js'), /!Auth\.syncEnabled\(\)[^;]*\) return;/);
   assert.match(strip('auth.js'), /ENABLED_ENVIRONMENTS=\['local','staging','production'\]/);
 });

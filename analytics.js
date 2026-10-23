@@ -4,7 +4,7 @@
   const config=Object.freeze({
     measurementId:'G-5P0Y0M7SNM',
     // Add a custom domain with its canonical path here after configuring GA4.
-    sites:[{hostname:'uchidats.github.io',path:'/web-onsen-stamp-rally/'}],
+    sites:[{hostname:'uchidats.github.io',path:'/web-onsen-stamp-rally/'},{hostname:'onsen.journeylab.jp',path:'/'}],
     consentKey:'onsen-analytics-consent-v1',consentDays:180,
     pageTitle:'温泉の旅 | My Onsen Journey'
   });

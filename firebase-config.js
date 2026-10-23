@@ -23,7 +23,7 @@ window.ONSEN_FIREBASE = window.ONSEN_FIREBASE || {
   sdkVersion: '10.14.1',
   environments: {
     production: {
-      hosts: ['uchidats.github.io'],
+      hosts: ['uchidats.github.io', 'onsen.journeylab.jp'], // 独自ドメイン(onsen.journeylab.jp)は2026-10 に追加。承認済みドメインにも登録が必要
       sync: true, // クラウド同期(Firestore)。本番も試験と同じプロジェクト・同じデータを使う
       config: FIREBASE_WEB_CONFIG
     },

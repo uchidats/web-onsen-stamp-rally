@@ -510,3 +510,29 @@ test('records synced before epochs existed (legacy root + legacy sync state) kee
   assert.equal(cloud.visits.size, 2); assert.equal(again.last().state, 'synced');
   assert.equal(again.engine.meta().epoch, cloud.root.epoch);
 });
+
+test('new origin (empty localStorage) logging in to an account that already has cloud records: nothing is uploaded or overwritten, the cloud records are downloaded', async () => {
+  const cloud = new FakeCloud(), old = device(cloud, 'github-pages-origin');
+  await old.join();
+  old.add('onsen-001', '2026-01-01'); old.add('onsen-001', '2026-01-02'); old.add('onsen-002', '2026-02-03'); old.note('onsen-002', '露天風呂が良かった');
+  await flush(old);
+  assert.equal(cloud.visits.size, 3);
+  const snapshot = () => JSON.stringify({ v: [...cloud.visits].sort(), n: [...cloud.notes].sort(), r: cloud.root });
+  const before = snapshot(), writesBefore = cloud.writes;
+  // 新ドメイン = 空のlocalStorage、同じアカウント(uid)
+  const fresh = device(cloud, 'onsen.journeylab.jp', 'user-1', mem());
+  assert.equal(fresh.count(), 0);
+  await fresh.begin();
+  assert.equal(fresh.last().state, 'consent', 'asks for consent before any exchange');
+  assert.equal(fresh.last().summary.willUpload, 0); assert.equal(fresh.last().summary.willDownload, 3);
+  assert.equal(snapshot(), before, 'cloud untouched before consent'); assert.equal(cloud.writes, writesBefore);
+  await fresh.engine.consent(); await settle(); await flush(fresh, old);
+  assert.equal(fresh.count(), 3); assert.deepEqual(fresh.visits('onsen-001').sort(), ['2026-01-01', '2026-01-02']);
+  assert.equal(fresh.state.userData.visits['onsen-002'].notes, '露天風呂が良かった');
+  assert.equal([...cloud.visits.values()].filter(d => d.status === 'active').length, 3, 'no cloud record was deleted');
+  assert.equal(snapshot(), before, 'cloud records and notes are byte-identical after the first sync (nothing overwritten)');
+  assert.equal(old.count(), 3); assert.equal(old.state.userData.visits['onsen-002'].notes, '露天風呂が良かった');
+  // 空の端末から後で何か足しても、既存のクラウド記録は消えない
+  fresh.add('onsen-003', '2026-03-04'); await flush(fresh, old);
+  assert.equal(old.count(), 4); assert.equal([...cloud.visits.values()].filter(d => d.status === 'active').length, 4);
+});

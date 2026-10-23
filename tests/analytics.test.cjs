@@ -50,3 +50,15 @@ test('Load failure does not send page views or interfere with the application; h
   const html=fs.readFileSync('index.html','utf8');assert.equal((html.match(/src="analytics[.]js[?]v=privacy-dialog-1"/g)||[]).length,1);assert.ok(html.slice(0,html.indexOf('</head>')).includes('src="analytics.js?v=privacy-dialog-1" defer'));
   assert.equal(html.includes('googletagmanager.com/gtag/js'),false);
 });
+test('Custom domain onsen.journeylab.jp (path /) uses the same consent gate and sanitized canonical URL; look-alike hosts, http and subpaths stay off',()=>{
+  const r=run('https://onsen.journeylab.jp/?comment=synthetic-private#memo');
+  assert.equal(r.scripts.length,0);assert.equal(r.nodes.analyticsNotice.hidden,false,'consent is asked again on the new origin');assert.equal(r.nodes.analyticsControls.hidden,false);
+  r.root.OnsenAnalytics.setConsent('granted');r.again();assert.equal(r.scripts.length,1);r.scripts[0].onload();
+  const event=r.commands().find(x=>x[0]==='event');assert.equal(event[2].page_location,'https://onsen.journeylab.jp/');assert.equal(event[2].page_referrer,'');
+  assert.equal(/synthetic-private|#memo/.test(JSON.stringify(r.commands())),false);
+  assert.ok(r.commands().filter(x=>x[0]==='consent').every(x=>x[2].ad_storage==='denied'&&x[2].ad_user_data==='denied'&&x[2].ad_personalization==='denied'));
+  assert.equal(run('https://onsen.journeylab.jp/index.html',valid('granted')).commands().some(x=>x[0]==='config'),true,'index.html is the same page');
+  for(const url of ['http://onsen.journeylab.jp/','https://onsen.journeylab.jp/other/','https://www.onsen.journeylab.jp/','https://evil.onsen.journeylab.jp/','https://onsen.journeylab.jp.evil.example/','https://journeylab.jp/']){
+    const x=run(url,valid('granted'));x.root.OnsenAnalytics.setConsent('granted');assert.equal(x.scripts.length,0,url);assert.equal(x.root.dataLayer,undefined,url);
+  }
+});
