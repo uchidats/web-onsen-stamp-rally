@@ -359,6 +359,8 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .filters .stay-field input, .filters .stay-field select { display: block; width: 100%; min-width: 0; height: 46px; padding: 8px; border: 1px solid #cecec1; border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; font-size: 14px; }
 /* 施設カードのベッドアイコン: 地図ピン(.map-link)と同じ大きさ・色。タップ領域だけ余白で広げる */
 .facility-meta .map-link:not(.stay-link) + .stay-link { margin-left: -6px; } /* 地図ピンのすぐ右(アイコン同士の間隔を詰める) */
+.facility-meta .facility-detail + .report-link { margin-left: -6px; } /* 詳細のすぐ右(旗アイコン) */
+.card .report-link::before { content: ''; position: absolute; inset: -8px -2px; }
 .card .stay-link::before { content: ''; position: absolute; inset: -8px -2px; }
 @media (max-width: 600px) {
 }
