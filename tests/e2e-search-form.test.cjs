@@ -12,7 +12,7 @@ test('Search form fits three widths, combines and clears filters, and derives pr
   await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<400});await send('Emulation.setTouchEmulationEnabled',{enabled:width<400});
   await evaluate(`document.getElementById('onsens').scrollIntoView({block:'start',behavior:'instant'})`);
   const layout=await evaluate(`(()=>{const r=id=>document.getElementById(id).getBoundingClientRect(),s=r('search'),b=r('clearFilter'),selects=['prefSelect','statusSelect','collectionPicker'].map(r);return {aligned:Math.abs(s.bottom-b.bottom)<1,searchWidth:s.width,clearAfter:b.left>=s.right,even:Math.max(...selects.map(x=>x.width))-Math.min(...selects.map(x=>x.width))<1,below:selects.every(x=>x.top>=b.bottom),fits:document.documentElement.scrollWidth<=innerWidth&&[s,b,...selects].every(x=>x.left>=0&&x.right<=innerWidth),background:getComputedStyle(document.getElementById('clearFilter')).backgroundColor}})()`);
-  assert.ok(layout.aligned&&layout.clearAfter&&layout.even&&layout.below&&layout.fits&&layout.searchWidth>=130,JSON.stringify(layout));assert.equal(layout.background,'rgba(0, 0, 0, 0)');
+  assert.ok(layout.aligned&&layout.clearAfter&&layout.even&&layout.below&&layout.fits&&layout.searchWidth>=130,JSON.stringify(layout));assert.equal(layout.background,'rgb(231, 238, 229)');
   assert.deepEqual(await evaluate(`[...document.getElementById('statusSelect').options].map(o=>o.textContent)`),['すべて','未訪問','訪問済み']);
   const storageBefore=await evaluate('JSON.stringify(localStorage)');
   assert.deepEqual(await evaluate("[...document.getElementById('categorySelect').options].map(o=>o.value)"),['','chi','kake','gensei']);
