@@ -273,7 +273,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       const ids = async () => evaluate("(async()=>{const s=document.getElementById('showMore');while(s&&!s.classList.contains('hide'))s.click();return [...document.querySelectorAll('#cards [data-facility-id]')].map(e=>e.dataset.facilityId)})()");
       const setSel = async (id, v) => { await evaluate(`(()=>{const e=document.getElementById('${id}');e.value='${v}';e.dispatchEvent(new Event('change'))})()`); await delay(150); };
       const opts = await evaluate("[...document.querySelectorAll('#colorSelect option')].map(o=>o.value+':'+o.textContent)");
-      assert.deepEqual(opts, [':すべての色', 'colorless:無色透明', 'milky_white:乳白色', 'white:白', 'gray_white:灰白色', 'green:緑', 'blue:青', 'yellow:黄', 'brown:茶褐色', 'black:黒', 'other:その他', 'unknown:未確認']);
+      assert.deepEqual(opts, [':すべて', 'colorless:無色透明', 'milky_white:乳白色', 'white:白', 'gray_white:灰白色', 'green:緑', 'blue:青', 'yellow:黄', 'brown:茶褐色', 'black:黒', 'other:その他', 'unknown:未確認']);
       const all = await ids();
       await setSel('colorSelect', 'green');
       const green = await ids();
@@ -306,7 +306,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       assert.ok((await ids()).includes('onsen-010'));
       await evaluate("document.getElementById('clearFilter').click()");
       await delay(150);
-      assert.ok((await evaluate("document.getElementById('colorSummary').textContent")).includes('すべての色'));
+      assert.ok((await evaluate("document.getElementById('colorSummary').textContent")).includes('すべて'));
     }
 
     // the dots never touch visit records or localStorage
