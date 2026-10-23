@@ -900,7 +900,11 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .privacy-dialog { position: fixed; width: min(620px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 24px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font-size: 13px; line-height: 1.8; }
 .privacy-dialog::backdrop { background: #16261fb0; }
 .privacy-dialog h2 { margin: 0 48px 16px 0; font-size: 20px; }
-.privacy-dialog p { margin: 12px 0; }
+.privacy-dialog p { margin: 10px 0; line-height: 1.9; }
+.privacy-dialog .privacy-section { margin: 0; padding: 18px 0 4px; border-top: 1px solid var(--line); }
+.privacy-dialog .privacy-section:first-of-type { border-top: 0; padding-top: 4px; }
+.privacy-dialog h3 { margin: 0 0 8px; font-size: 15px; line-height: 1.5; color: var(--moss); }
+.privacy-dialog p strong { color: var(--deep); }
 .privacy-dialog a { color: var(--moss); text-decoration: underline; overflow-wrap: anywhere; }
 .privacy-dialog .analytics-choice { display: block; margin: 16px 0 8px; }
 .privacy-dialog .analytics-actions[hidden] { display: none; }
