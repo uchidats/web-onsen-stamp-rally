@@ -11,7 +11,7 @@
   if (!host) return;
   const settings = root.ONSEN_FIREBASE || {};
   // 同期が有効な環境では、ヘッダーの説明を実態に合わせる(同期は「開始する」を選んだ時だけ始まる)
-  { const note = doc.querySelector('.account-note'); if (note) note.textContent = 'β版の機能です。同期を開始すると、訪問記録とメモがあなたのGoogleアカウントのクラウドにも保存され、同じアカウントの他の端末と同期されます。ログアウトしても、この端末の記録は残ります。'; }
+  { const note = doc.querySelector('.account-note'); if (note) note.textContent = '同期を開始すると、訪問記録とメモがあなたのGoogleアカウントのクラウドにも保存され、同じアカウントの他の端末と同期されます。ログアウトしても、この端末の記録は残ります。'; }
   let engine = null, generation = 0, dismissedFor = null, lastStatus = null, fsModule = null, consentBusy = false, consentRequested = false;
   const DELETE_KEY = 'onsen-rally-cloud-delete-v1';
   const pendingDelete = s => { try { const p = JSON.parse(root.localStorage.getItem(DELETE_KEY)); return p && p.uid === s.uid && p.projectId === s.projectId ? p : null; } catch (e) { return null; } };

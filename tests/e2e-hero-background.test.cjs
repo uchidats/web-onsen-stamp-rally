@@ -57,7 +57,7 @@ test('All five hero backgrounds fit three widths, preserve layout and contrast, 
       fs.writeFileSync(path.join(output, `${width}-${pattern}.png`), Buffer.from(screenshot.data, 'base64'));
       shots.push(screenshot.data);
       // Sample the rendered background behind the text, without the text itself.
-      const text = await evaluate(`['#heroCopy span','.hero-main > p','.hero-actions .outline','.hero-main > .eyebrow','.logo small','.beta-badge-header'].flatMap(s=>[...document.querySelectorAll(s)].map(e=>{const range=document.createRange();range.selectNodeContents(e);const r=range.getBoundingClientRect();return {selector:s,color:getComputedStyle(e).color,x:r.x,y:r.y,width:r.width,height:r.height}}))`);
+      const text = await evaluate(`['#heroCopy span','.hero-main > p','.hero-actions .outline','.hero-main > .eyebrow','.logo small'].flatMap(s=>[...document.querySelectorAll(s)].map(e=>{const range=document.createRange();range.selectNodeContents(e);const r=range.getBoundingClientRect();return {selector:s,color:getComputedStyle(e).color,x:r.x,y:r.y,width:r.width,height:r.height}}))`);
       // Keep the local text-backdrop overlay visible while hiding foreground content.
       await evaluate("document.querySelectorAll('.top,.hero-main > *').forEach(e=>e.style.visibility='hidden')");
       const background = await send('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width, height, scale: 1 } });

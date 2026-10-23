@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 
-test('Minimal beta badge and progress heading fit desktop and narrow phones', async t => {
+test('Progress heading fit desktop and narrow phones', async t => {
   const browser = await require('./helpers/browser.cjs').startBrowser(
     'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
     pathToFileURL(path.resolve('index.html')).href
@@ -18,15 +18,13 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
     await send('Emulation.setDeviceMetricsOverride', { width, height: 1000, deviceScaleFactor: 1, mobile: width < 400 });
     const layout = await evaluate(`(() => {
       const rect = s => document.querySelector(s).getBoundingClientRect();
-      const badge = rect('.beta-badge-header'), account = rect('.account-tools');
       const panel = rect('.progress-summary'), hero = rect('.hero');
       return {
-        badge: document.querySelector('.beta-badge-header').textContent,
         headings: document.querySelectorAll('.progress-summary h2').length,
-        notices: document.querySelectorAll('.beta-notice').length,
+        betaBadges: document.querySelectorAll('.beta-badge,.beta-notice').length,
+        betaText: /β|ベータ|BETA/i.test(document.body.innerText),
         overflow: document.documentElement.scrollWidth > innerWidth,
         cardCount: document.querySelectorAll('.progress-card').length,
-        badgeFits: badge.left >= 0 && badge.right <= innerWidth && (badge.right <= account.left || badge.top >= account.bottom),
         panelFits: panel.left >= 0 && panel.right <= innerWidth,
         overlap: hero.bottom - panel.top,
         percent: document.getElementById('totalPercent').textContent,
@@ -36,7 +34,8 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
         columns: new Set([...document.querySelectorAll('.progress-card')].map(e=>Math.round(e.getBoundingClientRect().left))).size
       };
     })()`);
-    assert.equal(layout.badge, 'β版 公開中');
+    assert.equal(layout.betaBadges, 0);
+    assert.equal(layout.betaText, false);
     assert.equal(layout.headings, 0);
     assert.equal(await evaluate("document.getElementById('regionalHeading').textContent"), '都道府県別の♨達成度');
     assert.equal(await evaluate("document.querySelector('#regional-progress .section-kicker').textContent"), 'REGIONAL PROGRESS');
@@ -54,10 +53,8 @@ test('Minimal beta badge and progress heading fit desktop and narrow phones', as
     assert.equal(await evaluate("document.getElementById('prefProgressMeta').getClientRects().length"), 0);
     assert.equal(await evaluate("document.documentElement.scrollWidth<=innerWidth"), true);
     await evaluate("document.getElementById('prefProgress').open=false");
-    assert.equal(layout.notices, 0);
     assert.equal(layout.overflow, false, JSON.stringify({ width, layout }));
     assert.equal(layout.cardCount, 4);
-    assert.equal(layout.badgeFits, true);
     assert.equal(layout.panelFits, true);
     assert.equal(layout.overlap, width < 400 ? 24 : 30);
     assert.equal(layout.percent, '25.4%');
