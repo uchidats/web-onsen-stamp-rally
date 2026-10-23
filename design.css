@@ -919,7 +919,7 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .analytics-actions { display: flex; gap: 12px; }
 .analytics-actions button { flex: 1; min-height: 44px; }
 #analyticsMessage:empty { display: none; }
-@media (max-width: 600px) { .analytics-notice p { white-space: normal; } .analytics-notice { left: 12px; right: 12px; width: auto; max-width: none; bottom: max(12px, env(safe-area-inset-bottom)); padding: 10px 12px; } .analytics-notice .analytics-actions { width: 100%; } .analytics-notice .analytics-actions button { flex: 1; } }
+@media (max-width: 600px) { .analytics-notice p { white-space: normal; flex: 1 1 100%; } .analytics-notice { left: 12px; right: 12px; width: auto; max-width: none; bottom: max(12px, env(safe-area-inset-bottom)); padding: 10px 12px; } .analytics-notice .analytics-actions { width: 100%; } .analytics-notice .analytics-actions button { flex: 1; } }
 
 /* Compact facility rows remain independent inside display-only groups. */
 #cards .card { font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif; font-weight: 500; }
