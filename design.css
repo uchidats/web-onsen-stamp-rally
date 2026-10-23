@@ -906,13 +906,16 @@ a.tag.gold:focus-visible { outline: 2px solid var(--moss); outline-offset: 1px; 
 .privacy-dialog .analytics-actions[hidden] { display: none; }
 .privacy-settings:focus-visible, .privacy-more:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
 @media (max-width: 600px) { .privacy-dialog { padding: 20px; } }
-.analytics-notice { position: fixed; bottom: 16px; left: 16px; right: 16px; max-width: 520px; margin-left: auto; padding: 20px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 4px 24px #192e2926; z-index: 1100; font-size: 13px; }
-.analytics-notice h2 { font-size: 18px; margin: 0 0 8px; }
-.analytics-notice p { margin: 8px 0; }
+.analytics-notice { position: fixed; bottom: 16px; right: 16px; width: max-content; max-width: min(560px, calc(100vw - 32px)); display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px 16px; padding: 10px 14px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 2px 12px #192e2926; z-index: 1100; font-size: 13px; }
+.analytics-notice[hidden] { display: none; }
+.analytics-notice p { margin: 0; flex: 1 1 260px; line-height: 1.6; }
+.analytics-notice .analytics-actions { gap: 8px; flex: 0 0 auto; }
+.analytics-notice .analytics-actions button { flex: none; min-height: 40px; padding: 6px 14px; font-size: 13px; }
+.analytics-notice .analytics-actions #analyticsNoticeAccept { background: #e7eee5; border-color: #b9ccb6; color: #294338; }
 .analytics-actions { display: flex; gap: 12px; }
 .analytics-actions button { flex: 1; min-height: 44px; }
 #analyticsMessage:empty { display: none; }
-@media (max-width: 600px) { .analytics-notice { padding: 16px; bottom: max(12px, env(safe-area-inset-bottom)); } }
+@media (max-width: 600px) { .analytics-notice { left: 12px; right: 12px; width: auto; max-width: none; bottom: max(12px, env(safe-area-inset-bottom)); padding: 10px 12px; } .analytics-notice .analytics-actions { width: 100%; } .analytics-notice .analytics-actions button { flex: 1; } }
 
 /* Compact facility rows remain independent inside display-only groups. */
 #cards .card { font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif; font-weight: 500; }
