@@ -205,6 +205,8 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .filters .search-row { grid-column: 1 / -1; display: flex; align-items: end; gap: 12px; min-width: 0; }
 .search-row .filter { flex: 1; }
 .filters .search-clear, .filters .stay-save { flex: none; height: 46px; padding: 10px 16px; border-color: var(--line); background: transparent; color: var(--moss); }
+.filters .search-clear { border-color: #b9ccb6; background: #e7eee5; color: #294338; transition: background-color .15s, border-color .15s; }
+.filters .search-clear:hover { border-color: #9bb497; background: #d3e0d0; }
 @media (min-width: 601px) {
   .filters { padding: 18px; gap: 12px; }
   /* PC・タブレット: 検索欄と宿泊条件は必要な幅だけ使い、左揃え(余った幅を埋めない) */
