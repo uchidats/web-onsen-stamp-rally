@@ -12,8 +12,8 @@ const REPORT_FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSc7vTNi32N9Ew_lE
 function reportUrl(x){const u=new URL(REPORT_FORM_URL);u.searchParams.set('usp','pp_url');u.searchParams.set('entry.1682536074',x.facility);u.searchParams.set('entry.1645956111',x.id);return u.toString()}
 const flagSvg='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 22V4"/><path d="M5 4h13l-3 4.5 3 4.5H5"/></svg>';
 function facilityReport(x){
-  const tip='掲載情報を報告',id='report-tip-'+x.id;
-  return `<a class="map-link report-link" href="${esc(reportUrl(x))}" target="_blank" rel="noopener noreferrer" aria-label="${esc(x.facility)}の掲載情報を報告（新しいタブで開く）" aria-describedby="${esc(id)}">${flagSvg}<span class="map-tooltip" id="${esc(id)}" role="tooltip">${tip}</span></a>`;
+  const tip='掲載情報の訂正・情報提供',id='report-tip-'+x.id;
+  return `<a class="map-link report-link" href="${esc(reportUrl(x))}" target="_blank" rel="noopener noreferrer" aria-label="${esc(x.facility)}の掲載情報の訂正・情報提供（新しいタブで開く）" aria-describedby="${esc(id)}">${flagSvg}<span class="map-tooltip" id="${esc(id)}" role="tooltip">${tip}</span></a>`;
 }
 function facilityName(x,context='card'){
   const url=officialUrl(x.officialUrl);

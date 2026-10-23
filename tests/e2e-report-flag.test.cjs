@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-test('E2E: 施設カードの旗アイコン(掲載情報を報告)', async (t) => {
+test('E2E: 施設カードの旗アイコン(掲載情報の訂正・情報提供)', async (t) => {
   const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
   if (!fs.existsSync(edgePath)) { t.skip('Edge not installed at standard path'); return; }
   const server = require('node:http').createServer((req, res) => {
@@ -48,7 +48,7 @@ test('E2E: 施設カードの旗アイコン(掲載情報を報告)', async (t) 
     assert.equal(u.searchParams.get('entry.1645956111'), 'onsen-001');
     assert.equal(a.target, '_blank');
     assert.match(a.rel, /noopener/); assert.match(a.rel, /noreferrer/);
-    assert.equal(a.tip, '掲載情報を報告');
+    assert.equal(a.tip, '掲載情報の訂正・情報提供');
     // クリックは詳細を開かず、既存の地図・宿泊・詳細リンクに影響しない
     await evaluate("window.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.report-link'))e.preventDefault()},false)");
     await evaluate(`${entry('onsen-001')}.querySelector('.report-link').click()`);
