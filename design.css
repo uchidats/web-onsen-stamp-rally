@@ -226,6 +226,8 @@ h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 27px; le
 .collection-picker { position: relative; font-size: 14px; }
 .collection-picker summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 46px; padding: 0 12px; border: 1px solid #cecec1; border-radius: 4px; background: #fdfbf6; cursor: pointer; list-style: none; }
 .collection-picker summary::-webkit-details-marker { display: none; }
+/* 絞り込み中(「すべて」以外)の4つのプルダウン */
+.filter select.is-filtered, .collection-picker summary.is-filtered { border-color: #b9ccb6; background-color: #e7eee5; color: #294338; }
 .collection-picker summary { -webkit-tap-highlight-color: transparent; user-select: none; }
 .collection-picker summary::after { content: '⌄'; color: var(--moss); }
 .collection-picker summary:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }

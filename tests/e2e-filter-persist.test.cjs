@@ -15,12 +15,16 @@ test('Search filters autosave to their own localStorage key, restore on reload a
  assert.deepEqual(saved,{v:1,q:'湯',pref,status:'unvisited',cat:'kake',color:'unknown'});
  await send('Page.reload');await wait('!!window.OnsenHost');
  assert.deepEqual(await vals(),['湯',pref,'unvisited','kake','unknown']);
+ const marks=()=>evaluate(`['prefSelect','collectionSummary','colorSummary','statusSelect'].map(id=>{const e=document.getElementById(id),c=getComputedStyle(e);return [e.classList.contains('is-filtered'),c.backgroundColor,c.borderTopColor,c.color].join('|')})`);
+ const ON='true|rgb(231, 238, 229)|rgb(185, 204, 182)|rgb(41, 67, 56)';
+ assert.deepEqual(await marks(),[ON,ON,ON,ON],'reload restores the filtered look on all four');
  assert.equal(await evaluate('document.getElementById("colorSummary").textContent'),'未確認');
  assert.equal(await evaluate(`document.querySelector('#collectionOptions [data-scope="kake"]').getAttribute('aria-pressed')`),'true');
  assert.equal(await evaluate(`localStorage.getItem('onsen-rally-user-v3')`),records,'visit records untouched');
  await evaluate(`document.getElementById('clearFilter').click()`);
  assert.deepEqual(await vals(),['','','','','']);
  assert.equal(await evaluate(`localStorage.getItem('${KEY}')`),null);
+ assert.ok((await marks()).every(m=>m.startsWith('false|')&&!m.includes('rgb(231, 238, 229)')),'clear returns all four to the normal look');
  await send('Page.reload');await wait('!!window.OnsenHost');
  assert.deepEqual(await vals(),['','','','','']);
 });
