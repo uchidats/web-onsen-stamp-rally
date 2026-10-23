@@ -35,7 +35,7 @@ test('Stay search: panel form, saved device-locally, bed icons on cards, detail 
     const place = await evaluate(`(()=>{const p=document.querySelector('.filters'),s=document.getElementById('staySearch'),sum=document.getElementById('collectionSummary').getBoundingClientRect(),sr=s.getBoundingClientRect(),pr=p.getBoundingClientRect();
       return JSON.stringify({inPanel:p.contains(s),below:sr.top>=sum.bottom,insidePanel:sr.left>=pr.left-1&&sr.right<=pr.right+1,border:getComputedStyle(s).borderTopWidth,heading:document.getElementById('stayHeading')?'present':document.getElementById('staySearch').getAttribute('aria-label')+'|visibleText:'+document.getElementById('staySearch').textContent.includes('宿泊の検索条件'),inModal:!!document.querySelector('.modal #stayForm,.modal #stayCheckIn'),clearInside:!!document.getElementById('clearFilter').closest('.stay-search')})})()`).then(JSON.parse);
     assert.deepEqual(place, { inPanel: true, below: true, insidePanel: true, border: '1px', heading: '宿泊の検索条件|visibleText:false', /* 視覚的な見出しは無く、スクリーンリーダー向けの名前(aria-label)だけ */ inModal: false, clearInside: false });
-    const layout = await evaluate(`(()=>{const els=[stayCheckIn,stayNights,stayAdults,staySave],r=els.map(e=>e.getBoundingClientRect());
+    const layout = await evaluate(`(()=>{const els=[stayCheckIn,stayNights,stayAdults],r=els.map(e=>e.getBoundingClientRect());
       return JSON.stringify({overflow:document.documentElement.scrollWidth>innerWidth||document.getElementById('staySearch').scrollWidth>document.getElementById('staySearch').clientWidth,small:els.filter((e,i)=>r[i].height<44).map(e=>e.id),outside:els.filter((e,i)=>r[i].left<0||r[i].right>innerWidth).map(e=>e.id),
         overlap:r.some((a,i)=>r.some((b,j)=>j>i&&a.left<b.right-1&&b.left<a.right-1&&a.top<b.bottom-1&&b.top<a.bottom-1)),sameRowDesktop:r[0].top===r[1].top&&r[1].top===r[2].top})})()`).then(JSON.parse);
     { const { sameRowDesktop, ...rest } = layout; assert.deepEqual(rest, { overflow: false, small: [], outside: [], overlap: false }); }
@@ -43,15 +43,11 @@ test('Stay search: panel form, saved device-locally, bed icons on cards, detail 
 
     // --- 初期値(日付なし・1泊・大人1名・1室)、保存ボタン、過去日・空は保存されない
     assert.deepEqual(await vals(), ['', '1', '1']);
-    assert.equal(await evaluate('staySave.textContent'), '条件を保存');
+    assert.equal(await evaluate('!document.getElementById("staySave")'), true, 'no save button (autosave)');
     // 「1室」の独立表示・説明文は無く、ラベルは「1室・大人」。保存ボタンの書体は「条件クリア」と同じ
     assert.deepEqual(await evaluate(`JSON.stringify({rooms:!!document.querySelector('.stay-rooms'),note:!!document.querySelector('#staySearch .stay-note,#staySearch .note'),adults:document.querySelector('label[for=stayAdults]').textContent,text:document.getElementById('staySearch').textContent.includes('絞り込み')})`).then(JSON.parse), { rooms: false, note: false, adults: '1室・大人', text: false });
-    const fontOf = id => evaluate(`(()=>{const c=getComputedStyle(document.getElementById('${id}'));return JSON.stringify([c.fontFamily,c.fontSize,c.fontWeight,c.letterSpacing,c.lineHeight,c.height])})()`).then(JSON.parse);
-    assert.deepEqual(await fontOf('staySave'), await fontOf('clearFilter'), 'save button typography matches 条件クリア');
     assert.equal(await evaluate("(()=>{const r=document.getElementById('stayStatus').getBoundingClientRect();return r.width<=1&&r.height<=1})()"), true, 'status is not shown permanently');
-    await evaluate('stayForm.requestSubmit()');
-    assert.match(await evaluate('stayStatus.textContent'), /チェックイン日/);
-    await evaluate(`stayCheckIn.value='${past}';stayForm.requestSubmit()`);
+    await evaluate(`stayCheckIn.value='${past}';stayCheckIn.dispatchEvent(new Event('change'))`);
     assert.match(await evaluate('stayStatus.textContent'), /過去/);
     assert.equal(await evaluate(`localStorage.getItem('${KEY}')`), null);
 
@@ -78,9 +74,7 @@ test('Stay search: panel form, saved device-locally, bed icons on cards, detail 
     assert.notEqual(await evaluate("document.getElementById('modalBg').style.display"), 'flex');
 
     // --- 保存 → ベッドアイコンのリンク先に日付・泊数・大人人数が入る
-    await evaluate(`stayCheckIn.value='${future}';stayNights.value='2';stayForm.requestSubmit()`);
-    assert.equal(await evaluate('stayStatus.textContent'), '条件を保存しました');
-    assert.equal(await evaluate("document.getElementById('toast').textContent"), '条件を保存しました', 'brief toast');
+    await evaluate(`stayCheckIn.value='${future}';stayNights.value='2';stayCheckIn.dispatchEvent(new Event('change'))`);
     assert.deepEqual(JSON.parse(await evaluate(`localStorage.getItem('${KEY}')`)), { v: 1, checkIn: future, nights: 2, adults: 1, rooms: 1 });
     const linkOf = id => evaluate(`JSON.stringify({href:document.querySelector('[data-stay="${id}"]').href,target:document.querySelector('[data-stay="${id}"]').target,rel:document.querySelector('[data-stay="${id}"]').rel})`).then(JSON.parse);
     let l = await linkOf('onsen-002'); let u = new URL(l.href);
@@ -88,9 +82,9 @@ test('Stay search: panel form, saved device-locally, bed icons on cards, detail 
     assert.equal(u.searchParams.get('q'), await evaluate("ONSEN_DATA.find(x=>x.id==='onsen-002').facility"));
     assert.equal(u.searchParams.get('ts'), await evaluate(`OnsenStaySearch.googleTs('${future}',2,1)`));
     assert.equal(new URL((await linkOf('onsen-008')).href).searchParams.get('q'), '大沢温泉 山水閣', 'rephrased query for facilities Google cannot find by name alone');
-    await evaluate(`stayAdults.value='3';stayForm.requestSubmit()`);
+    await evaluate(`stayAdults.value='3';stayAdults.dispatchEvent(new Event('change'))`);
     assert.equal(new URL((await linkOf('onsen-002')).href).searchParams.get('ts'), await evaluate(`OnsenStaySearch.googleTs('${future}',2,3)`));
-    await evaluate(`stayAdults.value='1';stayForm.requestSubmit()`);
+    await evaluate(`stayAdults.value='1';stayAdults.dispatchEvent(new Event('change'))`);
     // アイコンのクリックは詳細画面を開かない
     await evaluate("document.querySelector('[data-stay=\"onsen-002\"]').click()");
     assert.notEqual(await evaluate("document.getElementById('modalBg').style.display"), 'flex');

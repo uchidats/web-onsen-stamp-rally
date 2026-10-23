@@ -1,0 +1,26 @@
+const test=require('node:test'),assert=require('node:assert/strict'),path=require('node:path');
+const {pathToFileURL}=require('node:url');
+test('Search filters autosave to their own localStorage key, restore on reload and reset on 条件クリア',async t=>{
+ const browser=await require('./helpers/browser.cjs').startBrowser('C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',pathToFileURL(path.resolve('index.html')).href);
+ t.after(()=>browser.close());const {send,evaluate}=browser;
+ await send('Page.enable');await send('Network.enable');await send('Network.setBlockedURLs',{urls:['https://*']});
+ const wait=async expr=>{for(let i=0;i<100;i++){if(await evaluate(expr))return;await new Promise(r=>setTimeout(r,50));}assert.fail(expr)};
+ const KEY='onsen-rally-search-filters-v1',vals=()=>evaluate(`['search','prefSelect','statusSelect','categorySelect','colorSelect'].map(id=>document.getElementById(id).value)`);
+ await wait('!!window.OnsenHost');
+ assert.equal(await evaluate('!document.getElementById("staySave")'),true);
+ const records=await evaluate(`localStorage.getItem('onsen-rally-user-v3')`);
+ const pref=await evaluate(`document.getElementById('prefSelect').options[1].value`);
+ await evaluate(`(()=>{const set=(id,v,ev)=>{const e=document.getElementById(id);e.value=v;e.dispatchEvent(new Event(ev||'change'))};set('search','湯','input');set('prefSelect',${JSON.stringify(pref)});set('statusSelect','unvisited');set('categorySelect','kake');set('colorSelect','unknown')})()`);
+ const saved=JSON.parse(await evaluate(`localStorage.getItem('${KEY}')`));
+ assert.deepEqual(saved,{v:1,q:'湯',pref,status:'unvisited',cat:'kake',color:'unknown'});
+ await send('Page.reload');await wait('!!window.OnsenHost');
+ assert.deepEqual(await vals(),['湯',pref,'unvisited','kake','unknown']);
+ assert.equal(await evaluate('document.getElementById("colorSummary").textContent'),'未確認');
+ assert.equal(await evaluate(`document.querySelector('#collectionOptions [data-scope="kake"]').getAttribute('aria-pressed')`),'true');
+ assert.equal(await evaluate(`localStorage.getItem('onsen-rally-user-v3')`),records,'visit records untouched');
+ await evaluate(`document.getElementById('clearFilter').click()`);
+ assert.deepEqual(await vals(),['','','','','']);
+ assert.equal(await evaluate(`localStorage.getItem('${KEY}')`),null);
+ await send('Page.reload');await wait('!!window.OnsenHost');
+ assert.deepEqual(await vals(),['','','','','']);
+});
