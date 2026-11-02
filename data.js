@@ -1480,6 +1480,30 @@ window.ONSEN_DATA = [
     "coordinateLicense": "CDLA-Permissive-2.0",
     "coordinateSourceId": "10969912-a396-49bc-b621-a8e02384699b",
     "coordinateSourceRelease": "2026-09-23.1"
+  },
+  {
+    "id": "onsen-069",
+    "number": 69,
+    "area": "関東・信越",
+    "prefecture": "山梨県",
+    "onsen": "奈良田温泉",
+    "facility": "白根館",
+    "latitude": 35.57685089111328,
+    "longitude": 138.29991149902344,
+    "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+    "coordinateVerified": true,
+    "officialUrl": "https://r.goope.jp/shiranekan/",
+    "category": "その他",
+    "bathing": "平日10:30-16:00・土日祝10:30-17:00（最終受付は各30分前、火・木・金曜定休、大人1,000円）。宿泊は月・水曜限定の素泊まり（一人泊プランあり・公式サイトで予約）",
+    "station": "下部温泉駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "含硫黄－ナトリウム－塩化物温泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%99%BD%E6%A0%B9%E9%A4%A8%20%E5%B1%B1%E6%A2%A8%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-02",
+    "coordinateLicense": "CDLA-Permissive-2.0",
+    "coordinateSourceId": "8026fa75-75bc-4a55-b69c-5c61a9bc5e8e",
+    "coordinateSourceRelease": "2026-09-23.1"
   }
 ];
 

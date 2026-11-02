@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-10-22",
-  "method": "68 verified facilities (onsen-068 Furoukaku added 2026-10-22 from Overture Places / meta; the 67 earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-02",
+  "method": "69 verified facilities (onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -4202,6 +4202,59 @@
       ],
       "sourcePhones": [
         "+81551450311"
+      ],
+      "sourceAsset": "https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=places/type=place/part-00015-b21e3943-1706-5729-88ab-f4f5777eaae4-c000.zstd.parquet"
+    },
+    {
+      "id": "onsen-069",
+      "facility": "白根館",
+      "prefecture": "山梨県",
+      "latitude": 35.57685089111328,
+      "longitude": 138.29991149902344,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://r.goope.jp/shiranekan/about",
+      "note": "Overture Places(meta)の施設名付きレコード「白根館」。所在地「早川町奈良田344」・電話番号(+81556482711)が、公式サイト掲載の所在地(山梨県南巨摩郡早川町奈良田344)・電話(0556-48-2711)と一致。レコードのURLは旧サイト(salps.net)で、現行の公式サイトとは異なる。Overture GeoParquetの施設Point bboxを取得(float32)。国土地理院の住所検索は「奈良田」の地区代表点までしか返さないため採用しない。OSMには該当施設の建物・名称が見つからなかった。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-02",
+      "onsen": "奈良田温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "山梨県南巨摩郡早川町奈良田344",
+      "auditResult": "新規追加",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceId": "8026fa75-75bc-4a55-b69c-5c61a9bc5e8e",
+      "sourceFacilityName": "白根館",
+      "identityReferences": [
+        "https://r.goope.jp/shiranekan/",
+        "https://r.goope.jp/shiranekan/about"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E7%99%BD%E6%A0%B9%E9%A4%A8%20%E5%B1%B1%E6%A2%A8%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.29991149902344,
+          35.57685089111328
+        ]
+      },
+      "sourceRelease": "2026-09-23.1",
+      "sourceRecordId": "245641905843476",
+      "sourceAddress": [
+        {
+          "freeform": "早川町奈良田344",
+          "locality": "南巨摩郡早川町",
+          "postcode": "409-2701",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "http://www.salps.net/user/shiranekan"
+      ],
+      "sourcePhones": [
+        "+81556482711"
       ],
       "sourceAsset": "https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=places/type=place/part-00015-b21e3943-1706-5729-88ab-f4f5777eaae4-c000.zstd.parquet"
     }

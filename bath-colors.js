@@ -425,5 +425,13 @@ window.ONSEN_BATH_COLORS = {
       source: { url: 'https://www.ogawaonsen.co.jp/spa/', checkedAt: '2026-10-22' }
     }],
     source: { url: 'https://www.ogawaonsen.co.jp/spa/', checkedAt: '2026-10-22' }
+  },
+  'onsen-069': {
+    colors: [
+      { color: 'colorless', expression: '透明', scope: 'facility', role: 'base', evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「七不思議の湯」ページの温泉の特徴「透明からグリーン、白濁等まれに湯色が変化することがある」。基本は透明で、施設の温泉全体の記述。個々の浴槽へは広げない' } },
+      { color: 'green', expression: 'グリーン', scope: 'facility', role: 'variant', change: { kind: 'rare', note: 'まれに透明からグリーンに変わることがあります' }, evidence: { type: 'official_text', confidence: 'confirmed', note: '同じ公式の記述「透明からグリーン、白濁等まれに湯色が変化することがある」。まれに現れる色' } },
+      { color: 'milky_white', expression: '白濁', scope: 'facility', role: 'variant', change: { kind: 'rare', note: 'まれに透明から白濁することがあります' }, evidence: { type: 'official_text', confidence: 'confirmed', note: '同じ公式の記述「透明からグリーン、白濁等まれに湯色が変化することがある」。「白濁」は既存の分類(酸ヶ湯・大滝乃湯)と同じく乳白色に分類。まれに現れる色' } }
+    ],
+    source: { url: 'https://r.goope.jp/shiranekan/free/nanafushiginoyu', checkedAt: '2026-11-02' }
   }
 };

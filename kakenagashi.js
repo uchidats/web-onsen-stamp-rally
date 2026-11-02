@@ -400,6 +400,15 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「５つの源泉」ページ「５つの源泉は全て天然ラジウム泉100％のかけ流しです」。施設の源泉全体についての記述で、浴槽名の列挙はないため、個々の湯(代表的な湯)へは広げない。' },
     dilution: { water: 'unknown', note: '公式ページに加水の記載はない。湯窪の湯は泉温が低いため27〜32℃に加温すると明記。他の浴槽の加温の有無は記載がない。' },
     source: { url: 'https://www.furoukaku.jp/onsen.php', checkedAt: '2026-10-22' }
+  },
+  'onsen-069': {
+    scope: 'facility', baths: ['総桧風呂', '石造りの露天風呂', '木造りの露天風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '源泉名「奈良田温泉 七不思議の湯」。公式「七不思議の湯」ページ「浴槽への給湯：源泉100％かけ流し、加水なし（熱交換により温度調節）」「浴槽の数：総桧風呂（内湯）男女各１　露天風呂（石造り／木造り）　男女各１」。同じ表で全浴槽を列挙しており、宿泊プランのページも「こだわりの24時間源泉かけ流し！」と記載' },
+    dilution: { water: 'none', note: '公式「加水なし（熱交換により温度調節）」。加温の有無は明記されていない。熱交換による温度調節は季節によって湯温を上げる場合も考えられるため、年間を通じた無加温とは扱わない(加温の規則は付けず未確認)。循環・ろ過・消毒は未確認。毎日清掃・完全換水(公式)' },
+    source: { url: 'https://r.goope.jp/shiranekan/free/nanafushiginoyu', checkedAt: '2026-11-02' },
+    treatment: {
+      water: [{ status: 'none', scope: 'all', coverage: '総桧風呂(内湯)男女各1・露天風呂(石造り/木造り)男女各1', scopeNote: '公式の源泉表で「浴槽への給湯」の行が加水なしと述べ、同じ表の「浴槽の数」が施設の全浴槽を列挙している', quote: '浴槽への給湯：源泉100％かけ流し、加水なし（熱交換により温度調節）', url: 'https://r.goope.jp/shiranekan/free/nanafushiginoyu', checkedAt: '2026-11-02' }]
+    }
   }
 };
 

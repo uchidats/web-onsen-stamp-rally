@@ -492,5 +492,14 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '不老の湯', kind: '内湯', note: '地下から自然自噴するラジウム泉(不老閣2号源泉)を使う内湯です。日替わりの男女交代制です' }
     ],
     source: { url: 'https://www.furoukaku.jp/onsen.php', checkedAt: '2026-10-22' }
+  },
+  'onsen-069': {
+    note: '男湯と女湯は1日交替です。湯名は公式の説明(総桧風呂・石造り/木造りの露天風呂)による名称です。',
+    baths: [
+      { name: '総桧風呂', kind: '内湯', form: '男女別', tags: ['総桧造り'], note: '男女各1つの内湯です' },
+      { name: '石造りの露天風呂', kind: '露天', tags: ['男女日替わり'], note: 'この露天風呂の日は、脱衣場を経由して内湯と行き来できます' },
+      { name: '木造りの露天風呂', kind: '露天', tags: ['男女日替わり'], note: 'この露天風呂の日は、内湯と別の場所にあるため、行き来する際に着替えが必要です' }
+    ],
+    source: { url: 'https://r.goope.jp/shiranekan/free/higaerionsen', checkedAt: '2026-11-02' }
   }
 };
