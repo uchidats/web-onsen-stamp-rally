@@ -3,10 +3,10 @@ const c={window:{}};vm.runInNewContext(fs.readFileSync('data.js','utf8'),c);cons
 // Historical coordinate fixtures retain the former display name; only this name was corrected.
 const historicalValue=(row,key)=>row.id==='onsen-020'&&key==='facility'?'源泉・秘湯の宿 ふけの湯':row[key];
 require('../map.js');const M=globalThis.OnsenMap,audit=JSON.parse(fs.readFileSync('assets/coordinates.json','utf8'));
-assert.equal(data.length,70);assert.equal(new Set(data.map(x=>x.id)).size,70);assert.equal(audit.rows.length,70);
+assert.equal(data.length,73);assert.equal(new Set(data.map(x=>x.id)).size,73);assert.equal(audit.rows.length,73);
 const added1022=new Set(['onsen-068']); // 2026-10-22に追加(増富温泉 不老閣)。既存67施設は変更しない
 const added1102=new Set(['onsen-069']); // 2026-11-02に追加(奈良田温泉 白根館)。既存68施設は変更しない
-const added1103=new Set(['onsen-070']); // 2026-11-03に追加(草津温泉 山本館)。既存69施設は変更しない
+const added1103=new Set(['onsen-070','onsen-071','onsen-072','onsen-073']); // 2026-11-03に追加(草津温泉 山本館、伊豆の湯本館・山の家・観音温泉)。既存69施設は変更しない
 const additions={
   'onsen-006':['峡雲荘',39.8727646,140.9247795],
   'onsen-018':['後生掛温泉旅館',39.9720906,140.8003011],
@@ -47,10 +47,10 @@ for(const [i,x] of data.entries()){
   }else{assert.equal(x.latitude,null);assert.equal(x.longitude,null);assert.equal(x.coordinateSource,'');}
   for(const key of ['visits','visitCount','lastVisit','notes'])assert.equal(Object.hasOwn(x,key),false);
 }
-assert.equal(data.filter(M.verified).length,70);assert.equal(data.filter(x=>!M.verified(x)).length,0);
+assert.equal(data.filter(M.verified).length,73);assert.equal(data.filter(x=>!M.verified(x)).length,0);
 assert.match(audit.attribution,/OpenStreetMap contributors/);assert.match(audit.license,/ODbL-1.0.*CDLA-Permissive-2.0.*Apache-2.0/);
 for(const a of currentAdditions){const r=audit.rows.find(r=>r.id===a.id);assert.equal(r.coordinateLicense,a.coordinateLicense);assert.equal(r.googleCoordinatesStored,false);if(a.coordinateLicense!=='ODbL-1.0'){assert.match(r.coordinateSource,/stac\.overturemaps\.org/);assert.match(r.sourceId,/^[a-f0-9-]{36}$/);assert.equal(Object.hasOwn(r,'osmName'),false);}}
 for(const file of ['CDLA-Permissive-2.0.txt','Apache-2.0.txt','Foursquare-NOTICE.txt'])assert.ok(fs.readFileSync('assets/licenses/'+file,'utf8').length>1000);
 const ids=['onsen-002','onsen-003','onsen-004','onsen-005'];assert.deepEqual(Array.from(M.selection(data,'','青森県',()=>false),x=>x.id),ids);
 for(const id of ids){const x=data.find(x=>x.id===id);assert.equal(M.selection(data,'visited','青森県',r=>r.id===id)[0].id,id);}
-console.log('PASS: 70 fixed IDs (onsen-068 added 2026-10-22, onsen-069 added 2026-11-02, onsen-070 added 2026-11-03), existing 69 unchanged, 70 verified / 0 excluded, dates, footprint membership, attribution, WGS84 order and no personal data');
+console.log('PASS: 73 fixed IDs (onsen-068 added 2026-10-22, onsen-069 added 2026-11-02, onsen-070〜073 added 2026-11-03), existing 69 unchanged, 73 verified / 0 excluded, dates, footprint membership, attribution, WGS84 order and no personal data');

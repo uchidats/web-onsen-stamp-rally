@@ -77,7 +77,7 @@ test('gensei: every treatment rule carries its source, scope and quote; no manua
   for (const [id, e] of Object.entries(kake)) if (e.evidence.type === 'third_party') assert.deepEqual(certifiedBaths(e), [], id);
 });
 
-test('gensei: current certification (7 facilities, 17 baths) and the reasons others stay undecided or excluded', () => {
+test('gensei: current certification (9 facilities, 22 baths) and the reasons others stay undecided or excluded', () => {
   const certified = Object.fromEntries(Object.entries(kake).map(([id, e]) => [id, certifiedBaths(e)]).filter(([, b]) => b.length));
   assert.deepEqual(certified, {
     'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'],
@@ -86,7 +86,9 @@ test('gensei: current certification (7 facilities, 17 baths) and the reasons oth
     'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'],
     'onsen-035': ['大気の湯(東・西)'],
     'onsen-041': ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'],
-    'onsen-066': ['男女別の展望内湯']
+    'onsen-066': ['男女別の展望内湯'],
+    'onsen-071': ['露天風呂', '大浴場'],
+    'onsen-072': ['男湯（野天風呂）', '女湯（野天風呂）', '貸切風呂']
   });
   // 認定された湯は、必ず源泉かけ流しの湯(深緑の波)でもある
   for (const [id, names] of Object.entries(certified)) for (const n of names) assert.ok(kake[id].baths.includes(n), `${id}/${n}`);
@@ -192,4 +194,17 @@ test('gensei: Tochigi certifies only 加仁湯 (3 baths); 八丁の湯, 元泉�
   assert.equal(evaluate(kake['onsen-044'], 'かぶり湯').result, 'not_applicable');
   assert.equal(evaluate(kake['onsen-045'], '黄土浴アタラクシア').result, 'not_applicable');
   assert.ok(kake['onsen-045'].nonBathing.some(n => n.name === '黄土浴アタラクシア'));
+});
+
+test('gensei: Izu facilities — official kake-nagashi plus the recorded no-water/no-heating evidence, and Kannon Onsen stays undecided', () => {
+  // 湯本館: かけ流しは公式、加水・加温なしは日本温泉協会「全て加温加水無し」(第三者資料として区別して記録)
+  for (const k of ['water', 'heating']) { const r = kake['onsen-071'].treatment[k]; assert.equal(r.length, 1); assert.equal(r[0].status, 'none'); assert.equal(r[0].scope, 'all'); assert.equal(r[0].evidenceType, 'third_party_reported'); assert.match(r[0].url, /spa\.or\.jp/); }
+  assert.equal(kake['onsen-071'].evidence.type, 'official_text');
+  // 山の家: 自噴・かけ流し・加温なし・加水なしとも公式
+  for (const k of ['water', 'heating']) { const r = kake['onsen-072'].treatment[k]; assert.equal(r[0].status, 'none'); assert.equal(r[0].evidenceType, undefined); assert.match(r[0].quote, /加温や加水をせず/); }
+  // 観音温泉: 加水・加温の記載がないため規則を作らず保留(宿泊者専用浴場へもかけ流しを広げない)
+  assert.equal(kake['onsen-073'].treatment, undefined);
+  assert.deepEqual(kake['onsen-073'].baths, ['観音プリンシプル']);
+  assert.equal(evaluate(kake['onsen-073'], '観音プリンシプル').result, 'pending');
+  assert.equal(evaluate(kake['onsen-073'], 'ガラティア観音乃湯').result, 'pending');
 });

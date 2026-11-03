@@ -3,6 +3,8 @@
 // 表示に訪問記録や端末の保存データは使わない。公式ロゴ画像は使わず、文字の「秘♨」だけを使う。
 //   officialName   団体の現行会員一覧での宿名(data.js の施設名と表記が違う場合がある。名寄せは所在地・電話で確認済み)
 //   url            ラベルのリンク先。団体(nihon-hitou.org)の公式の加盟宿詳細ページ。クリック・タップで開く
+//                  2026-11-03 以降に追加した宿は、nihon-hitou.org の詳細ページが hitou.or.jp のトップへ転送されるため、
+//                  団体の公式Web(hitou.or.jp)の会員宿詳細(provider)をリンク先にする(ページの説明に「日本秘湯を守る会の…加盟宿」と明記されていることを確認)
 //   checkedAt      加盟を確認した日(一覧・ページの更新日ではない)
 //   reservationUrl 任意。秘湯Web(予約サービス)の宿詳細。管理用で画面には出さない
 //   note           任意。同定・誤認防止のための管理用メモ(画面には出さない)
@@ -35,5 +37,6 @@ window.ONSEN_HITOU_MEMBERSHIP = {
   'onsen-061': { officialName: '自在館', url: 'https://nihon-hitou.org/member/1112', checkedAt: '2026-10-19', reservationUrl: 'https://www.hitou.or.jp/provider/709' },
   'onsen-062': { officialName: '貝掛温泉', url: 'https://nihon-hitou.org/member/1106', checkedAt: '2026-10-19', reservationUrl: 'https://www.hitou.or.jp/provider/681' },
   'onsen-064': { officialName: '嵐渓荘', url: 'https://nihon-hitou.org/member/1126', checkedAt: '2026-10-19', reservationUrl: 'https://www.hitou.or.jp/provider/694' },
+  'onsen-071': { officialName: '湯本館', url: 'https://www.hitou.or.jp/provider/720', checkedAt: '2026-11-03', reservationUrl: 'https://www.hitou.or.jp/provider/720', note: '日本秘湯を守る会の公式Webの宿詳細(「日本秘湯を守る会の静岡県の加盟宿」、所在地 静岡県伊豆市湯ヶ島1656-1)と施設公式サイトの「『日本秘湯を守る会』に加盟している湯本館」で確認。nihon-hitou.org の会員詳細は2026-11-03時点でトップへ転送されるため hitou.or.jp の宿詳細をリンク先にした' },
   'onsen-066': { officialName: '室堂平 みくりが池温泉', url: 'https://nihon-hitou.org/member/630', checkedAt: '2026-10-19', reservationUrl: 'https://www.hitou.or.jp/provider/725', note: '室堂平 みくりが池温泉は修飾語追加。施設の季節営業・休館と加盟休会は別判定' }
 };

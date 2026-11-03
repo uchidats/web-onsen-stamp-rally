@@ -442,5 +442,12 @@ window.ONSEN_BATH_COLORS = {
       { color: 'milky_white', expression: '乳白色', scope: 'bath', scopeNames: ['若鹿の湯'], role: 'variant', change: { kind: 'tint', note: '2026年11月3日の日帰り入浴時の色です。公式は基本的に無色透明で、湯ノ花が舞うと濁ることがあると説明しており、常に乳白色ではありません' }, evidence: { type: 'site_visit', confidence: 'visit_observed', note: '2026年11月3日、利用者が若鹿の湯に日帰り入浴した際の現地観察で乳白色だった(個人の観察で、公開資料ではない)。公式Q&Aの「湯ノ花が舞いにごる事もございます」と整合する、その日の状態として扱い、恒常的な色とはしない。施設全体の基本の色(無色透明・公式)とは別の項目で、施設全体へは広げない' }, source: { url: 'https://yamamotokan.com/%e6%b8%a9%e6%b3%89/', checkedAt: '2026-11-03' } }
     ],
     source: { url: 'https://yamamotokan.com/qa/', checkedAt: '2026-11-03' }
+  },
+  'onsen-071': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'bath', scopeNames: ['大浴場'],
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「お風呂」ページの大浴場の項「泉質はカルシウム・ナトリウム-硫酸塩泉。無色透明でやわらかなお湯です。」大浴場の説明として書かれているため大浴場に付け、露天風呂へは広げない。日本温泉協会の施設紹介も「温泉は無色透明」(第三者資料)' }
+    }],
+    source: { url: 'https://www.yumotokan-izu2019.com/hot_springs', checkedAt: '2026-11-03' }
   }
 };

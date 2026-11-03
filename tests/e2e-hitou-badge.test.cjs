@@ -26,14 +26,14 @@ test('E2E: 地♨ / 秘♨ labels on cards (same look, order, mobile layout, acc
     await evaluate('localStorage.clear()');
     await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
 
-    const MEMBERS = ['onsen-001', 'onsen-006', 'onsen-009', 'onsen-010', 'onsen-012', 'onsen-015', 'onsen-017', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-024', 'onsen-027', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033', 'onsen-038', 'onsen-039', 'onsen-042', 'onsen-047', 'onsen-054', 'onsen-059', 'onsen-061', 'onsen-062', 'onsen-064', 'onsen-066'];
+    const MEMBERS = ['onsen-001', 'onsen-006', 'onsen-009', 'onsen-010', 'onsen-012', 'onsen-015', 'onsen-017', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-024', 'onsen-027', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033', 'onsen-038', 'onsen-039', 'onsen-042', 'onsen-047', 'onsen-054', 'onsen-059', 'onsen-061', 'onsen-062', 'onsen-064', 'onsen-066', 'onsen-071'];
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const URLS = JSON.parse(await evaluate('JSON.stringify(Object.fromEntries(Object.entries(window.ONSEN_HITOU_MEMBERSHIP).map(([k,v])=>[k,v.url])))'));
 
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
-      // 表示対象: 加盟確認済みの26施設だけ(各1個)。非加盟・未確定には出ない
-      assert.equal(await evaluate("document.querySelectorAll('#cards .hitou-tag').length"), 26);
+      // 表示対象: 加盟確認済みの27施設だけ(各1個)。非加盟・未確定には出ない
+      assert.equal(await evaluate("document.querySelectorAll('#cards .hitou-tag').length"), 27);
       const ids = JSON.parse(await evaluate("JSON.stringify([...document.querySelectorAll('#cards .facility-entry')].filter(e=>e.querySelector('.hitou-tag')).map(e=>e.dataset.facilityId))"));
       assert.deepEqual(ids.sort(), MEMBERS);
       assert.equal(await evaluate(`${entry('onsen-028')}.querySelectorAll('.hitou-tag').length`), 0, 'Higashiya (withdrawn) must not show it');

@@ -3,7 +3,7 @@
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-03",
-  "method": "70 verified facilities (onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "73 verified facilities (onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -4328,6 +4328,157 @@
             [
               138.5962071,
               36.623313
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-071",
+      "facility": "川端の宿 湯本館",
+      "prefecture": "静岡県",
+      "latitude": 34.8904112,
+      "longitude": 138.9238224,
+      "coordinateSource": "https://www.openstreetmap.org/node/5491225152",
+      "coordinateVerified": true,
+      "osmName": "湯本館",
+      "osmAddress": "",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://www.yumotokan-izu2019.com/yumotokan",
+      "note": "OSM施設POI node/5491225152(name=湯本館、tourism=hotel、website=旧公式ドメイン yumotokan-izu.jp、wikidata Q112009077)。Overture Places 2026-09-23.1(meta)のレコード「川端の宿湯本館」(id 7a65bea1-4c76-4d2c-831c-fab858ecc7d2、所在地「湯ヶ島1656-1」、電話+81558851028)が約3m の位置にあり、公式サイトの所在地(静岡県伊豆市湯ケ島1656-1)・電話(0558-85-1028)と一致。日本秘湯を守る会の宿詳細の地図座標(34.8904342, 138.9238144)とも整合。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-03",
+      "onsen": "湯ヶ島温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "静岡県伊豆市湯ケ島1656-1",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/5491225152",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "湯本館",
+      "identityReferences": [
+        "https://www.yumotokan-izu2019.com/yumotokan",
+        "https://www.hitou.or.jp/provider/720",
+        "https://stac.overturemaps.org/2026-09-23.1/catalog.json"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%B7%9D%E7%AB%AF%E3%81%AE%E5%AE%BF%20%E6%B9%AF%E6%9C%AC%E9%A4%A8%20%E9%9D%99%E5%B2%A1%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.9238224,
+          34.8904112
+        ]
+      },
+      "geometryCheck": "施設POIと一致"
+    },
+    {
+      "id": "onsen-072",
+      "facility": "野天風呂 山の家",
+      "prefecture": "静岡県",
+      "latitude": 34.75828552246094,
+      "longitude": 138.83612060546875,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://notenburo.jp/access/",
+      "note": "Overture Places(meta)の施設名付きレコード「野天風呂 山の家」。所在地「静岡県賀茂郡松崎町大澤445-4」・電話(+81558430217)・URL(notenburo.jp)が、公式サイトの所在地(静岡県賀茂郡松崎町大澤川之本445番地の4)・電話(0558-43-0217)・URLと一致。同じ場所(約10m以内)に旧称・旧電話の重複レコード(山の家、大沢温泉山の家、大沢荘別館山の家、秘湯大沢温泉)があり、いずれも整合する。約0.7km離れた大沢温泉ホテル(大澤153)は別施設。OSMには該当施設の建物・名称が見つからなかった。Overture GeoParquetの施設Point bboxを取得(float32)。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-03",
+      "onsen": "大沢温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "静岡県賀茂郡松崎町大澤川之本445-4",
+      "auditResult": "新規追加",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceId": "d225e0e1-0c54-407b-9357-b10cc35fb75f",
+      "sourceFacilityName": "野天風呂 山の家",
+      "identityReferences": [
+        "https://notenburo.jp/access/",
+        "https://notenburo.jp/about/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E5%A4%A9%E9%A2%A8%E5%91%82%20%E5%B1%B1%E3%81%AE%E5%AE%B6%20%E9%9D%99%E5%B2%A1%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.83612060546875,
+          34.75828552246094
+        ]
+      },
+      "sourceRelease": "2026-09-23.1",
+      "sourceRecordId": "213309376138133",
+      "sourceAddress": [
+        {
+          "freeform": "静岡県賀茂郡松崎町大澤４４５−４",
+          "locality": "賀茂郡松崎町",
+          "postcode": null,
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "https://notenburo.jp/"
+      ],
+      "sourcePhones": [
+        "+81558430217"
+      ]
+    },
+    {
+      "id": "onsen-073",
+      "facility": "観音温泉",
+      "prefecture": "静岡県",
+      "latitude": 34.7071087,
+      "longitude": 138.8811372,
+      "coordinateSource": "https://www.openstreetmap.org/way/659518585",
+      "coordinateVerified": true,
+      "osmName": "観音温泉",
+      "osmAddress": "静岡県下田市横川1092-1(OSMの住所タグ)",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://www.kannon-onsen.com/",
+      "note": "OSM建物way/659518585(name=観音温泉、tourism=hotel、website=https://www.kannon-onsen.com/、addr 静岡県下田市横川1092-1)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。公式サイトの所在地(静岡県下田市横川1092-1)と一致。Overture Places(meta)のレコード「ホテル観音温泉」(電話+81558281234が公式と一致)の点はこの建物の約45m南で、敷地内の別棟側にあたるため採用しない。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-03",
+      "onsen": "観音温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "静岡県下田市横川1092-1",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/659518585",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "観音温泉",
+      "identityReferences": [
+        "https://www.kannon-onsen.com/",
+        "https://www.spa.or.jp/search_f/detail_f/?F_ID=959"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E8%A6%B3%E9%9F%B3%E6%B8%A9%E6%B3%89%20%E9%9D%99%E5%B2%A1%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              138.8810038,
+              34.707257
+            ],
+            [
+              138.8812359,
+              34.7072735
+            ],
+            [
+              138.8812707,
+              34.7069604
+            ],
+            [
+              138.8810387,
+              34.7069417
+            ],
+            [
+              138.8810038,
+              34.707257
             ]
           ]
         ]

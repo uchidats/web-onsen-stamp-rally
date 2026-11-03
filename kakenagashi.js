@@ -415,6 +415,32 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの若鹿（わか）の湯の欄「源泉 ： 白旗源泉（100％源泉掛け流し）」(男女別浴場1・地下一階・内湯のみ)。公式Q&Aも「およそ43℃ほど、100％源泉掛け流しです」。Q&Aに出てくる貸切風呂ひょうたんは浴槽別の記載がなく「お水で埋められる」とあるため、かけ流しを広げない' },
     dilution: { water: 'unknown', note: '公式は「お湯の温度を少し熱め四十三度ほどにしてあります」「かけ流しの源泉は五十度以上」と書くが、温度を下げる方法(加水の有無)は書かれていない。加温の記載もない。加水・加温とも未確認のため規則は付けず、源生の湯は判定しない。循環・ろ過・消毒は未確認' },
     source: { url: 'https://yamamotokan.com/%e6%b8%a9%e6%b3%89/', checkedAt: '2026-11-03' }
+  },
+  'onsen-071': {
+    scope: 'facility', baths: ['露天風呂', '大浴場'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「お風呂」ページ「湯本館のお風呂は24時間ご利用いただける、こだわりの源泉掛け流しです。」に続けて露天風呂(貸切制)と大浴場(時間で男女入替)を紹介し、露天風呂の項も「贅沢な源泉掛け流しを堪能」と記載。客室の部屋風呂は代表的な湯に載せていない' },
+    dilution: { water: 'none', note: '公式には加水・加温の記載がない。日本温泉協会の施設紹介「温泉は無色透明、全て加温加水無しで、掛け流し」、日本秘湯を守る会の宿詳細「加水・加温・減温の有無: 加水・加温なし」(いずれも第三者資料)。循環・ろ過・消毒は未確認' },
+    source: { url: 'https://www.yumotokan-izu2019.com/hot_springs', checkedAt: '2026-11-03' },
+    treatment: {
+      water: [{ status: 'none', scope: 'all', evidenceType: 'third_party_reported', coverage: '全浴槽(日本温泉協会「全て加温加水無し」)', scopeNote: '日本温泉協会の施設紹介が「全て加温加水無しで、掛け流し」と施設の全浴槽を対象に書き、日本秘湯を守る会の宿詳細も「加水・加温なし」。公式の「お風呂は…源泉掛け流し」(露天風呂・大浴場)と矛盾しない。公式自身の加水・加温の記載はない', quote: '温泉は無色透明、全て加温加水無しで、掛け流し', url: 'https://www.spa.or.jp/search_f/detail_f/?F_ID=1011', checkedAt: '2026-11-03' }],
+      heating: [{ status: 'none', scope: 'all', evidenceType: 'third_party_reported', coverage: '全浴槽(日本温泉協会「全て加温加水無し」)', scopeNote: '日本温泉協会の施設紹介が「全て加温加水無しで、掛け流し」と施設の全浴槽を対象に書き、日本秘湯を守る会の宿詳細も「加水・加温なし」。公式の「お風呂は…源泉掛け流し」(露天風呂・大浴場)と矛盾しない。公式自身の加水・加温の記載はない', quote: '温泉は無色透明、全て加温加水無しで、掛け流し', url: 'https://www.spa.or.jp/search_f/detail_f/?F_ID=1011', checkedAt: '2026-11-03' }]
+    }
+  },
+  'onsen-072': {
+    scope: 'facility', baths: ['男湯（野天風呂）', '女湯（野天風呂）', '貸切風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「山の家とは」「山の家の湯は、自噴・源泉掛け流しです。」、貸切風呂のページ「野天風呂山の家の温泉は、すべて掛け流しです。」「もちろん、こちらも自噴・源泉掛け流しです。」施設の全浴槽(男湯・女湯の野天風呂と貸切風呂)が対象' },
+    dilution: { water: 'none', note: '公式トップ「自噴している温泉を、空気に触れさせず、加温や加水をせず、そのままの湯をお客様に楽しんでいただけることです。」循環・ろ過・消毒は未確認' },
+    source: { url: 'https://notenburo.jp/about/', checkedAt: '2026-11-03' },
+    treatment: {
+      water: [{ status: 'none', scope: 'all', coverage: '施設の温泉すべて(男湯・女湯の野天風呂、貸切風呂)', scopeNote: '公式トップの「私たちの自慢」として施設の温泉全体について述べ、貸切風呂のページも「野天風呂山の家の温泉は、すべて掛け流し」と全浴槽を対象にしている', quote: '自噴している温泉を、空気に触れさせず、加温や加水をせず、そのままの湯をお客様に楽しんでいただけることです。', url: 'https://notenburo.jp/', checkedAt: '2026-11-03' }],
+      heating: [{ status: 'none', scope: 'all', coverage: '施設の温泉すべて(男湯・女湯の野天風呂、貸切風呂)', scopeNote: '公式トップの「私たちの自慢」として施設の温泉全体について述べ、貸切風呂のページも「野天風呂山の家の温泉は、すべて掛け流し」と全浴槽を対象にしている', quote: '自噴している温泉を、空気に触れさせず、加温や加水をせず、そのままの湯をお客様に楽しんでいただけることです。', url: 'https://notenburo.jp/', checkedAt: '2026-11-03' }]
+    }
+  },
+  'onsen-073': {
+    scope: 'partial', baths: ['観音プリンシプル'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「観音プリンシプル」ページ「pH9.5の強アルカリ性・超軟水の『うぶ肌の湯』を100％源泉かけ流しで堪能」、日帰り温泉ページ「100％源泉かけ流しの美肌の湯」。日帰り温泉の観音プリンシプルについての記述で、宿泊者専用のガラティア観音乃湯・客室風呂へは個別に広げない(施設名「自家源泉かけ流しの宿」は総称)' },
+    dilution: { water: 'unknown', note: '公式・日本温泉協会とも加水・加温の記載はない(源泉温度52℃)。加水・加温とも未確認のため規則は付けず、源生の湯は保留。循環・ろ過・消毒は未確認' },
+    source: { url: 'https://www.kannon-onsen.com/hotspring/prin/', checkedAt: '2026-11-03' }
   }
 };
 

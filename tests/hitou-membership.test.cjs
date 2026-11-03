@@ -11,31 +11,32 @@ function load(file) {
 const data = load('data.js').ONSEN_DATA;
 const hitou = load('hitou-membership.js').ONSEN_HITOU_MEMBERSHIP;
 
-// 日本秘湯を守る会の現行加盟を確認できた26施設(両現行公式一覧への掲載・所在地/電話の照合済み)
+// 日本秘湯を守る会の現行加盟を確認できた27施設(公式一覧への掲載・所在地/電話の照合済み。onsen-071 は2026-11-03に hitou.or.jp の宿詳細と施設公式で確認)
 const MEMBERS = [
   'onsen-001', 'onsen-006', 'onsen-009', 'onsen-010', 'onsen-012', 'onsen-015', 'onsen-017', 'onsen-019', 'onsen-020', 'onsen-021',
   'onsen-024', 'onsen-027', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033', 'onsen-038', 'onsen-039', 'onsen-042', 'onsen-047',
-  'onsen-054', 'onsen-059', 'onsen-061', 'onsen-062', 'onsen-064', 'onsen-066'
+  'onsen-054', 'onsen-059', 'onsen-061', 'onsen-062', 'onsen-064', 'onsen-066', 'onsen-071'
 ];
 
-test('hitou membership: exactly the 26 confirmed member facilities, keyed by existing fixed IDs', () => {
-  assert.equal(data.length, 70);
+test('hitou membership: exactly the 27 confirmed member facilities, keyed by existing fixed IDs', () => {
+  assert.equal(data.length, 73);
   assert.deepEqual(Object.keys(hitou).sort(), MEMBERS);
   const ids = new Set(data.map(x => x.id));
   for (const id of Object.keys(hitou)) assert.ok(ids.has(id), id);
 });
 
-test('hitou membership: every entry has the official name, an official detail URL on nihon-hitou.org and a check date', () => {
+test('hitou membership: every entry has the official name, an official detail URL of the association and a check date', () => {
   for (const [id, e] of Object.entries(hitou)) {
     assert.ok(e.officialName, id);
-    assert.match(e.url, /^https:\/\/nihon-hitou\.org\/member\/\d+$/, id);
+    // nihon-hitou.org の会員詳細は2026-11に hitou.or.jp のトップへ転送されるようになったため、以後に追加した宿は hitou.or.jp の宿詳細を使う
+    assert.match(e.url, /^https:\/\/(nihon-hitou\.org\/member|www\.hitou\.or\.jp\/provider)\/\d+$/, id);
     assert.match(e.checkedAt, /^\d{4}-\d{2}-\d{2}$/, id);
     if (e.reservationUrl) assert.match(e.reservationUrl, /^https:\/\/www\.hitou\.or\.jp\/provider\/\d+$/, id);
     const u = new URL(e.url);
     assert.equal(u.username + u.password, '', id);
   }
   // 詳細ページは施設ごとに別(同名・近隣施設へURLを流用しない)
-  assert.equal(new Set(Object.values(hitou).map(e => e.url)).size, 26);
+  assert.equal(new Set(Object.values(hitou).map(e => e.url)).size, 27);
 });
 
 test('hitou membership: look-alike facilities are not mixed up (Azumaya, Higashiya, Ishizuka, Kashiwaya, Sannoujo, Kanikyu)', () => {
