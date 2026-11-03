@@ -409,6 +409,12 @@ window.ONSEN_KAKENAGASHI = {
     treatment: {
       water: [{ status: 'none', scope: 'all', coverage: '総桧風呂(内湯)男女各1・露天風呂(石造り/木造り)男女各1', scopeNote: '公式の源泉表で「浴槽への給湯」の行が加水なしと述べ、同じ表の「浴槽の数」が施設の全浴槽を列挙している', quote: '浴槽への給湯：源泉100％かけ流し、加水なし（熱交換により温度調節）', url: 'https://r.goope.jp/shiranekan/free/nanafushiginoyu', checkedAt: '2026-11-02' }]
     }
+  },
+  'onsen-070': {
+    scope: 'partial', baths: ['若鹿の湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの若鹿（わか）の湯の欄「源泉 ： 白旗源泉（100％源泉掛け流し）」(男女別浴場1・地下一階・内湯のみ)。公式Q&Aも「およそ43℃ほど、100％源泉掛け流しです」。Q&Aに出てくる貸切風呂ひょうたんは浴槽別の記載がなく「お水で埋められる」とあるため、かけ流しを広げない' },
+    dilution: { water: 'unknown', note: '公式は「お湯の温度を少し熱め四十三度ほどにしてあります」「かけ流しの源泉は五十度以上」と書くが、温度を下げる方法(加水の有無)は書かれていない。加温の記載もない。加水・加温とも未確認のため規則は付けず、源生の湯は判定しない。循環・ろ過・消毒は未確認' },
+    source: { url: 'https://yamamotokan.com/%e6%b8%a9%e6%b3%89/', checkedAt: '2026-11-03' }
   }
 };
 

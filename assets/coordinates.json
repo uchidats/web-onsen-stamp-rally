@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-11-02",
-  "method": "69 verified facilities (onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-03",
+  "method": "70 verified facilities (onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -4257,6 +4257,82 @@
         "+81556482711"
       ],
       "sourceAsset": "https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=places/type=place/part-00015-b21e3943-1706-5729-88ab-f4f5777eaae4-c000.zstd.parquet"
+    },
+    {
+      "id": "onsen-070",
+      "facility": "山本館",
+      "prefecture": "群馬県",
+      "latitude": 36.6231911,
+      "longitude": 138.5963223,
+      "coordinateSource": "https://www.openstreetmap.org/way/948490088",
+      "coordinateVerified": true,
+      "osmName": "山本館",
+      "osmAddress": "山本館, 西の河原通り, 草津, 草津町, 吾妻郡, 群馬県, 377-1711, 日本",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://yamamotokan.com/",
+      "note": "OSM建物way/948490088(name=山本館、tourism=hotel、website=http://yamamotokan.com/)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。Overture Places 2026-09-23.1(meta)のレコード「山本館」(id 8cc2bd6e-706a-4cd3-8efa-55ea0b4de613、所在地「草津町大字草津404」、電話+81279883244、URL yamamotokan.com)の点も同じポリゴン内(約4m)で、公式サイトの電話(0279-88-3244)・URLと一致。草津温泉の既存施設(大阪屋旅館・大滝乃湯)とは別の建物。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-03",
+      "onsen": "草津温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "群馬県吾妻郡草津町草津404",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/948490088",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "山本館",
+      "identityReferences": [
+        "https://yamamotokan.com/",
+        "https://yamamotokan.com/qa/",
+        "https://stac.overturemaps.org/2026-09-23.1/catalog.json"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%B1%B1%E6%9C%AC%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              138.5962071,
+              36.623313
+            ],
+            [
+              138.5961333,
+              36.623211
+            ],
+            [
+              138.5962611,
+              36.6231514
+            ],
+            [
+              138.5962673,
+              36.6231599
+            ],
+            [
+              138.5963363,
+              36.6231278
+            ],
+            [
+              138.5963307,
+              36.6231201
+            ],
+            [
+              138.5964381,
+              36.62307
+            ],
+            [
+              138.5965113,
+              36.6231712
+            ],
+            [
+              138.5962071,
+              36.623313
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
     }
   ],
   "coordinateSystem": "WGS84 (EPSG:4326), decimal degrees; GeoJSON order is [longitude, latitude], Leaflet is [latitude, longitude]"

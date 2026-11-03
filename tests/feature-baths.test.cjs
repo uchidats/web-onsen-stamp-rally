@@ -37,7 +37,7 @@ const FUKUSHIMA = {
 };
 
 const TOCHIGI = { 'onsen-040': '明賀屋本館', 'onsen-041': '加仁湯', 'onsen-042': '八丁の湯', 'onsen-043': '秘湯の宿 元泉館', 'onsen-044': '那須 鹿の湯', 'onsen-045': '大黒屋' };
-const GUNMA = { 'onsen-048': '鍾寿館', 'onsen-053': '湯宿 三河屋' };
+const GUNMA = { 'onsen-048': '鍾寿館', 'onsen-053': '湯宿 三河屋', 'onsen-070': '山本館' };
 const YAMANASHI = { 'onsen-068': '不老閣', 'onsen-069': '白根館' };
 const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
 const HOKKAIDO = { 'onsen-001': '知内温泉旅館' };
@@ -48,8 +48,8 @@ const IWATE = {
   'onsen-006': '峡雲荘', 'onsen-007': '藤三旅館', 'onsen-008': '山水閣', 'onsen-009': '元湯夏油', 'onsen-010': '石塚旅館', 'onsen-011': 'ほっとゆだ', 'onsen-012': '彩雲荘'
 };
 
-test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 2 Gunma facilities', () => {
-  assert.equal(data.length, 69);
+test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
+  assert.equal(data.length, 70);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -335,6 +335,16 @@ test('feature baths: Yamanashi (Shiranekan) lists the official 3 baths with the 
   assert.match(feature['onsen-069'].note, /1日交替/);
   assert.ok(feature['onsen-069'].baths.every(b => !b.color), 'no bath color text: the official color is for the spring as a whole');
   assert.ok(!/円|d+[:：]d+|d+時|d+分/.test(JSON.stringify(feature['onsen-069'].baths)), 'no prices or hours');
+});
+
+test('feature baths: Gunma (Yamamotokan) lists only the official 若鹿の湯 and invents no color, hours or prices', () => {
+  const x = data.find(v => v.id === 'onsen-070');
+  assert.equal(x.facility, '山本館'); assert.equal(x.onsen, '草津温泉'); assert.equal(x.prefecture, '群馬県');
+  assert.equal(data.filter(v => v.onsen === '草津温泉' && v.facility === '山本館').length, 1, 'no duplicate Kusatsu facility');
+  assert.deepEqual(feature['onsen-070'].baths.map(b => b.name), ['若鹿の湯']);
+  assert.equal(feature['onsen-070'].source.url, 'https://yamamotokan.com/%e6%b8%a9%e6%b3%89/');
+  assert.ok(feature['onsen-070'].baths.every(b => !b.color), 'no bath color: the official site does not name a color');
+  assert.ok(!/円|\d+[:：]\d+|\d+時|\d+分/.test(JSON.stringify(feature['onsen-070'].baths)), 'no prices or hours');
 });
 
 test('feature baths: Hokkaido (Shiriuchi) has 3 bath groups; the open-air bath name is explanatory and no reservation terms are invented', () => {

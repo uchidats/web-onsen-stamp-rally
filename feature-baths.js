@@ -501,5 +501,11 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '木造りの露天風呂', kind: '露天', tags: ['男女日替わり'], note: 'この露天風呂の日は、内湯と別の場所にあるため、行き来する際に着替えが必要です' }
     ],
     source: { url: 'https://r.goope.jp/shiranekan/free/higaerionsen', checkedAt: '2026-11-02' }
+  },
+  'onsen-070': {
+    baths: [
+      { name: '若鹿の湯', kind: '内湯', form: '男女別', tags: ['総檜造り', '白旗源泉'], note: '地下一階の総檜造りの浴場で、湯畑前の白旗源泉を引いています。湯温は43℃ほどと熱めです' }
+    ],
+    source: { url: 'https://yamamotokan.com/%e6%b8%a9%e6%b3%89/', checkedAt: '2026-11-03' }
   }
 };

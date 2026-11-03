@@ -1504,6 +1504,29 @@ window.ONSEN_DATA = [
     "coordinateLicense": "CDLA-Permissive-2.0",
     "coordinateSourceId": "8026fa75-75bc-4a55-b69c-5c61a9bc5e8e",
     "coordinateSourceRelease": "2026-09-23.1"
+  },
+  {
+    "id": "onsen-070",
+    "number": 70,
+    "area": "関東・信越",
+    "prefecture": "群馬県",
+    "onsen": "草津温泉",
+    "facility": "山本館",
+    "latitude": 36.6231911,
+    "longitude": 138.5963223,
+    "coordinateSource": "https://www.openstreetmap.org/way/948490088",
+    "coordinateVerified": true,
+    "officialUrl": "https://yamamotokan.com/",
+    "category": "その他",
+    "bathing": "11:30-15:00受付・1,000円（水・木曜休館）。一人泊は平日のみ可（公式Q&A）",
+    "station": "",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "酸性・含硫黄－アルミニウム－硫酸塩・塩化物温泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B1%B1%E6%9C%AC%E9%A4%A8%20%E7%BE%A4%E9%A6%AC%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-03",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/948490088"
   }
 ];
 
