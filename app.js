@@ -75,7 +75,7 @@ function groupedCards(list){
 // 湯の色の丸。データは bath-colors.js(根拠が十分な色だけ)。施設カードと詳細画面の「代表的な湯」で同じ部品を使う。
 // 無い施設・定義の無い色は何も出さない。同じ色は重複表示せず、最大3個。並びは資料の記載順。
 const BATH_COLOR_LIMIT=3;
-const EVIDENCE_NOTE={photo_inferred:'写真からの推定です',third_party_reported:'第三者資料の記載です'};
+const EVIDENCE_NOTE={photo_inferred:'写真からの推定です',third_party_reported:'第三者資料の記載です',visit_observed:'現地での観察です'};
 function bathColorText(c,def){
   const scope=c.scope==='bath'&&Array.isArray(c.scopeNames)&&c.scopeNames.length?'（'+c.scopeNames.join('・')+'）':c.scope==='facility'&&c.scopeLabel?'（'+c.scopeLabel+'）':'（施設全体）',parts=['湯の色: '+def.label+scope];
   if(c.expression&&c.expression!==def.label&&!c.listed&&c.role!=='variant')parts.push((c.evidence&&c.evidence.type&&c.evidence.type!=='official_text'?'資料の表現「':'公式の表現「')+c.expression+'」');
