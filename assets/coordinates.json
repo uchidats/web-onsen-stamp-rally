@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-11-03",
-  "method": "73 verified facilities (onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-05",
+  "method": "75 verified facilities (onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -4484,6 +4484,110 @@
         ]
       },
       "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-074",
+      "facility": "松柏館",
+      "prefecture": "福島県",
+      "latitude": 37.01100158691406,
+      "longitude": 140.84495544433594,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "http://www.syouhakukan.com/access.html",
+      "note": "Overture Places(meta)の施設名付きレコード「松柏館」。所在地「常磐湯本町三函158」・電話(+81246422141)・URL(www.syouhakukan.com)が、公式サイトの所在地(福島県いわき市常磐湯本町三函158)・電話(0246-42-2141)・URLと一致。じゃらんの施設ページの地図座標(37.010991, 140.84533)が約33mの位置で整合。国土地理院の住所検索の点(37.010647, 140.84285)は約190m西で、番地の代表点のため不採用。OSMには該当施設の建物・名称が見つからなかった。Overture GeoParquetの施設Point bboxを取得(float32)。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-05",
+      "onsen": "いわき湯本温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "福島県いわき市常磐湯本町三函158",
+      "auditResult": "新規追加",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceId": "900afd29-6a45-45bc-bd3e-cb2a7eab4f69",
+      "sourceFacilityName": "松柏館",
+      "identityReferences": [
+        "http://www.syouhakukan.com/access.html",
+        "https://kankou-iwaki.or.jp/reserve/50021"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%9D%BE%E6%9F%8F%E9%A4%A8%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.84495544433594,
+          37.01100158691406
+        ]
+      },
+      "sourceRelease": "2026-09-23.1",
+      "sourceRecordId": "150667768287890",
+      "sourceAddress": [
+        {
+          "freeform": "常磐湯本町三函158",
+          "locality": "いわき市",
+          "postcode": "972-8321",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "www.syouhakukan.com/"
+      ],
+      "sourcePhones": [
+        "+81246422141"
+      ]
+    },
+    {
+      "id": "onsen-075",
+      "facility": "旅館こいと",
+      "prefecture": "福島県",
+      "latitude": 37.0089225769043,
+      "longitude": 140.8447265625,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://koito-inn.co.jp/traffic.htm",
+      "note": "Overture Places(meta)の施設名付きレコード「旅館こいと」。所在地「常磐湯本町笠井1」・電話(+81246422151)・メール(info@koito-inn.co.jp)が、公式サイトの所在地(福島県いわき市常磐湯本町笠井1番地)・電話(0246-42-2151)・メールと一致。館内のBAR 1%ERのレコード(電話が同じ、koito-inn.co.jp/bar/)が同じ位置にある。公式の「コンビニは宿の2軒隣」とOvertureのローソン いわき常磐湯本店(約65m)、「温泉神社のお膝元」と温泉神社(約90m)の位置関係も整合。国土地理院の住所検索の点(37.007572, 140.841263)は約340m南西で、番地の代表点のため不採用。OSMには該当施設の建物・名称が見つからなかった。Overture GeoParquetの施設Point bboxを取得(float32)。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-05",
+      "onsen": "いわき湯本温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "福島県いわき市常磐湯本町笠井1番地",
+      "auditResult": "新規追加",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceId": "8707ba28-ff14-48e2-a26d-bf95be7aaa6e",
+      "sourceFacilityName": "旅館こいと",
+      "identityReferences": [
+        "https://koito-inn.co.jp/traffic.htm",
+        "https://kankou-iwaki.or.jp/reserve/50021"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%97%85%E9%A4%A8%E3%81%93%E3%81%84%E3%81%A8%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.8447265625,
+          37.0089225769043
+        ]
+      },
+      "sourceRelease": "2026-09-23.1",
+      "sourceRecordId": "248485878536284",
+      "sourceAddress": [
+        {
+          "freeform": "常磐湯本町笠井1",
+          "locality": "いわき市",
+          "postcode": "972-8321",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "https://twitter.com/koito2151"
+      ],
+      "sourcePhones": [
+        "+81246422151"
+      ]
     }
   ],
   "coordinateSystem": "WGS84 (EPSG:4326), decimal degrees; GeoJSON order is [longitude, latitude], Leaflet is [latitude, longitude]"

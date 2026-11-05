@@ -531,5 +531,22 @@ window.ONSEN_FEATURE_BATHS = {
       { name: 'ガラティア観音乃湯', tags: ['宿泊者専用', '大総檜風呂', '星空の満点露天風呂'], note: '宿泊者専用の温泉。大総檜風呂や露天風呂、打たせ湯、寝湯、サウナなどがあります' }
     ],
     source: { url: 'https://www.kannon-onsen.com/hotspring/', checkedAt: '2026-11-03' }
+  },
+  'onsen-074': {
+    note: '公式の温泉ページでは2つとも「純和風展望風呂」と案内されています。大浴場は男女別の内風呂のみで、貸切風呂・露天風呂はありません。',
+    baths: [
+      { name: '殿方展望ひのき風呂', kind: '内湯', form: '男女別', tags: ['最上階', '街並みの眺望', '朝日'], note: 'いわきの街全体を見渡す4階の展望風呂で、朝日は男湯から見られます' },
+      { name: 'ご婦人展望風呂', kind: '内湯', form: '男女別', tags: ['最上階', '街並みの眺望'], note: 'ガラス張りの窓で明るく開放的な展望風呂です' }
+    ],
+    source: { url: 'http://www.syouhakukan.com/spa.html', checkedAt: '2026-11-05' }
+  },
+  'onsen-075': {
+    note: '貸切風呂は大浴場とは別の予約制の浴室です。',
+    baths: [
+      { name: '大浴場', form: '男女別', tags: ['日帰り入浴可'], note: '硫黄分が強い湯で、銀製品は黒く変色するため注意が必要です' },
+      { name: '野趣露天風呂', kind: '露天', tags: ['観音山の麓', '日帰り入浴可'], note: '浴室棟の大浴場の奥にあり、観音山の麓に位置します' },
+      { name: '貸切風呂', form: '貸切', tags: ['要予約', '家族向け'], note: '家族4人で入れる浴室です' }
+    ],
+    source: { url: 'https://koito-inn.co.jp/onsen.htm', checkedAt: '2026-11-05' }
   }
 };

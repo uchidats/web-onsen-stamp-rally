@@ -73,7 +73,8 @@
     'onsen-049', 'onsen-050', 'onsen-052', 'onsen-054', 'onsen-055', 'onsen-056',
     'onsen-057', 'onsen-058', 'onsen-059', 'onsen-060', 'onsen-061', 'onsen-062',
     'onsen-063', 'onsen-064', 'onsen-065', 'onsen-066', 'onsen-067',
-    'onsen-070', 'onsen-071', 'onsen-073' // 2026-11-03 に同じ条件で確認(PCで施設ページ・住所一致、Android相当で検索結果の先頭)。onsen-072(山の家)はGoogleに宿泊施設として掲載がない
+    'onsen-070', 'onsen-071', 'onsen-073', // 2026-11-03 に同じ条件で確認(PCで施設ページ・住所一致、Android相当で検索結果の先頭)。onsen-072(山の家)はGoogleに宿泊施設として掲載がない
+    'onsen-074', 'onsen-075' // 2026-11-05 に同じ条件で確認(PCで施設ページ・住所一致、Android相当で検索結果の先頭)
   ]);
   const GOOGLE_QUERY_OVERRIDES = Object.freeze({
     'onsen-006': '松川温泉 峡雲荘',

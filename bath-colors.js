@@ -449,5 +449,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「お風呂」ページの大浴場の項「泉質はカルシウム・ナトリウム-硫酸塩泉。無色透明でやわらかなお湯です。」大浴場の説明として書かれているため大浴場に付け、露天風呂へは広げない。日本温泉協会の施設紹介も「温泉は無色透明」(第三者資料)' }
     }],
     source: { url: 'https://www.yumotokan-izu2019.com/hot_springs', checkedAt: '2026-11-03' }
+  },
+  'onsen-075': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの温泉の情報「外観 無色透明・無味」。源泉の分析表の記載で施設全体の色として登録し、個々の浴槽へは広げない' }
+    }],
+    source: { url: 'https://koito-inn.co.jp/onsen.htm', checkedAt: '2026-11-05' }
   }
 };

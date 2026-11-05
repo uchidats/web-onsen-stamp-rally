@@ -208,3 +208,20 @@ test('gensei: Izu facilities — official kake-nagashi plus the recorded no-wate
   assert.equal(evaluate(kake['onsen-073'], '観音プリンシプル').result, 'pending');
   assert.equal(evaluate(kake['onsen-073'], 'ガラティア観音乃湯').result, 'pending');
 });
+
+test('gensei: Iwaki Yumoto stays undecided — no water/heating rules, and the private bath is outside the kake-nagashi record', () => {
+  // 松柏館: 公式の「一滴の水も使ってはおりません」は時期が不明で現在の運用を確認できないため確認済みにしない
+  assert.equal(kake['onsen-074'].treatment, undefined);
+  assert.equal(kake['onsen-074'].dilution.water, 'unknown');
+  for (const name of kake['onsen-074'].baths) assert.equal(evaluate(kake['onsen-074'], name).result, 'pending');
+  // こいと: 「加水無し・加温無し」は宿の方針で浴槽別ではないため規則にしない。消毒なしだけを記録する
+  const koito = kake['onsen-075'];
+  assert.equal(koito.treatment.water, undefined);
+  assert.equal(koito.treatment.heating, undefined);
+  assert.equal(koito.treatment.disinfection[0].status, 'none');
+  assert.equal(koito.dilution.water, 'unknown');
+  assert.equal(koito.scope, 'partial');
+  assert.deepEqual(koito.baths, ['大浴場', '野趣露天風呂']);
+  for (const name of ['大浴場', '野趣露天風呂', '貸切風呂']) assert.equal(evaluate(koito, name).result, 'pending');
+  assert.deepEqual(certifiedBaths(koito), []);
+});
