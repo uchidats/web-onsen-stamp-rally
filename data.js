@@ -1686,7 +1686,7 @@ window.ONSEN_DATA = [
     "station": "伊東駅",
     "distanceKm": null,
     "elevationM": null,
-    "springType": "ナトリウム・カルシウム－塩化物泉",
+    "springType": "カルシウム・ナトリウム－塩化物温泉",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%B1%E3%82%A4%E3%82%BA%E3%83%8F%E3%82%A6%E3%82%B9%E4%BC%8A%E6%9D%B1%E6%B8%A9%E6%B3%89%20%E9%9D%99%E5%B2%A1%E7%9C%8C",
     "coordinateCheckedAt": "2026-11-06",
     "coordinateLicense": "ODbL-1.0",

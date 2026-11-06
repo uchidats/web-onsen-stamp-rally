@@ -87,11 +87,13 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-071': ['湯の色: 無色透明（大浴場）。'],
       // 2026-11-05 追加(公式「温泉」ページの分析表「外観 無色透明」)
       'onsen-075': ['湯の色: 無色透明（施設全体）。'],
+      // 2026-11-06 追加(純温泉協会の施設ページ「無色透明の湯」)
+      'onsen-077': ['湯の色: 無色透明（施設全体）。第三者資料の記載です。'],
       'onsen-070': ['湯の色: 無色透明（施設全体）。公式の表現「基本的には無色透明」。', '湯の色: 乳白色（若鹿の湯）。2026年11月3日の日帰り入浴時の色です。公式は基本的に無色透明で、湯ノ花が舞うと濁ることがあると説明しており、常に乳白色ではありません。現地での観察です。']
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
     // 保留(根拠不足)の施設には丸を出さない
-    const NONE = ['onsen-001', 'onsen-005', 'onsen-007', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-022', 'onsen-025', 'onsen-037', 'onsen-038', 'onsen-042', 'onsen-047', 'onsen-050', 'onsen-055', 'onsen-056', 'onsen-058', 'onsen-060', 'onsen-063', 'onsen-068', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-076', 'onsen-077'];
+    const NONE = ['onsen-001', 'onsen-005', 'onsen-007', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-022', 'onsen-025', 'onsen-037', 'onsen-038', 'onsen-042', 'onsen-047', 'onsen-050', 'onsen-055', 'onsen-056', 'onsen-058', 'onsen-060', 'onsen-063', 'onsen-068', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-076'];
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
     const center = async expr => { const r = await rect(expr); return { x: r.x + r.w / 2, y: r.y + r.h / 2 }; };

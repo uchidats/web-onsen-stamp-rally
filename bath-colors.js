@@ -456,5 +456,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの温泉の情報「外観 無色透明・無味」。源泉の分析表の記載で施設全体の色として登録し、個々の浴槽へは広げない' }
     }],
     source: { url: 'https://koito-inn.co.jp/onsen.htm', checkedAt: '2026-11-05' }
+  },
+  'onsen-077': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '純温泉協会の施設ページ(2021年)「無色透明の湯は、カルシウム・ナトリウム－塩化物泉。」公式サイトに色の記載はなく、第三者資料として施設全体の色に登録し、個々の浴槽へは広げない' }
+    }],
+    source: { url: 'https://realonsen.com/kshouse-ito/', checkedAt: '2026-11-06' }
   }
 };
