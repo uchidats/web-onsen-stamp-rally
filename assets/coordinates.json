@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-11-05",
-  "method": "75 verified facilities (onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-06",
+  "method": "77 verified facilities (onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -4588,6 +4588,120 @@
       "sourcePhones": [
         "+81246422151"
       ]
+    },
+    {
+      "id": "onsen-076",
+      "facility": "東海館",
+      "prefecture": "静岡県",
+      "latitude": 34.9716918,
+      "longitude": 139.0970631,
+      "coordinateSource": "https://www.openstreetmap.org/way/190835270",
+      "coordinateVerified": true,
+      "osmName": "東海館",
+      "osmAddress": "静岡県伊東市東松原町12-10(OSMの住所タグ)",
+      "osmFeatureType": "tourism/museum",
+      "addressReference": "https://itospa.com/spot/detail_52002.html",
+      "note": "OSM建物way/190835270(name=東海館、tourism=museum、building=hotel、historic=yes、住所タグ 東松原町12-10、wikidata Q11527984)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。伊東市の公式観光ガイドの所在地(静岡県伊東市東松原町12-10)と一致。Overture Places(meta)のレコード「東海館」(電話+81557362004が公式と一致)の点も同じポリゴン内にある。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-06",
+      "onsen": "伊東温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "静岡県伊東市東松原町12-10",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/190835270",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "東海館",
+      "identityReferences": [
+        "https://itospa.com/spot/detail_52002.html",
+        "https://itospa.com/spa/detail_54227.html"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E6%B5%B7%E9%A4%A8%20%E9%9D%99%E5%B2%A1%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              139.0968635,
+              34.9717337
+            ],
+            [
+              139.097224,
+              34.9717984
+            ],
+            [
+              139.097263,
+              34.971647
+            ],
+            [
+              139.097168,
+              34.9716256
+            ],
+            [
+              139.097168,
+              34.9716137
+            ],
+            [
+              139.0968909,
+              34.9715268
+            ],
+            [
+              139.0968431,
+              34.9716413
+            ],
+            [
+              139.0968859,
+              34.9716498
+            ],
+            [
+              139.0968635,
+              34.9717337
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-077",
+      "facility": "ケイズハウス伊東温泉",
+      "prefecture": "静岡県",
+      "latitude": 34.9717852,
+      "longitude": 139.0974223,
+      "coordinateSource": "https://www.openstreetmap.org/node/1131014120",
+      "coordinateVerified": true,
+      "osmName": "K's House Ito Onsen",
+      "osmAddress": "",
+      "osmFeatureType": "tourism/hostel",
+      "addressReference": "https://kshouse.jp/ito-j/index.html",
+      "note": "OSM施設POI node/1131014120(name=K's House Ito Onsen、tourism=hostel)。建物way/381680188の中にある。Overture Places 2026-09-23.1(meta)のレコード「ケイズハウス伊東温泉」(所在地「東松原町12-13」、電話+81557359444、URL kshouse.jp が公式と一致)が約3mの位置にあり、公式アクセスの「東海館の隣」とも整合。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-06",
+      "onsen": "伊東温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "静岡県伊東市東松原町12-13",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/1131014120",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "K's House Ito Onsen",
+      "identityReferences": [
+        "https://kshouse.jp/ito-j/index.html",
+        "https://kshouse.jp/ito-j/access.html"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E3%82%B1%E3%82%A4%E3%82%BA%E3%83%8F%E3%82%A6%E3%82%B9%E4%BC%8A%E6%9D%B1%E6%B8%A9%E6%B3%89%20%E9%9D%99%E5%B2%A1%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.0974223,
+          34.9717852
+        ]
+      },
+      "geometryCheck": "施設POIと一致"
     }
   ],
   "coordinateSystem": "WGS84 (EPSG:4326), decimal degrees; GeoJSON order is [longitude, latitude], Leaflet is [latitude, longitude]"

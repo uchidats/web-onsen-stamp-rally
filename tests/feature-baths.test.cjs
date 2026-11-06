@@ -39,6 +39,7 @@ const FUKUSHIMA = {
 const TOCHIGI = { 'onsen-040': '明賀屋本館', 'onsen-041': '加仁湯', 'onsen-042': '八丁の湯', 'onsen-043': '秘湯の宿 元泉館', 'onsen-044': '那須 鹿の湯', 'onsen-045': '大黒屋' };
 const GUNMA = { 'onsen-048': '鍾寿館', 'onsen-053': '湯宿 三河屋', 'onsen-070': '山本館' };
 const YAMANASHI = { 'onsen-068': '不老閣', 'onsen-069': '白根館' };
+const ITO = { 'onsen-076': '東海館', 'onsen-077': 'ケイズハウス伊東温泉' };
 const IWAKI = { 'onsen-074': '松柏館', 'onsen-075': '旅館こいと' };
 const SHIZUOKA = { 'onsen-071': '川端の宿 湯本館', 'onsen-072': '野天風呂 山の家', 'onsen-073': '観音温泉' };
 const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
@@ -51,8 +52,8 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 75);
-  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(HOKKAIDO)].sort());
+  assert.equal(data.length, 77);
+  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
     assert.equal(data.find(x => x.id === id).prefecture, '群馬県');
@@ -387,6 +388,17 @@ test('feature baths: Iwaki Yumoto keeps the private bath apart and states what S
   assert.ok(!k['貸切風呂'].tags.includes('日帰り入浴可'));
   for (const id of Object.keys(IWAKI)) {
     assert.ok(feature[id].baths.every(b => !b.color), id + ': no bath color text');
+    assert.ok(!/円|\d+[:：]\d+|\d+時|\d+分/.test(JSON.stringify(feature[id].baths)), id + ': no prices or hours');
+  }
+});
+
+test('feature baths: Ito lists only indoor baths and no open-air bath for the two facilities', () => {
+  for (const [id, name] of Object.entries(ITO)) { const x = data.find(v => v.id === id); assert.equal(x.facility, name); assert.equal(x.prefecture, '静岡県'); assert.equal(x.onsen, '伊東温泉'); }
+  assert.deepEqual(feature['onsen-076'].baths.map(b => b.name), ['大浴場', '小浴場']);
+  assert.deepEqual(feature['onsen-077'].baths.map(b => b.name), ['男女別の内風呂', '貸切温泉']);
+  assert.match(feature['onsen-077'].note, /露天風呂はありません/);
+  for (const id of Object.keys(ITO)) {
+    assert.ok(feature[id].baths.every(b => !b.color && b.kind === '内湯'), id + ': indoor baths with no color text');
     assert.ok(!/円|\d+[:：]\d+|\d+時|\d+分/.test(JSON.stringify(feature[id].baths)), id + ': no prices or hours');
   }
 });

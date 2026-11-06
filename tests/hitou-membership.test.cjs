@@ -19,7 +19,7 @@ const MEMBERS = [
 ];
 
 test('hitou membership: exactly the 27 confirmed member facilities, keyed by existing fixed IDs', () => {
-  assert.equal(data.length, 75);
+  assert.equal(data.length, 77);
   assert.deepEqual(Object.keys(hitou).sort(), MEMBERS);
   const ids = new Set(data.map(x => x.id));
   for (const id of Object.keys(hitou)) assert.ok(ids.has(id), id);

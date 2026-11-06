@@ -456,6 +456,27 @@ window.ONSEN_KAKENAGASHI = {
     treatment: {
       disinfection: [{ status: 'none', scope: 'all', coverage: '施設の温泉', scopeNote: '公式「温泉」ページが施設の温泉全体について述べている', quote: '温泉の効能を中和してしまう塩素系薬剤による消毒をしません。', url: 'https://koito-inn.co.jp/onsen.htm', checkedAt: '2026-11-05' }]
     }
+  },
+  'onsen-076': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'スルガ銀行「井伊部長の温泉グルメ探訪」(取材2013年7月)「源泉の温度は26.3℃」「加温はしていますが」「源泉かけ流しの天然温泉」。ニフティ温泉も掛け流しに分類。伊東市の公式観光ガイドの東海館のページにかけ流しの記載はなく、るるぶ&more.は「源泉かけ流し：なし」と記載して資料が食い違う。施設全体の第三者記述のため、大浴場・小浴場へは個別に広げない' },
+    dilution: { water: 'unknown', note: '加水の有無は公式に記載がなく未確認。循環・消毒は公式に記載がない。個人の入浴記(大露天風呂の日記、2024年)に「加温はされていますが、循環消毒なしの源泉かけ流し」とあり、循環ろ過なしはこの個人の記録が根拠で、公式・第三者団体の資料ではない' },
+    source: { url: 'https://onsen.surugabank.co.jp/higashiizu/1718.html', checkedAt: '2026-11-06' },
+    treatment: {
+      heating: [{ status: 'yes', scope: 'all', evidenceType: 'third_party_reported', coverage: '施設の温泉', scopeNote: 'スルガ銀行の取材記事が施設の温泉全体について加温を述べており、個人の入浴記も源泉温度が低いため加温と書く。公式の記載はない。加温ありのため源生の湯の対象外', quote: '加温はしていますが', url: 'https://onsen.surugabank.co.jp/higashiizu/1718.html', checkedAt: '2026-11-06' }]
+    }
+  },
+  'onsen-077': {
+    scope: 'facility', baths: ['男女別の内風呂', '貸切温泉'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: "公式トップ「毎分100リットルを超える100％自家源泉かけ流しの温泉」。公式英語版「Our fresh & pristine onsen water is provided directly from K's House's own sources and continuously overflow from the bathtubs 24hours a day, 365 days a year.」公式FAQに内風呂のみとあり、公式の設備欄に貸切温泉がある" },
+    perBathEvidence: { type: 'third_party', confidence: 'third_party_reported', note: '公式は浴槽別に書いていない。純温泉協会の掲載(2021年)が男性用浴室・女性用浴室・貸切風呂の3浴槽とも純温泉A(加水なし、加温なし、循環ろ過なし、消毒なし、入浴剤なし)としており、個別の湯への適用はこの第三者資料による' },
+    dilution: { water: 'none', note: '公式の分析書ページ「Adding water nil」「Additional Heating nil」「Circulating Filtration nil」。公式英語版「Our onsen temperature is controlled by mixing two natural spring sources at different temperatures. Absolutely no water is pumped from a tap into the tub.」温度の異なる2本の自家源泉の混合で、真水の加水ではない。泉質は公式トップがナトリウム・カルシウム塩化物泉、公式の分析書ページがCalcium Sodium - Chloride Springで、表記が異なる' },
+    source: { url: 'https://kshouse.jp/ito-e/ito-topics_e/ito-news_20150601.html', checkedAt: '2026-11-06' },
+    treatment: {
+      water: [{ status: 'none', scope: 'all', coverage: '施設の温泉すべて(男女別の内風呂、貸切温泉)', scopeNote: '公式の分析書ページが施設の温泉について加水なしと書き、公式英語版も浴槽への水道水の注入を否定している。個別の浴槽は純温泉協会の3浴槽とも純温泉Aとする掲載で補う', quote: 'Absolutely no water is pumped from a tap into the tub.', url: 'https://kshouse.jp/ito-e/ito-topics_e/ito-news_20150601.html', checkedAt: '2026-11-06' }],
+      heating: [{ status: 'none', scope: 'all', coverage: '施設の温泉すべて(男女別の内風呂、貸切温泉)', scopeNote: '公式の分析書ページが施設の温泉について加温なしと書く。個別の浴槽は純温泉協会の3浴槽とも純温泉Aとする掲載で補う', quote: 'Additional Heating nil', url: 'https://kshouse.jp/ito-e/ito-topics_e/ito-topics_20171231.html', checkedAt: '2026-11-06' }],
+      disinfection: [{ status: 'none', scope: 'all', coverage: '施設の温泉', scopeNote: '公式英語版が施設の温泉全体について、循環・ろ過をしておらず塩素消毒を必要としないと書く', quote: 'non-circulated, non-filtered, 100% pure onsen water needs NO sterilization process by chlorine.', url: 'https://kshouse.jp/ito-e/ito-topics_e/ito-news_20150601.html', checkedAt: '2026-11-06' }]
+    }
   }
 };
 

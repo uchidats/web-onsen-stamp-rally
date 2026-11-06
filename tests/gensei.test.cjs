@@ -77,7 +77,7 @@ test('gensei: every treatment rule carries its source, scope and quote; no manua
   for (const [id, e] of Object.entries(kake)) if (e.evidence.type === 'third_party') assert.deepEqual(certifiedBaths(e), [], id);
 });
 
-test('gensei: current certification (9 facilities, 22 baths) and the reasons others stay undecided or excluded', () => {
+test('gensei: current certification (10 facilities, 24 baths) and the reasons others stay undecided or excluded', () => {
   const certified = Object.fromEntries(Object.entries(kake).map(([id, e]) => [id, certifiedBaths(e)]).filter(([, b]) => b.length));
   assert.deepEqual(certified, {
     'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'],
@@ -88,7 +88,8 @@ test('gensei: current certification (9 facilities, 22 baths) and the reasons oth
     'onsen-041': ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'],
     'onsen-066': ['男女別の展望内湯'],
     'onsen-071': ['露天風呂', '大浴場'],
-    'onsen-072': ['男湯（野天風呂）', '女湯（野天風呂）', '貸切風呂']
+    'onsen-072': ['男湯（野天風呂）', '女湯（野天風呂）', '貸切風呂'],
+    'onsen-077': ['男女別の内風呂', '貸切温泉']
   });
   // 認定された湯は、必ず源泉かけ流しの湯(深緑の波)でもある
   for (const [id, names] of Object.entries(certified)) for (const n of names) assert.ok(kake[id].baths.includes(n), `${id}/${n}`);
@@ -224,4 +225,20 @@ test('gensei: Iwaki Yumoto stays undecided — no water/heating rules, and the p
   assert.deepEqual(koito.baths, ['大浴場', '野趣露天風呂']);
   for (const name of ['大浴場', '野趣露天風呂', '貸切風呂']) assert.equal(evaluate(koito, name).result, 'pending');
   assert.deepEqual(certifiedBaths(koito), []);
+});
+
+test('gensei: Ito — Tokaikan is excluded by heating, and K\'s House is certified on official no-water/no-heating evidence', () => {
+  // 東海館: 加温あり(第三者資料)のため対象外
+  const tokai = kake['onsen-076'];
+  assert.equal(tokai.evidence.type, 'third_party');
+  assert.equal(tokai.treatment.heating[0].status, 'yes');
+  assert.equal(tokai.treatment.heating[0].evidenceType, 'third_party_reported');
+  for (const name of ['大浴場', '小浴場']) assert.equal(evaluate(tokai, name).result, 'excluded');
+  assert.deepEqual(certifiedBaths(tokai), []);
+  // ケイズハウス: 2本の自家源泉の混合は加水ではない。公式の分析書ページと公式説明で加水・加温なし
+  const ks = kake['onsen-077'];
+  for (const k of ['water', 'heating', 'disinfection']) { assert.equal(ks.treatment[k][0].status, 'none'); assert.equal(ks.treatment[k][0].evidenceType, undefined); }
+  assert.match(ks.dilution.note, /mixing two natural spring sources/);
+  assert.equal(ks.perBathEvidence.type, 'third_party');
+  assert.deepEqual(certifiedBaths(ks), ['男女別の内風呂', '貸切温泉']);
 });

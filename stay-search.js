@@ -74,7 +74,8 @@
     'onsen-057', 'onsen-058', 'onsen-059', 'onsen-060', 'onsen-061', 'onsen-062',
     'onsen-063', 'onsen-064', 'onsen-065', 'onsen-066', 'onsen-067',
     'onsen-070', 'onsen-071', 'onsen-073', // 2026-11-03 に同じ条件で確認(PCで施設ページ・住所一致、Android相当で検索結果の先頭)。onsen-072(山の家)はGoogleに宿泊施設として掲載がない
-    'onsen-074', 'onsen-075' // 2026-11-05 に同じ条件で確認(PCで施設ページ・住所一致、Android相当で検索結果の先頭)
+    'onsen-074', 'onsen-075', // 2026-11-05 に同じ条件で確認(PCで施設ページ・住所一致、Android相当で検索結果の先頭)
+    'onsen-077' // 2026-11-06 に同じ条件で確認。onsen-076(東海館)は宿泊不可の文化施設
   ]);
   const GOOGLE_QUERY_OVERRIDES = Object.freeze({
     'onsen-006': '松川温泉 峡雲荘',
@@ -93,7 +94,8 @@
     'onsen-056': '奈良屋旅館 野沢温泉村',
     'onsen-059': '毒沢鉱泉 神乃湯',
     'onsen-070': '草津温泉 山本館',
-    'onsen-071': '湯ヶ島温泉 湯本館'
+    'onsen-071': '湯ヶ島温泉 湯本館',
+    'onsen-077': "K's House Ito Onsen"
   });
   const googleVerified = id => GOOGLE_VERIFIED_IDS.includes(id);
   // 保存済みの条件(有効なもの)から Google ホテルのリンクを作る。条件や施設が対象外なら null。

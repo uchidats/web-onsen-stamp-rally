@@ -548,5 +548,21 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '貸切風呂', form: '貸切', tags: ['要予約', '家族向け'], note: '家族4人で入れる浴室です' }
     ],
     source: { url: 'https://koito-inn.co.jp/onsen.htm', checkedAt: '2026-11-05' }
+  },
+  'onsen-076': {
+    note: '大浴場と小浴場は男女の時間入替制です。',
+    baths: [
+      { name: '大浴場', kind: '内湯', tags: ['総タイル張り', '唐獅子の湯口', '男女入替制'], note: '床から壁まで総タイル張りで、黒錆色の唐獅子の湯口は森田東光の作です' },
+      { name: '小浴場', kind: '内湯', tags: ['男女入替制'], note: '大浴場と時間で男女を入れ替えて利用します' }
+    ],
+    source: { url: 'https://itospa.com/spa/detail_54227.html', checkedAt: '2026-11-06' }
+  },
+  'onsen-077': {
+    note: '「男女別の内風呂」は公式の説明をもとにした説明用の名称です。露天風呂はありません。',
+    baths: [
+      { name: '男女別の内風呂', kind: '内湯', form: '男女別', tags: ['自家源泉', '日帰り入浴可'], note: '2本の自家源泉を混合して湯温を調整しています' },
+      { name: '貸切温泉', kind: '内湯', form: '貸切', tags: ['自家源泉'], note: '男女別の内風呂とは別の貸切の温泉です' }
+    ],
+    source: { url: 'https://kshouse.jp/ito-j/faq.html', checkedAt: '2026-11-06' }
   }
 };
