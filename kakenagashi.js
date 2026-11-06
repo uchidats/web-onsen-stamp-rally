@@ -463,7 +463,7 @@ window.ONSEN_KAKENAGASHI = {
     dilution: { water: 'unknown', note: '加水の有無は公式に記載がなく未確認。循環・消毒は公式に記載がない。個人の入浴記(大露天風呂の日記、2024年)に「加温はされていますが、循環消毒なしの源泉かけ流し」とあり、循環ろ過なしはこの個人の記録が根拠で、公式・第三者団体の資料ではない' },
     source: { url: 'https://onsen.surugabank.co.jp/higashiizu/1718.html', checkedAt: '2026-11-06' },
     treatment: {
-      heating: [{ status: 'yes', scope: 'all', evidenceType: 'third_party_reported', coverage: '施設の温泉', scopeNote: 'スルガ銀行の取材記事が施設の温泉全体について加温を述べており、個人の入浴記も源泉温度が低いため加温と書く。公式の記載はない。加温ありのため源生の湯の対象外', quote: '加温はしていますが', url: 'https://onsen.surugabank.co.jp/higashiizu/1718.html', checkedAt: '2026-11-06' }]
+      heating: [{ status: 'yes', scope: 'all', evidenceType: 'third_party_reported', coverage: '施設の温泉', scopeNote: 'スルガ銀行の取材記事が施設の温泉全体について加温を述べており、個人の入浴記も源泉温度が低いため加温と書く。公式の記載はない。加温ありのため源生の湯の対象外', quote: '源泉の温度は26.3℃。加温はしていますが、源泉かけ流しの天然温泉です。', url: 'https://onsen.surugabank.co.jp/higashiizu/1718.html', checkedAt: '2026-11-06' }]
     }
   },
   'onsen-077': {
