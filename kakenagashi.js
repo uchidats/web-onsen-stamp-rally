@@ -545,6 +545,15 @@ window.ONSEN_KAKENAGASHI = {
       water: [{ status: 'none', scope: 'baths', baths: ['内湯（あつ湯）'], coverage: '内湯（あつ湯）', scopeNote: '公式の内湯ページが「あつ湯」を名指しして加水しないと書く', quote: '加水をせず熱交換にて昇温をしております。', url: 'https://www.awanoyu-ryokan.com/uchiyu.html', checkedAt: '2026-11-08' }],
       heating: [{ status: 'yes', scope: 'baths', baths: ['内湯（あつ湯）'], coverage: '内湯（あつ湯）', scopeNote: '公式の内湯ページが「あつ湯」を名指しして熱交換で昇温していると書く。加温ありのため源生の湯の対象外', quote: '加水をせず熱交換にて昇温をしております。', url: 'https://www.awanoyu-ryokan.com/uchiyu.html', checkedAt: '2026-11-08' }]
     }
+  },
+  'onsen-090': {
+    scope: 'facility', baths: ['檜造りの大風呂', '岩風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「檜造りの大風呂と岩風呂の二つの温泉がございます。熱めの大風呂とぬるめの岩風呂。どちらも源泉掛け流しで加温はしておりません。」施設の2つの浴場を名指しして書いている' },
+    dilution: { water: 'unknown', note: '公式は2つの浴場とも加温なしと書くが、加水・循環の記載はない。加水が未確認のため源生の湯は保留' },
+    source: { url: 'https://sandogoya-onsen.com/onsen/', checkedAt: '2026-11-08' },
+    treatment: {
+      heating: [{ status: 'none', scope: 'all', coverage: '施設の浴場すべて(檜造りの大風呂・岩風呂)', scopeNote: '公式「温泉」ページが、施設にある2つの浴場を名指しして「どちらも」加温していないと書く', quote: 'どちらも源泉掛け流しで加温はしておりません。', url: 'https://sandogoya-onsen.com/onsen/', checkedAt: '2026-11-08' }]
+    }
   }
 };
 

@@ -46,7 +46,7 @@ test('Progress heading fit desktop and narrow phones', async t => {
       fs.writeFileSync(path.join(browser.profile, `${section}-${width}.png`),Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
     }
     assert.equal(await evaluate("document.querySelector('.pref-progress-toggle strong').textContent"), '都道府県別の♨達成度');
-    assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"), '14都道府県・87施設の訪問進捗');
+    assert.equal(await evaluate("document.getElementById('prefProgressMeta').textContent"), '14都道府県・89施設の訪問進捗');
     assert.equal(await evaluate("document.getElementById('prefProgressMeta').getClientRects().length"), 0);
     await evaluate("document.getElementById('prefProgress').open=true");
     assert.equal(await evaluate("document.querySelectorAll('#prefgrid .pref').length"), 14);

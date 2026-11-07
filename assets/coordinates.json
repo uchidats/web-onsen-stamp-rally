@@ -3,7 +3,7 @@
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-08",
-  "method": "88 verified facilities (onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "90 verified facilities (onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -5547,6 +5547,84 @@
         "coordinates": [
           137.6240779,
           36.14579
+        ]
+      },
+      "geometryCheck": "施設POIと一致"
+    },
+    {
+      "id": "onsen-089",
+      "facility": "煙草屋旅館",
+      "prefecture": "栃木県",
+      "latitude": 37.1381286,
+      "longitude": 139.9460407,
+      "coordinateSource": "https://www.openstreetmap.org/node/5471132725",
+      "coordinateVerified": true,
+      "osmName": "煙草屋旅館",
+      "osmAddress": "",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://www.tabakoyaryokan.com/",
+      "note": "OSM施設POI node/5471132725(name=煙草屋旅館、tourism=hotel)。公式サイトの所在地は「栃木県那須塩原市三斗小屋温泉」で番地がない。Overture Places 2026-09-23.1(meta)のレコード「三斗小屋温泉煙草屋旅館」(URLが公式と一致)が約50mの位置にある。約1.5km離れた電話・URLが公式と一致するレコード「三斗小屋温泉　煙草屋旅館」(所在地「栃木県」のみ)は位置が合わないため不採用。約40m北西に同じ三斗小屋温泉の大黒屋旅館(onsen-090)がある。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-08",
+      "onsen": "三斗小屋温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "栃木県那須塩原市三斗小屋温泉",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/5471132725",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "煙草屋旅館",
+      "identityReferences": [
+        "https://www.tabakoyaryokan.com/",
+        "https://www.tabakoyaryokan.com/stay.php"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E4%B8%89%E6%96%97%E5%B0%8F%E5%B1%8B%E6%B8%A9%E6%B3%89%20%E7%85%99%E8%8D%89%E5%B1%8B%E6%97%85%E9%A4%A8%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9460407,
+          37.1381286
+        ]
+      },
+      "geometryCheck": "施設POIと一致"
+    },
+    {
+      "id": "onsen-090",
+      "facility": "大黒屋旅館",
+      "prefecture": "栃木県",
+      "latitude": 37.1383882,
+      "longitude": 139.9457118,
+      "coordinateSource": "https://www.openstreetmap.org/node/5471132726",
+      "coordinateVerified": true,
+      "osmName": "大黒屋",
+      "osmAddress": "",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://sandogoya-onsen.com/access/",
+      "note": "OSM施設POI node/5471132726(name=大黒屋、tourism=hotel)。Overture Places 2026-09-23.1(meta)のレコード「三斗小屋温泉 大黒屋」(所在地「919 Itamuro」、電話+819010454933、URLが公式と一致)が約5mの位置にあり、公式のアクセスページの所在地(栃木県那須塩原市板室919)と一致。板室温泉の大黒屋(onsen-045)とは別施設。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-08",
+      "onsen": "三斗小屋温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "栃木県那須塩原市板室919",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/5471132726",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "大黒屋",
+      "identityReferences": [
+        "https://sandogoya-onsen.com/access/",
+        "https://sandogoya-onsen.com/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E4%B8%89%E6%96%97%E5%B0%8F%E5%B1%8B%E6%B8%A9%E6%B3%89%20%E5%A4%A7%E9%BB%92%E5%B1%8B%20%E6%A0%83%E6%9C%A8%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9457118,
+          37.1383882
         ]
       },
       "geometryCheck": "施設POIと一致"

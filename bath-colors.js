@@ -505,5 +505,12 @@ window.ONSEN_BATH_COLORS = {
       { color: 'colorless', expression: '透明な湯', scope: 'bath', scopeNames: ['内湯（ぬる湯）'], change: { kind: 'tint', note: '公式の温泉データでは「内湯(ぬる湯) 多少白濁（変化あり）」とされています' }, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の内湯ページ「｢ぬる湯｣ 源泉そのままの湯で、透明な湯。」。大野天風呂ページの温泉データは「内湯(ぬる湯) 多少白濁（変化あり）」で、変化として併記する。あつ湯は温泉データの「さら湯」と同じ浴槽か公式に明記がないため色を付けない' } }
     ],
     source: { url: 'https://www.awanoyu-ryokan.com/uchiyu.html', checkedAt: '2026-11-08' }
+  },
+  'onsen-089': {
+    colors: [{
+      color: 'brown', expression: '赤く濁る', scope: 'bath', scopeNames: ['岩風呂'],
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の宿泊案内ページのお風呂の項「赤く濁るポカポカの岩風呂」。既存の色分類の「茶褐色」に当てる。野天風呂・木の湯舟は色の記載がないため付けない' }
+    }],
+    source: { url: 'https://www.tabakoyaryokan.com/stay.php', checkedAt: '2026-11-08' }
   }
 };

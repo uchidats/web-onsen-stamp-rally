@@ -327,3 +327,13 @@ test('gensei: Iwanoyu and Awanoyu stay undecided, and Awanoyu’s hot indoor bat
   for (const n of ['男女共用大野天風呂', '内湯（ぬる湯）', '内湯露天風呂']) assert.equal(evaluate(aw, n).result, 'pending', n);
   assert.deepEqual(certifiedBaths(aw), []);
 });
+
+test('gensei: Sandogoya — Tabakoya has no kake-nagashi record, and Daikokuya stays undecided with no-heating only', () => {
+  assert.equal(kake['onsen-089'], undefined, 'no official or organizational kake-nagashi with non-circulation evidence');
+  const e = kake['onsen-090'];
+  assert.equal(e.evidence.type, 'official_text');
+  assert.deepEqual(e.baths, ['檜造りの大風呂', '岩風呂']);
+  assert.equal(e.treatment.heating[0].status, 'none'); assert.equal(e.treatment.water, undefined);
+  for (const n of e.baths) assert.equal(evaluate(e, n).result, 'pending', n);
+  assert.deepEqual(certifiedBaths(e), []);
+});

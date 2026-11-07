@@ -636,5 +636,22 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '内湯露天風呂', kind: '露天', form: '男女別', tags: ['男女別'], note: '男女別の露天風呂で、女性内湯からは直接行けません' }
     ],
     source: { url: 'https://www.awanoyu-ryokan.com/uchiyu.html', checkedAt: '2026-11-08' }
+  },
+  'onsen-089': {
+    note: 'それぞれ源泉の違う3つのお風呂です。男女の入れ替えと女性専用時間があります。',
+    baths: [
+      { name: '野天風呂', kind: '露天', form: '混浴', tags: ['夕焼けと星空', '女性専用時間あり', '夜間入浴可'], note: '煙草屋の代名詞の野天風呂で、20人ほど入れます' },
+      { name: '木の湯舟', form: '混浴', tags: ['湯治客御用達', '女性専用時間あり'], note: '湯治客御用達の木の湯舟で、10人ほど入れます' },
+      { name: '岩風呂', form: '混浴', tags: ['赤く濁る', '女性専用時間あり'], note: '赤く濁るポカポカの岩風呂で、3人ほど入れます' }
+    ],
+    source: { url: 'https://www.tabakoyaryokan.com/stay.php', checkedAt: '2026-11-08' }
+  },
+  'onsen-090': {
+    note: '2つの浴場を男女が1時間ごとに交互に利用します。',
+    baths: [
+      { name: '檜造りの大風呂', tags: ['熱め', '加温なし', '男女交替制'], note: '檜造りの熱めの大風呂です' },
+      { name: '岩風呂', tags: ['ぬるめ', '加温なし', '男女交替制'], note: 'ぬるめの岩風呂です' }
+    ],
+    source: { url: 'https://sandogoya-onsen.com/onsen/', checkedAt: '2026-11-08' }
   }
 };

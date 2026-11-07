@@ -32,7 +32,7 @@ test('Search form fits three widths, combines and clears filters, and derives pr
   await activate('#collectionSummary');
   await evaluate('document.getElementById("search").click()');
   assert.equal(await evaluate('document.getElementById("collectionPicker").open'),false);
-  for(const [scope,total] of [['chi',42],['kake',70],['gensei',11],['all',87]]){
+  for(const [scope,total] of [['chi',42],['kake',71],['gensei',11],['all',89]]){
    await activate('#collectionSummary');await activate('#collectionOptions [data-scope="'+scope+'"]');
    assert.equal(await evaluate('document.getElementById("collectionPicker").open'),false);
    assert.equal(await evaluate('document.getElementById("categorySelect").value'),scope==='all'?'':scope);
@@ -54,12 +54,12 @@ test('Search form fits three widths, combines and clears filters, and derives pr
   const p=await evaluate(`(()=>{const r=document.getElementById('clearFilter').getBoundingClientRect();return{x:r.x+r.width/2,y:r.y+r.height/2}})()`);
   if(width<400){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[p]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...p,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...p,button:'left',clickCount:1});}
   assert.deepEqual(await evaluate(`['search','prefSelect','statusSelect','categorySelect'].map(id=>document.getElementById(id).value)`),['','','','']);
-  assert.ok((await evaluate(`document.getElementById('resultCount').textContent`)).includes('87'));
+  assert.ok((await evaluate(`document.getElementById('resultCount').textContent`)).includes('89'));
   fs.writeFileSync(path.join(browser.profile,`search-${width}.png`),Buffer.from((await send('Page.captureScreenshot',{format:'png'})).data,'base64'));
  }
  // A future facility is a browser-only fixture; the source master remains intact.
  await send('Page.addScriptToEvaluateOnNewDocument',{source:`let qaRows;Object.defineProperty(window,'ONSEN_DATA',{configurable:true,get:()=>qaRows,set:v=>{qaRows=[...v,{...v[0],id:'qa-added-prefecture',prefecture:'沖縄県'}]}})`});
- await send('Page.reload');await wait(`!!window.OnsenHost&&window.ONSEN_DATA.length===89`);
+ await send('Page.reload');await wait(`!!window.OnsenHost&&window.ONSEN_DATA.length===91`);
  options=await candidates();assert.deepEqual(options.actual,options.expected);assert.equal(options.actual.at(-1),'沖縄県');assert.equal(options.actual.length,16);
  t.diagnostic('Screenshots: '+browser.profile);
 });
