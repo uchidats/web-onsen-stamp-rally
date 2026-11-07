@@ -3,10 +3,10 @@ const c={window:{}};vm.runInNewContext(fs.readFileSync('data.js','utf8'),c);cons
 // Historical coordinate fixtures retain the former display name; only this name was corrected.
 const historicalValue=(row,key)=>row.id==='onsen-020'&&key==='facility'?'源泉・秘湯の宿 ふけの湯':row[key];
 require('../map.js');const M=globalThis.OnsenMap,audit=JSON.parse(fs.readFileSync('assets/coordinates.json','utf8'));
-assert.equal(data.length,79);assert.equal(new Set(data.map(x=>x.id)).size,79);assert.equal(audit.rows.length,79);
+assert.equal(data.length,80);assert.equal(new Set(data.map(x=>x.id)).size,80);assert.equal(audit.rows.length,80);
 const added1022=new Set(['onsen-068']); // 2026-10-22に追加(増富温泉 不老閣)。既存67施設は変更しない
 const added1102=new Set(['onsen-069']); // 2026-11-02に追加(奈良田温泉 白根館)。既存68施設は変更しない
-const added1108=new Set(['onsen-079']); // 2026-11-08に追加(十勝岳温泉 湯元 凌雲閣)
+const added1108=new Set(['onsen-079','onsen-080']); // 2026-11-08に追加(十勝岳温泉 湯元 凌雲閣、横向温泉 滝川屋旅館)
 const added1107=new Set(['onsen-078']); // 2026-11-07に追加(蓮華温泉 白馬岳蓮華温泉ロッジ)
 const added1106=new Set(['onsen-076','onsen-077']); // 2026-11-06に追加(伊東温泉 東海館・ケイズハウス伊東温泉)
 const added1105=new Set(['onsen-074','onsen-075']); // 2026-11-05に追加(いわき湯本温泉 松柏館・旅館こいと)
@@ -51,10 +51,10 @@ for(const [i,x] of data.entries()){
   }else{assert.equal(x.latitude,null);assert.equal(x.longitude,null);assert.equal(x.coordinateSource,'');}
   for(const key of ['visits','visitCount','lastVisit','notes'])assert.equal(Object.hasOwn(x,key),false);
 }
-assert.equal(data.filter(M.verified).length,79);assert.equal(data.filter(x=>!M.verified(x)).length,0);
+assert.equal(data.filter(M.verified).length,80);assert.equal(data.filter(x=>!M.verified(x)).length,0);
 assert.match(audit.attribution,/OpenStreetMap contributors/);assert.match(audit.license,/ODbL-1.0.*CDLA-Permissive-2.0.*Apache-2.0/);
 for(const a of currentAdditions){const r=audit.rows.find(r=>r.id===a.id);assert.equal(r.coordinateLicense,a.coordinateLicense);assert.equal(r.googleCoordinatesStored,false);if(a.coordinateLicense!=='ODbL-1.0'){assert.match(r.coordinateSource,/stac\.overturemaps\.org/);assert.match(r.sourceId,/^[a-f0-9-]{36}$/);assert.equal(Object.hasOwn(r,'osmName'),false);}}
 for(const file of ['CDLA-Permissive-2.0.txt','Apache-2.0.txt','Foursquare-NOTICE.txt'])assert.ok(fs.readFileSync('assets/licenses/'+file,'utf8').length>1000);
 const ids=['onsen-002','onsen-003','onsen-004','onsen-005'];assert.deepEqual(Array.from(M.selection(data,'','青森県',()=>false),x=>x.id),ids);
 for(const id of ids){const x=data.find(x=>x.id===id);assert.equal(M.selection(data,'visited','青森県',r=>r.id===id)[0].id,id);}
-console.log('PASS: 79 fixed IDs (onsen-068 added 2026-10-22, onsen-069 added 2026-11-02, onsen-070〜073 added 2026-11-03, onsen-074〜075 added 2026-11-05, onsen-076〜077 added 2026-11-06, onsen-078 added 2026-11-07, onsen-079 added 2026-11-08), existing 69 unchanged, 79 verified / 0 excluded, dates, footprint membership, attribution, WGS84 order and no personal data');
+console.log('PASS: 80 fixed IDs (onsen-068 added 2026-10-22, onsen-069 added 2026-11-02, onsen-070〜073 added 2026-11-03, onsen-074〜075 added 2026-11-05, onsen-076〜077 added 2026-11-06, onsen-078 added 2026-11-07, onsen-079〜080 added 2026-11-08), existing 69 unchanged, 80 verified / 0 excluded, dates, footprint membership, attribution, WGS84 order and no personal data');

@@ -1737,6 +1737,30 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-08",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "way/889237285"
+  },
+  {
+    "id": "onsen-080",
+    "number": 80,
+    "area": "南東北",
+    "prefecture": "福島県",
+    "onsen": "横向温泉",
+    "facility": "滝川屋旅館",
+    "latitude": 37.655487060546875,
+    "longitude": 140.2527618408203,
+    "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+    "coordinateVerified": true,
+    "officialUrl": "",
+    "category": "その他",
+    "bathing": "日帰り入浴は予約制で1時間の貸切（料金は最新情報を確認できないため未記載）。浴場は混浴風呂と女湯で、混浴風呂は足元湧出の槽と加温した湯を注ぐ槽に仕切られている（個人の入浴記による。施設の公式サイトは確認できない）",
+    "station": "",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "単純温泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%BB%9D%E5%B7%9D%E5%B1%8B%E6%97%85%E9%A4%A8%20%E7%A6%8F%E5%B3%B6%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "CDLA-Permissive-2.0",
+    "coordinateSourceId": "8c1fae3b-da72-4b2d-9633-c75c35d9b9d4",
+    "coordinateSourceRelease": "2026-09-23.1"
   }
 ];
 
