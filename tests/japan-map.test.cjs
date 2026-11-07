@@ -278,7 +278,7 @@ test('JapanPrefMap: SVG markup contains all 47 prefecture paths/polygons with co
   }
 });
 
-test('Integration with actual data.js: verifies 90 onsens across prefectures', () => {
+test('Integration with actual data.js: verifies 91 onsens across prefectures', () => {
   const { PREFECTURES, getPrefStats } = loadJapanMap();
 
   // Load real data.js
@@ -286,7 +286,7 @@ test('Integration with actual data.js: verifies 90 onsens across prefectures', (
   const win = {};
   vm.runInNewContext(dataCode, { window: win });
   const DATA = win.ONSEN_DATA;
-  assert.equal(DATA.length, 90, 'Must preserve 90 facilities');
+  assert.equal(DATA.length, 91, 'Must preserve 91 facilities');
 
   // Check stats when no visits
   let totalWithFacilities = 0;
@@ -338,7 +338,7 @@ test('Geographic projection matches standard Mercator, preserves aspect and does
   assert.ok(Math.abs(project(140,40)[1]-project(140,41)[1]-(merc(41)-merc(40))*PROJECTION.scale)<1e-8);
 });
 
-test('JapanPrefMap: displays exactly 90 verified onsen markers and 0 unverified markers', () => {
+test('JapanPrefMap: displays exactly 90 verified onsen markers and no marker for the 1 unverified facility', () => {
   const MapModule = loadJapanMap();
   const dataCode = fs.readFileSync('data.js', 'utf8');
   const win = {};
@@ -363,9 +363,9 @@ test('JapanPrefMap: displays exactly 90 verified onsen markers and 0 unverified 
   const markers = container.querySelectorAll('.japan-map-marker');
   assert.equal(markers.length, 90, 'DOM should contain 90 marker elements');
 
-  // Verify none of the 0 unverified onsens have a marker
+  // Verify the 1 unverified facility (onsen-091, coordinates pending) has no marker
   const unverified = DATA.filter(x => !x.coordinateVerified);
-  assert.equal(unverified.length, 0, 'Should have 0 unverified onsens');
+  assert.equal(unverified.map(x => x.id).join(','), 'onsen-091', 'Should have 1 unverified onsen');
   for (const u of unverified) {
     const found = markers.find(m => m.getAttribute('data-onsen-id') === u.id);
     assert.equal(found, undefined, `Unverified facility ${u.id} (${u.facility}) must NOT have a marker on the map`);

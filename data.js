@@ -1992,6 +1992,27 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-08",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "node/5471132726"
+  },
+  {
+    "id": "onsen-091",
+    "number": 91,
+    "area": "関東・信越",
+    "prefecture": "長野県",
+    "onsen": "七味温泉",
+    "facility": "紅葉館",
+    "latitude": null,
+    "longitude": null,
+    "coordinateSource": "",
+    "coordinateVerified": false,
+    "officialUrl": "https://shitimi-kouyoukan.com/",
+    "category": "その他",
+    "bathing": "日帰り入浴10:00〜14:30最終受付・15:00退室、大人700円（中学生以上）・小学生600円。小学生未満と入れ墨のある方は入浴不可（公式）。男女とも10名ほどでいっぱいになる小さなお風呂で、公式はお隣の山王荘（17:00まで、泉質は同じ）も案内している。日帰り専用駐車場は館から少し離れている（公式）。1名の宿泊は電話で問い合わせ（公式）。第二露天風呂（おばあちゃんのお風呂）は2025年10月から設備不良のため休業、2027年1月中旬〜2月中旬は改修工事のため休業（公式のお知らせ）",
+    "station": "須坂駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "含硫黄－カルシウム・ナトリウム－硫酸塩・塩化物泉（低張性中性高温泉）",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E5%91%B3%E6%B8%A9%E6%B3%89%20%E7%B4%85%E8%91%89%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-08"
   }
 ];
 

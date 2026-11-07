@@ -27,7 +27,7 @@ test('E2E: national SVG zoom, pan, pinch and selection',async t=>{
   await send('Network.enable');await send('Network.setBlockedURLs',{urls:['https://*']});
   await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===89");
   await evaluate("(()=>{const repo=OnsenRecords.create(localStorage);let state=repo.load();for(const id of ['onsen-001','onsen-006','onsen-026'])state=repo.setVisited(state,id,true);})()");
-  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===89 && document.getElementById('totalText').textContent.startsWith('3 / 89')");
+  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===89 && document.getElementById('totalText').textContent.startsWith('3 / 90')");
   const stored=await evaluate('JSON.stringify(localStorage)');
   const bounds=async()=>evaluate("(()=>{const r=document.querySelector('.geolonia-svg-map').getBoundingClientRect();return{x:r.left,y:r.top,width:r.width,height:r.height}})()");
   const view=()=>evaluate("document.querySelector('.geolonia-svg-map').getAttribute('viewBox').split(' ').map(Number)");

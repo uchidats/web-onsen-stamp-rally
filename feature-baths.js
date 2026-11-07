@@ -653,5 +653,13 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '岩風呂', tags: ['ぬるめ', '加温なし', '男女交替制'], note: 'ぬるめの岩風呂です' }
     ],
     source: { url: 'https://sandogoya-onsen.com/onsen/', checkedAt: '2026-11-08' }
+  },
+  'onsen-091': {
+    note: '男湯に内湯・露天風呂・炭色の湯、女湯に内湯・露天風呂・洞窟風呂があります。夜20時に男女が入れ替わり、朝8時に戻ります。',
+    baths: [
+      { name: '洞窟風呂', tags: ['女湯', '男女交代制'], note: '初代館主が、冬の寒い中でも露天風呂まで行けるよう山の中にトンネルを掘って作ったお風呂です' },
+      { name: '炭色の湯', tags: ['男湯', '男女交代制'], note: '男湯にあるお風呂です' }
+    ],
+    source: { url: 'https://shitimi-kouyoukan.com/?page_id=71', checkedAt: '2026-11-08' }
   }
 };

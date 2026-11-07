@@ -337,3 +337,13 @@ test('gensei: Sandogoya — Tabakoya has no kake-nagashi record, and Daikokuya s
   for (const n of e.baths) assert.equal(evaluate(e, n).result, 'pending', n);
   assert.deepEqual(certifiedBaths(e), []);
 });
+
+test('gensei: Shichimi Kouyoukan — facility-level official kake-nagashi without heating or added water stays undecided per bath', () => {
+  const e = kake['onsen-091'];
+  assert.equal(e.evidence.type, 'official_text');
+  assert.deepEqual(e.baths, []);
+  assert.equal(e.dilution.water, 'none');
+  assert.equal(e.treatment, undefined);
+  assert.deepEqual(certifiedBaths(e), []);
+  for (const n of ['洞窟風呂', '炭色の湯']) assert.equal(evaluate(e, n).result, 'pending', n);
+});

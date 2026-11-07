@@ -512,5 +512,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の宿泊案内ページのお風呂の項「赤く濁るポカポカの岩風呂」。既存の色分類の「茶褐色」に当てる。野天風呂・木の湯舟は色の記載がないため付けない' }
     }],
     source: { url: 'https://www.tabakoyaryokan.com/stay.php', checkedAt: '2026-11-08' }
+  },
+  'onsen-091': {
+    colors: [
+      { color: 'green', expression: 'エメラルドグリーン', scope: 'facility', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「温泉の色はその日の気温などで変わり 主にエメラルドグリーンや乳白色になります。」施設の温泉全体についての記述で、浴槽ごとの色は書かれていない。同ページの「黒い湯花が舞っています」は湯花の記述で、湯の色としては扱わない' }, change: { kind: 'seasonal', note: 'その日の気温などで変わります' } },
+      { color: 'milky_white', expression: '乳白色', scope: 'facility', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「温泉の色はその日の気温などで変わり 主にエメラルドグリーンや乳白色になります。」施設の温泉全体についての記述で、浴槽ごとの色は書かれていない。同ページの「黒い湯花が舞っています」は湯花の記述で、湯の色としては扱わない' }, change: { kind: 'seasonal', note: 'その日の気温などで変わります' } }
+    ],
+    source: { url: 'https://shitimi-kouyoukan.com/?page_id=71', checkedAt: '2026-11-08' }
   }
 };

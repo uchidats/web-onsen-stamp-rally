@@ -26,7 +26,7 @@ function check(ui,scope,done,total){
 test('Achievement scopes count facility IDs, retired listings, kakenagashi, and gensei scopes',()=>{
   const all=data.map(x=>x.id),chiRows=data.filter(chi),kakeRows=data.filter(kake),genseiRows=data.filter(gensei);
   assert.equal(chiRows.length,43);
-  assert.equal(kakeRows.length,72);
+  assert.equal(kakeRows.length,73);
   assert.equal(genseiRows.length,11);
   for(const ids of [[],all.slice(0,17),all,chiRows.map(x=>x.id),genseiRows.map(x=>x.id),['onsen-015'],['onsen-015','onsen-016']]){
     const ui=boot(ids);

@@ -554,6 +554,12 @@ window.ONSEN_KAKENAGASHI = {
     treatment: {
       heating: [{ status: 'none', scope: 'all', coverage: '施設の浴場すべて(檜造りの大風呂・岩風呂)', scopeNote: '公式「温泉」ページが、施設にある2つの浴場を名指しして「どちらも」加温していないと書く', quote: 'どちらも源泉掛け流しで加温はしておりません。', url: 'https://sandogoya-onsen.com/onsen/', checkedAt: '2026-11-08' }]
     }
+  },
+  'onsen-091': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「加温、加水のない百％源泉掛け流しの温泉です」。施設の温泉全体についての記述で、浴槽ごとの記載ではないため個々の湯へは広げない' },
+    dilution: { water: 'none', note: '公式「加温、加水のない百％源泉掛け流しの温泉です」(施設全体の記述)。循環の有無は書かれておらず、浴槽ごとの記載もないため源生の湯は保留' },
+    source: { url: 'https://shitimi-kouyoukan.com/?page_id=71', checkedAt: '2026-11-08' }
   }
 };
 

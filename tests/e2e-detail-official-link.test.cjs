@@ -30,7 +30,8 @@ test('E2E: facility name in the detail view links to the official site (card and
     const open = {
       card: id => evaluate(`document.querySelector('[data-detail="${id}"]').click()`),
       // 地図のマーカー(キーボード/スクリーンリーダー操作と同じ経路)から詳細を開く
-      map: id => evaluate(`document.querySelector('.japan-map-marker[data-onsen-id="${id}"]').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}))`)
+      // 座標未確定の施設(地図にピンなし)は、地図の「位置確認中」一覧のボタンから開く
+      map: id => evaluate(`(()=>{const m=document.querySelector('.japan-map-marker[data-onsen-id="${id}"]');if(m)return m.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true}));const x=ONSEN_DATA.find(v=>v.id==='${id}');[...document.querySelectorAll('#mapUnverified button')].find(b=>b.textContent===x.facility+'（'+x.prefecture+'）').click()})()`)
     };
     const modalOpen = () => evaluate("document.getElementById('modalBg').style.display==='flex'");
     const close = async () => { await evaluate("document.getElementById('modalClose').click()"); await delay(50); };
@@ -41,12 +42,12 @@ test('E2E: facility name in the detail view links to the official site (card and
     const data = JSON.parse(await evaluate('JSON.stringify(ONSEN_DATA.map(x=>({id:x.id,facility:x.facility,officialUrl:x.officialUrl,lat:x.latitude,lng:x.longitude})))'));
     const withUrl = data.filter(x => x.officialUrl), without = data.filter(x => !x.officialUrl);
     assert.deepEqual(without.map(x => x.id), ['onsen-005', 'onsen-022', 'onsen-025', 'onsen-080', 'onsen-087']);
-    assert.equal(withUrl.length, 84);
+    assert.equal(withUrl.length, 85);
 
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       for (const via of ['card', 'map']) {
-        // 公式サイト登録あり: 全84施設で、施設名がそのURLへのリンク(新しいタブ・noopener)
+        // 公式サイト登録あり: 全85施設で、施設名がそのURLへのリンク(新しいタブ・noopener)
         for (const x of withUrl) {
           await open[via](x.id);
           assert.equal(await modalOpen(), true, `${via}:${x.id} opens`);
@@ -110,7 +111,7 @@ test('E2E: facility name in the detail view links to the official site (card and
 
     // データ・保存形式は変えない(座標・公式URLは読み取るだけ)
     assert.equal(await evaluate('JSON.stringify(localStorage)'), '{}');
-    assert.equal(await evaluate('ONSEN_DATA.length'), 89);
+    assert.equal(await evaluate('ONSEN_DATA.length'), 90);
     ws.close();
   } finally { await browser.close(); server.closeAllConnections(); server.close(); }
 });
