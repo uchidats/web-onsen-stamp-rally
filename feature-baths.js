@@ -617,5 +617,14 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '貸切露天風呂', kind: '露天', form: '貸切', tags: ['予約制', '日帰り利用も可'], note: '時間によって貸し切れる露天風呂で、デラックスルームからは直接入れます' }
     ],
     source: { url: 'https://kawashimaryokan.co.jp/stay', checkedAt: '2026-11-08' }
+  },
+  'onsen-086': {
+    note: '浴場の構成は公式の施設案内によります。',
+    baths: [
+      { name: '混浴（内湯・露天風呂）', form: '混浴', tags: ['内湯・露天風呂'], note: '内湯と露天風呂が一つずつある混浴の浴場です' },
+      { name: '男女別の湯', form: '男女別', tags: ['内湯・露天風呂', '打たせ湯'], note: '男湯・女湯それぞれに内湯・露天風呂・打たせ湯があり、旅館部にも内湯があります' },
+      { name: '貸切風呂（亀の湯・玉肌の湯）', form: '貸切', tags: ['打たせ湯', '要予約'], note: '内湯と打たせ湯がある貸切風呂で、受付での予約が必要です。旅館に宿泊すると無料です' }
+    ],
+    source: { url: 'https://kuroyu.com/facility/', checkedAt: '2026-11-08' }
   }
 };

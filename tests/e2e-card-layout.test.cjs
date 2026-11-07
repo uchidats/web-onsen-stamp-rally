@@ -100,21 +100,20 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
       const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:bounds});
       fs.writeFileSync(`scratch/card-layout-qa/cards-${width}.png`,Buffer.from(shot.data,'base64'));
     }
-    assert.equal(await evaluate("document.querySelectorAll('[data-group=nyuto] .facility-entry').length"),2);
+    assert.equal(await evaluate("document.querySelectorAll('[data-group=nyuto] .facility-entry').length"),3);
     await evaluate("document.querySelector('[data-detail=onsen-015]').click();document.getElementById('detailStamp').click();document.getElementById('modalClose').click()");
     assert.equal(await evaluate("document.querySelector('[data-facility-id=onsen-015] .conquered-badge').textContent"),'制覇');
     assert.equal(await evaluate("!!document.querySelector('[data-facility-id=onsen-016] .conquered-badge')"),false);
     for(const status of ['visited','unvisited']){
       await evaluate(`document.getElementById('statusSelect').value='${status}';document.getElementById('statusSelect').dispatchEvent(new Event('change'))`);
-      assert.equal(await evaluate("document.querySelectorAll('[data-group=nyuto] .facility-entry').length"),1);
-      assert.equal(await evaluate("document.querySelector('[data-group=nyuto] .facility-entry').dataset.facilityId"),status==='visited'?'onsen-015':'onsen-016');
+      assert.deepEqual(await evaluate("[...document.querySelectorAll('[data-group=nyuto] .facility-entry')].map(e=>e.dataset.facilityId)"),status==='visited'?['onsen-015']:['onsen-016','onsen-086']);
     }
     await evaluate("document.getElementById('clearFilter').click();document.getElementById('search').value=ONSEN_DATA[1].facility;document.getElementById('search').dispatchEvent(new Event('input'))");
     assert.equal(await evaluate("document.querySelectorAll('.facility-entry').length"),1);
     assert.equal(await evaluate("document.querySelector('.facility-entry').dataset.facilityId"),'onsen-016');
     useMaster=true;
     await evaluate('localStorage.clear();location.reload()');
-    await waitFor("document.querySelector('[data-group=nyuto] .facility-entry') && ONSEN_DATA.length===84");
+    await waitFor("document.querySelector('[data-group=nyuto] .facility-entry') && ONSEN_DATA.length===85");
     for(const width of [1440,1280,768,390,320]){
       await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<400});
       await evaluate("document.getElementById('onsens').scrollIntoView()");
@@ -151,7 +150,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
     }
     await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
     assert.equal(await evaluate("document.querySelectorAll('#cards .card').length"),75);
-    assert.equal(await evaluate("new Set([...document.querySelectorAll('.facility-entry')].map(r=>r.dataset.facilityId)).size"),84);
+    assert.equal(await evaluate("new Set([...document.querySelectorAll('.facility-entry')].map(r=>r.dataset.facilityId)).size"),85);
     await evaluate("document.querySelector('[data-detail=onsen-015]').click()");
     assert.equal(await evaluate("document.querySelector('#modalSubtitle .facility-name').textContent"),'鶴の湯温泉');
     assert.ok(await evaluate("document.getElementById('detailList').textContent.includes('最寄り駅')"));

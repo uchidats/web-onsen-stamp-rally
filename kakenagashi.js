@@ -523,6 +523,12 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「心も体もあたたまる源泉かけ流し天然温泉。」施設の温泉全体についての記述で、大浴場・貸切露天風呂など浴槽ごとの記載ではないため、個々の湯へは広げない' },
     dilution: { water: 'unknown', note: '公式に加水・加温・循環の記載はない(泉温35.0°C)。浴槽別に無加水・無加温・非循環を確認できないため規則は付けず、源生の湯は認定しない' },
     source: { url: 'https://kawashimaryokan.co.jp/spa', checkedAt: '2026-11-08' }
+  },
+  'onsen-086': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'ニッポン旅マガジンの黒湯温泉の紹介(2026年11月更新)「湯は酸性硫黄泉と単純硫化水素泉（源泉は複数あり、加水源泉かけ流しで使われています）。」公式サイトにかけ流しの記載はない。施設単位の第三者資料のため、個々の浴槽へは広げない' },
+    dilution: { water: 'added', note: '同じ紹介に「加水源泉かけ流し」とある(第三者資料、浴槽別ではない)。公式に加水・加温・循環の記載はない。源生の湯は判定しない' },
+    source: { url: 'https://tabi-mag.jp/ak0034/', checkedAt: '2026-11-08' }
   }
 };
 

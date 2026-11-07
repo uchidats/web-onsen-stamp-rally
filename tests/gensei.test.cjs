@@ -307,3 +307,12 @@ test('gensei: Kawashima Ryokan is not certified — official kake-nagashi is fac
   assert.equal(e.treatment, undefined);
   assert.deepEqual(certifiedBaths(e), []);
 });
+
+test('gensei: Kuroyu is not judged — kake-nagashi is a third-party, facility-level report with added water', () => {
+  const e = kake['onsen-086'];
+  assert.equal(e.evidence.type, 'third_party');
+  assert.deepEqual(e.baths, []);
+  assert.equal(e.dilution.water, 'added');
+  assert.equal(e.treatment, undefined);
+  assert.deepEqual(certifiedBaths(e), []);
+});

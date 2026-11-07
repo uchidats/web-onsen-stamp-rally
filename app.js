@@ -56,7 +56,7 @@ function colorMatch(x,col){if(!col)return true;const cs=bathColorEntry(x);return
 function filtered(){const q=$('search').value.trim().toLowerCase(),pr=prefFilter||$('prefSelect').value,st=$('statusSelect').value,cat=$('categorySelect').value,col=$('colorSelect').value;return DATA.filter(x=>(!q||[x.onsen,x.facility,x.springType,state.userData.visits[x.id]?.notes,x.category,categoryLabel(x.category),x.prefecture].join(' ').toLowerCase().includes(q))&&(!pr||x.prefecture===pr)&&(!cat||(PROGRESS_SCOPES.find(s=>s.id===cat)?.includes(x)??(x.category===cat||categoryLabel(x.category)===cat)))&&colorMatch(x,col)&&(!st||(st==='visited'?visited(x):!visited(x))))}
 // Display-only groups, explicitly audited against the master. Never infer from name fragments.
 const CARD_GROUPS = [
-  {id:'nyuto',name:'乳頭温泉郷',prefecture:'秋田県',ids:['onsen-015','onsen-016']},
+  {id:'nyuto',name:'乳頭温泉郷',prefecture:'秋田県',ids:['onsen-015','onsen-016','onsen-086']},
   {id:'takayu',name:'高湯温泉',prefecture:'福島県',ids:['onsen-034','onsen-035']},
   {id:'okukinu',name:'奥鬼怒温泉',prefecture:'栃木県',ids:['onsen-041','onsen-042']},
   {id:'shima',name:'四万温泉',prefecture:'群馬県',ids:['onsen-048','onsen-049']},

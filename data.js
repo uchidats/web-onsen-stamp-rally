@@ -1876,6 +1876,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-08",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "way/577709929"
+  },
+  {
+    "id": "onsen-086",
+    "number": 86,
+    "area": "北東北",
+    "prefecture": "秋田県",
+    "onsen": "乳頭温泉郷",
+    "facility": "黒湯温泉",
+    "latitude": 39.8026548,
+    "longitude": 140.8059929,
+    "coordinateSource": "https://www.openstreetmap.org/way/457387981",
+    "coordinateVerified": true,
+    "officialUrl": "https://kuroyu.com/",
+    "category": "その他",
+    "bathing": "日帰り入浴 木〜火曜9:00-16:30（受付16:00まで）、水曜9:00-11:00（受付10:30まで）、祝日は変更あり・中学生以上800円。営業期間は4月中旬〜11月上旬（冬季休業）。貸切風呂は45分2,750円（要予約、旅館宿泊者は無料）。自炊部は1〜3名で利用可（電話予約のみ）（公式）",
+    "station": "田沢湖駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "単純硫黄温泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B9%B3%E9%A0%AD%E6%B8%A9%E6%B3%89%E9%83%B7%20%E9%BB%92%E6%B9%AF%E6%B8%A9%E6%B3%89%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/457387981"
   }
 ];
 
