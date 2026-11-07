@@ -484,5 +484,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の施設紹介ページの大浴場の項「日本一黒い湯の源泉掛け流しを満々とたたえた大浴場。」効能ページも「日本一黒い湯植物性（フミン）モール温泉」。既存の色分類の「黒」に当てる。青森県観光情報サイトの特集(2024年)は大浴場の湯を「こげ茶色に色づいていますが透き通って」と書き、見え方の表現は資料で異なる' }
     }],
     source: { url: 'http://www.touhoku-onsen.com/sisetu.html', checkedAt: '2026-11-08' }
+  },
+  'onsen-083': {
+    colors: [{
+      color: 'yellow', expression: '黄金色', scope: 'bath', scopeNames: ['殿湯', '姫湯'],
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの殿湯「黄金色に輝くお湯の素晴らしさをご堪能ください。」、姫湯「黄金色に輝くお湯をご堪能ください。」。公式のよくある質問は「湯口に注ぐ温泉は無色透明で鉄分を多く含む空気に触れると黄金色に変わる濁り湯」。既存の色分類の「黄」に当てる。宿泊者専用の福寿・長寿は浴場ごとの色の記載がないため付けない' }
+    }],
+    source: { url: 'https://www.matusirosou.com/onsen/', checkedAt: '2026-11-08' }
   }
 };

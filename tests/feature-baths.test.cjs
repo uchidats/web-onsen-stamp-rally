@@ -46,7 +46,7 @@ const IWAKI = { 'onsen-074': '松柏館', 'onsen-075': '旅館こいと' };
 const SHIZUOKA = { 'onsen-071': '川端の宿 湯本館', 'onsen-072': '野天風呂 山の家', 'onsen-073': '観音温泉' };
 const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
 const HOKKAIDO = { 'onsen-001': '知内温泉旅館' };
-const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯' };
+const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘' };
 const NIIGATA = { 'onsen-060': 'ひなの宿ちとせ', 'onsen-061': '自在館', 'onsen-062': '貝掛温泉', 'onsen-063': '瀬波グランドホテルはぎのや', 'onsen-064': '嵐渓荘' };
 
 const IWATE = {
@@ -54,7 +54,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 82);
+  assert.equal(data.length, 83);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -444,4 +444,13 @@ test('feature baths: Tohoku Onsen lists the official baths and leaves out the op
   assert.deepEqual(feature['onsen-081'].baths.map(b => b.name), ['大浴場', '家族風呂']);
   assert.match(feature['onsen-081'].note, /露天風呂/);
   assert.ok(!feature['onsen-081'].baths.some(b => /露天/.test(b.name)));
+});
+
+test('feature baths: Matsushirosou keeps the day-use baths and the guest-only baths apart', () => {
+  const x = data.find(v => v.id === 'onsen-083');
+  assert.equal(x.facility, '黄金の湯 松代荘'); assert.equal(x.prefecture, '長野県'); assert.equal(x.onsen, '松代温泉');
+  const b = Object.fromEntries(feature['onsen-083'].baths.map(v => [v.name, v]));
+  assert.deepEqual(Object.keys(b), ['殿湯', '姫湯', '福寿', '長寿']);
+  for (const n of ['殿湯', '姫湯']) assert.ok(b[n].tags.includes('日帰り入浴可') && !b[n].tags.includes('宿泊者専用'), n);
+  for (const n of ['福寿', '長寿']) assert.ok(b[n].tags.includes('宿泊者専用') && !b[n].tags.includes('日帰り入浴可'), n);
 });

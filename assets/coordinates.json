@@ -3,7 +3,7 @@
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-08",
-  "method": "82 verified facilities (onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "83 verified facilities (onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -5164,6 +5164,45 @@
         ]
       },
       "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-083",
+      "facility": "黄金の湯 松代荘",
+      "prefecture": "長野県",
+      "latitude": 36.568401,
+      "longitude": 138.2109976,
+      "coordinateSource": "https://www.openstreetmap.org/node/10713333985",
+      "coordinateVerified": true,
+      "osmName": "松代荘",
+      "osmAddress": "",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://www.matusirosou.com/access/",
+      "note": "OSM施設POI node/10713333985(name=松代荘、tourism=hotel、contact:phone=+81 26-278-2596、website=https://www.matusirosou.com/)。電話・公式サイトが公式の所在地ページ(長野県長野市松代町東条3541、026-278-2596)と一致。Overture Places 2026-09-23.1(meta)のレコード「国民宿舎松代荘」(所在地「松代町東条3541」、電話+81262782596、URLが公式と一致)が約20mの位置にある。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-08",
+      "onsen": "松代温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "長野県長野市松代町東条3541",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/10713333985",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "松代荘",
+      "identityReferences": [
+        "https://www.matusirosou.com/access/",
+        "https://www.matsushiro-kankou.com/spot/spot-648/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E9%BB%84%E9%87%91%E3%81%AE%E6%B9%AF%20%E6%9D%BE%E4%BB%A3%E8%8D%98%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.2109976,
+          36.568401
+        ]
+      },
+      "geometryCheck": "施設POIと一致"
     }
   ],
   "coordinateSystem": "WGS84 (EPSG:4326), decimal degrees; GeoJSON order is [longitude, latitude], Leaflet is [latitude, longitude]"

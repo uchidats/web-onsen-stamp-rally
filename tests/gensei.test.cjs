@@ -77,7 +77,7 @@ test('gensei: every treatment rule carries its source, scope and quote; no manua
   for (const [id, e] of Object.entries(kake)) if (e.evidence.type === 'third_party') assert.deepEqual(certifiedBaths(e), [], id);
 });
 
-test('gensei: current certification (10 facilities, 24 baths) and the reasons others stay undecided or excluded', () => {
+test('gensei: current certification (11 facilities, 28 baths) and the reasons others stay undecided or excluded', () => {
   const certified = Object.fromEntries(Object.entries(kake).map(([id, e]) => [id, certifiedBaths(e)]).filter(([, b]) => b.length));
   assert.deepEqual(certified, {
     'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'],
@@ -89,7 +89,8 @@ test('gensei: current certification (10 facilities, 24 baths) and the reasons ot
     'onsen-066': ['男女別の展望内湯'],
     'onsen-071': ['露天風呂', '大浴場'],
     'onsen-072': ['男湯（野天風呂）', '女湯（野天風呂）', '貸切風呂'],
-    'onsen-077': ['男女別の内風呂', '貸切温泉']
+    'onsen-077': ['男女別の内風呂', '貸切温泉'],
+    'onsen-083': ['殿湯', '姫湯', '福寿', '長寿']
   });
   // 認定された湯は、必ず源泉かけ流しの湯(深緑の波)でもある
   for (const [id, names] of Object.entries(certified)) for (const n of names) assert.ok(kake[id].baths.includes(n), `${id}/${n}`);
@@ -282,4 +283,11 @@ test('gensei: New Onsenkaku is not certified — kake-nagashi is third party at 
   assert.equal(e.treatment, undefined);
   assert.equal(e.dilution.water, 'unknown');
   assert.deepEqual(certifiedBaths(e), []);
+});
+
+test('gensei: Matsushirosou is certified on the official no-heating/no-water/no-circulation statement covering all four baths', () => {
+  const e = kake['onsen-083'];
+  assert.equal(e.evidence.type, 'official_text');
+  for (const k of ['water', 'heating']) { const r = e.treatment[k]; assert.equal(r.length, 1); assert.equal(r[0].status, 'none'); assert.equal(r[0].scope, 'all'); assert.equal(r[0].evidenceType, undefined); assert.match(r[0].quote, /加熱せず、加水せず、循環ろ過せず/); }
+  assert.deepEqual(certifiedBaths(e), ['殿湯', '姫湯', '福寿', '長寿']);
 });

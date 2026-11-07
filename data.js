@@ -1807,6 +1807,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-08",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "way/577709936"
+  },
+  {
+    "id": "onsen-083",
+    "number": 83,
+    "area": "関東・信越",
+    "prefecture": "長野県",
+    "onsen": "松代温泉",
+    "facility": "黄金の湯 松代荘",
+    "latitude": 36.568401,
+    "longitude": 138.2109976,
+    "coordinateSource": "https://www.openstreetmap.org/node/10713333985",
+    "coordinateVerified": true,
+    "officialUrl": "https://www.matusirosou.com/",
+    "category": "その他",
+    "bathing": "日帰り入浴10:00-22:00（最終受付21:30）・大人700円。日帰りで入れるのは大浴場（殿湯・姫湯）で、福寿・長寿は宿泊者専用（公式）。一人泊可（公式の客室案内にシングルルーム・定員1〜2名の部屋あり）",
+    "station": "",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "含鉄（Ⅱ）－ナトリウム・カルシウム－塩化物温泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%BB%84%E9%87%91%E3%81%AE%E6%B9%AF%20%E6%9D%BE%E4%BB%A3%E8%8D%98%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "node/10713333985"
   }
 ];
 
