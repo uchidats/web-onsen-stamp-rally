@@ -242,3 +242,14 @@ test('gensei: Ito — Tokaikan is excluded by heating, and K\'s House is certifi
   assert.equal(ks.perBathEvidence.type, 'third_party');
   assert.deepEqual(certifiedBaths(ks), ['男女別の内風呂', '貸切温泉']);
 });
+
+test('gensei: Renge is not certified — per-bath added water is unsettled, so no water or heating rules exist', () => {
+  const e = kake['onsen-078'];
+  assert.equal(e.evidence.type, 'third_party');
+  assert.equal(e.treatment, undefined);
+  assert.equal(e.dilution.water, 'unknown');
+  assert.match(e.dilution.note, /循環：なし/);
+  assert.deepEqual(e.baths, [], 'third-party evidence stays at facility level');
+  for (const name of ['仙気ノ湯', '薬師湯', '黄金湯', '三国一ノ湯', '総湯']) assert.equal(evaluate(e, name).result, 'pending');
+  assert.deepEqual(certifiedBaths(e), []);
+});

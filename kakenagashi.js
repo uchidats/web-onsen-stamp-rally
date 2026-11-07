@@ -477,6 +477,12 @@ window.ONSEN_KAKENAGASHI = {
       heating: [{ status: 'none', scope: 'all', coverage: '施設の温泉すべて(男女別の内風呂、貸切温泉)', scopeNote: '公式の分析書ページが施設の温泉について加温なしと書く。個別の浴槽は純温泉協会の3浴槽とも純温泉Aとする掲載で補う', quote: 'Additional Heating nil', url: 'https://kshouse.jp/ito-e/ito-topics_e/ito-topics_20171231.html', checkedAt: '2026-11-06' }],
       disinfection: [{ status: 'none', scope: 'all', coverage: '施設の温泉', scopeNote: '公式英語版が施設の温泉全体について、循環・ろ過をしておらず塩素消毒を必要としないと書く', quote: 'non-circulated, non-filtered, 100% pure onsen water needs NO sterilization process by chlorine.', url: 'https://kshouse.jp/ito-e/ito-topics_e/ito-news_20150601.html', checkedAt: '2026-11-06' }]
     }
+  },
+  'onsen-078': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: '共同通信のコラム(温泉ソムリエ小松歩、2024年7月2日)が内湯と4つの野天風呂の合計5カ所を挙げて「もちろん、すべて「源泉掛け流し」で楽しむことができます。」と書き、末尾の温泉データに「◆掛け流し」とある。公式にかけ流しの記載はない。第三者資料の記述のため施設単位で登録し、個々の浴槽へは広げない' },
+    dilution: { water: 'unknown', note: '同じコラムの温泉データは「加水：あり、なし／加温：なし／循環：なし／消毒：なし」で、浴槽別の対応が書かれていない。新潟県の観光サイトは総湯を「温泉の熱と成分が吹き出ているところに水を当てて温泉にしている」と書き、個人の入浴記(温泉奉行所、2020年)は仙気ノ湯で「熱ければ黒いホースから出る水で加水調整します」と書く。浴槽別の加水が確定しないため、加水・加温の規則は付けず、源生の湯は認定しない。非循環の根拠は上のコラムの「循環：なし」で、第三者資料。公式に記載はない' },
+    source: { url: 'https://ovo.kyodo.co.jp/column/a-1984793', checkedAt: '2026-11-07' }
   }
 };
 

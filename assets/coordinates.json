@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-11-06",
-  "method": "77 verified facilities (onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-07",
+  "method": "78 verified facilities (onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -4699,6 +4699,45 @@
         "coordinates": [
           139.0974223,
           34.9717852
+        ]
+      },
+      "geometryCheck": "施設POIと一致"
+    },
+    {
+      "id": "onsen-078",
+      "facility": "白馬岳蓮華温泉ロッジ",
+      "prefecture": "新潟県",
+      "latitude": 36.8102052,
+      "longitude": 137.7986132,
+      "coordinateSource": "https://www.openstreetmap.org/node/4424692395",
+      "coordinateVerified": true,
+      "osmName": "Hakubadake Renge Onsen Lodge",
+      "osmAddress": "",
+      "osmFeatureType": "tourism/alpine_hut",
+      "addressReference": "https://niigata-kankou.or.jp/spot/detail_45045.html",
+      "note": "OSM施設POI node/4424692395(name:en=Hakubadake Renge Onsen Lodge、tourism=alpine_hut)。周囲にOSMの建物way/645318852・645318853がある。Overture Places 2026-09-23.1(meta)のレコード「白馬岳蓮華温泉ロッジ」(所在地「大所991」、電話+81255521063が公式の事務所番号、URLが公式と一致)が約27mの位置にあり、新潟県の観光サイトの所在地(新潟県糸魚川市大所991)と一致。国土地理院の住所検索は「大所」の地区代表点までしか返さないため使っていない。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-07",
+      "onsen": "蓮華温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "新潟県糸魚川市大所991",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/4424692395",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "Hakubadake Renge Onsen Lodge",
+      "identityReferences": [
+        "https://rengeonsen.main.jp/",
+        "https://niigata-kankou.or.jp/spot/detail_45045.html"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E7%99%BD%E9%A6%AC%E5%B2%B3%E8%93%AE%E8%8F%AF%E6%B8%A9%E6%B3%89%E3%83%AD%E3%83%83%E3%82%B8%20%E6%96%B0%E6%BD%9F%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.7986132,
+          36.8102052
         ]
       },
       "geometryCheck": "施設POIと一致"

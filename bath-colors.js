@@ -463,5 +463,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'third_party', confidence: 'third_party_reported', note: '純温泉協会の施設ページ(2021年)「無色透明の湯は、カルシウム・ナトリウム－塩化物泉。」公式サイトに色の記載はなく、第三者資料として施設全体の色に登録し、個々の浴槽へは広げない' }
     }],
     source: { url: 'https://realonsen.com/kshouse-ito/', checkedAt: '2026-11-06' }
+  },
+  'onsen-078': {
+    colors: [
+      { color: 'milky_white', expression: '全体的に白濁', scope: 'bath', scopeNames: ['仙気ノ湯'], evidence: { type: 'third_party', confidence: 'third_party_reported', note: '新潟県の観光サイトの蓮華温泉特集「成分が濃いからか全体的に白濁しており」。共同通信のコラムは「薄く濁って見えます」、個人の入浴記はエメラルドグリーン系と書き、資料で表現が異なる。仙気ノ湯にだけ付ける' } },
+      { color: 'colorless', expression: '無色透明', scope: 'bath', scopeNames: ['薬師湯'], change: { kind: 'tint', note: '浴槽の岩に付いた藻で全体が緑色に見えますが、湯自体の色ではありません' }, evidence: { type: 'third_party', confidence: 'third_party_reported', note: '新潟県の観光サイトの蓮華温泉特集「湯は無色透明ですが、なぜかここの浴槽の中だけ岩に藻が付着しており、全体を緑色に見せています。」緑色は湯の色として登録しない' } }
+    ],
+    source: { url: 'https://niigata-kankou.or.jp/feature/renge/', checkedAt: '2026-11-07' }
   }
 };

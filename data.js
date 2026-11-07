@@ -1691,6 +1691,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-06",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "node/1131014120"
+  },
+  {
+    "id": "onsen-078",
+    "number": 78,
+    "area": "関東・信越",
+    "prefecture": "新潟県",
+    "onsen": "蓮華温泉",
+    "facility": "白馬岳蓮華温泉ロッジ",
+    "latitude": 36.8102052,
+    "longitude": 137.7986132,
+    "coordinateSource": "https://www.openstreetmap.org/node/4424692395",
+    "coordinateVerified": true,
+    "officialUrl": "https://rengeonsen.main.jp/",
+    "category": "その他",
+    "bathing": "日帰り入浴9:30-17:00・野天風呂のみ大人500円、内湯利用は大人1,000円（内湯・野天風呂の両方も1,000円）。車・自転車はロッジ付近までで、野天風呂へは山道を徒歩で移動。営業は春（3月中旬〜5月5日）と夏〜秋（6月下旬頃〜10月20日頃）で、その間と冬季は休業。車道の開通は夏〜秋のみ。2026年は10月19日に営業終了。一人泊可（公式）。ネット予約は山小屋予約サイト「やまたん」",
+    "station": "平岩駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%99%BD%E9%A6%AC%E5%B2%B3%E8%93%AE%E8%8F%AF%E6%B8%A9%E6%B3%89%E3%83%AD%E3%83%83%E3%82%B8%20%E6%96%B0%E6%BD%9F%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-07",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "node/4424692395"
   }
 ];
 

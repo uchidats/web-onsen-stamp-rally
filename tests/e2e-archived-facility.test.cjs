@@ -6,7 +6,7 @@ test('Temporarily hidden facility: master and fixed ID kept, excluded from list/
   if (!fs.existsSync(edge)) { t.skip('Edge not installed'); return; }
   // マスターと固定IDは残る(単体)
   const ctx = {}; require('node:vm').runInNewContext(fs.readFileSync('data.js', 'utf8'), Object.assign(ctx, { window: ctx }));
-  assert.equal(ctx.ONSEN_DATA.length, 77);
+  assert.equal(ctx.ONSEN_DATA.length, 78);
   assert.ok(ctx.ONSEN_DATA.some(x => x.id === ID && x.facility === '湯守の宿三之亟'));
   assert.deepEqual(Object.keys(ctx.ONSEN_ARCHIVED), [ID]);
   assert.ok(!/閉館|廃業|営業終了|休業/.test(JSON.stringify(ctx.ONSEN_ARCHIVED)), 'no closure claim');
@@ -25,7 +25,7 @@ test('Temporarily hidden facility: master and fixed ID kept, excluded from list/
     await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
     const r = await evaluate(`JSON.stringify({data:ONSEN_DATA.length,master:ONSEN_MASTER.length,inMaster:ONSEN_MASTER.some(x=>x.id==='${ID}'),inData:ONSEN_DATA.some(x=>x.id==='${ID}'),card:!!document.querySelector('[data-facility-id="${ID}"]'),text:document.getElementById('cards').textContent.includes('三之亟'),
       markers:document.querySelectorAll('.japan-map-marker').length,markerId:!!document.querySelector('.japan-map-marker[data-onsen-id="${ID}"]'),total:document.getElementById('totalText').textContent,count:document.getElementById('resultCount').textContent,bed:!!document.querySelector('[data-stay="${ID}"]'),verified:OnsenStaySearch.googleVerified('${ID}')})`).then(JSON.parse);
-    assert.deepEqual(r, { data: 76, master: 77, inMaster: true, inData: false, card: false, text: false, markers: 76, markerId: false, total: '0 / 76 施設', count: '76 施設 · 66 温泉地', bed: false, verified: false }, width + 'px');
+    assert.deepEqual(r, { data: 77, master: 78, inMaster: true, inData: false, card: false, text: false, markers: 77, markerId: false, total: '0 / 77 施設', count: '77 施設 · 66 温泉地', bed: false, verified: false }, width + 'px');
     // 検索でも出ない
     await evaluate("search.value='三之亟';search.dispatchEvent(new Event('input'))");
     assert.equal(await evaluate("document.querySelectorAll('#cards .facility-entry').length"), 0);
