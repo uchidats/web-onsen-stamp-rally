@@ -1714,6 +1714,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-07",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "node/4424692395"
+  },
+  {
+    "id": "onsen-079",
+    "number": 79,
+    "area": "北海道",
+    "prefecture": "北海道",
+    "onsen": "十勝岳温泉",
+    "facility": "湯元 凌雲閣",
+    "latitude": 43.4135808,
+    "longitude": 142.6428054,
+    "coordinateSource": "https://www.openstreetmap.org/way/889237285",
+    "coordinateVerified": true,
+    "officialUrl": "https://www.ryounkaku.jp/",
+    "category": "その他",
+    "bathing": "日帰り入浴8:00-19:00（最終受付18:30）・大人1,000円、不定休。混雑時は入場制限あり。大岩の湯・小岩の湯は時間帯で男女入替。冬季は露天風呂の湯温が低く、急勾配の道は4WD・スタッドレスタイヤが必要（公式）。一人泊可（日本秘湯を守る会の予約ページ）",
+    "station": "上富良野駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B9%AF%E5%85%83%20%E5%87%8C%E9%9B%B2%E9%96%A3%20%E5%8C%97%E6%B5%B7%E9%81%93",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/889237285"
   }
 ];
 

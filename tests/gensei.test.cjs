@@ -253,3 +253,14 @@ test('gensei: Renge is not certified — per-bath added water is unsettled, so n
   for (const name of ['仙気ノ湯', '薬師湯', '黄金湯', '三国一ノ湯', '総湯']) assert.equal(evaluate(e, name).result, 'pending');
   assert.deepEqual(certifiedBaths(e), []);
 });
+
+test('gensei: Ryounkaku stays undecided — official kake-nagashi per bath, but no per-bath no-water/no-heating evidence', () => {
+  const e = kake['onsen-079'];
+  assert.equal(e.evidence.type, 'official_text');
+  assert.equal(e.scope, 'partial');
+  assert.deepEqual(e.baths, ['大岩の湯', '小岩の湯', '露天風呂', '酸性湯']);
+  assert.equal(e.treatment, undefined);
+  assert.equal(e.dilution.water, 'unknown');
+  for (const name of e.baths) assert.equal(evaluate(e, name).result, 'pending');
+  assert.deepEqual(certifiedBaths(e), []);
+});

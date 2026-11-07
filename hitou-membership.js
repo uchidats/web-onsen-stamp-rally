@@ -38,5 +38,6 @@ window.ONSEN_HITOU_MEMBERSHIP = {
   'onsen-062': { officialName: '貝掛温泉', url: 'https://nihon-hitou.org/member/1106', checkedAt: '2026-10-19', reservationUrl: 'https://www.hitou.or.jp/provider/681' },
   'onsen-064': { officialName: '嵐渓荘', url: 'https://nihon-hitou.org/member/1126', checkedAt: '2026-10-19', reservationUrl: 'https://www.hitou.or.jp/provider/694' },
   'onsen-071': { officialName: '湯本館', url: 'https://www.hitou.or.jp/provider/720', checkedAt: '2026-11-03', reservationUrl: 'https://www.hitou.or.jp/provider/720', note: '日本秘湯を守る会の公式Webの宿詳細(「日本秘湯を守る会の静岡県の加盟宿」、所在地 静岡県伊豆市湯ヶ島1656-1)と施設公式サイトの「『日本秘湯を守る会』に加盟している湯本館」で確認。nihon-hitou.org の会員詳細は2026-11-03時点でトップへ転送されるため hitou.or.jp の宿詳細をリンク先にした' },
-  'onsen-066': { officialName: '室堂平 みくりが池温泉', url: 'https://nihon-hitou.org/member/630', checkedAt: '2026-10-19', reservationUrl: 'https://www.hitou.or.jp/provider/725', note: '室堂平 みくりが池温泉は修飾語追加。施設の季節営業・休館と加盟休会は別判定' }
+  'onsen-066': { officialName: '室堂平 みくりが池温泉', url: 'https://nihon-hitou.org/member/630', checkedAt: '2026-10-19', reservationUrl: 'https://www.hitou.or.jp/provider/725', note: '室堂平 みくりが池温泉は修飾語追加。施設の季節営業・休館と加盟休会は別判定' },
+  'onsen-079': { officialName: '湯元 凌雲閣', url: 'https://www.hitou.or.jp/provider/847', checkedAt: '2026-11-08', reservationUrl: 'https://www.hitou.or.jp/provider/847', note: '日本秘湯を守る会の公式Webの宿詳細(説明「日本秘湯を守る会の北海道の加盟宿」、所在地 北海道空知郡上富良野町十勝岳温泉)と秘湯Web会員宿一覧への掲載、施設公式サイトの「秘湯を守る会ご案内」と予約リンク(providerId=847)で確認' }
 };

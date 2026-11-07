@@ -470,5 +470,12 @@ window.ONSEN_BATH_COLORS = {
       { color: 'colorless', expression: '無色透明', scope: 'bath', scopeNames: ['薬師湯'], change: { kind: 'tint', note: '浴槽の岩に付いた藻で全体が緑色に見えますが、湯自体の色ではありません' }, evidence: { type: 'third_party', confidence: 'third_party_reported', note: '新潟県の観光サイトの蓮華温泉特集「湯は無色透明ですが、なぜかここの浴槽の中だけ岩に藻が付着しており、全体を緑色に見せています。」緑色は湯の色として登録しない' } }
     ],
     source: { url: 'https://niigata-kankou.or.jp/feature/renge/', checkedAt: '2026-11-07' }
+  },
+  'onsen-079': {
+    colors: [
+      { color: 'brown', expression: '茶褐色', scope: 'bath', scopeNames: ['大岩の湯', '小岩の湯', '露天風呂'], evidence: { type: 'third_party', confidence: 'third_party_reported', note: '日本秘湯を守る会の宿詳細「温泉は、鉄分を多き含んだ茶褐色の温泉と酸性の透明な温泉の２種類の源泉が楽しめる。」酸性でない方の源泉が公式の凌雲閣2号井(含鉄（Ⅱ）-カルシウム・ナトリウム－硫酸塩温泉、中性)で、公式がこの源泉を使うとする大岩の湯・小岩の湯・露天風呂に付ける。公式自身の色の記載はない' } },
+      { color: 'colorless', expression: '透明', scope: 'bath', scopeNames: ['酸性湯'], evidence: { type: 'third_party', confidence: 'third_party_reported', note: '日本秘湯を守る会の宿詳細の「酸性の透明な温泉」。公式の凌雲閣1号井(酸性・含鉄（Ⅱ）-水素－硫酸塩温泉)に当たり、公式がこの源泉を使うとする酸性湯に付ける。公式自身の色の記載はない' } }
+    ],
+    source: { url: 'https://www.hitou.or.jp/provider/847', checkedAt: '2026-11-08' }
   }
 };

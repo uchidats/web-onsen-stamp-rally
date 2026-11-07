@@ -278,7 +278,7 @@ test('JapanPrefMap: SVG markup contains all 47 prefecture paths/polygons with co
   }
 });
 
-test('Integration with actual data.js: verifies 78 onsens across prefectures', () => {
+test('Integration with actual data.js: verifies 79 onsens across prefectures', () => {
   const { PREFECTURES, getPrefStats } = loadJapanMap();
 
   // Load real data.js
@@ -286,7 +286,7 @@ test('Integration with actual data.js: verifies 78 onsens across prefectures', (
   const win = {};
   vm.runInNewContext(dataCode, { window: win });
   const DATA = win.ONSEN_DATA;
-  assert.equal(DATA.length, 78, 'Must preserve 78 facilities');
+  assert.equal(DATA.length, 79, 'Must preserve 79 facilities');
 
   // Check stats when no visits
   let totalWithFacilities = 0;
@@ -338,7 +338,7 @@ test('Geographic projection matches standard Mercator, preserves aspect and does
   assert.ok(Math.abs(project(140,40)[1]-project(140,41)[1]-(merc(41)-merc(40))*PROJECTION.scale)<1e-8);
 });
 
-test('JapanPrefMap: displays exactly 78 verified onsen markers and 0 unverified markers', () => {
+test('JapanPrefMap: displays exactly 79 verified onsen markers and 0 unverified markers', () => {
   const MapModule = loadJapanMap();
   const dataCode = fs.readFileSync('data.js', 'utf8');
   const win = {};
@@ -358,10 +358,10 @@ test('JapanPrefMap: displays exactly 78 verified onsen markers and 0 unverified 
   });
 
   assert.ok(instance, 'Map instance should be created');
-  assert.equal(instance.getMarkerCount(), 78, 'Must render exactly 78 verified markers');
+  assert.equal(instance.getMarkerCount(), 79, 'Must render exactly 79 verified markers');
 
   const markers = container.querySelectorAll('.japan-map-marker');
-  assert.equal(markers.length, 78, 'DOM should contain 78 marker elements');
+  assert.equal(markers.length, 79, 'DOM should contain 79 marker elements');
 
   // Verify none of the 0 unverified onsens have a marker
   const unverified = DATA.filter(x => !x.coordinateVerified);
@@ -371,9 +371,9 @@ test('JapanPrefMap: displays exactly 78 verified onsen markers and 0 unverified 
     assert.equal(found, undefined, `Unverified facility ${u.id} (${u.facility}) must NOT have a marker on the map`);
   }
 
-  // Verify all 78 verified facilities have a marker
+  // Verify all 79 verified facilities have a marker
   const verified = DATA.filter(x => x.coordinateVerified);
-  assert.equal(verified.length, 78, 'Should have 78 verified onsens');
+  assert.equal(verified.length, 79, 'Should have 79 verified onsens');
   for (const v of verified) {
     const found = markers.find(m => m.getAttribute('data-onsen-id') === v.id);
     assert.ok(found, `Verified facility ${v.id} (${v.facility}) must have a marker`);

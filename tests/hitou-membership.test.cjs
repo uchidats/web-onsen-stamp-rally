@@ -11,15 +11,15 @@ function load(file) {
 const data = load('data.js').ONSEN_DATA;
 const hitou = load('hitou-membership.js').ONSEN_HITOU_MEMBERSHIP;
 
-// 日本秘湯を守る会の現行加盟を確認できた27施設(公式一覧への掲載・所在地/電話の照合済み。onsen-071 は2026-11-03に hitou.or.jp の宿詳細と施設公式で確認)
+// 日本秘湯を守る会の現行加盟を確認できた28施設(公式一覧への掲載・所在地/電話の照合済み。onsen-071 は2026-11-03に hitou.or.jp の宿詳細と施設公式で確認。onsen-079 は2026-11-08に同様に確認)
 const MEMBERS = [
   'onsen-001', 'onsen-006', 'onsen-009', 'onsen-010', 'onsen-012', 'onsen-015', 'onsen-017', 'onsen-019', 'onsen-020', 'onsen-021',
   'onsen-024', 'onsen-027', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033', 'onsen-038', 'onsen-039', 'onsen-042', 'onsen-047',
-  'onsen-054', 'onsen-059', 'onsen-061', 'onsen-062', 'onsen-064', 'onsen-066', 'onsen-071'
+  'onsen-054', 'onsen-059', 'onsen-061', 'onsen-062', 'onsen-064', 'onsen-066', 'onsen-071', 'onsen-079'
 ];
 
-test('hitou membership: exactly the 27 confirmed member facilities, keyed by existing fixed IDs', () => {
-  assert.equal(data.length, 78);
+test('hitou membership: exactly the 28 confirmed member facilities, keyed by existing fixed IDs', () => {
+  assert.equal(data.length, 79);
   assert.deepEqual(Object.keys(hitou).sort(), MEMBERS);
   const ids = new Set(data.map(x => x.id));
   for (const id of Object.keys(hitou)) assert.ok(ids.has(id), id);
@@ -36,7 +36,7 @@ test('hitou membership: every entry has the official name, an official detail UR
     assert.equal(u.username + u.password, '', id);
   }
   // 詳細ページは施設ごとに別(同名・近隣施設へURLを流用しない)
-  assert.equal(new Set(Object.values(hitou).map(e => e.url)).size, 27);
+  assert.equal(new Set(Object.values(hitou).map(e => e.url)).size, 28);
 });
 
 test('hitou membership: look-alike facilities are not mixed up (Azumaya, Higashiya, Ishizuka, Kashiwaya, Sannoujo, Kanikyu)', () => {
