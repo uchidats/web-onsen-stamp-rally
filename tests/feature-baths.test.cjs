@@ -17,7 +17,8 @@ const KNOWN_KEYS = ['name', 'kind', 'form', 'color', 'tags', 'note'];
 
 const AKITA = {
   'onsen-013': '新玉川温泉', 'onsen-014': '玉川温泉', 'onsen-015': '鶴の湯温泉', 'onsen-016': '妙乃湯', 'onsen-017': '元湯雄山閣', 'onsen-018': '後生掛温泉旅館',
-  'onsen-019': '鷹の湯温泉', 'onsen-020': '源泉・秘湯の宿 ふけの湯', 'onsen-021': '奥山旅館', 'onsen-022': '川原毛大湯滝', 'onsen-023': '湯瀬ホテル'
+  'onsen-019': '鷹の湯温泉', 'onsen-020': '源泉・秘湯の宿 ふけの湯', 'onsen-021': '奥山旅館', 'onsen-022': '川原毛大湯滝', 'onsen-023': '湯瀬ホテル',
+  'onsen-084': '栗駒山荘'
 };
 
 const AOMORI = {
@@ -54,7 +55,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 83);
+  assert.equal(data.length, 84);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -453,4 +454,12 @@ test('feature baths: Matsushirosou keeps the day-use baths and the guest-only ba
   assert.deepEqual(Object.keys(b), ['殿湯', '姫湯', '福寿', '長寿']);
   for (const n of ['殿湯', '姫湯']) assert.ok(b[n].tags.includes('日帰り入浴可') && !b[n].tags.includes('宿泊者専用'), n);
   for (const n of ['福寿', '長寿']) assert.ok(b[n].tags.includes('宿泊者専用') && !b[n].tags.includes('日帰り入浴可'), n);
+});
+
+test('feature baths: Kurikoma Sanso lists only the officially described open-air bath', () => {
+  const x = data.find(v => v.id === 'onsen-084');
+  assert.equal(x.facility, '栗駒山荘'); assert.equal(x.prefecture, '秋田県'); assert.equal(x.onsen, '須川温泉');
+  assert.deepEqual(feature['onsen-084'].baths.map(b => b.name), ['展望大浴場（露天風呂）']);
+  assert.match(feature['onsen-084'].note, /内湯は公式に説明がない/);
+  assert.match(x.bathing, /冬期休業/);
 });

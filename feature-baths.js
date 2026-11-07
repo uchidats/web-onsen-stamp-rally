@@ -603,5 +603,12 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '長寿', tags: ['宿泊者専用', '壺風呂', '内湯・露天風呂'], note: '露天風呂・内湯風呂・壺風呂がある宿泊者専用の浴場です' }
     ],
     source: { url: 'https://www.matusirosou.com/onsen/', checkedAt: '2026-11-08' }
+  },
+  'onsen-084': {
+    note: '「展望大浴場（露天風呂）」は公式の説明をもとにした説明用の名称です。「仙人の湯」は公式が温泉に付けた名称です。内湯は公式に説明がないため載せていません。',
+    baths: [
+      { name: '展望大浴場（露天風呂）', kind: '露天', tags: ['標高約1100m', '大パノラマ'], note: '須川高原の大自然を一望できる大パノラマ露天風呂です。左手に秣岳、右手にブナの原生林が茂る野鳥の森を望めます' }
+    ],
+    source: { url: 'https://www.kurikomasanso.com/', checkedAt: '2026-11-08' }
   }
 };

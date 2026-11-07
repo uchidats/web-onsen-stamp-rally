@@ -511,6 +511,12 @@ window.ONSEN_KAKENAGASHI = {
       water: [{ status: 'none', scope: 'all', coverage: '施設の温泉すべて(大浴場の殿湯・姫湯、宿泊者専用の福寿・長寿)', scopeNote: '公式「温泉」ページの「松代荘の源泉 3つの特徴」が源泉と湯船全体について加水・加熱・循環ろ過をしないと書き、同じページが4つの浴場をすべて源泉かけ流しとして紹介している', quote: '加熱せず、加水せず、循環ろ過せず。涌きたて、生まれたての源泉、正真正銘の100％かけ流し、豊富な湯量を、湯船にちょうど良く満たす徹底管理があってこその贅沢です。', url: 'https://www.matusirosou.com/onsen/', checkedAt: '2026-11-08' }],
       heating: [{ status: 'none', scope: 'all', coverage: '施設の温泉すべて(大浴場の殿湯・姫湯、宿泊者専用の福寿・長寿)', scopeNote: '公式「温泉」ページの「松代荘の源泉 3つの特徴」が源泉と湯船全体について加水・加熱・循環ろ過をしないと書き、同じページが4つの浴場をすべて源泉かけ流しとして紹介している', quote: '加熱せず、加水せず、循環ろ過せず。涌きたて、生まれたての源泉、正真正銘の100％かけ流し、豊富な湯量を、湯船にちょうど良く満たす徹底管理があってこその贅沢です。', url: 'https://www.matusirosou.com/onsen/', checkedAt: '2026-11-08' }]
     }
+  },
+  'onsen-084': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の料金ページ「午後 11:30 ～ 午前 5:00（源泉かけ流しの温泉を張り替えるため）」。入浴できない時間の理由として施設の温泉全体について書かれており、浴槽ごとの記載ではないため、個々の湯へは広げない' },
+    dilution: { water: 'unknown', note: '公式に加水・加温・循環の記載はない。源生の湯は今回は判定しない' },
+    source: { url: 'https://www.kurikomasanso.com/ryokin.html', checkedAt: '2026-11-08' }
   }
 };
 

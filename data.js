@@ -1830,6 +1830,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-08",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "node/10713333985"
+  },
+  {
+    "id": "onsen-084",
+    "number": 84,
+    "area": "北東北",
+    "prefecture": "秋田県",
+    "onsen": "須川温泉",
+    "facility": "栗駒山荘",
+    "latitude": 38.9800539,
+    "longitude": 140.7674038,
+    "coordinateSource": "https://www.openstreetmap.org/node/5094654423",
+    "coordinateVerified": true,
+    "officialUrl": "https://www.kurikomasanso.com/",
+    "category": "その他",
+    "bathing": "日帰り入浴10:00-16:30（最終受付16:00。トップページは10:00-16:00と表記）・大人1,000円。冬期休業は例年11月4日から4月下旬まで（公式）。紅葉時期は水不足で時短営業の場合あり。一人泊は洋室シングルで可（ネット予約不可、電話で予約）",
+    "station": "一ノ関駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "酸性・含硫黄・含鉄（Ⅱ）－ナトリウム－硫酸塩・塩化物温泉（硫化水素型）",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%A0%97%E9%A7%92%E5%B1%B1%E8%8D%98%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "node/5094654423"
   }
 ];
 

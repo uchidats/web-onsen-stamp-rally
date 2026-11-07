@@ -291,3 +291,11 @@ test('gensei: Matsushirosou is certified on the official no-heating/no-water/no-
   for (const k of ['water', 'heating']) { const r = e.treatment[k]; assert.equal(r.length, 1); assert.equal(r[0].status, 'none'); assert.equal(r[0].scope, 'all'); assert.equal(r[0].evidenceType, undefined); assert.match(r[0].quote, /加熱せず、加水せず、循環ろ過せず/); }
   assert.deepEqual(certifiedBaths(e), ['殿湯', '姫湯', '福寿', '長寿']);
 });
+
+test('gensei: Kurikoma Sanso is not judged — kake-nagashi is official but facility-level, with no per-bath icons', () => {
+  const e = kake['onsen-084'];
+  assert.equal(e.evidence.type, 'official_text');
+  assert.deepEqual(e.baths, []);
+  assert.equal(e.treatment, undefined);
+  assert.deepEqual(certifiedBaths(e), []);
+});

@@ -3,7 +3,7 @@
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-08",
-  "method": "83 verified facilities (onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "84 verified facilities (onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -5200,6 +5200,45 @@
         "coordinates": [
           138.2109976,
           36.568401
+        ]
+      },
+      "geometryCheck": "施設POIと一致"
+    },
+    {
+      "id": "onsen-084",
+      "facility": "栗駒山荘",
+      "prefecture": "秋田県",
+      "latitude": 38.9800539,
+      "longitude": 140.7674038,
+      "coordinateSource": "https://www.openstreetmap.org/node/5094654423",
+      "coordinateVerified": true,
+      "osmName": "栗駒山荘",
+      "osmAddress": "",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://www.kurikomasanso.com/access.html",
+      "note": "OSM施設POI node/5094654423(name=栗駒山荘、name:en=Kurikomasanso、tourism=hotel)。公式の所在地は「秋田県雄勝郡東成瀬村椿川字仁郷山国有林（栗駒国定公園内）」で番地がなく、公式の交通案内は国道342号線の秋田・岩手県境にあると説明している。約300m東の須川高原温泉(岩手県側の別施設、OSM node/5094654422)とは別の点。Overture Places 2026-09-23.1(meta)のレコード「須川温泉 栗駒山荘」(電話+81182475111が公式と一致)が約2mの位置にある。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-08",
+      "onsen": "須川温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "秋田県雄勝郡東成瀬村椿川字仁郷山国有林",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/5094654423",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "栗駒山荘",
+      "identityReferences": [
+        "https://www.kurikomasanso.com/access.html",
+        "https://www.kurikomasanso.com/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%A0%97%E9%A7%92%E5%B1%B1%E8%8D%98%20%E7%A7%8B%E7%94%B0%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.7674038,
+          38.9800539
         ]
       },
       "geometryCheck": "施設POIと一致"
