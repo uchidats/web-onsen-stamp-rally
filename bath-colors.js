@@ -477,5 +477,12 @@ window.ONSEN_BATH_COLORS = {
       { color: 'colorless', expression: '透明', scope: 'bath', scopeNames: ['酸性湯'], evidence: { type: 'third_party', confidence: 'third_party_reported', note: '日本秘湯を守る会の宿詳細の「酸性の透明な温泉」。公式の凌雲閣1号井(酸性・含鉄（Ⅱ）-水素－硫酸塩温泉)に当たり、公式がこの源泉を使うとする酸性湯に付ける。公式自身の色の記載はない' } }
     ],
     source: { url: 'https://www.hitou.or.jp/provider/847', checkedAt: '2026-11-08' }
+  },
+  'onsen-081': {
+    colors: [{
+      color: 'black', expression: '日本一黒い湯', scope: 'bath', scopeNames: ['大浴場'],
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の施設紹介ページの大浴場の項「日本一黒い湯の源泉掛け流しを満々とたたえた大浴場。」効能ページも「日本一黒い湯植物性（フミン）モール温泉」。既存の色分類の「黒」に当てる。青森県観光情報サイトの特集(2024年)は大浴場の湯を「こげ茶色に色づいていますが透き通って」と書き、見え方の表現は資料で異なる' }
+    }],
+    source: { url: 'http://www.touhoku-onsen.com/sisetu.html', checkedAt: '2026-11-08' }
   }
 };

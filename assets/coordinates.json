@@ -3,7 +3,7 @@
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-08",
-  "method": "80 verified facilities (onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "81 verified facilities (onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -4878,6 +4878,73 @@
       "sourcePhones": [
         "+81242643211"
       ]
+    },
+    {
+      "id": "onsen-081",
+      "facility": "東北温泉",
+      "prefecture": "青森県",
+      "latitude": 40.778477,
+      "longitude": 141.2169748,
+      "coordinateSource": "https://www.openstreetmap.org/way/695770388",
+      "coordinateVerified": true,
+      "osmName": "東北温泉",
+      "osmAddress": "",
+      "osmFeatureType": "amenity/public_bath",
+      "addressReference": "http://www.touhoku-onsen.com/",
+      "note": "OSM建物way/695770388(name=東北温泉、amenity=public_bath)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。同じポリゴン内にOSMの施設POI node/7168788696(name=東北温泉、tourism=hotel、website=http://touhoku-onsen.com)と、Overture Places(meta)のレコード「東北温泉」(所在地「東北町字上笹橋21-18」、電話+81175633715、URLが公式と一致)の点がある。公式サイトの所在地(青森県上北郡東北町字上笹橋21-18)・電話(0175-63-3715)と一致。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-08",
+      "onsen": "上笹橋温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "青森県上北郡東北町字上笹橋21-18",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/695770388",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "東北温泉",
+      "identityReferences": [
+        "http://www.touhoku-onsen.com/",
+        "https://aomori-tourism.com/spot/detail_8006.html"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E5%8C%97%E6%B8%A9%E6%B3%89%20%E9%9D%92%E6%A3%AE%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              141.2168764,
+              40.7785819
+            ],
+            [
+              141.2168646,
+              40.7786637
+            ],
+            [
+              141.2170663,
+              40.7786804
+            ],
+            [
+              141.2171103,
+              40.7783752
+            ],
+            [
+              141.2168715,
+              40.7783555
+            ],
+            [
+              141.2168394,
+              40.7785788
+            ],
+            [
+              141.2168764,
+              40.7785819
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
     }
   ],
   "coordinateSystem": "WGS84 (EPSG:4326), decimal degrees; GeoJSON order is [longitude, latitude], Leaflet is [latitude, longitude]"

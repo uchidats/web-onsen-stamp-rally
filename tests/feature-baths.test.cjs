@@ -21,7 +21,7 @@ const AKITA = {
 };
 
 const AOMORI = {
-  'onsen-002': '酸ヶ湯温泉旅館', 'onsen-003': '蔦温泉旅館', 'onsen-004': '黄金崎不老ふ死温泉', 'onsen-005': '姉戸川温泉'
+  'onsen-002': '酸ヶ湯温泉旅館', 'onsen-003': '蔦温泉旅館', 'onsen-004': '黄金崎不老ふ死温泉', 'onsen-005': '姉戸川温泉', 'onsen-081': '東北温泉'
 };
 
 const YAMAGATA = {
@@ -54,7 +54,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 80);
+  assert.equal(data.length, 81);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -158,13 +158,13 @@ test('feature baths: Iwate 7 facilities publish only officially confirmed conten
   assert.deepEqual(foot, ['onsen-007/白猿の湯', 'onsen-009/大湯', 'onsen-009/滝の湯', 'onsen-009/真湯']);
 });
 
-test('feature baths: Aomori 4 facilities publish only officially confirmed content (9 baths)', () => {
+test('feature baths: Aomori 5 facilities publish only officially confirmed content (11 baths)', () => {
   const names = id => feature[id].baths.map(b => b.name);
   assert.deepEqual(names('onsen-002'), ['ヒバ千人風呂', '玉の湯']);
   assert.deepEqual(names('onsen-003'), ['久安の湯', '泉響の湯', '貸切風呂']);
   assert.deepEqual(names('onsen-004'), ['海辺の露天風呂', '不老ふ死の湯', '黄金の湯']);
   assert.deepEqual(names('onsen-005'), ['大浴場']);
-  assert.equal(Object.keys(AOMORI).reduce((n, id) => n + feature[id].baths.length, 0), 9);
+  assert.equal(Object.keys(AOMORI).reduce((n, id) => n + feature[id].baths.length, 0), 11);
   // 酸ヶ湯: 白濁は玉の湯だけ。千人風呂には色を付けない。足元湧出は環境省計画書の「自然湧出(源泉の湧出状況)」からは確認できず載せない。4源泉と施設全体の源泉数を混同しない
   assert.equal(feature['onsen-002'].baths[1].color, '白濁(乳白色)');
   assert.equal(feature['onsen-002'].baths[0].color, undefined);
@@ -435,4 +435,13 @@ test('feature baths: Ryounkaku names the official source for each bath and keeps
   assert.ok(b['酸性湯'].tags.includes('凌雲閣1号井'));
   assert.ok(b['露天風呂'].tags.includes('冬季は湯温が低い'));
   assert.equal(b['露天風呂'].kind, '露天');
+});
+
+test('feature baths: Tohoku Onsen lists the official baths and leaves out the open-air bath whose use is unconfirmed', () => {
+  const x = data.find(v => v.id === 'onsen-081');
+  assert.equal(x.facility, '東北温泉'); assert.equal(x.prefecture, '青森県'); assert.equal(x.onsen, '上笹橋温泉');
+  assert.equal(x.springType, '弱アルカリ性単純温泉');
+  assert.deepEqual(feature['onsen-081'].baths.map(b => b.name), ['大浴場', '家族風呂']);
+  assert.match(feature['onsen-081'].note, /露天風呂/);
+  assert.ok(!feature['onsen-081'].baths.some(b => /露天/.test(b.name)));
 });

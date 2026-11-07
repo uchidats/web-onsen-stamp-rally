@@ -585,5 +585,13 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '酸性湯', kind: '内湯', tags: ['凌雲閣1号井', '低温'], note: '大岩・小岩に一つずつある、低温でじっくり温まる酸性のお湯です' }
     ],
     source: { url: 'https://www.ryounkaku.jp/onsen', checkedAt: '2026-11-08' }
+  },
+  'onsen-081': {
+    note: '露天風呂は公式の施設紹介に記載がなく、利用できるか確認できないため載せていません。',
+    baths: [
+      { name: '大浴場', kind: '内湯', tags: ['日本一黒い湯', '水風呂は湧き水'], note: '日本一黒い湯の源泉掛け流しをたたえた大浴場です。水風呂には湧き水を使っています' },
+      { name: '家族風呂', form: '貸切', tags: ['焼き物の浴槽', '大人4人まで'], note: '滋賀県の焼き物の浴槽を使った貸切の家族風呂です(公式の表記は「設楽焼」)' }
+    ],
+    source: { url: 'http://www.touhoku-onsen.com/sisetu.html', checkedAt: '2026-11-08' }
   }
 };

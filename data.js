@@ -1761,6 +1761,29 @@ window.ONSEN_DATA = [
     "coordinateLicense": "CDLA-Permissive-2.0",
     "coordinateSourceId": "8c1fae3b-da72-4b2d-9633-c75c35d9b9d4",
     "coordinateSourceRelease": "2026-09-23.1"
+  },
+  {
+    "id": "onsen-081",
+    "number": 81,
+    "area": "北東北",
+    "prefecture": "青森県",
+    "onsen": "上笹橋温泉",
+    "facility": "東北温泉",
+    "latitude": 40.778477,
+    "longitude": 141.2169748,
+    "coordinateSource": "https://www.openstreetmap.org/way/695770388",
+    "coordinateVerified": true,
+    "officialUrl": "http://www.touhoku-onsen.com/",
+    "category": "その他",
+    "bathing": "日帰り入浴6:00-22:00（年中無休）・大人400円。家族風呂は60分1,600円（大人4人まで）。現金のみ（公式）。露天風呂は公式に記載がなく、青森県観光サイトの2024年の記事では入浴できないとされる。一人泊可（公式の宿泊料金表に1室1名の料金あり）",
+    "station": "乙供駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "弱アルカリ性単純温泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E5%8C%97%E6%B8%A9%E6%B3%89%20%E9%9D%92%E6%A3%AE%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/695770388"
   }
 ];
 

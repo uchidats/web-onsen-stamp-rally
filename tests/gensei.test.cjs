@@ -264,3 +264,13 @@ test('gensei: Ryounkaku stays undecided — official kake-nagashi per bath, but 
   for (const name of e.baths) assert.equal(evaluate(e, name).result, 'pending');
   assert.deepEqual(certifiedBaths(e), []);
 });
+
+test('gensei: Tohoku Onsen stays undecided — official kake-nagashi on 大浴場, but no per-bath no-water/no-heating/no-circulation evidence', () => {
+  const e = kake['onsen-081'];
+  assert.equal(e.evidence.type, 'official_text');
+  assert.deepEqual(e.baths, ['大浴場']);
+  assert.equal(e.treatment, undefined);
+  assert.equal(e.dilution.water, 'unknown');
+  for (const name of ['大浴場', '家族風呂']) assert.equal(evaluate(e, name).result, 'pending');
+  assert.deepEqual(certifiedBaths(e), []);
+});
