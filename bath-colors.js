@@ -498,5 +498,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの効能の項「お湯はアルカリ性でわずかに黄濁していて、弱い石油臭があるのも特徴です。」既存の色分類の「黄」に当てる。施設の湯全体についての記述のため施設全体の色とし、個々の浴槽へは広げない' }
     }],
     source: { url: 'https://kawashimaryokan.co.jp/spa', checkedAt: '2026-11-08' }
+  },
+  'onsen-088': {
+    colors: [
+      { color: 'milky_white', expression: '乳白色', scope: 'bath', scopeNames: ['男女共用大野天風呂'], evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の大野天風呂ページ「白骨温泉イコール乳白色というイメージのままの大野天風呂です。」温泉データ「浴槽の色　…内風呂(大野天風呂)･大野天風呂 乳白色」。源泉は湧出直後は無色透明で、空気に触れてミルククリーム色やコバルトブルーに変化する(公式)' } },
+      { color: 'colorless', expression: '透明な湯', scope: 'bath', scopeNames: ['内湯（ぬる湯）'], change: { kind: 'tint', note: '公式の温泉データでは「内湯(ぬる湯) 多少白濁（変化あり）」とされています' }, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の内湯ページ「｢ぬる湯｣ 源泉そのままの湯で、透明な湯。」。大野天風呂ページの温泉データは「内湯(ぬる湯) 多少白濁（変化あり）」で、変化として併記する。あつ湯は温泉データの「さら湯」と同じ浴槽か公式に明記がないため色を付けない' } }
+    ],
+    source: { url: 'https://www.awanoyu-ryokan.com/uchiyu.html', checkedAt: '2026-11-08' }
   }
 };

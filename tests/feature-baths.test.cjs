@@ -48,7 +48,7 @@ const IWAKI = { 'onsen-074': '松柏館', 'onsen-075': '旅館こいと' };
 const SHIZUOKA = { 'onsen-071': '川端の宿 湯本館', 'onsen-072': '野天風呂 山の家', 'onsen-073': '観音温泉' };
 const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
 const HOKKAIDO = { 'onsen-001': '知内温泉旅館' };
-const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘' };
+const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘', 'onsen-088': '泡の湯旅館' };
 const NIIGATA = { 'onsen-060': 'ひなの宿ちとせ', 'onsen-061': '自在館', 'onsen-062': '貝掛温泉', 'onsen-063': '瀬波グランドホテルはぎのや', 'onsen-064': '嵐渓荘' };
 
 const IWATE = {
@@ -56,7 +56,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 86);
+  assert.equal(data.length, 88);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -480,4 +480,13 @@ test('feature baths: Kuroyu lists the mixed, separate and private baths from the
   assert.equal(x.springType, '単純硫黄温泉');
   assert.deepEqual(feature['onsen-086'].baths.map(b => b.form), ['混浴', '男女別', '貸切']);
   assert.match(x.bathing, /冬季休業/);
+});
+
+test('feature baths: Awanoyu lists the shared open-air bath and the indoor baths, and Iwanoyu has none without an official source', () => {
+  const b = Object.fromEntries(feature['onsen-088'].baths.map(v => [v.name, v]));
+  assert.deepEqual(Object.keys(b), ['男女共用大野天風呂', '内湯（ぬる湯）', '内湯（あつ湯）', '内湯露天風呂']);
+  assert.equal(b['男女共用大野天風呂'].form, '混浴');
+  assert.equal(feature['onsen-087'], undefined);
+  const iw = data.find(v => v.id === 'onsen-087');
+  assert.equal(iw.officialUrl, ''); assert.equal(iw.springType, '単純温泉'); assert.match(iw.bathing, /日帰り入浴不可・1名宿泊不可/);
 });

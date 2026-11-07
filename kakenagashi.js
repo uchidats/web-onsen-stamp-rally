@@ -529,6 +529,22 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'ニッポン旅マガジンの黒湯温泉の紹介(2026年11月更新)「湯は酸性硫黄泉と単純硫化水素泉（源泉は複数あり、加水源泉かけ流しで使われています）。」公式サイトにかけ流しの記載はない。施設単位の第三者資料のため、個々の浴槽へは広げない' },
     dilution: { water: 'added', note: '同じ紹介に「加水源泉かけ流し」とある(第三者資料、浴槽別ではない)。公式に加水・加温・循環の記載はない。源生の湯は判定しない' },
     source: { url: 'https://tabi-mag.jp/ak0034/', checkedAt: '2026-11-08' }
+  },
+  'onsen-087': {
+    scope: 'partial', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: '日本温泉協会の施設情報「掛け流し浴槽　有」。かけ流しの浴槽があることを示すだけで、どの浴槽かは書かれていないため、施設の一部としてscopeはpartialとし、個々の湯へは広げない。施設の公式サイトは確認できない' },
+    dilution: { water: 'unknown', note: '加水・加温・循環の記載は確認できない。源生の湯は保留' },
+    source: { url: 'https://www.spa.or.jp/search_f/detail_f/?F_ID=737', checkedAt: '2026-11-08' }
+  },
+  'onsen-088': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の日帰り入浴ページの見出し「信州でも有数な湯量をほこります(源泉掛け流し)」。施設の湯全体についての記述で浴槽ごとの記載ではないため、個々の湯へは広げない' },
+    dilution: { water: 'unknown', note: '公式の温泉データ「加温の理由　源泉温度がぬるい為、お客様に快適にご入浴して頂ける様加温または一部加温しております。」内湯の「ぬる湯」は「源泉そのままの湯で、透明な湯。」、「あつ湯」は「加水をせず熱交換にて昇温をしております。」大野天風呂の加温の有無は浴槽別に書かれていない。源生の湯は保留' },
+    source: { url: 'https://www.awanoyu-ryokan.com/gairai.html', checkedAt: '2026-11-08' },
+    treatment: {
+      water: [{ status: 'none', scope: 'baths', baths: ['内湯（あつ湯）'], coverage: '内湯（あつ湯）', scopeNote: '公式の内湯ページが「あつ湯」を名指しして加水しないと書く', quote: '加水をせず熱交換にて昇温をしております。', url: 'https://www.awanoyu-ryokan.com/uchiyu.html', checkedAt: '2026-11-08' }],
+      heating: [{ status: 'yes', scope: 'baths', baths: ['内湯（あつ湯）'], coverage: '内湯（あつ湯）', scopeNote: '公式の内湯ページが「あつ湯」を名指しして熱交換で昇温していると書く。加温ありのため源生の湯の対象外', quote: '加水をせず熱交換にて昇温をしております。', url: 'https://www.awanoyu-ryokan.com/uchiyu.html', checkedAt: '2026-11-08' }]
+    }
   }
 };
 

@@ -316,3 +316,14 @@ test('gensei: Kuroyu is not judged — kake-nagashi is a third-party, facility-l
   assert.equal(e.treatment, undefined);
   assert.deepEqual(certifiedBaths(e), []);
 });
+
+test('gensei: Iwanoyu and Awanoyu stay undecided, and Awanoyu’s hot indoor bath is excluded by heat-exchange heating', () => {
+  const iw = kake['onsen-087'];
+  assert.equal(iw.evidence.type, 'third_party'); assert.equal(iw.scope, 'partial'); assert.deepEqual(iw.baths, []); assert.equal(iw.treatment, undefined);
+  const aw = kake['onsen-088'];
+  assert.equal(aw.evidence.type, 'official_text'); assert.deepEqual(aw.baths, []);
+  assert.equal(aw.treatment.heating[0].status, 'yes'); assert.deepEqual(aw.treatment.heating[0].baths, ['内湯（あつ湯）']);
+  assert.equal(evaluate(aw, '内湯（あつ湯）').result, 'excluded');
+  for (const n of ['男女共用大野天風呂', '内湯（ぬる湯）', '内湯露天風呂']) assert.equal(evaluate(aw, n).result, 'pending', n);
+  assert.deepEqual(certifiedBaths(aw), []);
+});

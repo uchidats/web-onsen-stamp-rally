@@ -626,5 +626,15 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '貸切風呂（亀の湯・玉肌の湯）', form: '貸切', tags: ['打たせ湯', '要予約'], note: '内湯と打たせ湯がある貸切風呂で、受付での予約が必要です。旅館に宿泊すると無料です' }
     ],
     source: { url: 'https://kuroyu.com/facility/', checkedAt: '2026-11-08' }
+  },
+  'onsen-088': {
+    note: '内湯は別棟の檜造りで、ぬる湯・あつ湯など3つの湯船があります。',
+    baths: [
+      { name: '男女共用大野天風呂', kind: '露天', form: '混浴', tags: ['乳白色', '男女で入口が別', '日帰り入浴可'], note: '白く濁った湯の大きな野天風呂で、入口は男女で分かれています' },
+      { name: '内湯（ぬる湯）', kind: '内湯', form: '男女別', tags: ['源泉そのまま', '約37℃'], note: '源泉そのままの透明な湯です' },
+      { name: '内湯（あつ湯）', kind: '内湯', form: '男女別', tags: ['熱交換で昇温', '約40℃'], note: '加水をせず、熱交換で温度を上げています' },
+      { name: '内湯露天風呂', kind: '露天', form: '男女別', tags: ['男女別'], note: '男女別の露天風呂で、女性内湯からは直接行けません' }
+    ],
+    source: { url: 'https://www.awanoyu-ryokan.com/uchiyu.html', checkedAt: '2026-11-08' }
   }
 };

@@ -99,11 +99,13 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-083': ['湯の色: 黄（殿湯・姫湯）。公式の表現「黄金色」。'],
       // 2026-11-08 追加(公式「温泉」ページ「わずかに黄濁していて」)
       'onsen-085': ['湯の色: 黄（施設全体）。公式の表現「わずかに黄濁」。'],
+      // 2026-11-08 追加(公式の大野天風呂ページ・内湯ページ)
+      'onsen-088': ['湯の色: 乳白色（男女共用大野天風呂）。', '湯の色: 無色透明（内湯（ぬる湯））。公式の表現「透明な湯」。公式の温泉データでは「内湯(ぬる湯) 多少白濁（変化あり）」とされています。'],
       'onsen-070': ['湯の色: 無色透明（施設全体）。公式の表現「基本的には無色透明」。', '湯の色: 乳白色（若鹿の湯）。2026年11月3日の日帰り入浴時の色です。公式は基本的に無色透明で、湯ノ花が舞うと濁ることがあると説明しており、常に乳白色ではありません。現地での観察です。']
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
     // 保留(根拠不足)の施設には丸を出さない
-    const NONE = ['onsen-001', 'onsen-005', 'onsen-007', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-022', 'onsen-025', 'onsen-037', 'onsen-038', 'onsen-042', 'onsen-047', 'onsen-050', 'onsen-055', 'onsen-056', 'onsen-058', 'onsen-060', 'onsen-063', 'onsen-068', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-076', 'onsen-080', 'onsen-082', 'onsen-084', 'onsen-086'];
+    const NONE = ['onsen-001', 'onsen-005', 'onsen-007', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-022', 'onsen-025', 'onsen-037', 'onsen-038', 'onsen-042', 'onsen-047', 'onsen-050', 'onsen-055', 'onsen-056', 'onsen-058', 'onsen-060', 'onsen-063', 'onsen-068', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-076', 'onsen-080', 'onsen-082', 'onsen-084', 'onsen-086', 'onsen-087'];
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
     const center = async expr => { const r = await rect(expr); return { x: r.x + r.w / 2, y: r.y + r.h / 2 }; };
@@ -244,7 +246,8 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-078': { '仙気ノ湯': 1, '薬師湯': 1 },
       'onsen-079': { '大岩の湯': 1, '小岩の湯': 1, '露天風呂': 1, '酸性湯': 1 },
       'onsen-081': { '大浴場': 1 },
-      'onsen-083': { '殿湯': 1, '姫湯': 1 }
+      'onsen-083': { '殿湯': 1, '姫湯': 1 },
+      'onsen-088': { '男女共用大野天風呂': 1, '内湯（ぬる湯）': 1 }
     };
     const NO_DETAIL_DOTS = ['onsen-041', 'onsen-043', 'onsen-044', 'onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014', 'onsen-019', 'onsen-023', 'onsen-024', 'onsen-027', 'onsen-040', 'onsen-045', 'onsen-049', 'onsen-053', 'onsen-065', 'onsen-067'];
     for (const width of [1280, 390, 320]) {
