@@ -517,6 +517,12 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式の料金ページ「午後 11:30 ～ 午前 5:00（源泉かけ流しの温泉を張り替えるため）」。入浴できない時間の理由として施設の温泉全体について書かれており、浴槽ごとの記載ではないため、個々の湯へは広げない' },
     dilution: { water: 'unknown', note: '公式に加水・加温・循環の記載はない。源生の湯は今回は判定しない' },
     source: { url: 'https://www.kurikomasanso.com/ryokin.html', checkedAt: '2026-11-08' }
+  },
+  'onsen-085': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「心も体もあたたまる源泉かけ流し天然温泉。」施設の温泉全体についての記述で、大浴場・貸切露天風呂など浴槽ごとの記載ではないため、個々の湯へは広げない' },
+    dilution: { water: 'unknown', note: '公式に加水・加温・循環の記載はない(泉温35.0°C)。浴槽別に無加水・無加温・非循環を確認できないため規則は付けず、源生の湯は認定しない' },
+    source: { url: 'https://kawashimaryokan.co.jp/spa', checkedAt: '2026-11-08' }
   }
 };
 

@@ -1853,6 +1853,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-08",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "node/5094654423"
+  },
+  {
+    "id": "onsen-085",
+    "number": 85,
+    "area": "北海道",
+    "prefecture": "北海道",
+    "onsen": "豊富温泉",
+    "facility": "川島旅館",
+    "latitude": 45.0740302,
+    "longitude": 141.8394518,
+    "coordinateSource": "https://www.openstreetmap.org/way/577709929",
+    "coordinateVerified": true,
+    "officialUrl": "https://kawashimaryokan.co.jp/",
+    "category": "その他",
+    "bathing": "日帰り入浴13:00-20:00（最終入場19:30）・大人1,000円、1回60分（1日1回まで、人数制限あり）。貸切露天風呂は予約制で45分3,000円（宿泊者優先）。一人泊可（公式の客室案内にシングル8室）",
+    "station": "豊富駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "含よう素－ナトリウム－塩化物温泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B7%9D%E5%B3%B6%E6%97%85%E9%A4%A8%20%E8%B1%8A%E5%AF%8C%E6%B8%A9%E6%B3%89%20%E5%8C%97%E6%B5%B7%E9%81%93",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/577709929"
   }
 ];
 

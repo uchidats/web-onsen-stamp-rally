@@ -610,5 +610,12 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '展望大浴場（露天風呂）', kind: '露天', tags: ['標高約1100m', '大パノラマ'], note: '須川高原の大自然を一望できる大パノラマ露天風呂です。左手に秣岳、右手にブナの原生林が茂る野鳥の森を望めます' }
     ],
     source: { url: 'https://www.kurikomasanso.com/', checkedAt: '2026-11-08' }
+  },
+  'onsen-085': {
+    baths: [
+      { name: '大浴場', tags: ['男女入替制', '露天風呂付き', '日帰り入浴可'], note: '1階に2か所あり、それぞれに石造りの露天風呂があります。毎日男女が入れ替わります' },
+      { name: '貸切露天風呂', kind: '露天', form: '貸切', tags: ['予約制', '日帰り利用も可'], note: '時間によって貸し切れる露天風呂で、デラックスルームからは直接入れます' }
+    ],
+    source: { url: 'https://kawashimaryokan.co.jp/stay', checkedAt: '2026-11-08' }
   }
 };

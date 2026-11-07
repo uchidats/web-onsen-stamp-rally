@@ -299,3 +299,11 @@ test('gensei: Kurikoma Sanso is not judged — kake-nagashi is official but faci
   assert.equal(e.treatment, undefined);
   assert.deepEqual(certifiedBaths(e), []);
 });
+
+test('gensei: Kawashima Ryokan is not certified — official kake-nagashi is facility-level and no treatment is stated', () => {
+  const e = kake['onsen-085'];
+  assert.equal(e.evidence.type, 'official_text');
+  assert.deepEqual(e.baths, []);
+  assert.equal(e.treatment, undefined);
+  assert.deepEqual(certifiedBaths(e), []);
+});

@@ -114,7 +114,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
     assert.equal(await evaluate("document.querySelector('.facility-entry').dataset.facilityId"),'onsen-016');
     useMaster=true;
     await evaluate('localStorage.clear();location.reload()');
-    await waitFor("document.querySelector('[data-group=nyuto] .facility-entry') && ONSEN_DATA.length===83");
+    await waitFor("document.querySelector('[data-group=nyuto] .facility-entry') && ONSEN_DATA.length===84");
     for(const width of [1440,1280,768,390,320]){
       await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<400});
       await evaluate("document.getElementById('onsens').scrollIntoView()");
@@ -151,7 +151,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
     }
     await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
     assert.equal(await evaluate("document.querySelectorAll('#cards .card').length"),75);
-    assert.equal(await evaluate("new Set([...document.querySelectorAll('.facility-entry')].map(r=>r.dataset.facilityId)).size"),83);
+    assert.equal(await evaluate("new Set([...document.querySelectorAll('.facility-entry')].map(r=>r.dataset.facilityId)).size"),84);
     await evaluate("document.querySelector('[data-detail=onsen-015]').click()");
     assert.equal(await evaluate("document.querySelector('#modalSubtitle .facility-name').textContent"),'鶴の湯温泉');
     assert.ok(await evaluate("document.getElementById('detailList').textContent.includes('最寄り駅')"));

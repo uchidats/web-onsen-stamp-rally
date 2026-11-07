@@ -491,5 +491,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの殿湯「黄金色に輝くお湯の素晴らしさをご堪能ください。」、姫湯「黄金色に輝くお湯をご堪能ください。」。公式のよくある質問は「湯口に注ぐ温泉は無色透明で鉄分を多く含む空気に触れると黄金色に変わる濁り湯」。既存の色分類の「黄」に当てる。宿泊者専用の福寿・長寿は浴場ごとの色の記載がないため付けない' }
     }],
     source: { url: 'https://www.matusirosou.com/onsen/', checkedAt: '2026-11-08' }
+  },
+  'onsen-085': {
+    colors: [{
+      color: 'yellow', expression: 'わずかに黄濁', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの効能の項「お湯はアルカリ性でわずかに黄濁していて、弱い石油臭があるのも特徴です。」既存の色分類の「黄」に当てる。施設の湯全体についての記述のため施設全体の色とし、個々の浴槽へは広げない' }
+    }],
+    source: { url: 'https://kawashimaryokan.co.jp/spa', checkedAt: '2026-11-08' }
   }
 };
