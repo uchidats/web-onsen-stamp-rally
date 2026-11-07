@@ -495,6 +495,12 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップ・効能ページ「弱アルカリ性単純温泉、日本一黒い湯植物性（フミン）モール温泉です。源泉100％掛け流し」。施設紹介ページの大浴場の項「日本一黒い湯の源泉掛け流しを満々とたたえた大浴場。」家族風呂には個別の掛け流しの記載がないため広げない' },
     dilution: { water: 'unknown', note: '公式に加水・加温・循環の記載はない。青森県観光情報サイトの特集(2024年)は施設について「無加温・無加水の掛け流し」と書き、施設紹介の家族風呂情報に「加水　不可」とあるが、いずれも第三者資料で、大浴場について無加水・無加温・非循環を浴槽別に示すものではない。規則は付けず、源生の湯は保留' },
     source: { url: 'http://www.touhoku-onsen.com/sisetu.html', checkedAt: '2026-11-08' }
+  },
+  'onsen-082': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: '豊富温泉の湯治情報サイト「ミライノトウジ」の入浴施設一覧で、ニュー温泉閣ホテルの「料金・入浴設備」欄に「■源泉掛け流し」。公式サイトにかけ流しの記載はない。施設単位の第三者資料のため、個々の浴槽へは広げない' },
+    dilution: { water: 'unknown', note: '公式に加水・加温・循環の記載はない。温泉情報サイト(温泉ニア)や個人の宿泊記に「加温あり、加水なし、循環なし、消毒なし」の記載があるが、浴槽別ではなく公式でもない。源泉の泉温は公式の分析情報で混合槽31.8℃。規則は付けず、源生の湯は認定しない' },
+    source: { url: 'https://toyotomi-onsen.com/hotspring', checkedAt: '2026-11-08' }
   }
 };
 

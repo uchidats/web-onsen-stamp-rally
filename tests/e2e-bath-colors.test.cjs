@@ -99,7 +99,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
     // 保留(根拠不足)の施設には丸を出さない
-    const NONE = ['onsen-001', 'onsen-005', 'onsen-007', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-022', 'onsen-025', 'onsen-037', 'onsen-038', 'onsen-042', 'onsen-047', 'onsen-050', 'onsen-055', 'onsen-056', 'onsen-058', 'onsen-060', 'onsen-063', 'onsen-068', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-076', 'onsen-080'];
+    const NONE = ['onsen-001', 'onsen-005', 'onsen-007', 'onsen-009', 'onsen-011', 'onsen-013', 'onsen-014', 'onsen-022', 'onsen-025', 'onsen-037', 'onsen-038', 'onsen-042', 'onsen-047', 'onsen-050', 'onsen-055', 'onsen-056', 'onsen-058', 'onsen-060', 'onsen-063', 'onsen-068', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-076', 'onsen-080', 'onsen-082'];
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);
     const center = async expr => { const r = await rect(expr); return { x: r.x + r.w / 2, y: r.y + r.h / 2 }; };

@@ -1784,6 +1784,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-08",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "way/695770388"
+  },
+  {
+    "id": "onsen-082",
+    "number": 82,
+    "area": "北海道",
+    "prefecture": "北海道",
+    "onsen": "豊富温泉",
+    "facility": "ニュー温泉閣ホテル",
+    "latitude": 45.0745082,
+    "longitude": 141.8395231,
+    "coordinateSource": "https://www.openstreetmap.org/way/577709936",
+    "coordinateVerified": true,
+    "officialUrl": "https://new-onsenkaku.com/",
+    "category": "その他",
+    "bathing": "日帰り入浴 朝湯7:00-8:30・昼夕湯13:00-21:00、大人（中学生以上）600円（公式）。石油試掘時に湧いた油分を含む湯で、油臭がある（公式）。豊富駅から無料送迎あり（予約時に要連絡）",
+    "station": "豊富駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "ナトリウム－塩化物泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%8B%E3%83%A5%E3%83%BC%E6%B8%A9%E6%B3%89%E9%96%A3%E3%83%9B%E3%83%86%E3%83%AB%20%E5%8C%97%E6%B5%B7%E9%81%93",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/577709936"
   }
 ];
 

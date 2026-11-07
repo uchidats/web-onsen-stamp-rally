@@ -274,3 +274,12 @@ test('gensei: Tohoku Onsen stays undecided — official kake-nagashi on 大浴�
   for (const name of ['大浴場', '家族風呂']) assert.equal(evaluate(e, name).result, 'pending');
   assert.deepEqual(certifiedBaths(e), []);
 });
+
+test('gensei: New Onsenkaku is not certified — kake-nagashi is third party at facility level and heating is unsettled per bath', () => {
+  const e = kake['onsen-082'];
+  assert.equal(e.evidence.type, 'third_party');
+  assert.deepEqual(e.baths, []);
+  assert.equal(e.treatment, undefined);
+  assert.equal(e.dilution.water, 'unknown');
+  assert.deepEqual(certifiedBaths(e), []);
+});

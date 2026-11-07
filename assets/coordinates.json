@@ -3,7 +3,7 @@
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-08",
-  "method": "81 verified facilities (onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "82 verified facilities (onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -4940,6 +4940,225 @@
             [
               141.2168764,
               40.7785819
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-082",
+      "facility": "ニュー温泉閣ホテル",
+      "prefecture": "北海道",
+      "latitude": 45.0745082,
+      "longitude": 141.8395231,
+      "coordinateSource": "https://www.openstreetmap.org/way/577709936",
+      "coordinateVerified": true,
+      "osmName": "ニュー温泉閣ホテル",
+      "osmAddress": "",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://new-onsenkaku.com/access",
+      "note": "OSM建物way/577709936(name=ニュー温泉閣ホテル、tourism=hotel、phone=+81 162 82 1243)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。公式サイトの所在地(北海道天塩郡豊富町字温泉)・電話(0162-82-1243)と一致。Overture Places 2026-09-23.1(meta)のレコード「ニュー温泉閣ホテル」(電話+81162821243、URL new-onsenkaku.com が公式と一致)の点も同じポリゴン内にある。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-08",
+      "onsen": "豊富温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "北海道天塩郡豊富町字温泉",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/577709936",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "ニュー温泉閣ホテル",
+      "identityReferences": [
+        "https://new-onsenkaku.com/access",
+        "https://toyotomi-onsen.com/hotspring"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E3%83%8B%E3%83%A5%E3%83%BC%E6%B8%A9%E6%B3%89%E9%96%A3%E3%83%9B%E3%83%86%E3%83%AB%20%E5%8C%97%E6%B5%B7%E9%81%93",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              141.8393593,
+              45.0744605
+            ],
+            [
+              141.8394959,
+              45.0744399
+            ],
+            [
+              141.8395072,
+              45.0744774
+            ],
+            [
+              141.8393794,
+              45.0744967
+            ],
+            [
+              141.8393964,
+              45.0745532
+            ],
+            [
+              141.8396647,
+              45.0745127
+            ],
+            [
+              141.8396475,
+              45.0744559
+            ],
+            [
+              141.839545,
+              45.0744714
+            ],
+            [
+              141.8395334,
+              45.0744329
+            ],
+            [
+              141.8396698,
+              45.0744123
+            ],
+            [
+              141.8396392,
+              45.0743113
+            ],
+            [
+              141.8394985,
+              45.0743325
+            ],
+            [
+              141.8394916,
+              45.0743099
+            ],
+            [
+              141.8394227,
+              45.0743203
+            ],
+            [
+              141.8394296,
+              45.0743433
+            ],
+            [
+              141.8393276,
+              45.0743587
+            ],
+            [
+              141.8393422,
+              45.0744069
+            ],
+            [
+              141.8393158,
+              45.0744109
+            ],
+            [
+              141.8393025,
+              45.0743668
+            ],
+            [
+              141.8391458,
+              45.0743904
+            ],
+            [
+              141.8391412,
+              45.0743752
+            ],
+            [
+              141.8390543,
+              45.0743883
+            ],
+            [
+              141.8390593,
+              45.074405
+            ],
+            [
+              141.8390201,
+              45.0744109
+            ],
+            [
+              141.8390522,
+              45.0745174
+            ],
+            [
+              141.8391921,
+              45.0744965
+            ],
+            [
+              141.8391979,
+              45.0745156
+            ],
+            [
+              141.8389459,
+              45.0745534
+            ],
+            [
+              141.838961,
+              45.0746035
+            ],
+            [
+              141.8392427,
+              45.0745612
+            ],
+            [
+              141.8392546,
+              45.0746008
+            ],
+            [
+              141.8392075,
+              45.0746079
+            ],
+            [
+              141.8392356,
+              45.0747013
+            ],
+            [
+              141.8393781,
+              45.0746799
+            ],
+            [
+              141.8393496,
+              45.0745851
+            ],
+            [
+              141.8393057,
+              45.0745917
+            ],
+            [
+              141.8392941,
+              45.0745529
+            ],
+            [
+              141.839352,
+              45.0745442
+            ],
+            [
+              141.8393369,
+              45.0744939
+            ],
+            [
+              141.839272,
+              45.0745036
+            ],
+            [
+              141.8392664,
+              45.0744849
+            ],
+            [
+              141.8393327,
+              45.074475
+            ],
+            [
+              141.8393206,
+              45.0744349
+            ],
+            [
+              141.8393502,
+              45.0744305
+            ],
+            [
+              141.8393593,
+              45.0744605
             ]
           ]
         ]
