@@ -149,7 +149,7 @@ test('E2E: facility name links and map icons fit desktop and mobile cards', asyn
       fs.writeFileSync(`scratch/card-layout-qa/master-${width}.png`,Buffer.from(shot.data,'base64'));
     }
     await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
-    assert.equal(await evaluate("document.querySelectorAll('#cards .card').length"),78);
+    assert.equal(await evaluate("document.querySelectorAll('#cards .card').length"),79);
     assert.equal(await evaluate("new Set([...document.querySelectorAll('.facility-entry')].map(r=>r.dataset.facilityId)).size"),89);
     await evaluate("document.querySelector('[data-detail=onsen-015]').click()");
     assert.equal(await evaluate("document.querySelector('#modalSubtitle .facility-name').textContent"),'鶴の湯温泉');

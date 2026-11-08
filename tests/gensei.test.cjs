@@ -347,3 +347,14 @@ test('gensei: Shichimi Kouyoukan — facility-level official kake-nagashi withou
   assert.deepEqual(certifiedBaths(e), []);
   for (const n of ['洞窟風呂', '炭色の湯']) assert.equal(evaluate(e, n).result, 'pending', n);
 });
+
+test('gensei: Yado Miyama — facility-level official kake-nagashi with seasonal (cold-season) heating is not certified', () => {
+  const e = kake['onsen-092'];
+  assert.equal(e.evidence.type, 'official_text');
+  assert.deepEqual(e.baths, []);
+  assert.equal(e.dilution.water, 'unknown');
+  assert.equal(e.treatment.heating[0].status, 'yes');
+  assert.match(e.treatment.heating[0].quote, /寒冷期は加温しています/);
+  assert.deepEqual(certifiedBaths(e), []);
+  assert.notEqual(evaluate(e, '男女別の内湯').result, 'certified');
+});

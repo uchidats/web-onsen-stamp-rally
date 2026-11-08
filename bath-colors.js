@@ -519,5 +519,13 @@ window.ONSEN_BATH_COLORS = {
       { color: 'milky_white', expression: '乳白色', scope: 'facility', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「温泉の色はその日の気温などで変わり 主にエメラルドグリーンや乳白色になります。」施設の温泉全体についての記述で、浴槽ごとの色は書かれていない。同ページの「黒い湯花が舞っています」は湯花の記述で、湯の色としては扱わない' }, change: { kind: 'seasonal', note: 'その日の気温などで変わります' } }
     ],
     source: { url: 'https://shitimi-kouyoukan.com/?page_id=71', checkedAt: '2026-11-08' }
+  },
+  'onsen-092': {
+    colors: [{
+      color: 'yellow', expression: 'やや黒い薄黄色', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの温泉データ「湯色 やや黒い薄黄色」。見出しは「紅茶のような湯の色」。色の名詞は薄黄色のため既存分類の「黄」に当て、「やや黒い」「紅茶のような」は同じ湯の表現の違いとして変化欄に記す(黒・茶褐色の別の色としては扱わない)。浴槽ごとの記載はない' },
+      change: { kind: 'tint', note: '公式は「紅茶のような湯の色」とも表現しています' }
+    }],
+    source: { url: 'https://yado-miyama.com/spa/', checkedAt: '2026-11-08' }
   }
 };

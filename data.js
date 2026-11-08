@@ -2013,6 +2013,30 @@ window.ONSEN_DATA = [
     "springType": "含硫黄－カルシウム・ナトリウム－硫酸塩・塩化物泉（低張性中性高温泉）",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%83%E5%91%B3%E6%B8%A9%E6%B3%89%20%E7%B4%85%E8%91%89%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C",
     "coordinateCheckedAt": "2026-11-08"
+  },
+  {
+    "id": "onsen-092",
+    "number": 92,
+    "area": "南東北",
+    "prefecture": "宮城県",
+    "onsen": "川渡温泉",
+    "facility": "山ふところの宿 みやま",
+    "latitude": 38.731956481933594,
+    "longitude": 140.75279235839844,
+    "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+    "coordinateVerified": true,
+    "officialUrl": "https://yado-miyama.com/",
+    "category": "その他",
+    "bathing": "日帰り入浴の案内は公式サイトにない。男女別の内湯は24時間入浴可（公式）。本館はお一人様から利用できる湯治向きの部屋（公式）。1日に迎えるのは2〜3組。支払いは現金のみ（公式）。川渡温泉駅・鳴子御殿湯駅への送迎あり（予約時などに要連絡、公式）",
+    "station": "川渡温泉駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "単純温泉（低張性弱アルカリ性高温泉）",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%B1%B1%E3%81%B5%E3%81%A8%E3%81%93%E3%82%8D%E3%81%AE%E5%AE%BF%20%E3%81%BF%E3%82%84%E3%81%BE%20%E5%AE%AE%E5%9F%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "CDLA-Permissive-2.0",
+    "coordinateSourceId": "c7bebde1-3ce0-48f4-bb46-c6760849da3a",
+    "coordinateSourceRelease": "2026-09-23.1"
   }
 ];
 

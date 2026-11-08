@@ -661,5 +661,12 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '炭色の湯', tags: ['男湯', '男女交代制'], note: '男湯にあるお風呂です' }
     ],
     source: { url: 'https://shitimi-kouyoukan.com/?page_id=71', checkedAt: '2026-11-08' }
+  },
+  'onsen-092': {
+    note: 'お風呂は新館側にある男女別の内湯で、男女同じ広さです。',
+    baths: [
+      { name: '男女別の内湯', form: '男女別', tags: ['金山杉の浴室', '玄晶石の浴槽', '24時間入浴可'], note: '浴槽は硯の産地で有名な宮城県雄勝の玄晶石、浴室内は金山杉をはじめ杉材をふんだんに使っています' }
+    ],
+    source: { url: 'https://yado-miyama.com/spa/', checkedAt: '2026-11-08' }
   }
 };

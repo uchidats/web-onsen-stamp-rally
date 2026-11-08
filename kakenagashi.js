@@ -560,6 +560,15 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「加温、加水のない百％源泉掛け流しの温泉です」。施設の温泉全体についての記述で、浴槽ごとの記載ではないため個々の湯へは広げない' },
     dilution: { water: 'none', note: '公式「加温、加水のない百％源泉掛け流しの温泉です」(施設全体の記述)。循環の有無は書かれておらず、浴槽ごとの記載もないため源生の湯は保留' },
     source: { url: 'https://shitimi-kouyoukan.com/?page_id=71', checkedAt: '2026-11-08' }
+  },
+  'onsen-092': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの見出し「源泉掛け流しです」。施設の温泉全体についての記述で、浴槽ごとの記載ではないため個々の湯へは広げない' },
+    dilution: { water: 'unknown', note: '公式に加水・循環の記載はない。加温は寒冷期のみありと公式に書かれている。源生の湯は認定しない' },
+    source: { url: 'https://yado-miyama.com/spa/', checkedAt: '2026-11-08' },
+    treatment: {
+      heating: [{ status: 'yes', scope: 'all', coverage: '施設の温泉(寒冷期のみ)', scopeNote: '公式「温泉」ページが、ぬる目のお湯で寒冷期は加温していると書く。季節限定の加温だが、加温ありの期間があるため無加温とは扱わない', quote: 'ぬる目のお湯です（寒冷期は加温しています）', url: 'https://yado-miyama.com/spa/', checkedAt: '2026-11-08' }]
+    }
   }
 };
 

@@ -3,7 +3,7 @@
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-08",
-  "method": "90 verified facilities and 1 pending facility without coordinates (onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "91 verified facilities and 1 pending facility without coordinates (onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -5658,6 +5658,57 @@
       "confidence": "未確定",
       "geometry": null,
       "geometryCheck": "座標未確定のため照合なし"
+    },
+    {
+      "id": "onsen-092",
+      "facility": "山ふところの宿 みやま",
+      "prefecture": "宮城県",
+      "latitude": 38.731956481933594,
+      "longitude": 140.75279235839844,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
+      "addressReference": "https://yado-miyama.com/",
+      "note": "Overture Places 2026-09-23.1(meta)の施設名付きレコード「山ふところの宿みやま」。所在地「鳴子温泉字要害91」(大崎市、989-6711)・電話(+81229847641)・URL(www.yado-miyama.com)が、公式サイトの所在地(宮城県大崎市鳴子温泉字要害91)・電話(0229-84-7641)・URLと一致。地点はOSMの無名の建物 way/1162974719 の内側にある。国土地理院の航空写真で、地点に建物が3棟並び西から北側に森があることを確認し、公式の説明(茅葺の母屋・本館・新館の3棟が並ぶ、裏に古墳の森)と合う。国土地理院の住所検索の点(約170m北西)は番地の代表点のため使わない。Overture GeoParquetの施設Point bboxを取得(float32)。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-08",
+      "onsen": "川渡温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "宮城県大崎市鳴子温泉字要害91",
+      "auditResult": "新規追加",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceId": "c7bebde1-3ce0-48f4-bb46-c6760849da3a",
+      "sourceFacilityName": "山ふところの宿みやま",
+      "identityReferences": [
+        "https://yado-miyama.com/",
+        "https://yado-miyama.com/access/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%B1%B1%E3%81%B5%E3%81%A8%E3%81%93%E3%82%8D%E3%81%AE%E5%AE%BF%20%E3%81%BF%E3%82%84%E3%81%BE%20%E5%AE%AE%E5%9F%8E%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.75279235839844,
+          38.731956481933594
+        ]
+      },
+      "sourceRelease": "2026-09-23.1",
+      "sourceAddress": [
+        {
+          "freeform": "鳴子温泉字要害91",
+          "locality": "大崎市",
+          "postcode": "989-6711",
+          "region": null,
+          "country": "JP"
+        }
+      ],
+      "sourceWebsites": [
+        "https://www.yado-miyama.com/"
+      ],
+      "sourcePhones": [
+        "+81229847641"
+      ]
     }
   ],
   "coordinateSystem": "WGS84 (EPSG:4326), decimal degrees; GeoJSON order is [longitude, latitude], Leaflet is [latitude, longitude]"
