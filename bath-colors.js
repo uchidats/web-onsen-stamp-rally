@@ -527,5 +527,12 @@ window.ONSEN_BATH_COLORS = {
       change: { kind: 'tint', note: '公式は「紅茶のような湯の色」とも表現しています' }
     }],
     source: { url: 'https://yado-miyama.com/spa/', checkedAt: '2026-11-08' }
+  },
+  'onsen-093': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「4つのお風呂」ページの泉質欄「すっきりと澄んで肌にやさしい単純泉（無色透明・無味無臭）、源泉かけ流し」。施設の温泉全体についての記述で、浴槽ごとの色は書かれていない' }
+    }],
+    source: { url: 'https://aoninet.com/hotspring/', checkedAt: '2026-11-08' }
   }
 };

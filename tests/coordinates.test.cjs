@@ -3,10 +3,10 @@ const c={window:{}};vm.runInNewContext(fs.readFileSync('data.js','utf8'),c);cons
 // Historical coordinate fixtures retain the former display name; only this name was corrected.
 const historicalValue=(row,key)=>row.id==='onsen-020'&&key==='facility'?'源泉・秘湯の宿 ふけの湯':row[key];
 require('../map.js');const M=globalThis.OnsenMap,audit=JSON.parse(fs.readFileSync('assets/coordinates.json','utf8'));
-assert.equal(data.length,92);assert.equal(new Set(data.map(x=>x.id)).size,92);assert.equal(audit.rows.length,92);
+assert.equal(data.length,93);assert.equal(new Set(data.map(x=>x.id)).size,93);assert.equal(audit.rows.length,93);
 const added1022=new Set(['onsen-068']); // 2026-10-22に追加(増富温泉 不老閣)。既存67施設は変更しない
 const added1102=new Set(['onsen-069']); // 2026-11-02に追加(奈良田温泉 白根館)。既存68施設は変更しない
-const added1108=new Set(['onsen-079','onsen-080','onsen-081','onsen-082','onsen-083','onsen-084','onsen-085','onsen-086','onsen-087','onsen-088','onsen-089','onsen-090','onsen-091','onsen-092']); // 2026-11-08に追加(十勝岳温泉 湯元 凌雲閣、横向温泉 滝川屋旅館、上笹橋温泉 東北温泉、豊富温泉 ニュー温泉閣ホテル、松代温泉 黄金の湯 松代荘、須川温泉 栗駒山荘、豊富温泉 川島旅館、乳頭温泉郷 黒湯温泉、仙仁温泉 花仙庵 岩の湯、白骨温泉 泡の湯旅館、三斗小屋温泉 煙草屋旅館・大黒屋旅館、七味温泉 紅葉館(座標未確定)、川渡温泉 山ふところの宿 みやま)
+const added1108=new Set(['onsen-079','onsen-080','onsen-081','onsen-082','onsen-083','onsen-084','onsen-085','onsen-086','onsen-087','onsen-088','onsen-089','onsen-090','onsen-091','onsen-092','onsen-093']); // 2026-11-08に追加(十勝岳温泉 湯元 凌雲閣、横向温泉 滝川屋旅館、上笹橋温泉 東北温泉、豊富温泉 ニュー温泉閣ホテル、松代温泉 黄金の湯 松代荘、須川温泉 栗駒山荘、豊富温泉 川島旅館、乳頭温泉郷 黒湯温泉、仙仁温泉 花仙庵 岩の湯、白骨温泉 泡の湯旅館、三斗小屋温泉 煙草屋旅館・大黒屋旅館、七味温泉 紅葉館(座標未確定)、川渡温泉 山ふところの宿 みやま、青荷温泉 ランプの宿 青荷温泉)
 const added1107=new Set(['onsen-078']); // 2026-11-07に追加(蓮華温泉 白馬岳蓮華温泉ロッジ)
 const added1106=new Set(['onsen-076','onsen-077']); // 2026-11-06に追加(伊東温泉 東海館・ケイズハウス伊東温泉)
 const added1105=new Set(['onsen-074','onsen-075']); // 2026-11-05に追加(いわき湯本温泉 松柏館・旅館こいと)
@@ -51,11 +51,11 @@ for(const [i,x] of data.entries()){
   }else{assert.equal(x.latitude,null);assert.equal(x.longitude,null);assert.equal(x.coordinateSource,'');}
   for(const key of ['visits','visitCount','lastVisit','notes'])assert.equal(Object.hasOwn(x,key),false);
 }
-assert.equal(data.filter(M.verified).length,91);assert.equal(data.filter(x=>!M.verified(x)).map(x=>x.id).join(','),'onsen-091');
+assert.equal(data.filter(M.verified).length,92);assert.equal(data.filter(x=>!M.verified(x)).map(x=>x.id).join(','),'onsen-091');
 {const x=data.find(x=>x.id==='onsen-091'),r=audit.rows.find(r=>r.id==='onsen-091');assert.equal(x.facility,'紅葉館');assert.equal(x.coordinateVerified,false);assert.equal(x.latitude,null);assert.equal(x.longitude,null);assert.equal(x.coordinateSource,'');assert.match(x.mapUrl,/^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=/);assert.equal(r.geometry,null);assert.equal(r.googleCoordinatesStored,false);assert.equal(r.address,'長野県上高井郡高山村大字牧2974-45');}
 assert.match(audit.attribution,/OpenStreetMap contributors/);assert.match(audit.license,/ODbL-1.0.*CDLA-Permissive-2.0.*Apache-2.0/);
 for(const a of currentAdditions){const r=audit.rows.find(r=>r.id===a.id);assert.equal(r.coordinateLicense,a.coordinateLicense);assert.equal(r.googleCoordinatesStored,false);if(a.coordinateLicense!=='ODbL-1.0'){assert.match(r.coordinateSource,/stac\.overturemaps\.org/);assert.match(r.sourceId,/^[a-f0-9-]{36}$/);assert.equal(Object.hasOwn(r,'osmName'),false);}}
 for(const file of ['CDLA-Permissive-2.0.txt','Apache-2.0.txt','Foursquare-NOTICE.txt'])assert.ok(fs.readFileSync('assets/licenses/'+file,'utf8').length>1000);
-const ids=['onsen-002','onsen-003','onsen-004','onsen-005','onsen-081'];assert.deepEqual(Array.from(M.selection(data,'','青森県',()=>false),x=>x.id),ids);
+const ids=['onsen-002','onsen-003','onsen-004','onsen-005','onsen-081','onsen-093'];assert.deepEqual(Array.from(M.selection(data,'','青森県',()=>false),x=>x.id),ids);
 for(const id of ids){const x=data.find(x=>x.id===id);assert.equal(M.selection(data,'visited','青森県',r=>r.id===id)[0].id,id);}
-console.log('PASS: 92 fixed IDs (onsen-068 added 2026-10-22, onsen-069 added 2026-11-02, onsen-070〜073 added 2026-11-03, onsen-074〜075 added 2026-11-05, onsen-076〜077 added 2026-11-06, onsen-078 added 2026-11-07, onsen-079〜092 added 2026-11-08), existing 69 unchanged, 91 verified / 1 pending (onsen-091, no coordinates), dates, footprint membership, attribution, WGS84 order and no personal data');
+console.log('PASS: 93 fixed IDs (onsen-068 added 2026-10-22, onsen-069 added 2026-11-02, onsen-070〜073 added 2026-11-03, onsen-074〜075 added 2026-11-05, onsen-076〜077 added 2026-11-06, onsen-078 added 2026-11-07, onsen-079〜093 added 2026-11-08), existing 69 unchanged, 92 verified / 1 pending (onsen-091, no coordinates), dates, footprint membership, attribution, WGS84 order and no personal data');

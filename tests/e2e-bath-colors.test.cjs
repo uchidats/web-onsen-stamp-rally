@@ -107,6 +107,8 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-091': ['緑', '乳白色'].map(l => `湯の色: ${l}（施設全体）。その日の気温などで変わります。${LIST}`),
       // 2026-11-08 追加(公式「温泉」ページの温泉データ「湯色 やや黒い薄黄色」)
       'onsen-092': ['湯の色: 黄（施設全体）。公式の表現「やや黒い薄黄色」。公式は「紅茶のような湯の色」とも表現しています。'],
+      // 2026-11-08 追加(公式「4つのお風呂」の泉質欄「単純泉（無色透明・無味無臭）」)
+      'onsen-093': ['湯の色: 無色透明（施設全体）。'],
       'onsen-070': ['湯の色: 無色透明（施設全体）。公式の表現「基本的には無色透明」。', '湯の色: 乳白色（若鹿の湯）。2026年11月3日の日帰り入浴時の色です。公式は基本的に無色透明で、湯ノ花が舞うと濁ることがあると説明しており、常に乳白色ではありません。現地での観察です。']
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
@@ -256,7 +258,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-088': { '男女共用大野天風呂': 1, '内湯（ぬる湯）': 1 },
       'onsen-089': { '岩風呂': 1 }
     };
-    const NO_DETAIL_DOTS = ['onsen-041', 'onsen-091', 'onsen-092', 'onsen-043', 'onsen-044', 'onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014', 'onsen-019', 'onsen-023', 'onsen-024', 'onsen-027', 'onsen-040', 'onsen-045', 'onsen-049', 'onsen-053', 'onsen-065', 'onsen-067'];
+    const NO_DETAIL_DOTS = ['onsen-041', 'onsen-091', 'onsen-092', 'onsen-093', 'onsen-043', 'onsen-044', 'onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014', 'onsen-019', 'onsen-023', 'onsen-024', 'onsen-027', 'onsen-040', 'onsen-045', 'onsen-049', 'onsen-053', 'onsen-065', 'onsen-067'];
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       for (const [id, want] of Object.entries(DETAIL)) {

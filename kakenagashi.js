@@ -569,6 +569,12 @@ window.ONSEN_KAKENAGASHI = {
     treatment: {
       heating: [{ status: 'yes', scope: 'all', coverage: '施設の温泉(寒冷期のみ)', scopeNote: '公式「温泉」ページが、ぬる目のお湯で寒冷期は加温していると書く。季節限定の加温だが、加温ありの期間があるため無加温とは扱わない', quote: 'ぬる目のお湯です（寒冷期は加温しています）', url: 'https://yado-miyama.com/spa/', checkedAt: '2026-11-08' }]
     }
+  },
+  'onsen-093': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「4つのお風呂」ページの泉質欄「すっきりと澄んで肌にやさしい単純泉（無色透明・無味無臭）、源泉かけ流し」。施設の温泉全体についての記述で、4つのお風呂それぞれの記載ではないため個々の湯へは広げない' },
+    dilution: { water: 'unknown', note: '公式に加水・加温・循環の記載はない。浴槽別の無加水・無加温・非循環が確認できないため源生の湯は認定しない' },
+    source: { url: 'https://aoninet.com/hotspring/', checkedAt: '2026-11-08' }
   }
 };
 

@@ -358,3 +358,13 @@ test('gensei: Yado Miyama — facility-level official kake-nagashi with seasonal
   assert.deepEqual(certifiedBaths(e), []);
   assert.notEqual(evaluate(e, '男女別の内湯').result, 'certified');
 });
+
+test('gensei: Aoni Onsen — facility-level official kake-nagashi is not extended to the four baths, and nothing is certified', () => {
+  const e = kake['onsen-093'];
+  assert.equal(e.evidence.type, 'official_text');
+  assert.deepEqual(e.baths, []);
+  assert.equal(e.dilution.water, 'unknown');
+  assert.equal(e.treatment, undefined);
+  assert.deepEqual(certifiedBaths(e), []);
+  for (const n of ['健六の湯', '本館内湯', '滝見の湯', '露天風呂(混浴)']) assert.equal(evaluate(e, n).result, 'pending', n);
+});

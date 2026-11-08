@@ -2037,6 +2037,29 @@ window.ONSEN_DATA = [
     "coordinateLicense": "CDLA-Permissive-2.0",
     "coordinateSourceId": "c7bebde1-3ce0-48f4-bb46-c6760849da3a",
     "coordinateSourceRelease": "2026-09-23.1"
+  },
+  {
+    "id": "onsen-093",
+    "number": 93,
+    "area": "北東北",
+    "prefecture": "青森県",
+    "onsen": "青荷温泉",
+    "facility": "ランプの宿 青荷温泉",
+    "latitude": 40.5713185,
+    "longitude": 140.7294614,
+    "coordinateSource": "https://www.openstreetmap.org/way/736900231",
+    "coordinateVerified": true,
+    "officialUrl": "https://aoninet.com/",
+    "category": "その他",
+    "bathing": "日帰り入浴10:00〜15:00・1,000円（2026年4月1日改定、公式）。冬期（12月1日〜3月31日）は国道102号入口から宿まで一般車両通行止めで、自家用車は道の駅「虹の湖」に置き、予約制の送迎バス「青荷シャトルバス」で来館する（日帰りも送迎時間に準じる、公式）。夏期の送迎バスも事前予約制（公式）。公式のオンライン予約で1名1室の宿泊プランが表示される（日により空きなし）",
+    "station": "黒石駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "単純温泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%A9%E3%83%B3%E3%83%97%E3%81%AE%E5%AE%BF%20%E9%9D%92%E8%8D%B7%E6%B8%A9%E6%B3%89%20%E9%9D%92%E6%A3%AE%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-08",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/736900231"
   }
 ];
 
