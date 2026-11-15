@@ -678,5 +678,13 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '露天風呂(混浴)', kind: '露天', form: '混浴', tags: ['岩造り', '女性専用時間あり'], note: '岩造りの野趣あふれる湯舟で、夜は星空、朝は静けさと風景を楽しめます' }
     ],
     source: { url: 'https://aoninet.com/hotspring/', checkedAt: '2026-11-08' }
+  },
+  'onsen-094': {
+    note: '温泉は別棟1階にあり、男湯・女湯それぞれに温泉と冷泉の2種類の浴槽があります（男女入れ替えなし）。',
+    baths: [
+      { name: '温泉（加温）', kind: '内湯', form: '男女別', tags: ['加温', '木曽川を望む'], note: '源泉の温度が約13℃と低いため加温している温泉の浴槽です' },
+      { name: '冷泉', kind: '内湯', form: '男女別', tags: ['冷泉', '木曽川を望む'], note: '温泉の浴槽と並ぶ冷泉の浴槽です' }
+    ],
+    source: { url: 'https://hpdsp.jp/kakehashi-onsen/hot_spring', checkedAt: '2026-11-15' }
   }
 };

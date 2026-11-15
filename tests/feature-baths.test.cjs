@@ -50,7 +50,7 @@ const IWAKI = { 'onsen-074': '松柏館', 'onsen-075': '旅館こいと' };
 const SHIZUOKA = { 'onsen-071': '川端の宿 湯本館', 'onsen-072': '野天風呂 山の家', 'onsen-073': '観音温泉' };
 const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
 const HOKKAIDO = { 'onsen-001': '知内温泉旅館' };
-const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘', 'onsen-088': '泡の湯旅館' };
+const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘', 'onsen-088': '泡の湯旅館', 'onsen-094': '棧温泉旅館' };
 const NIIGATA = { 'onsen-060': 'ひなの宿ちとせ', 'onsen-061': '自在館', 'onsen-062': '貝掛温泉', 'onsen-063': '瀬波グランドホテルはぎのや', 'onsen-064': '嵐渓荘' };
 
 const IWATE = {
@@ -58,7 +58,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 93);
+  assert.equal(data.length, 94);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -530,5 +530,15 @@ test('feature baths: Aoni Onsen lists the four official baths with their officia
   assert.ok(b['健六の湯'].tags.includes('24時間入浴可'));
   assert.match(x.bathing, /日帰り入浴10:00〜15:00・1,000円/);
   assert.match(x.bathing, /冬期（12月1日〜3月31日）は国道102号入口から宿まで一般車両通行止め/);
+  assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
+});
+
+test('feature baths: Kakehashi Onsen lists the heated bath and the cold-spring bath, without claiming kake-nagashi or an unheated cold bath', () => {
+  const x = data.find(v => v.id === 'onsen-094');
+  assert.equal(x.onsen, '棧温泉'); assert.equal(x.springType, '単純二酸化炭素冷鉱泉'); assert.equal(x.station, '上松駅');
+  assert.deepEqual(feature['onsen-094'].baths.map(b => b.name), ['温泉（加温）', '冷泉']);
+  assert.ok(feature['onsen-094'].baths.every(b => b.form === '男女別' && b.kind === '内湯'));
+  assert.ok(!/非加温|加温なし|かけ流し|掛け流し/.test(JSON.stringify(feature['onsen-094'])));
+  assert.match(x.bathing, /源泉かけ流しと、冷泉の浴槽を加温しているかは公式に記載がない/);
   assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
 });

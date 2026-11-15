@@ -534,5 +534,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「4つのお風呂」ページの泉質欄「すっきりと澄んで肌にやさしい単純泉（無色透明・無味無臭）、源泉かけ流し」。施設の温泉全体についての記述で、浴槽ごとの色は書かれていない' }
     }],
     source: { url: 'https://aoninet.com/hotspring/', checkedAt: '2026-11-08' }
+  },
+  'onsen-094': {
+    colors: [{
+      color: 'brown', expression: '鉄分の多い茶褐色の湯', scope: 'facility',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'まっぷる(昭文社)の棧温泉旅館(日帰り入浴)の紹介「鉄分の多い茶褐色の湯」(取材時点の情報、更新日の記載なし)。公式サイトは「鉄分を含む単純二酸化炭素冷鉱泉」と書くが、湯の色は書いていない。温泉・冷泉のどちらの浴槽の色かは書かれていないため施設全体にとどめる' }
+    }],
+    source: { url: 'https://www.mapple.net/spot/20010717/', checkedAt: '2026-11-15' }
   }
 };

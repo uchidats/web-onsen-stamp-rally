@@ -170,3 +170,6 @@ test('kakenagashi: Hokkaido (Shiriuchi) has 1 card wave and 3 bath-level waves b
   for (const b of e.baths) assert.equal(GENSEI.evaluate(e, b).result, 'pending', b);
   assert.match(e.dilution.note, /お客様にお任せ/);
 });
+
+// 棧温泉旅館(onsen-094): 公式にかけ流しの記載がなく、温泉の浴槽は加温。冷泉の浴槽の扱いも公式に記載がないため、かけ流しの記録は作らない
+if (kake['onsen-094'] !== undefined) throw new Error('onsen-094 must not have a kake-nagashi record without official evidence');

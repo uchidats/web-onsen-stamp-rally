@@ -2060,6 +2060,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-08",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "way/736900231"
+  },
+  {
+    "id": "onsen-094",
+    "number": 94,
+    "area": "関東・信越",
+    "prefecture": "長野県",
+    "onsen": "棧温泉",
+    "facility": "棧温泉旅館",
+    "latitude": 35.8064017,
+    "longitude": 137.6864061,
+    "coordinateSource": "https://www.openstreetmap.org/node/1674228880",
+    "coordinateVerified": true,
+    "officialUrl": "https://hpdsp.jp/kakehashi-onsen/",
+    "category": "その他",
+    "bathing": "日帰り入浴9:00〜21:00（月数回の不定休あり）、大人700円・小学生450円（公式）。温泉は別棟1階で、男湯・女湯それぞれに温泉と冷泉の2種類の浴槽がある（男女入れ替えなし、公式）。源泉温度が約13℃と低いため加温している（公式）。源泉かけ流しと、冷泉の浴槽を加温しているかは公式に記載がない。宿泊者は24時間入浴可。定員1〜2名の客室あり（公式）",
+    "station": "上松駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "単純二酸化炭素冷鉱泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%A3%A7%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+    "coordinateCheckedAt": "2026-11-15",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "node/1674228880"
   }
 ];
 
