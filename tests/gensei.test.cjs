@@ -368,3 +368,11 @@ test('gensei: Aoni Onsen — facility-level official kake-nagashi is not extende
   assert.deepEqual(certifiedBaths(e), []);
   for (const n of ['健六の湯', '本館内湯', '滝見の湯', '露天風呂(混浴)']) assert.equal(evaluate(e, n).result, 'pending', n);
 });
+
+test('gensei: Kakehashi — the cold-spring bath is kake-nagashi and unheated by bathing records, but added water is unconfirmed, so nothing is certified', () => {
+  const e = kake['onsen-094'];
+  assert.equal(evaluate(e, '冷泉').result, 'pending');
+  assert.equal(evaluate(e, '冷泉').water, 'unknown');
+  assert.equal(evaluate(e, '温泉（加温）').result, 'excluded');
+  assert.deepEqual(certifiedBaths(e), []);
+});

@@ -575,6 +575,19 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「4つのお風呂」ページの泉質欄「すっきりと澄んで肌にやさしい単純泉（無色透明・無味無臭）、源泉かけ流し」。施設の温泉全体についての記述で、4つのお風呂それぞれの記載ではないため個々の湯へは広げない' },
     dilution: { water: 'unknown', note: '公式に加水・加温・循環の記載はない。浴槽別の無加水・無加温・非循環が確認できないため源生の湯は認定しない' },
     source: { url: 'https://aoninet.com/hotspring/', checkedAt: '2026-11-08' }
+  },
+  'onsen-094': {
+    scope: 'partial', baths: ['冷泉'],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: '公式サイトにかけ流しの記載はない(公式「温泉」ページは「源泉の温度は約13℃と低いため加温しております」「浴槽は、温泉と冷泉の2種類」)。かけ流しは冷泉の浴槽だけに付け、加温している温泉の浴槽には付けない。施設全体のかけ流しとは扱わない' },
+    perBathEvidence: { type: 'third_party', confidence: 'third_party_reported', note: '冷泉の浴槽への適用は複数の現地入浴記録などの第三者資料による判断で、施設公式の浴槽別の記載ではない(公式未確認)。4travelの旅行記(2019年8月11日訪問)「加熱された熱湯とぬる湯（源泉風呂）の2槽」、@nifty温泉の利用者投稿(2009年)「源泉・加温エリアの２槽に分かれた内湯」、子連れ温泉ガイド 地熱愛好会の紹介(2022年時点、温泉ポータルyumo.toに引用)「非加熱冷鉱泉と加熱浴槽」。@nifty温泉の施設情報は施設全体に「源泉かけ流し」とするが浴槽別ではない。冷泉の浴槽そのものを「かけ流し」と書いた記録は見つかっておらず、非加熱の源泉浴槽という複数の記録と施設情報の「源泉かけ流し」をあわせた扱い' },
+    dilution: { water: 'unknown', note: '冷泉の浴槽の加水・循環ろ過・消毒は未確認(公式・入浴記録とも記載なし)。源生の湯は登録しない' },
+    source: { url: 'https://hpdsp.jp/kakehashi-onsen/hot_spring', checkedAt: '2026-11-15' },
+    treatment: {
+      heating: [
+        { status: 'yes', scope: 'baths', baths: ['温泉（加温）'], coverage: '温泉（加温）の浴槽', scopeNote: '公式「温泉」ページが、源泉温度が低いため加温していると書き、温泉情報の使用位置を「摂氏42度(加熱)」とする。冷泉の浴槽には広げない', quote: '源泉の温度は約13℃と低いため加温しております。', url: 'https://hpdsp.jp/kakehashi-onsen/hot_spring', checkedAt: '2026-11-15' },
+        { status: 'none', scope: 'baths', baths: ['冷泉'], evidenceType: 'third_party_reported', coverage: '冷泉の浴槽', scopeNote: '公式未確認。複数の現地入浴記録などが、加熱浴槽とは別の「源泉風呂」「非加熱冷鉱泉」の浴槽と書く', quote: '加熱された熱湯とぬる湯（源泉風呂）の2槽(4travel旅行記、2019年) / 非加熱冷鉱泉と加熱浴槽(地熱愛好会の紹介、2022年時点)', url: 'https://4travel.jp/travelogue/11528073', checkedAt: '2026-11-15' }
+      ]
+    }
   }
 };
 

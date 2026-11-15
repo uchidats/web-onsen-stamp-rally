@@ -32,7 +32,7 @@ test('Search form fits three widths, combines and clears filters, and derives pr
   await activate('#collectionSummary');
   await evaluate('document.getElementById("search").click()');
   assert.equal(await evaluate('document.getElementById("collectionPicker").open'),false);
-  for(const [scope,total] of [['chi',42],['kake',74],['gensei',11],['all',93]]){
+  for(const [scope,total] of [['chi',42],['kake',75],['gensei',11],['all',93]]){
    await activate('#collectionSummary');await activate('#collectionOptions [data-scope="'+scope+'"]');
    assert.equal(await evaluate('document.getElementById("collectionPicker").open'),false);
    assert.equal(await evaluate('document.getElementById("categorySelect").value'),scope==='all'?'':scope);

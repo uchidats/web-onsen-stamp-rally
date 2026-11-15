@@ -65,7 +65,7 @@ test('Four progress rings: responsive layout, percentages, record edits, backup 
         return {columns:new Set(rects.map(r=>Math.round(r.left))).size,rows:new Set(rects.map(r=>Math.round(r.top))).size,overflow:document.documentElement.scrollWidth>innerWidth,contained:cards.every(e=>{const r=e.getBoundingClientRect();return [...e.querySelectorAll('h3,.progress-ring,.progress-percent,.progress-count')].every(x=>{const b=x.getBoundingClientRect();return b.left>=r.left&&b.right<=r.right&&b.top>=r.top&&b.bottom<=r.bottom})}),controls:document.querySelectorAll('#progressRings button,#progressRings a,#progressRings select,#progressScope,#totalBar').length};
       })()`);
       assert.deepEqual(layout, { columns: width === 1280 ? 4 : 2, rows: width === 1280 ? 1 : 2, overflow: false, contained: true, controls: 2 });
-      assert.deepEqual(rings.map(r => r.total), [93, 42, 74, 11]);
+      assert.deepEqual(rings.map(r => r.total), [93, 42, 75, 11]);
       await evaluate("document.getElementById('progress').scrollIntoView({block:'center',behavior:'instant'})");
       await evaluate('new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))');
       const shot = await send('Page.captureScreenshot', { format: 'png' });

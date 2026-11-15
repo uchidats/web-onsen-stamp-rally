@@ -33,7 +33,7 @@ test('kakenagashi: the card icon facilities are exactly the confirmed ones (72);
     'onsen-001', 'onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012',
     'onsen-015', 'onsen-016', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027',
     'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033',
-    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-040', 'onsen-041', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-048', 'onsen-054', 'onsen-055', 'onsen-056', 'onsen-057', 'onsen-058', 'onsen-060', 'onsen-061', 'onsen-065', 'onsen-066', 'onsen-067', 'onsen-068', 'onsen-069', 'onsen-070', 'onsen-071', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-075', 'onsen-076', 'onsen-077', 'onsen-078', 'onsen-079', 'onsen-081', 'onsen-082', 'onsen-083', 'onsen-084', 'onsen-085', 'onsen-086', 'onsen-087', 'onsen-088', 'onsen-090', 'onsen-091', 'onsen-092', 'onsen-093'
+    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-040', 'onsen-041', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-048', 'onsen-054', 'onsen-055', 'onsen-056', 'onsen-057', 'onsen-058', 'onsen-060', 'onsen-061', 'onsen-065', 'onsen-066', 'onsen-067', 'onsen-068', 'onsen-069', 'onsen-070', 'onsen-071', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-075', 'onsen-076', 'onsen-077', 'onsen-078', 'onsen-079', 'onsen-081', 'onsen-082', 'onsen-083', 'onsen-084', 'onsen-085', 'onsen-086', 'onsen-087', 'onsen-088', 'onsen-090', 'onsen-091', 'onsen-092', 'onsen-093', 'onsen-094'
   ]);
   // 酸ヶ湯・新玉川・玉川・川原毛は、かけ流しを明記した資料を確認できていない
   for (const id of ['onsen-002', 'onsen-013', 'onsen-014', 'onsen-022']) assert.equal(kake[id], undefined, id);
@@ -60,9 +60,10 @@ test('kakenagashi: per-bath icons use only bath-level evidence and match 代表�
     const names = (feature[id] ? feature[id].baths : []).map(b => b.name);
     for (const b of e.baths) { assert.ok(names.includes(b), `${id}: ${b} is not a registered 代表的な湯`); n++; }
     // 第三者団体の一覧(施設単位)だけでは、個々の浴槽に広げない
-    if (e.evidence.type === 'third_party') assert.deepEqual(e.baths, [], id);
+    // 例外: 棧温泉旅館(onsen-094)の冷泉浴槽は、利用者の指示により複数の現地入浴記録(第三者資料)で浴槽単位に付ける。perBathEvidence に公式未確認と明記する
+    if (e.evidence.type === 'third_party' && id !== 'onsen-094') assert.deepEqual(e.baths, [], id);
   }
-  assert.equal(n, 115);
+  assert.equal(n, 116);
   // 施設全体の記述だけの施設・かけ流しが明記されていない浴槽には付けない
   assert.deepEqual(kake['onsen-008'].baths, ['大沢の湯']); // 山水の湯・豊沢の湯は公式FAQのかけ流しの列挙に含まれない
   assert.deepEqual(kake['onsen-011'].baths, ['大浴場']); // 貸切風呂は記載なし
@@ -171,5 +172,20 @@ test('kakenagashi: Hokkaido (Shiriuchi) has 1 card wave and 3 bath-level waves b
   assert.match(e.dilution.note, /お客様にお任せ/);
 });
 
-// 棧温泉旅館(onsen-094): 公式にかけ流しの記載がなく、温泉の浴槽は加温。冷泉の浴槽の扱いも公式に記載がないため、かけ流しの記録は作らない
-if (kake['onsen-094'] !== undefined) throw new Error('onsen-094 must not have a kake-nagashi record without official evidence');
+
+test('kakenagashi: Kakehashi (onsen-094) marks only the cold-spring bath, from on-site bathing records, never the heated bath or the whole facility', () => {
+  const e = kake['onsen-094'];
+  assert.equal(e.scope, 'partial');
+  assert.equal(e.baths.join(','), '冷泉');
+  assert.ok(!e.baths.includes('温泉（加温）'));
+  assert.equal(e.evidence.type, 'third_party'); assert.equal(e.evidence.confidence, 'third_party_reported');
+  assert.equal(e.perBathEvidence.type, 'third_party');
+  assert.match(e.perBathEvidence.note, /現地入浴記録/); assert.match(e.perBathEvidence.note, /公式未確認/); assert.match(e.perBathEvidence.note, /施設公式の浴槽別の記載ではない/);
+  const heat = Object.fromEntries(e.treatment.heating.map(r => [r.baths[0], r]));
+  assert.equal(heat['温泉（加温）'].status, 'yes');
+  assert.equal(heat['冷泉'].status, 'none'); assert.equal(heat['冷泉'].evidenceType, 'third_party_reported');
+  assert.equal(e.treatment.water, undefined); assert.equal(e.treatment.disinfection, undefined);
+  assert.equal(GENSEI.evaluate(e, '冷泉').result, 'pending');
+  assert.equal(GENSEI.evaluate(e, '温泉（加温）').result, 'excluded');
+  assert.equal(GENSEI.certifiedBaths(e).length, 0);
+});

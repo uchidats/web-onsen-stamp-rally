@@ -539,6 +539,8 @@ test('feature baths: Kakehashi Onsen lists the heated bath and the cold-spring b
   assert.deepEqual(feature['onsen-094'].baths.map(b => b.name), ['温泉（加温）', '冷泉']);
   assert.ok(feature['onsen-094'].baths.every(b => b.form === '男女別' && b.kind === '内湯'));
   assert.ok(!/非加温|加温なし|かけ流し|掛け流し/.test(JSON.stringify(feature['onsen-094'])));
-  assert.match(x.bathing, /源泉かけ流しと、冷泉の浴槽を加温しているかは公式に記載がない/);
+  assert.match(x.bathing, /冷泉の浴槽は、複数の現地入浴記録をもとに非加温の源泉かけ流しとして扱っている（公式未確認）/);
+  assert.match(x.bathing, /加温している温泉の浴槽はかけ流しの対象外/);
+  assert.match(x.bathing, /冷泉の浴槽の加水・循環ろ過・消毒は未確認/);
   assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
 });
