@@ -686,5 +686,14 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '冷泉', kind: '内湯', form: '男女別', tags: ['冷泉', '木曽川を望む'], note: '温泉の浴槽と並ぶ冷泉の浴槽です' }
     ],
     source: { url: 'https://hpdsp.jp/kakehashi-onsen/hot_spring', checkedAt: '2026-11-15' }
+  },
+  'onsen-096': {
+    note: '信玄の薬湯では冷泉と温湯の交互浴が勧められています。薬効が強いため、1回の入浴は15分までが目安です。信玄の薬湯と森の温泉には洗い場がありません。',
+    baths: [
+      { name: '信玄の薬湯', tags: ['打たせ湯', '冷泉と温湯の交互浴', '飲泉可'], note: '打たせ湯のように注ぎ落ちた湯が、風情ある湯壺を青みがかった乳白色に変えながら満たします。湯船の深さは90センチです' },
+      { name: '森の温泉', kind: '露天', tags: ['白樺の森', '冬季閉鎖'], note: '森林に囲まれた開放感いっぱいの露天風呂です。冬季（11月20日〜4月中旬）は閉鎖されます' },
+      { name: '内湯', kind: '内湯', tags: ['洗い場あり'], note: '身体を洗うカランがついた内湯です' }
+    ],
+    source: { url: 'https://www.sib-tatu.com/hotspa.html', checkedAt: '2026-11-20' }
   }
 };

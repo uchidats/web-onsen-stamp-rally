@@ -588,6 +588,24 @@ window.ONSEN_KAKENAGASHI = {
         { status: 'none', scope: 'baths', baths: ['冷泉'], evidenceType: 'third_party_reported', coverage: '冷泉の浴槽', scopeNote: '公式未確認。複数の現地入浴記録などが、加熱浴槽とは別の「源泉風呂」「非加熱冷鉱泉」の浴槽と書く', quote: '加熱された熱湯とぬる湯（源泉風呂）の2槽(4travel旅行記、2019年) / 非加熱冷鉱泉と加熱浴槽(地熱愛好会の紹介、2022年時点)', url: 'https://4travel.jp/travelogue/11528073', checkedAt: '2026-11-15' }
       ]
     }
+  },
+  'onsen-095': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の施設情報「提供方法 源泉かけ流し、加水なし、加温あり」、評価コメント「大量の源泉を湯口から湯尻へ流し切り」。施設単位の第三者資料で、内湯・野天風呂それぞれの浴槽別の記載ではないため、個々の湯へは広げない。施設の公式サイトはなく、Facebookページにかけ流しの記載は確認できない' },
+    dilution: { water: 'none', note: '湯シュラン2026の提供方法は「加水なし」、同じページの施設紹介(施設提供の文)も源泉を「加温加水なし」とする(いずれも第三者サイト上の記載)。加温は資料内で矛盾する: 提供方法は「加温あり」、施設紹介は自噴する2本の源泉を「(加温加水なし)」とする。浴槽ごとの加温・循環ろ過・消毒は未確認。源生の湯は登録しない' },
+    source: { url: 'https://yuchelin.org/award/kagai-onsen-ichiyokan-2026/', checkedAt: '2026-11-20' }
+  },
+  'onsen-096': {
+    scope: 'partial', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の施設情報「提供方法 源泉かけ流し、加水なし、加温(加温浴槽のみ)」、評価コメント「21℃の源泉がまるで上から滝のようにザバザバとかけ流される感動的な源泉浴槽」。第三者資料のため個々の湯へは広げない。公式サイトにかけ流しの記載はない(公式は「打たせ湯は源泉のままで低温」「加熱によって湯治は楽になりました」と書く)' },
+    dilution: { water: 'none', note: '湯シュラン2026の提供方法は「加水なし」(第三者資料)。加温は加温浴槽のみ(湯シュラン)で、公式は源泉を加熱して利用し打たせ湯は源泉のままと書く。信玄の薬湯の源泉浴槽と加温浴槽、森の温泉・内湯それぞれの循環ろ過・消毒は未確認。源生の湯は登録しない' },
+    source: { url: 'https://yuchelin.org/award/okutateshina-onsen-shibu-tatsuno-kan-2026/', checkedAt: '2026-11-20' }
+  },
+  'onsen-097': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の施設情報「提供方法 源泉かけ流し、加水あり（冬季のみ）、加温なし」。施設単位の第三者資料で浴槽別の記載ではないため、個々の湯へは広げない。施設の公式サイトは確認できない' },
+    dilution: { water: 'for_temperature', note: '湯シュラン2026「冬場は加温した水道水を温度維持のために加水」(冬季のみ)。加温は「加温なし」(第三者資料)。循環ろ過・消毒は未確認。冬季に加水があるため源生の湯は登録しない' },
+    source: { url: 'https://yuchelin.org/award/niitsu-onsen-2026/', checkedAt: '2026-11-20' }
   }
 };
 

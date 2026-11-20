@@ -50,7 +50,7 @@ const IWAKI = { 'onsen-074': '松柏館', 'onsen-075': '旅館こいと' };
 const SHIZUOKA = { 'onsen-071': '川端の宿 湯本館', 'onsen-072': '野天風呂 山の家', 'onsen-073': '観音温泉' };
 const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
 const HOKKAIDO = { 'onsen-001': '知内温泉旅館' };
-const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘', 'onsen-088': '泡の湯旅館', 'onsen-094': '棧温泉旅館' };
+const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘', 'onsen-088': '泡の湯旅館', 'onsen-094': '棧温泉旅館', 'onsen-096': '渋・辰野館' };
 const NIIGATA = { 'onsen-060': 'ひなの宿ちとせ', 'onsen-061': '自在館', 'onsen-062': '貝掛温泉', 'onsen-063': '瀬波グランドホテルはぎのや', 'onsen-064': '嵐渓荘' };
 
 const IWATE = {
@@ -58,7 +58,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 94);
+  assert.equal(data.length, 97);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -543,4 +543,16 @@ test('feature baths: Kakehashi Onsen lists the heated bath and the cold-spring b
   assert.match(x.bathing, /加温している温泉の浴槽はかけ流しの対象外/);
   assert.match(x.bathing, /冷泉の浴槽の加水・循環ろ過・消毒は未確認/);
   assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
+});
+
+test('feature baths: Shibu Tatsunokan lists its three official baths; Ichiyokan and Niitsu Onsen have none without an official source', () => {
+  assert.deepEqual(feature['onsen-096'].baths.map(b => b.name), ['信玄の薬湯', '森の温泉', '内湯']);
+  assert.ok(feature['onsen-096'].baths[1].tags.includes('冬季閉鎖'));
+  assert.ok(feature['onsen-096'].baths.every(b => !b.color));
+  assert.equal(feature['onsen-095'], undefined); assert.equal(feature['onsen-097'], undefined);
+  const t = data.find(v => v.id === 'onsen-096'), k = data.find(v => v.id === 'onsen-095'), n = data.find(v => v.id === 'onsen-097');
+  assert.equal(t.officialUrl, 'https://www.sib-tatu.com/'); assert.match(t.bathing, /日帰り入浴11:00〜16:00（受付15:00まで）、要予約・不定休、大人1,650円/);
+  assert.equal(k.officialUrl, ''); assert.match(k.bathing, /営業時間・定休日・料金は公式に確認できていない/); assert.match(k.bathing, /日帰り温泉施設/);
+  assert.equal(n.officialUrl, ''); assert.match(n.bathing, /泉質・源泉温度は資料で異なり/);
+  for (const x of [t, k, n]) { assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null); }
 });

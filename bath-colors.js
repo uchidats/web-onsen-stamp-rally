@@ -541,5 +541,28 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'まっぷる(昭文社)の棧温泉旅館(日帰り入浴)の紹介「鉄分の多い茶褐色の湯」(取材時点の情報、更新日の記載なし)。公式サイトは「鉄分を含む単純二酸化炭素冷鉱泉」と書くが、湯の色は書いていない。温泉・冷泉のどちらの浴槽の色かは書かれていないため施設全体にとどめる' }
     }],
     source: { url: 'https://www.mapple.net/spot/20010717/', checkedAt: '2026-11-15' }
+  },
+  'onsen-095': {
+    colors: [{
+      color: 'brown', expression: '濃い茶褐色', scope: 'facility',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の評価コメント「湧出直後は透明な湯が、空気に触れると鉄分の酸化で濃い茶褐色へ！」。施設の公式サイトはない。内湯・野天風呂のどちらの色かは書かれていないため施設全体にとどめる' },
+      change: { kind: 'tint', note: '湧出直後は透明で、空気に触れると鉄分の酸化で茶褐色に変わります' }
+    }],
+    source: { url: 'https://yuchelin.org/award/kagai-onsen-ichiyokan-2026/', checkedAt: '2026-11-20' }
+  },
+  'onsen-096': {
+    colors: [{
+      color: 'milky_white', expression: '青みがかった乳白色', scope: 'bath', scopeNames: ['信玄の薬湯'],
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページの信玄の薬湯の説明「打たせ湯のように注ぎ落ちた湯が、風情ある湯壺を青みがかった乳白色に変えながら満たします。」湯シュラン2026の施設紹介も同じ表現。森の温泉・内湯の色は書かれていないため付けない' }
+    }],
+    source: { url: 'https://www.sib-tatu.com/hotspa.html', checkedAt: '2026-11-20' }
+  },
+  'onsen-097': {
+    colors: [{
+      color: 'colorless', expression: 'ほぼ無色透明', scope: 'facility',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '新潟県観光協会の新津温泉のページ「ほぼ無色透明で、わずかに白く濁っている」。湯シュラン2026の評価コメントも「わずかに濁った湯」。施設の公式サイトは確認できない。浴槽ごとの記載はない' },
+      change: { kind: 'tint', note: 'わずかに白く濁っています' }
+    }],
+    source: { url: 'https://niigata-kankou.or.jp/spot/detail_11336.html', checkedAt: '2026-11-20' }
   }
 };

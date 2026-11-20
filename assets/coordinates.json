@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-11-15",
-  "method": "93 verified facilities and 1 pending facility without coordinates (onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-20",
+  "method": "96 verified facilities and 1 pending facility without coordinates (onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -5812,6 +5812,383 @@
         "coordinates": [
           137.6864061,
           35.8064017
+        ]
+      },
+      "geometryCheck": "施設POIと一致"
+    },
+    {
+      "id": "onsen-095",
+      "facility": "一陽館",
+      "prefecture": "長野県",
+      "latitude": 36.56923,
+      "longitude": 138.2127411,
+      "coordinateSource": "https://www.openstreetmap.org/way/683097216",
+      "coordinateVerified": true,
+      "osmName": "加賀井温泉;一陽館",
+      "osmAddress": "",
+      "osmFeatureType": "amenity/public_bath",
+      "addressReference": "https://yuchelin.org/award/kagai-onsen-ichiyokan-2026/",
+      "note": "OSM建物way/683097216(name=加賀井温泉;一陽館、amenity=public_bath)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。湯シュラン2026の施設情報・施設のFacebookページの所在地(長野市松代町東条55)・電話(026-278-2016)と一致。Overture Places 2026-09-23.1(meta)のレコード「加賀井温泉一陽館」(所在地「松代町 東条 ５５」、電話+81262782016)が約25mの位置にある。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-20",
+      "onsen": "加賀井温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "長野県長野市松代町東条55",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/683097216",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "加賀井温泉;一陽館",
+      "identityReferences": [
+        "https://yuchelin.org/award/kagai-onsen-ichiyokan-2026/",
+        "https://www.facebook.com/ICHIYOKAN/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%8A%A0%E8%B3%80%E4%BA%95%E6%B8%A9%E6%B3%89%20%E4%B8%80%E9%99%BD%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              138.2126665,
+              36.5693836
+            ],
+            [
+              138.2126727,
+              36.5692805
+            ],
+            [
+              138.2126864,
+              36.5692819
+            ],
+            [
+              138.2126989,
+              36.5691737
+            ],
+            [
+              138.2126746,
+              36.5691729
+            ],
+            [
+              138.2126757,
+              36.5691263
+            ],
+            [
+              138.2127052,
+              36.5691266
+            ],
+            [
+              138.2127098,
+              36.5690881
+            ],
+            [
+              138.2129843,
+              36.5691047
+            ],
+            [
+              138.2129745,
+              36.5692479
+            ],
+            [
+              138.2129026,
+              36.5692516
+            ],
+            [
+              138.2129043,
+              36.569212
+            ],
+            [
+              138.2127908,
+              36.5692088
+            ],
+            [
+              138.2127874,
+              36.5692871
+            ],
+            [
+              138.212763,
+              36.5692862
+            ],
+            [
+              138.2127549,
+              36.5693906
+            ],
+            [
+              138.2126665,
+              36.5693836
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-096",
+      "facility": "渋・辰野館",
+      "prefecture": "長野県",
+      "latitude": 36.0336044,
+      "longitude": 138.3098745,
+      "coordinateSource": "https://www.openstreetmap.org/way/1218652392",
+      "coordinateVerified": true,
+      "osmName": "渋辰野館",
+      "osmAddress": "",
+      "osmFeatureType": "building/hotel",
+      "addressReference": "https://yuchelin.org/award/okutateshina-onsen-shibu-tatsuno-kan-2026/",
+      "note": "OSM建物way/1218652392(name=渋辰野館、building=hotel。同名のPLATEAU由来の建物部分way/404266601・建物リレーション16568741あり)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。Overture Places 2026-09-23.1(meta)のレコード「渋・辰野館」(所在地「豊平奥蓼科4734」、電話+81266672128)が約6mの位置(ポリゴン内)にあり、公式・湯シュラン2026の所在地(長野県茅野市豊平4734)・電話(0266-67-2128)と一致。約1.6km北東の渋御殿湯とは別施設。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-20",
+      "onsen": "奥蓼科温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "長野県茅野市豊平4734",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/1218652392",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "渋辰野館",
+      "identityReferences": [
+        "https://www.sib-tatu.com/",
+        "https://yuchelin.org/award/okutateshina-onsen-shibu-tatsuno-kan-2026/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%A5%A5%E8%93%BC%E7%A7%91%E6%B8%A9%E6%B3%89%20%E6%B8%8B%E3%83%BB%E8%BE%B0%E9%87%8E%E9%A4%A8%20%E9%95%B7%E9%87%8E%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              138.3096507,
+              36.0335955
+            ],
+            [
+              138.309705,
+              36.033513
+            ],
+            [
+              138.3097234,
+              36.0335211
+            ],
+            [
+              138.3097331,
+              36.0335062
+            ],
+            [
+              138.3097807,
+              36.0335265
+            ],
+            [
+              138.3097706,
+              36.0335419
+            ],
+            [
+              138.309807,
+              36.0335579
+            ],
+            [
+              138.3098413,
+              36.0335564
+            ],
+            [
+              138.3098408,
+              36.0335491
+            ],
+            [
+              138.3100138,
+              36.0335506
+            ],
+            [
+              138.3100144,
+              36.0335996
+            ],
+            [
+              138.3100536,
+              36.0335992
+            ],
+            [
+              138.3101084,
+              36.0336092
+            ],
+            [
+              138.3101041,
+              36.0335662
+            ],
+            [
+              138.3101052,
+              36.0335661
+            ],
+            [
+              138.3101019,
+              36.0335659
+            ],
+            [
+              138.3101051,
+              36.033536
+            ],
+            [
+              138.3101188,
+              36.033537
+            ],
+            [
+              138.310116,
+              36.0335645
+            ],
+            [
+              138.3102016,
+              36.0335513
+            ],
+            [
+              138.3101917,
+              36.0334965
+            ],
+            [
+              138.3102975,
+              36.0334835
+            ],
+            [
+              138.3103222,
+              36.0335454
+            ],
+            [
+              138.3104522,
+              36.0335124
+            ],
+            [
+              138.3105049,
+              36.0334991
+            ],
+            [
+              138.3105492,
+              36.033595
+            ],
+            [
+              138.3104519,
+              36.0336229
+            ],
+            [
+              138.310445,
+              36.0336248
+            ],
+            [
+              138.3104519,
+              36.0336403
+            ],
+            [
+              138.3104617,
+              36.0336624
+            ],
+            [
+              138.3104518,
+              36.0336651
+            ],
+            [
+              138.3103507,
+              36.0336926
+            ],
+            [
+              138.3103291,
+              36.0336502
+            ],
+            [
+              138.3102472,
+              36.0336624
+            ],
+            [
+              138.3102543,
+              36.0337094
+            ],
+            [
+              138.3101306,
+              36.0337255
+            ],
+            [
+              138.3101282,
+              36.033715
+            ],
+            [
+              138.3100918,
+              36.03372
+            ],
+            [
+              138.3100802,
+              36.0336382
+            ],
+            [
+              138.3100525,
+              36.033633
+            ],
+            [
+              138.3100148,
+              36.0336333
+            ],
+            [
+              138.3100151,
+              36.0336572
+            ],
+            [
+              138.3098524,
+              36.0336563
+            ],
+            [
+              138.3098528,
+              36.0336679
+            ],
+            [
+              138.3097867,
+              36.0336683
+            ],
+            [
+              138.3097908,
+              36.0336233
+            ],
+            [
+              138.309767,
+              36.0336596
+            ],
+            [
+              138.3096507,
+              36.0335955
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-097",
+      "facility": "新津温泉",
+      "prefecture": "新潟県",
+      "latitude": 37.7947302,
+      "longitude": 139.1288083,
+      "coordinateSource": "https://www.openstreetmap.org/node/5323165721",
+      "coordinateVerified": true,
+      "osmName": "新津温泉",
+      "osmAddress": "",
+      "osmFeatureType": "amenity/public_bath",
+      "addressReference": "https://niigata-kankou.or.jp/spot/detail_11336.html",
+      "note": "OSM施設POI node/5323165721(name=新津温泉、amenity=public_bath、wikidata=Q117276500)。Overture Places 2026-09-23.1(meta)のレコード「新津温泉」(所在地「秋葉区新津本町4丁目17-13」、電話+81250220842)が約18mの位置にあり、新潟県観光協会・湯シュラン2026の所在地(新潟市秋葉区新津本町4-17-13)・電話(0250-22-0842)と一致。施設の公式サイトは確認できない。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-20",
+      "onsen": "新津温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "新潟県新潟市秋葉区新津本町4-17-13",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/5323165721",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "新津温泉",
+      "identityReferences": [
+        "https://niigata-kankou.or.jp/spot/detail_11336.html",
+        "https://yuchelin.org/award/niitsu-onsen-2026/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E6%B4%A5%E6%B8%A9%E6%B3%89%20%E6%96%B0%E6%BD%9F%E7%9C%8C",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.1288083,
+          37.7947302
         ]
       },
       "geometryCheck": "施設POIと一致"

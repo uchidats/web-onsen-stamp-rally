@@ -376,3 +376,8 @@ test('gensei: Kakehashi — the cold-spring bath is kake-nagashi and unheated by
   assert.equal(evaluate(e, '温泉（加温）').result, 'excluded');
   assert.deepEqual(certifiedBaths(e), []);
 });
+
+test('gensei: none of Ichiyokan, Shibu Tatsunokan, Niitsu Onsen is certified (third-party facility-level records, heating/added water unconfirmed or present)', () => {
+  for (const id of ['onsen-095', 'onsen-096', 'onsen-097']) assert.deepEqual(certifiedBaths(kake[id]), [], id);
+  for (const n of ['信玄の薬湯', '森の温泉', '内湯']) assert.equal(evaluate(kake['onsen-096'], n).result, 'pending', n);
+});
