@@ -388,3 +388,8 @@ test('gensei: none of Daiichi Takimotokan, Fureai Center and Roma no Izumi is ce
   assert.equal(evaluate(kake['onsen-099'], '湯治湯').result, 'excluded');
   assert.equal(evaluate(kake['onsen-100'], '家族風呂').result, 'pending');
 });
+
+test('gensei: Kawaraya すのこの湯 is excluded because water is added (third-party Yuchelin)', () => {
+  assert.equal(evaluate(kake['onsen-101'], 'すのこの湯').result, 'excluded');
+  assert.deepEqual(certifiedBaths(kake['onsen-101']), []);
+});

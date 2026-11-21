@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-11-21",
-  "method": "99 verified facilities and 1 pending facility without coordinates (onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-22",
+  "method": "100 verified facilities and 1 pending facility without coordinates (onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -6760,6 +6760,81 @@
             [
               143.2194834,
               42.920172
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-101",
+      "facility": "すのこの湯 かわらや",
+      "prefecture": "山形県",
+      "latitude": 38.1676099,
+      "longitude": 140.3973707,
+      "coordinateSource": "https://www.openstreetmap.org/way/855381867",
+      "coordinateVerified": true,
+      "osmName": "すのこの湯 かわらや",
+      "osmAddress": "",
+      "osmFeatureType": "amenity/public_bath",
+      "addressReference": "https://yuchelin.org/award/zao-onsen-sunoko-no-yu-kawaraya-2026/",
+      "note": "OSM建物way/855381867(name=すのこの湯 かわらや、amenity=public_bath)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。隣の建物way/855381866は蔵王温泉 川原湯共同浴場(別施設)で採用しない。Overture Places 2026-09-23.1(meta)のレコード「すのこの湯かわらや」(所在地「蔵王温泉43」、電話+81236949007)が約2m(ポリゴン内)にあり、公式・湯シュラン2026の所在地(山形県山形市蔵王温泉43)・電話(023-694-9007)と一致。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-22",
+      "onsen": "蔵王温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "山形県山形市蔵王温泉43",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/855381867",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "すのこの湯 かわらや",
+      "identityReferences": [
+        "https://www.kawarayaga.com/",
+        "https://yuchelin.org/award/zao-onsen-sunoko-no-yu-kawaraya-2026/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E3%81%99%E3%81%AE%E3%81%93%E3%81%AE%E6%B9%AF%20%E3%81%8B%E3%82%8F%E3%82%89%E3%82%84%20%E8%94%B5%E7%8E%8B%E6%B8%A9%E6%B3%89",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              140.3972953,
+              38.1676765
+            ],
+            [
+              140.3973351,
+              38.1675025
+            ],
+            [
+              140.3974264,
+              38.1675154
+            ],
+            [
+              140.3974166,
+              38.167558
+            ],
+            [
+              140.397442,
+              38.1675616
+            ],
+            [
+              140.3974171,
+              38.1676703
+            ],
+            [
+              140.3973308,
+              38.1676581
+            ],
+            [
+              140.3973256,
+              38.1676808
+            ],
+            [
+              140.3972953,
+              38.1676765
             ]
           ]
         ]

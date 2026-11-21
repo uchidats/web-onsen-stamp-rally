@@ -2221,6 +2221,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-21",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "way/545316603"
+  },
+  {
+    "id": "onsen-101",
+    "number": 101,
+    "area": "南東北",
+    "prefecture": "山形県",
+    "onsen": "蔵王温泉",
+    "facility": "すのこの湯 かわらや",
+    "latitude": 38.1676099,
+    "longitude": 140.3973707,
+    "coordinateSource": "https://www.openstreetmap.org/way/855381867",
+    "coordinateVerified": true,
+    "officialUrl": "https://www.kawarayaga.com/",
+    "category": "その他",
+    "bathing": "日帰り温泉。入浴料は大人600円・子供300円（公式の「温泉」「施設案内」の料金表。同じ公式サイト内の蔵王温泉の施設一覧には400円の古い記載あり）。営業時間・定休日は公式に記載がなく未確認（施設へ要確認）。湯船の底のすのこの隙間から源泉が湧き上がる足元湧出の湯（公式・湯シュラン2026）。湧き出す湯のため湯温は日によって変わる（湯シュラン2026掲載の施設からのお願い）。強酸性のため脱衣場にロッカーはなく、貴重品はフロントに預ける（公式）。お部屋休憩あり（2時間2,500円、公式）。泉質・泉温は資料で異なり、公式の分析（平成16年）は48.1℃・pH1.7、湯シュラン2026は50.4℃・pH1.8",
+    "station": "山形駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "酸性・含硫黄－アルミニウム－硫酸塩・塩化物温泉（低張性酸性高温泉）",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%99%E3%81%AE%E3%81%93%E3%81%AE%E6%B9%AF%20%E3%81%8B%E3%82%8F%E3%82%89%E3%82%84%20%E8%94%B5%E7%8E%8B%E6%B8%A9%E6%B3%89",
+    "coordinateCheckedAt": "2026-11-22",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/855381867"
   }
 ];
 

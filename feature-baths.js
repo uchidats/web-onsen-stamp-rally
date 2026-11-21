@@ -720,5 +720,12 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '家族風呂', form: '貸切', tags: ['ファミリーバス11室', 'サウナ付き3室'], note: '家族風呂（ファミリーバス）が11室と、サウナ付き家族風呂（ファミリーサウナ）が3室あります' }
     ],
     source: { url: 'http://ro-ma.jp/', checkedAt: '2026-11-21' }
+  },
+  'onsen-101': {
+    note: '川原で源泉が湧き出している場所に、底がすのこ状の湯船を置いた温泉です。湯船とシャワーはドアで仕切られています。',
+    baths: [
+      { name: 'すのこの湯', tags: ['足元湧出', '強酸性の硫黄泉', '美肌の湯'], note: '湯船の底のすのこの隙間から源泉が湧き上がり、空気にふれる前の湯に入れます' }
+    ],
+    source: { url: 'https://www.kawarayaga.com/onsen_jiman.html', checkedAt: '2026-11-22' }
   }
 };

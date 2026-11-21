@@ -26,7 +26,7 @@ const AOMORI = {
 };
 
 const YAMAGATA = {
-  'onsen-028': '東屋', 'onsen-029': '湯守の宿三之亟', 'onsen-030': '湯宿元河原湯', 'onsen-031': '福島屋', 'onsen-032': '桝形屋', 'onsen-033': '吾妻屋'
+  'onsen-028': '東屋', 'onsen-029': '湯守の宿三之亟', 'onsen-030': '湯宿元河原湯', 'onsen-031': '福島屋', 'onsen-032': '桝形屋', 'onsen-033': '吾妻屋', 'onsen-101': 'すのこの湯 かわらや'
 };
 
 const MIYAGI = {
@@ -59,7 +59,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 100);
+  assert.equal(data.length, 101);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO_YUCHELIN), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -192,7 +192,7 @@ test('feature baths: Aomori 6 facilities publish only officially confirmed conte
   assert.ok(!/透明/.test(JSON.stringify(feature['onsen-005'])));
 });
 
-test('feature baths: Yamagata 6 facilities publish only confirmed, currently usable baths (15 baths)', () => {
+test('feature baths: Yamagata 7 facilities publish only confirmed, currently usable baths (16 baths)', () => {
   const names = id => feature[id].baths.map(b => b.name);
   assert.deepEqual(names('onsen-028'), ['滝風呂', '石風呂', '露天風呂']);
   assert.deepEqual(names('onsen-029'), ['大岩風呂', 'ひょうたん風呂']);
@@ -200,13 +200,13 @@ test('feature baths: Yamagata 6 facilities publish only confirmed, currently usa
   assert.deepEqual(names('onsen-031'), ['岩風呂', '檜露天風呂', '混浴内風呂']);
   assert.deepEqual(names('onsen-032'), ['混浴露天風呂', '女性専用露天風呂', '檜造りの内風呂']);
   assert.deepEqual(names('onsen-033'), ['根っこ風呂', '眺望露天風呂']);
-  assert.equal(Object.keys(YAMAGATA).reduce((n, id) => n + feature[id].baths.length, 0), 15);
+  assert.equal(Object.keys(YAMAGATA).reduce((n, id) => n + feature[id].baths.length, 0), 16);
   // 休止中の浴槽(三之亟の露天風呂・吾妻屋の滝見露天風呂)は代表的な湯に含めない
   assert.ok(!feature['onsen-029'].baths.some(b => b.name === '露天風呂'));
   assert.ok(!JSON.stringify(feature['onsen-033']).includes('滝見'));
-  // 足元湧出は三之亟の大岩風呂(深湯・中湯)だけ。範囲を補足で限定している
+  // 足元湧出は三之亟の大岩風呂(深湯・中湯)と、かわらやのすのこの湯(2026-11-22追加)。三之亟は範囲を補足で限定している
   const foot = Object.entries(feature).filter(([id]) => YAMAGATA[id]).flatMap(([id, e]) => e.baths.filter(b => (b.tags || []).includes('足元湧出')).map(b => id + '/' + b.name));
-  assert.deepEqual(foot, ['onsen-029/大岩風呂']);
+  assert.deepEqual(foot, ['onsen-029/大岩風呂', 'onsen-101/すのこの湯']);
   assert.match(feature['onsen-029'].baths[0].note, /深湯・中湯/);
   // 源泉の無色透明(白布・三之亟・吾妻屋)を湯の色にしない。施設全体の色を浴槽へ広げない
   for (const id of ['onsen-028', 'onsen-029', 'onsen-033']) assert.ok(!/無色|透明/.test(JSON.stringify(feature[id])) && feature[id].baths.every(b => !b.color), id);
@@ -567,4 +567,14 @@ test('feature baths: the Hokkaido Yuchelin facilities list their official baths,
   assert.match(data.find(v => v.id === 'onsen-100').bathing, /ローマノ福の湯」（11:00〜22:00、大人550円）は別の浴場/);
   assert.match(data.find(v => v.id === 'onsen-098').bathing, /日帰り入浴9:00〜18:00、大人2,500円/);
   assert.match(data.find(v => v.id === 'onsen-099').bathing, /日帰り入浴10:00〜21:00（最終受付20:30）、隔週木曜定休/);
+});
+
+test('feature baths: Kawaraya lists すのこの湯 with the official foot-spring (足元湧出) tag', () => {
+  const x = data.find(v => v.id === 'onsen-101');
+  assert.equal(x.onsen, '蔵王温泉'); assert.equal(x.officialUrl, 'https://www.kawarayaga.com/');
+  assert.deepEqual(feature['onsen-101'].baths.map(b => b.name), ['すのこの湯']);
+  assert.ok(feature['onsen-101'].baths[0].tags.includes('足元湧出'));
+  assert.match(x.bathing, /営業時間・定休日は公式に記載がなく未確認/);
+  assert.match(x.bathing, /入浴料は大人600円/);
+  assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
 });

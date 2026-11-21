@@ -3,10 +3,11 @@ const c={window:{}};vm.runInNewContext(fs.readFileSync('data.js','utf8'),c);cons
 // Historical coordinate fixtures retain the former display name; only this name was corrected.
 const historicalValue=(row,key)=>row.id==='onsen-020'&&key==='facility'?'源泉・秘湯の宿 ふけの湯':row[key];
 require('../map.js');const M=globalThis.OnsenMap,audit=JSON.parse(fs.readFileSync('assets/coordinates.json','utf8'));
-assert.equal(data.length,100);assert.equal(new Set(data.map(x=>x.id)).size,100);assert.equal(audit.rows.length,100);
+assert.equal(data.length,101);assert.equal(new Set(data.map(x=>x.id)).size,101);assert.equal(audit.rows.length,101);
 const added1022=new Set(['onsen-068']); // 2026-10-22に追加(増富温泉 不老閣)。既存67施設は変更しない
 const added1102=new Set(['onsen-069']); // 2026-11-02に追加(奈良田温泉 白根館)。既存68施設は変更しない
 const added1108=new Set(['onsen-079','onsen-080','onsen-081','onsen-082','onsen-083','onsen-084','onsen-085','onsen-086','onsen-087','onsen-088','onsen-089','onsen-090','onsen-091','onsen-092','onsen-093']); // 2026-11-08に追加(十勝岳温泉 湯元 凌雲閣、横向温泉 滝川屋旅館、上笹橋温泉 東北温泉、豊富温泉 ニュー温泉閣ホテル、松代温泉 黄金の湯 松代荘、須川温泉 栗駒山荘、豊富温泉 川島旅館、乳頭温泉郷 黒湯温泉、仙仁温泉 花仙庵 岩の湯、白骨温泉 泡の湯旅館、三斗小屋温泉 煙草屋旅館・大黒屋旅館、七味温泉 紅葉館(座標未確定)、川渡温泉 山ふところの宿 みやま、青荷温泉 ランプの宿 青荷温泉)
+const added1122=new Set(['onsen-101']); // 2026-11-22に追加(蔵王温泉 すのこの湯 かわらや)
 const added1121=new Set(['onsen-098','onsen-099','onsen-100']); // 2026-11-21に追加(登別温泉 第一滝本館、豊富温泉 豊富町ふれあいセンター、帯広温泉 ローマの泉)
 const added1120=new Set(['onsen-095','onsen-096','onsen-097']); // 2026-11-20に追加(加賀井温泉 一陽館、奥蓼科温泉 渋・辰野館、新津温泉)
 const added1115=new Set(['onsen-094']); // 2026-11-15に追加(棧温泉 棧温泉旅館)
@@ -40,10 +41,10 @@ for(const [id,[name,lat,lon]] of Object.entries(additions)){const x=data.find(x=
 function inside(p,ring){let result=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])result=!result;}return result;}
 for(const [i,x] of data.entries()){
   const current=currentAdditions.some(a=>a.id===x.id);
-  assert.equal(x.id,'onsen-'+String(i+1).padStart(3,'0'));assert.equal(x.coordinateCheckedAt,added1121.has(x.id)?'2026-11-21':added1120.has(x.id)?'2026-11-20':added1115.has(x.id)?'2026-11-15':added1108.has(x.id)?'2026-11-08':added1107.has(x.id)?'2026-11-07':added1106.has(x.id)?'2026-11-06':added1105.has(x.id)?'2026-11-05':added1103.has(x.id)?'2026-11-03':added1102.has(x.id)?'2026-11-02':added1022.has(x.id)?'2026-10-22':current?'2026-10-14':additions[x.id]?'2026-10-13':'2026-10-11');
+  assert.equal(x.id,'onsen-'+String(i+1).padStart(3,'0'));assert.equal(x.coordinateCheckedAt,added1122.has(x.id)?'2026-11-22':added1121.has(x.id)?'2026-11-21':added1120.has(x.id)?'2026-11-20':added1115.has(x.id)?'2026-11-15':added1108.has(x.id)?'2026-11-08':added1107.has(x.id)?'2026-11-07':added1106.has(x.id)?'2026-11-06':added1105.has(x.id)?'2026-11-05':added1103.has(x.id)?'2026-11-03':added1102.has(x.id)?'2026-11-02':added1022.has(x.id)?'2026-10-22':current?'2026-10-14':additions[x.id]?'2026-10-13':'2026-10-11');
   const r=audit.rows.find(r=>r.id===x.id);assert.equal(r.coordinateCheckedAt,x.coordinateCheckedAt);
   assert.equal(r.latitude,x.latitude);assert.equal(r.longitude,x.longitude);assert.equal(r.coordinateSource,x.coordinateSource);
-  const fresh=added1121.has(x.id)||added1120.has(x.id)||added1115.has(x.id)||added1108.has(x.id)||added1107.has(x.id)||added1106.has(x.id)||added1105.has(x.id)||added1103.has(x.id)||added1102.has(x.id)||added1022.has(x.id)||current||additions[x.id];assert.equal(r.previousLatitude,fresh?null:x.latitude);assert.equal(r.previousLongitude,fresh?null:x.longitude);
+  const fresh=added1122.has(x.id)||added1121.has(x.id)||added1120.has(x.id)||added1115.has(x.id)||added1108.has(x.id)||added1107.has(x.id)||added1106.has(x.id)||added1105.has(x.id)||added1103.has(x.id)||added1102.has(x.id)||added1022.has(x.id)||current||additions[x.id];assert.equal(r.previousLatitude,fresh?null:x.latitude);assert.equal(r.previousLongitude,fresh?null:x.longitude);
   assert.equal(r.coordinateVerified,x.coordinateVerified);
   assert.equal(M.verified(x),x.coordinateVerified);
   if(x.coordinateVerified){
@@ -54,11 +55,11 @@ for(const [i,x] of data.entries()){
   }else{assert.equal(x.latitude,null);assert.equal(x.longitude,null);assert.equal(x.coordinateSource,'');}
   for(const key of ['visits','visitCount','lastVisit','notes'])assert.equal(Object.hasOwn(x,key),false);
 }
-assert.equal(data.filter(M.verified).length,99);assert.equal(data.filter(x=>!M.verified(x)).map(x=>x.id).join(','),'onsen-091');
+assert.equal(data.filter(M.verified).length,100);assert.equal(data.filter(x=>!M.verified(x)).map(x=>x.id).join(','),'onsen-091');
 {const x=data.find(x=>x.id==='onsen-091'),r=audit.rows.find(r=>r.id==='onsen-091');assert.equal(x.facility,'紅葉館');assert.equal(x.coordinateVerified,false);assert.equal(x.latitude,null);assert.equal(x.longitude,null);assert.equal(x.coordinateSource,'');assert.match(x.mapUrl,/^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=/);assert.equal(r.geometry,null);assert.equal(r.googleCoordinatesStored,false);assert.equal(r.address,'長野県上高井郡高山村大字牧2974-45');}
 assert.match(audit.attribution,/OpenStreetMap contributors/);assert.match(audit.license,/ODbL-1.0.*CDLA-Permissive-2.0.*Apache-2.0/);
 for(const a of currentAdditions){const r=audit.rows.find(r=>r.id===a.id);assert.equal(r.coordinateLicense,a.coordinateLicense);assert.equal(r.googleCoordinatesStored,false);if(a.coordinateLicense!=='ODbL-1.0'){assert.match(r.coordinateSource,/stac\.overturemaps\.org/);assert.match(r.sourceId,/^[a-f0-9-]{36}$/);assert.equal(Object.hasOwn(r,'osmName'),false);}}
 for(const file of ['CDLA-Permissive-2.0.txt','Apache-2.0.txt','Foursquare-NOTICE.txt'])assert.ok(fs.readFileSync('assets/licenses/'+file,'utf8').length>1000);
 const ids=['onsen-002','onsen-003','onsen-004','onsen-005','onsen-081','onsen-093'];assert.deepEqual(Array.from(M.selection(data,'','青森県',()=>false),x=>x.id),ids);
 for(const id of ids){const x=data.find(x=>x.id===id);assert.equal(M.selection(data,'visited','青森県',r=>r.id===id)[0].id,id);}
-console.log('PASS: 100 fixed IDs (onsen-068 added 2026-10-22, onsen-069 added 2026-11-02, onsen-070〜073 added 2026-11-03, onsen-074〜075 added 2026-11-05, onsen-076〜077 added 2026-11-06, onsen-078 added 2026-11-07, onsen-079〜093 added 2026-11-08, onsen-094 added 2026-11-15, onsen-095〜097 added 2026-11-20, onsen-098〜100 added 2026-11-21), existing 69 unchanged, 99 verified / 1 pending (onsen-091, no coordinates), dates, footprint membership, attribution, WGS84 order and no personal data');
+console.log('PASS: 101 fixed IDs (onsen-068 added 2026-10-22, onsen-069 added 2026-11-02, onsen-070〜073 added 2026-11-03, onsen-074〜075 added 2026-11-05, onsen-076〜077 added 2026-11-06, onsen-078 added 2026-11-07, onsen-079〜093 added 2026-11-08, onsen-094 added 2026-11-15, onsen-095〜097 added 2026-11-20, onsen-098〜100 added 2026-11-21, onsen-101 added 2026-11-22), existing 69 unchanged, 100 verified / 1 pending (onsen-091, no coordinates), dates, footprint membership, attribution, WGS84 order and no personal data');

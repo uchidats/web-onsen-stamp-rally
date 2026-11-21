@@ -630,6 +630,16 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップのローマの泉(家族風呂)の紹介欄「植物性モール天然温泉 源泉掛け流し100％天然温泉ですので、贅沢な泉質をたっぷりとご利用いただけます。」「家族風呂（ファミリーバス）が11室と、サウナ付き家族風呂（ファミリーサウナ）が3室」。ローマの泉の浴槽はこの家族風呂(ファミリーバス・ファミリーサウナ)だけのため、家族風呂に付ける。同じ建物2階の公衆浴場ローマノ福の湯はこの施設に含めない。湯シュラン2026の受賞浴槽も家族風呂で「源泉かけ流し、加水なし、加温なし」' },
     dilution: { water: 'none', note: '公式「炭酸や硫黄などの成分を含むアルカリ性単純温泉（植物性モール温泉）。加温や加水をせず、ぜいたくに源泉かけ流しで提供しています。」湯シュラン2026も家族風呂を「加水なし、加温なし」とする。ただし循環ろ過・消毒の有無は確認できないため、源生の湯は保留(加水・加温の規則は付けない)' },
     source: { url: 'http://ro-ma.jp/', checkedAt: '2026-11-21' }
+  },
+  'onsen-101': {
+    scope: 'facility', baths: ['すのこの湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「温泉」ページ「自家自噴天然掛け流し」「かわらや自慢のすのこの湯は、川原の中で源泉が湧きだしている中に、底がすのこ状の湯船を置いた状態で温泉を楽しめる事から『すのこの湯』と言われています。まさに本当の意味での源泉掛け流し100％の贅沢な温泉を満喫できます。」すのこの湯を名指ししている。湯シュラン2026の湧出形態は「自然湧出、足元湧出」' },
+    dilution: { water: 'added', note: '湯シュラン2026の提供方法「源泉かけ流し、加水あり、加温なし」(第三者資料)。加水の目的・時期は書かれていない。公式に加水の記載はない。循環ろ過・消毒は未確認。加水ありのため源生の湯の対象外' },
+    source: { url: 'https://www.kawarayaga.com/onsen_jiman.html', checkedAt: '2026-11-22' },
+    treatment: {
+      water: [{ status: 'yes', scope: 'baths', baths: ['すのこの湯'], evidenceType: 'third_party_reported', coverage: 'すのこの湯', scopeNote: '湯シュラン2026の受賞浴槽(すのこの湯)の提供方法「加水あり」(第三者資料)。加水ありのため源生の湯の対象外', quote: '源泉かけ流し、加水あり、加温なし', url: 'https://yuchelin.org/award/zao-onsen-sunoko-no-yu-kawaraya-2026/', checkedAt: '2026-11-22' }],
+      heating: [{ status: 'none', scope: 'baths', baths: ['すのこの湯'], evidenceType: 'third_party_reported', coverage: 'すのこの湯', scopeNote: '湯シュラン2026の提供方法「加温なし」(第三者資料)', quote: '源泉かけ流し、加水あり、加温なし', url: 'https://yuchelin.org/award/zao-onsen-sunoko-no-yu-kawaraya-2026/', checkedAt: '2026-11-22' }]
+    }
   }
 };
 

@@ -585,5 +585,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「地下1200メートルからくみ上げた茶褐色の湯」「コーヒー色したとろけるようなモールの湯」(同じ源泉)。湯シュラン2026の家族風呂の評価も「コーヒーのように濃い湯色」' }
     }],
     source: { url: 'http://ro-ma.jp/', checkedAt: '2026-11-21' }
+  },
+  'onsen-101': {
+    colors: [{
+      color: 'blue', expression: '青色透明', scope: 'bath', scopeNames: ['すのこの湯'],
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の評価コメント「足元を眺めると『すのこ』が青色透明の湯の中に浮き上がって見える」。公式サイトに湯の色の記載はない。「青」を色の語として既存の色分類の「青」に当てる(透明は濁りのなさ)' }
+    }],
+    source: { url: 'https://yuchelin.org/award/zao-onsen-sunoko-no-yu-kawaraya-2026/', checkedAt: '2026-11-22' }
   }
 };
