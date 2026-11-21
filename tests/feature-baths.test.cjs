@@ -42,6 +42,7 @@ const GUNMA = { 'onsen-048': '鍾寿館', 'onsen-053': '湯宿 三河屋', 'onse
 const YAMANASHI = { 'onsen-068': '不老閣', 'onsen-069': '白根館' };
 const SANDOGOYA = { 'onsen-089': '煙草屋旅館', 'onsen-090': '大黒屋旅館' };
 const SHICHIMI = { 'onsen-091': '紅葉館' };
+const HOKKAIDO_YUCHELIN = { 'onsen-098': '第一滝本館', 'onsen-099': '豊富町ふれあいセンター', 'onsen-100': 'ローマの泉' };
 const TOYOTOMI = { 'onsen-085': '川島旅館' };
 const TOKACHIDAKE = { 'onsen-079': '湯元 凌雲閣' };
 const RENGE = { 'onsen-078': '白馬岳蓮華温泉ロッジ' };
@@ -58,8 +59,8 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 97);
-  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO)].sort());
+  assert.equal(data.length, 100);
+  assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO_YUCHELIN), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
     assert.equal(data.find(x => x.id === id).prefecture, '群馬県');
@@ -555,4 +556,15 @@ test('feature baths: Shibu Tatsunokan lists its three official baths; Ichiyokan 
   assert.equal(k.officialUrl, ''); assert.match(k.bathing, /営業時間・定休日・料金は公式に確認できていない/); assert.match(k.bathing, /日帰り温泉施設/);
   assert.equal(n.officialUrl, ''); assert.match(n.bathing, /泉質・源泉温度は資料で異なり/);
   for (const x of [t, k, n]) { assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null); }
+});
+
+test('feature baths: the Hokkaido Yuchelin facilities list their official baths, and Roma no Izumi is the family-bath facility, not the upstairs public bath', () => {
+  for (const [id, name] of Object.entries(HOKKAIDO_YUCHELIN)) { const x = data.find(v => v.id === id); assert.equal(x.facility, name); assert.equal(x.prefecture, '北海道'); assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null); }
+  assert.deepEqual(feature['onsen-098'].baths.map(b => b.name), ['金蔵の湯', '露天風呂', '寝湯・打たせ湯', '歩行浴']);
+  assert.deepEqual(feature['onsen-099'].baths.map(b => b.name), ['一般浴場', '湯治湯']);
+  assert.deepEqual(feature['onsen-100'].baths.map(b => b.name), ['家族風呂']);
+  assert.ok(!feature['onsen-100'].baths.some(b => /福の湯/.test(b.name)));
+  assert.match(data.find(v => v.id === 'onsen-100').bathing, /ローマノ福の湯」（11:00〜22:00、大人550円）は別の浴場/);
+  assert.match(data.find(v => v.id === 'onsen-098').bathing, /日帰り入浴9:00〜18:00、大人2,500円/);
+  assert.match(data.find(v => v.id === 'onsen-099').bathing, /日帰り入浴10:00〜21:00（最終受付20:30）、隔週木曜定休/);
 });

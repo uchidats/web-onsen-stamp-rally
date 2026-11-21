@@ -606,6 +606,30 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の施設情報「提供方法 源泉かけ流し、加水あり（冬季のみ）、加温なし」。施設単位の第三者資料で浴槽別の記載ではないため、個々の湯へは広げない。施設の公式サイトは確認できない' },
     dilution: { water: 'for_temperature', note: '湯シュラン2026「冬場は加温した水道水を温度維持のために加水」(冬季のみ)。加温は「加温なし」(第三者資料)。循環ろ過・消毒は未確認。冬季に加水があるため源生の湯は登録しない' },
     source: { url: 'https://yuchelin.org/award/niitsu-onsen-2026/', checkedAt: '2026-11-20' }
+  },
+  'onsen-098': {
+    scope: 'facility', baths: ['金蔵の湯'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「大浴場」ページ「登別温泉最多、5つの泉質を贅沢に源泉かけ流しで湯めぐり」(施設全体の記述)と、金蔵の湯について「歴史の温もりを感じながら源泉100%かけ流しをご堪能いただけます。」浴槽単位でかけ流しを名指ししているのは金蔵の湯だけのため、ほかの浴槽(泉質・湯使いが異なる男女計35槽)には一括で広げない。湯シュラン2026も「全浴槽を源泉かけ流しで満たせる」とするが第三者資料' },
+    dilution: { water: 'for_temperature', note: '湯シュラン2026の提供方法「源泉かけ流し、加水あり、加温なし」、備考「一部浴槽で加水」、評価コメント「高温の源泉は自家水源で温度を整え、『万病の湯』では湯車と湯棚で自然に冷まし、加水せずに届ける」。どの浴槽に加水しているかは浴槽別に確認できない(金蔵の湯の加水も未確認)。循環ろ過・消毒は未確認。源生の湯は登録しない' },
+    source: { url: 'https://takimotokan.co.jp/ja/spa/', checkedAt: '2026-11-21' },
+    treatment: {
+      heating: [{ status: 'none', scope: 'all', evidenceType: 'third_party_reported', coverage: '施設の温泉', scopeNote: '湯シュラン2026の提供方法が施設の温泉について「加温なし」とする(第三者資料)。公式に加温の記載はない', quote: '源泉かけ流し、加水あり、加温なし', url: 'https://yuchelin.org/award/noboribetsu-onsen-daiichi-takimoto-kan-2026/', checkedAt: '2026-11-21' }]
+    }
+  },
+  'onsen-099': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '豊富温泉公式の入浴施設ページ「町営温泉入浴施設 ふれあいセンター」の欄「町が運営する温泉入浴施設です。源泉掛け流しの湯。」「■源泉掛け流し」。施設の記述で、一般浴場・湯治湯それぞれの浴槽別の記載ではないため、個々の湯へは広げない。湯シュラン2026は湯治湯を「源泉掛け流し、加水なし、加温あり」とする(第三者資料)' },
+    dilution: { water: 'none', note: '湯シュラン2026の湯治湯の提供方法「加水なし」(第三者資料)。一般浴場の加水は未確認。加温は湯治湯で「加温あり」(湯シュラン2026、泉温34.2℃)。循環ろ過・消毒は未確認。源生の湯は登録しない' },
+    source: { url: 'https://toyotomi-onsen.com/hotspring', checkedAt: '2026-11-21' },
+    treatment: {
+      heating: [{ status: 'yes', scope: 'baths', baths: ['湯治湯'], evidenceType: 'third_party_reported', coverage: '湯治湯', scopeNote: '湯シュラン2026の湯治湯(受賞浴槽)の提供方法「加温あり」(第三者資料)', quote: '源泉掛け流し、加水なし、加温あり', url: 'https://yuchelin.org/award/toyotomi-onsen-toyotomi-town-fureai-center-2026/', checkedAt: '2026-11-21' }]
+    }
+  },
+  'onsen-100': {
+    scope: 'facility', baths: ['家族風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップのローマの泉(家族風呂)の紹介欄「植物性モール天然温泉 源泉掛け流し100％天然温泉ですので、贅沢な泉質をたっぷりとご利用いただけます。」「家族風呂（ファミリーバス）が11室と、サウナ付き家族風呂（ファミリーサウナ）が3室」。ローマの泉の浴槽はこの家族風呂(ファミリーバス・ファミリーサウナ)だけのため、家族風呂に付ける。同じ建物2階の公衆浴場ローマノ福の湯はこの施設に含めない。湯シュラン2026の受賞浴槽も家族風呂で「源泉かけ流し、加水なし、加温なし」' },
+    dilution: { water: 'none', note: '公式「炭酸や硫黄などの成分を含むアルカリ性単純温泉（植物性モール温泉）。加温や加水をせず、ぜいたくに源泉かけ流しで提供しています。」湯シュラン2026も家族風呂を「加水なし、加温なし」とする。ただし循環ろ過・消毒の有無は確認できないため、源生の湯は保留(加水・加温の規則は付けない)' },
+    source: { url: 'http://ro-ma.jp/', checkedAt: '2026-11-21' }
   }
 };
 

@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-11-20",
-  "method": "96 verified facilities and 1 pending facility without coordinates (onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-21",
+  "method": "99 verified facilities and 1 pending facility without coordinates (onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -6192,6 +6192,579 @@
         ]
       },
       "geometryCheck": "施設POIと一致"
+    },
+    {
+      "id": "onsen-098",
+      "facility": "第一滝本館",
+      "prefecture": "北海道",
+      "latitude": 42.4951825,
+      "longitude": 141.1448378,
+      "coordinateSource": "https://www.openstreetmap.org/way/238811172",
+      "coordinateVerified": true,
+      "osmName": "第一滝本館",
+      "osmAddress": "",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://takimotokan.co.jp/ja/access/",
+      "note": "OSM建物way/238811172(name=第一滝本館、building=hotel、addr=登別温泉町55)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。公式・湯シュラン2026の所在地(北海道登別市登別温泉町55)・電話(0143-84-2111)と一致。Overture Places 2026-09-23.1(meta)のレコード「Daiichi Takimotokan」(所在地「South Building, 55 Noboribetsuonsencho」、電話+81143842111)が約43mの位置(ポリゴン内)にある。大浴場棟はOSM node/8569599456(第一滝本館大浴場)。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-21",
+      "onsen": "登別温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "北海道登別市登別温泉町55",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/238811172",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "第一滝本館",
+      "identityReferences": [
+        "https://takimotokan.co.jp/",
+        "https://yuchelin.org/award/noboribetsu-onsen-daiichi-takimoto-kan-2026/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E7%AC%AC%E4%B8%80%E6%BB%9D%E6%9C%AC%E9%A4%A8%20%E7%99%BB%E5%88%A5%E6%B8%A9%E6%B3%89%20%E5%8C%97%E6%B5%B7%E9%81%93",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              141.1441391,
+              42.4947514
+            ],
+            [
+              141.1441994,
+              42.4946961
+            ],
+            [
+              141.1443291,
+              42.4947608
+            ],
+            [
+              141.1443896,
+              42.4947086
+            ],
+            [
+              141.1445667,
+              42.494556
+            ],
+            [
+              141.1443821,
+              42.4943323
+            ],
+            [
+              141.1443383,
+              42.4943498
+            ],
+            [
+              141.1442963,
+              42.4942905
+            ],
+            [
+              141.1444114,
+              42.4942353
+            ],
+            [
+              141.1444534,
+              42.4942892
+            ],
+            [
+              141.1445941,
+              42.4942312
+            ],
+            [
+              141.1448518,
+              42.4945506
+            ],
+            [
+              141.1447952,
+              42.4945762
+            ],
+            [
+              141.1448683,
+              42.4946166
+            ],
+            [
+              141.1448829,
+              42.4946004
+            ],
+            [
+              141.1450254,
+              42.4946867
+            ],
+            [
+              141.1447129,
+              42.4949602
+            ],
+            [
+              141.1451552,
+              42.4952243
+            ],
+            [
+              141.1451205,
+              42.495254
+            ],
+            [
+              141.1454622,
+              42.4952459
+            ],
+            [
+              141.1452959,
+              42.4950963
+            ],
+            [
+              141.1453727,
+              42.4950519
+            ],
+            [
+              141.1453379,
+              42.4950263
+            ],
+            [
+              141.1456121,
+              42.4948646
+            ],
+            [
+              141.1457747,
+              42.4950114
+            ],
+            [
+              141.1456413,
+              42.4950909
+            ],
+            [
+              141.1456943,
+              42.4951408
+            ],
+            [
+              141.145517,
+              42.4952432
+            ],
+            [
+              141.1456102,
+              42.4952405
+            ],
+            [
+              141.1456285,
+              42.4955006
+            ],
+            [
+              141.1454787,
+              42.4955046
+            ],
+            [
+              141.1454768,
+              42.4955248
+            ],
+            [
+              141.1455207,
+              42.4955221
+            ],
+            [
+              141.1455828,
+              42.4955801
+            ],
+            [
+              141.1456687,
+              42.4955208
+            ],
+            [
+              141.145687,
+              42.4955289
+            ],
+            [
+              141.1457857,
+              42.4954494
+            ],
+            [
+              141.145846,
+              42.4954992
+            ],
+            [
+              141.1460178,
+              42.4953887
+            ],
+            [
+              141.1462791,
+              42.495607
+            ],
+            [
+              141.1461914,
+              42.4956582
+            ],
+            [
+              141.1463138,
+              42.4957741
+            ],
+            [
+              141.1457473,
+              42.496111
+            ],
+            [
+              141.1456541,
+              42.4960247
+            ],
+            [
+              141.1455408,
+              42.4960935
+            ],
+            [
+              141.1452356,
+              42.4958213
+            ],
+            [
+              141.1454293,
+              42.4956946
+            ],
+            [
+              141.1454165,
+              42.4956771
+            ],
+            [
+              141.1453672,
+              42.4957013
+            ],
+            [
+              141.1452173,
+              42.495572
+            ],
+            [
+              141.1453123,
+              42.4955019
+            ],
+            [
+              141.1453544,
+              42.4955383
+            ],
+            [
+              141.1453599,
+              42.4954979
+            ],
+            [
+              141.1452941,
+              42.4954521
+            ],
+            [
+              141.1451656,
+              42.4954561
+            ],
+            [
+              141.1451223,
+              42.4954574
+            ],
+            [
+              141.1451205,
+              42.4953133
+            ],
+            [
+              141.1450803,
+              42.4953496
+            ],
+            [
+              141.1450474,
+              42.4953308
+            ],
+            [
+              141.1449505,
+              42.4954035
+            ],
+            [
+              141.144373,
+              42.4950492
+            ],
+            [
+              141.1444096,
+              42.4950182
+            ],
+            [
+              141.144161,
+              42.494874
+            ],
+            [
+              141.1441502,
+              42.4948136
+            ],
+            [
+              141.1441391,
+              42.4947514
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-099",
+      "facility": "豊富町ふれあいセンター",
+      "prefecture": "北海道",
+      "latitude": 45.0736238,
+      "longitude": 141.8403635,
+      "coordinateSource": "https://www.openstreetmap.org/way/571733394",
+      "coordinateVerified": true,
+      "osmName": "豊富温泉;ふれあいセンター",
+      "osmAddress": "",
+      "osmFeatureType": "amenity/public_bath",
+      "addressReference": "https://toyotomi-onsen.com/hotspring",
+      "note": "OSM建物way/571733394(name=豊富温泉;ふれあいセンター、amenity=public_bath、operator=豊富町、phone=+81 162 82 1777)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。豊富温泉公式・湯シュラン2026の所在地(北海道天塩郡豊富町字温泉)・電話(0162-82-1777)と一致。Overture Places 2026-09-23.1(meta)のレコード「豊富温泉ふれあいセンター」(所在地・電話なし)は約54m離れたバス停付近の点のため不採用。同じ豊富温泉のニュー温泉閣ホテル(onsen-082)・川島旅館(onsen-085)とは別の建物。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-21",
+      "onsen": "豊富温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "北海道天塩郡豊富町字温泉",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/571733394",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "豊富温泉;ふれあいセンター",
+      "identityReferences": [
+        "https://toyotomi-onsen.com/hotspring",
+        "https://yuchelin.org/award/toyotomi-onsen-toyotomi-town-fureai-center-2026/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E8%B1%8A%E5%AF%8C%E6%B8%A9%E6%B3%89%20%E3%81%B5%E3%82%8C%E3%81%82%E3%81%84%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%20%E5%8C%97%E6%B5%B7%E9%81%93",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              141.8400513,
+              45.0737868
+            ],
+            [
+              141.8401654,
+              45.0737122
+            ],
+            [
+              141.8401863,
+              45.0737272
+            ],
+            [
+              141.8402993,
+              45.0736502
+            ],
+            [
+              141.8401863,
+              45.0735752
+            ],
+            [
+              141.8403482,
+              45.0734674
+            ],
+            [
+              141.8404188,
+              45.073516
+            ],
+            [
+              141.8403984,
+              45.073529
+            ],
+            [
+              141.8404428,
+              45.0735637
+            ],
+            [
+              141.8405375,
+              45.073504
+            ],
+            [
+              141.8404896,
+              45.0734663
+            ],
+            [
+              141.8406357,
+              45.0733729
+            ],
+            [
+              141.8407314,
+              45.07345
+            ],
+            [
+              141.8405828,
+              45.0735405
+            ],
+            [
+              141.8405648,
+              45.0735267
+            ],
+            [
+              141.8404457,
+              45.073609
+            ],
+            [
+              141.8405177,
+              45.073658
+            ],
+            [
+              141.8405292,
+              45.0736495
+            ],
+            [
+              141.8406157,
+              45.0736926
+            ],
+            [
+              141.8406676,
+              45.0736386
+            ],
+            [
+              141.8407638,
+              45.0736852
+            ],
+            [
+              141.8407753,
+              45.073713
+            ],
+            [
+              141.8407805,
+              45.0737455
+            ],
+            [
+              141.8407807,
+              45.0737707
+            ],
+            [
+              141.8407598,
+              45.0737952
+            ],
+            [
+              141.8407371,
+              45.0738118
+            ],
+            [
+              141.8406939,
+              45.0738148
+            ],
+            [
+              141.8406533,
+              45.073807
+            ],
+            [
+              141.8406283,
+              45.0738312
+            ],
+            [
+              141.8404625,
+              45.0737436
+            ],
+            [
+              141.8405345,
+              45.0736939
+            ],
+            [
+              141.8405023,
+              45.0736731
+            ],
+            [
+              141.8404614,
+              45.0736472
+            ],
+            [
+              141.840372,
+              45.0737057
+            ],
+            [
+              141.8403936,
+              45.0737224
+            ],
+            [
+              141.8401787,
+              45.0738582
+            ],
+            [
+              141.8401375,
+              45.0738294
+            ],
+            [
+              141.8401064,
+              45.0738512
+            ],
+            [
+              141.8400703,
+              45.0738252
+            ],
+            [
+              141.8400878,
+              45.0738144
+            ],
+            [
+              141.8400513,
+              45.0737868
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-100",
+      "facility": "ローマの泉",
+      "prefecture": "北海道",
+      "latitude": 42.9201186,
+      "longitude": 143.2196076,
+      "coordinateSource": "https://www.openstreetmap.org/way/545316603",
+      "coordinateVerified": true,
+      "osmName": "ローマノ福の湯",
+      "osmAddress": "",
+      "osmFeatureType": "amenity/public_bath",
+      "addressReference": "http://ro-ma.jp/",
+      "note": "OSM建物way/545316603(name=ローマノ福の湯、amenity=public_bath)。公式サイトでは、正面入口すぐにローマの泉(家族風呂)の受付があり、公衆浴場ローマノ福の湯は同じ建物の2階にあるため、この建物の位置をローマの泉の座標とする(施設としてはローマの泉(家族風呂)を登録し、ローマノ福の湯とは区別する)。公開座標はこの建物ポリゴンのNominatim代表点で、ポリゴン内にあることを確認。Overture Places 2026-09-23.1(meta)のレコード「ローマノ福の湯」(所在地「東9条南12丁目4-2」、URL ro-ma.jp)が約2m(ポリゴン内)。ローマの泉単独のPOIはOSM・Overtureとも見つからない。所在地は公式「帯広市東9南12」、湯シュラン2026「帯広市東9条南12丁目4番地」。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-21",
+      "onsen": "帯広温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "北海道帯広市東9条南12丁目4",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/545316603",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "ローマノ福の湯",
+      "identityReferences": [
+        "http://ro-ma.jp/",
+        "https://yuchelin.org/award/roma-no-izumi-2026/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E3%83%AD%E3%83%BC%E3%83%9E%E3%81%AE%E6%B3%89%20%E5%B8%AF%E5%BA%83",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              143.2194834,
+              42.920172
+            ],
+            [
+              143.2194941,
+              42.9200928
+            ],
+            [
+              143.2195021,
+              42.9200329
+            ],
+            [
+              143.2197338,
+              42.9200496
+            ],
+            [
+              143.2197209,
+              42.9201458
+            ],
+            [
+              143.2197002,
+              42.9201443
+            ],
+            [
+              143.2196945,
+              42.9201872
+            ],
+            [
+              143.2194834,
+              42.920172
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
     }
   ],
   "coordinateSystem": "WGS84 (EPSG:4326), decimal degrees; GeoJSON order is [longitude, latitude], Leaflet is [latitude, longitude]"

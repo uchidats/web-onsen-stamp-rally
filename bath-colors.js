@@ -564,5 +564,26 @@ window.ONSEN_BATH_COLORS = {
       change: { kind: 'tint', note: 'わずかに白く濁っています' }
     }],
     source: { url: 'https://niigata-kankou.or.jp/spot/detail_11336.html', checkedAt: '2026-11-20' }
+  },
+  'onsen-098': {
+    colors: [
+      { color: 'milky_white', expression: '湯の花により白く濁る', scope: 'facility', scopeLabel: '硫黄泉の湯', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「大浴場」ページの硫黄泉の説明「湯の花により白く濁ることが多く」。泉質ごとの記述で、どの浴槽が硫黄泉かは寝湯・打たせ湯以外書かれていないため、施設の一部の範囲にとどめる' } },
+      { color: 'brown', expression: '赤い色', scope: 'facility', scopeLabel: '重曹泉の湯', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「大浴場」ページの重曹泉の説明「赤い色は、泉質に含まれる鉄分の酸化によって変色したものです。」既存の色分類の「茶褐色」に当てる(「赤く濁る」を茶褐色とした既存例と同じ扱い)。どの浴槽が重曹泉かは書かれていない' } }
+    ],
+    source: { url: 'https://takimotokan.co.jp/ja/spa/', checkedAt: '2026-11-21' }
+  },
+  'onsen-099': {
+    colors: [{
+      color: 'yellow', expression: '淡黄色白濁', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '豊富温泉公式「泉質・効能」ページ「いずれも黄濁し」、知覚的試験「淡黄色白濁 カン味 石油臭」(ふれあいセンターの源泉①)。湯シュラン2026も湯治湯を「黄褐色の濁り湯」とする。既存の色分類の「黄」に当てる(同じ源泉の川島旅館と同じ)。浴槽ごとの記載はない' }
+    }],
+    source: { url: 'https://toyotomi-onsen.com/quality', checkedAt: '2026-11-21' }
+  },
+  'onsen-100': {
+    colors: [{
+      color: 'brown', expression: '茶褐色', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「地下1200メートルからくみ上げた茶褐色の湯」「コーヒー色したとろけるようなモールの湯」(同じ源泉)。湯シュラン2026の家族風呂の評価も「コーヒーのように濃い湯色」' }
+    }],
+    source: { url: 'http://ro-ma.jp/', checkedAt: '2026-11-21' }
   }
 };

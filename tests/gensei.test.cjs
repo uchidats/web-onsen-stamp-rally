@@ -381,3 +381,10 @@ test('gensei: none of Ichiyokan, Shibu Tatsunokan, Niitsu Onsen is certified (th
   for (const id of ['onsen-095', 'onsen-096', 'onsen-097']) assert.deepEqual(certifiedBaths(kake[id]), [], id);
   for (const n of ['信玄の薬湯', '森の温泉', '内湯']) assert.equal(evaluate(kake['onsen-096'], n).result, 'pending', n);
 });
+
+test('gensei: none of Daiichi Takimotokan, Fureai Center and Roma no Izumi is certified while circulation/disinfection (and added water per bath) are unconfirmed', () => {
+  for (const id of ['onsen-098', 'onsen-099', 'onsen-100']) assert.deepEqual(certifiedBaths(kake[id]), [], id);
+  assert.equal(evaluate(kake['onsen-098'], '金蔵の湯').result, 'pending');
+  assert.equal(evaluate(kake['onsen-099'], '湯治湯').result, 'excluded');
+  assert.equal(evaluate(kake['onsen-100'], '家族風呂').result, 'pending');
+});
