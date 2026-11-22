@@ -592,5 +592,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の評価コメント「足元を眺めると『すのこ』が青色透明の湯の中に浮き上がって見える」。公式サイトに湯の色の記載はない。「青」を色の語として既存の色分類の「青」に当てる(透明は濁りのなさ)' }
     }],
     source: { url: 'https://yuchelin.org/award/zao-onsen-sunoko-no-yu-kawaraya-2026/', checkedAt: '2026-11-22' }
+  },
+  'onsen-102': {
+    colors: [{
+      color: 'brown', expression: 'ウーロン茶のような色', scope: 'bath', scopeNames: ['大浴槽（熱めの湯）', '個室家族風呂'],
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '純温泉協会の施設ページ(2023年)「丸美ヶ丘温泉3号泉は、モール成分が多く、ウーロン茶のような色をしていて、やや熱めの湯は…美肌の湯です。この源泉は、大浴場の広い浴槽（浴槽①③）と家族風呂（浴槽⑤～⑭）で使用しています。」3号泉を使う大浴槽と家族風呂に当て、既存の色分類の「茶褐色」とする。小浴槽(2号泉)の色は書かれていないため登録しない。公式サイトに湯の色の記載はない' }
+    }],
+    source: { url: 'https://realonsen.com/marumigaoka/', checkedAt: '2026-11-22' }
   }
 };

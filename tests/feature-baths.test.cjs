@@ -50,7 +50,7 @@ const ITO = { 'onsen-076': '東海館', 'onsen-077': 'ケイズハウス伊東�
 const IWAKI = { 'onsen-074': '松柏館', 'onsen-075': '旅館こいと' };
 const SHIZUOKA = { 'onsen-071': '川端の宿 湯本館', 'onsen-072': '野天風呂 山の家', 'onsen-073': '観音温泉' };
 const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
-const HOKKAIDO = { 'onsen-001': '知内温泉旅館' };
+const HOKKAIDO = { 'onsen-001': '知内温泉旅館', 'onsen-102': '丸美ヶ丘温泉ホテル' };
 const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘', 'onsen-088': '泡の湯旅館', 'onsen-094': '棧温泉旅館', 'onsen-096': '渋・辰野館' };
 const NIIGATA = { 'onsen-060': 'ひなの宿ちとせ', 'onsen-061': '自在館', 'onsen-062': '貝掛温泉', 'onsen-063': '瀬波グランドホテルはぎのや', 'onsen-064': '嵐渓荘' };
 
@@ -59,7 +59,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 101);
+  assert.equal(data.length, 102);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO_YUCHELIN), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -576,5 +576,15 @@ test('feature baths: Kawaraya lists すのこの湯 with the official foot-sprin
   assert.ok(feature['onsen-101'].baths[0].tags.includes('足元湧出'));
   assert.match(x.bathing, /営業時間・定休日は公式に記載がなく未確認/);
   assert.match(x.bathing, /入浴料は大人600円/);
+  assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
+});
+
+test('feature baths: Marumigaoka lists the 2 public-bath tubs from the 2 springs and the private family baths, with official tags only', () => {
+  const x = data.find(v => v.id === 'onsen-102');
+  assert.equal(x.onsen, '丸美ヶ丘温泉'); assert.equal(x.prefecture, '北海道'); assert.equal(x.station, '帯広駅');
+  assert.equal(feature['onsen-102'].baths.map(b => b.name).join(','), '大浴槽（熱めの湯）,小浴槽（ぬる湯）,個室家族風呂');
+  assert.ok(feature['onsen-102'].baths.every(b => !b.color), 'no bath color text: the official site states none');
+  assert.ok(feature['onsen-102'].baths.every(b => !(b.tags || []).some(g => /泡|気泡/.test(g))), 'bubbles are third-party only, not an official tag');
+  assert.match(x.bathing, /定休日は公式に記載がなく未確認/);
   assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
 });

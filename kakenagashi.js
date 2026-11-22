@@ -640,6 +640,28 @@ window.ONSEN_KAKENAGASHI = {
       water: [{ status: 'yes', scope: 'baths', baths: ['すのこの湯'], evidenceType: 'third_party_reported', coverage: 'すのこの湯', scopeNote: '湯シュラン2026の受賞浴槽(すのこの湯)の提供方法「加水あり」(第三者資料)。加水ありのため源生の湯の対象外', quote: '源泉かけ流し、加水あり、加温なし', url: 'https://yuchelin.org/award/zao-onsen-sunoko-no-yu-kawaraya-2026/', checkedAt: '2026-11-22' }],
       heating: [{ status: 'none', scope: 'baths', baths: ['すのこの湯'], evidenceType: 'third_party_reported', coverage: 'すのこの湯', scopeNote: '湯シュラン2026の提供方法「加温なし」(第三者資料)', quote: '源泉かけ流し、加水あり、加温なし', url: 'https://yuchelin.org/award/zao-onsen-sunoko-no-yu-kawaraya-2026/', checkedAt: '2026-11-22' }]
     }
+  },
+  'onsen-102': {
+    scope: 'facility', baths: ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）', '個室家族風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「源泉100%掛け流しは人生のご褒美です」「源泉100%掛け流し 温度・泉質の異なるモール源泉２本」。大浴場の項で小浴槽・大浴槽を挙げて「【純温泉（加水なし・塩素なし・循環なし）】」、個室家族風呂の項で「高温泉使用【純温泉】（温度調節の為最低限の加水あり・塩素なし・循環なし）」と浴槽ごとに書く' },
+    perBathEvidence: { type: 'third_party', confidence: 'third_party_reported', note: '浴槽ごとの湯使いは純温泉協会の純温泉認定書(2023年2月22日)による。浴槽①②③④(大浴場の男湯・女湯。①③が大浴槽=丸美ヶ丘温泉3号泉、②④が小浴槽=2号泉)は純温泉A(完全放流式・加水なし・加温なし・循環ろ過なし・消毒なし・添加なし)、浴槽⑤〜⑭(家族風呂、3号泉)は純温泉B(完全放流式・加水あり(加水率約5%・井戸水)・加温なし・循環ろ過なし・消毒なし)。同協会の施設ページ本文の「純温泉A＝浴槽①～⑭」は認定書(⑤〜⑭は純温泉B)と食い違うため、認定書を採る。家族風呂の浴槽数は認定書の10槽に対し現在の公式は8室' },
+    dilution: { water: 'for_temperature', note: '大浴場の大浴槽・小浴槽は加水なし(公式・純温泉協会の純温泉認定書(2023年2月22日))。大浴槽は「源泉約48度・浴槽内は加水せずに湯量調節で約42~43度」(公式)。個室家族風呂は温度調節のため最低限の加水あり(公式)、認定書では加水率約5%・井戸水。加温は全浴槽なし(認定書)。2号泉の源泉温度は約37℃(公式)・38.0℃(認定書)で、小浴槽はそのまま使う' },
+    source: { url: 'https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel', checkedAt: '2026-11-22' },
+    treatment: {
+      water: [
+        { status: 'none', scope: 'baths', baths: ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）'], coverage: '大浴場の大浴槽・小浴槽', scopeNote: '公式の大浴場の項が小浴槽・大浴槽を挙げて「純温泉（加水なし・塩素なし・循環なし）」と書く。純温泉協会の純温泉認定書(2023年2月22日)も浴槽①〜④を加水なしとする', quote: '成分・温度の異なる２本のモール泉【純温泉（加水なし・塩素なし・循環なし）】・小浴槽（源泉約37度）…・大浴槽（源泉約48度・浴槽内は加水せずに湯量調節で約42~43度）', url: 'https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel', checkedAt: '2026-11-22' },
+        { status: 'yes', scope: 'baths', baths: ['個室家族風呂'], coverage: '個室家族風呂', scopeNote: '公式の個室家族風呂の項。純温泉協会の純温泉認定書(2023年2月22日)も浴槽⑤〜⑭を純温泉B(加水率約5%・井戸水)とする。加水ありのため源生の湯の対象外', quote: '高温泉使用【純温泉】（温度調節の為最低限の加水あり・塩素なし・循環なし）', url: 'https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel', checkedAt: '2026-11-22' }
+      ],
+      heating: [
+        { status: 'none', scope: 'baths', baths: ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）', '個室家族風呂'], evidenceType: 'third_party_reported', coverage: '浴槽①〜⑭(大浴場の大浴槽・小浴槽、家族風呂)', scopeNote: '純温泉協会の純温泉認定書(2023年2月22日)が浴槽①〜④・⑤〜⑭とも「加温：なし」とする(認定時点の第三者資料)。公式に加温の記載はないが、大浴槽は源泉約48℃を湯量で調節、小浴槽は源泉約37℃のぬる湯と書き、2026-11-22時点の公式の記述に加温と矛盾する記載はない', quote: '加温：なし(浴槽①②③④、浴槽⑤〜⑭)', url: 'https://realonsen.com/marumigaoka/', checkedAt: '2026-11-22' }
+      ],
+      circulation: [
+        { status: 'none', scope: 'baths', baths: ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）', '個室家族風呂'], coverage: '大浴場の大浴槽・小浴槽、個室家族風呂', scopeNote: '公式が大浴場・個室家族風呂とも「循環なし」と書く。純温泉協会の純温泉認定書(2023年2月22日)も浴槽①〜⑭を循環ろ過装置なしとする', quote: '【純温泉（加水なし・塩素なし・循環なし）】／（温度調節の為最低限の加水あり・塩素なし・循環なし）', url: 'https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel', checkedAt: '2026-11-22' }
+      ],
+      disinfection: [
+        { status: 'none', scope: 'baths', baths: ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）', '個室家族風呂'], coverage: '大浴場の大浴槽・小浴槽、個室家族風呂', scopeNote: '公式が大浴場・個室家族風呂とも「塩素なし」と書く。純温泉協会の純温泉認定書(2023年2月22日)も浴槽①〜⑭を消毒なしとする', quote: '【純温泉（加水なし・塩素なし・循環なし）】／（温度調節の為最低限の加水あり・塩素なし・循環なし）', url: 'https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel', checkedAt: '2026-11-22' }
+      ]
+    }
   }
 };
 

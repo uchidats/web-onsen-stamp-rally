@@ -3,7 +3,7 @@
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-22",
-  "method": "100 verified facilities and 1 pending facility without coordinates (onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "101 verified facilities and 1 pending facility without coordinates (onsen-102 Marumigaoka Onsen Hotel (Otofuke) from unnamed OSM building way/560548485 identified by the official address point, aerial photos and the Japan Real Onsen Association bath layout, added 2026-11-22; onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -6835,6 +6835,141 @@
             [
               140.3972953,
               38.1676765
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-102",
+      "facility": "丸美ヶ丘温泉ホテル",
+      "prefecture": "北海道",
+      "latitude": 42.9471337,
+      "longitude": 143.2235066,
+      "coordinateSource": "https://www.openstreetmap.org/way/560548485",
+      "coordinateVerified": true,
+      "osmName": "名称未登録の建物",
+      "osmAddress": "",
+      "osmFeatureType": "building",
+      "addressReference": "https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel",
+      "note": "OSMの名前タグのない建物way/560548485(building=yes、GSIオルソ画像からのトレース)。OSM・Overture Places 2026-09-23.1に施設名・電話の一致するレコードはなく、名称タグ一致と偽らない。施設の同定: 公式・純温泉協会・音更町十勝川温泉観光協会の所在地「北海道河東郡音更町宝来本通6丁目2」を国土地理院の住所検索で引いた「宝来本通六丁目２番」の地点から約55m東北東。地理院シームレス空中写真(z17・z18)で、住宅地東側の森の中にある唯一の大きな建物群で、駐車場を伴う。建物の形(南北に長い棟と北側の棟)は純温泉協会の浴槽配置図(家族風呂エリアの長い棟・大浴場・客室棟)と向きを90度回すと対応する。公式の「小高い丘の上・森に囲まれた・約9000坪の敷地」とも整合。公開座標はOSM頂点のみから建物内部の最大内接余裕点を計算(200分割格子)。Google座標は不使用。地理院は閲覧照合のみで座標取得なし。",
+      "coordinateCheckedAt": "2026-11-22",
+      "onsen": "丸美ヶ丘温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "北海道河東郡音更町宝来本通6丁目2",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/560548485",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "丸美ヶ丘温泉ホテル（施設同定は公式所在地の地理院住所点・航空写真・純温泉協会の配置図、OSM建物名タグ未登録）",
+      "identityReferences": [
+        "https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel",
+        "https://realonsen.com/marumigaoka/",
+        "http://www.tokachigawa.net/spa/stay/marumigaoka.html",
+        "https://msearch.gsi.go.jp/address-search/AddressSearch?q=%E5%8C%97%E6%B5%B7%E9%81%93%E6%B2%B3%E6%9D%B1%E9%83%A1%E9%9F%B3%E6%9B%B4%E7%94%BA%E5%AE%9D%E6%9D%A5%E6%9C%AC%E9%80%9A6%E4%B8%81%E7%9B%AE2",
+        "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/235364/96376.jpg"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E4%B8%B8%E7%BE%8E%E3%83%B6%E4%B8%98%E6%B8%A9%E6%B3%89%E3%83%9B%E3%83%86%E3%83%AB%20%E9%9F%B3%E6%9B%B4%E7%94%BA",
+      "googleCoordinatesStored": false,
+      "confidence": "高（公式所在地の住所点・航空写真・浴槽配置図と公開建物形状の対応）",
+      "coordinateMethod": "Interior point maximizing distance from OSM polygon boundary over a 200 x 200 local grid; longitude scaled by cos(latitude), rounded to 7 decimals and interior-tested.",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              143.2234038,
+              42.9470353
+            ],
+            [
+              143.2232918,
+              42.9476347
+            ],
+            [
+              143.2234145,
+              42.947647
+            ],
+            [
+              143.2233954,
+              42.947749
+            ],
+            [
+              143.2234152,
+              42.947751
+            ],
+            [
+              143.2234082,
+              42.9477885
+            ],
+            [
+              143.2237484,
+              42.9478226
+            ],
+            [
+              143.2237638,
+              42.9477407
+            ],
+            [
+              143.2238128,
+              42.9477456
+            ],
+            [
+              143.2238222,
+              42.9476951
+            ],
+            [
+              143.2237808,
+              42.9476909
+            ],
+            [
+              143.2237876,
+              42.9476543
+            ],
+            [
+              143.2237038,
+              42.9476459
+            ],
+            [
+              143.2236941,
+              42.9476977
+            ],
+            [
+              143.223471,
+              42.9476753
+            ],
+            [
+              143.2235268,
+              42.9473773
+            ],
+            [
+              143.2235721,
+              42.9473819
+            ],
+            [
+              143.2236102,
+              42.947178
+            ],
+            [
+              143.2237122,
+              42.9471882
+            ],
+            [
+              143.2237266,
+              42.947111
+            ],
+            [
+              143.2236256,
+              42.9471009
+            ],
+            [
+              143.2236336,
+              42.9470583
+            ],
+            [
+              143.2234038,
+              42.9470353
             ]
           ]
         ]

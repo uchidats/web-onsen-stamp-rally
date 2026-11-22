@@ -727,5 +727,14 @@ window.ONSEN_FEATURE_BATHS = {
       { name: 'すのこの湯', tags: ['足元湧出', '強酸性の硫黄泉', '美肌の湯'], note: '湯船の底のすのこの隙間から源泉が湧き上がり、空気にふれる前の湯に入れます' }
     ],
     source: { url: 'https://www.kawarayaga.com/onsen_jiman.html', checkedAt: '2026-11-22' }
+  },
+  'onsen-102': {
+    note: '泉温・成分の異なる2本のモール泉の源泉を使い分けています。大浴場の大きな窓から四季の自然を眺められます。',
+    baths: [
+      { name: '大浴槽（熱めの湯）', kind: '内湯', tags: ['源泉約48度', '湯量で温度調節', 'モール泉'], note: '加水せずに湯量の調節で約42〜43度にしています' },
+      { name: '小浴槽（ぬる湯）', kind: '内湯', tags: ['源泉約37度', '母なる地球の羊水の湯', 'モール泉'], note: 'お母さんのお腹の中に戻ったように、心やすらかに入っていられるぬる湯です' },
+      { name: '個室家族風呂', form: '貸切', tags: ['8部屋', '予約不要', '高温泉使用'], note: '高温泉のモール泉を個室で楽しめます' }
+    ],
+    source: { url: 'https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel', checkedAt: '2026-11-22' }
   }
 };

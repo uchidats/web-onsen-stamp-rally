@@ -2244,6 +2244,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-22",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "way/855381867"
+  },
+  {
+    "id": "onsen-102",
+    "number": 102,
+    "area": "北海道",
+    "prefecture": "北海道",
+    "onsen": "丸美ヶ丘温泉",
+    "facility": "丸美ヶ丘温泉ホテル",
+    "latitude": 42.9471337,
+    "longitude": 143.2235066,
+    "coordinateSource": "https://www.openstreetmap.org/way/560548485",
+    "coordinateVerified": true,
+    "officialUrl": "https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel",
+    "category": "その他",
+    "bathing": "日帰り入浴10:00〜23:00（最終受付22:00）、大人600円・小学生100円・幼児無料（公式）。個室家族風呂（8室、予約不要）は月〜土14:00〜・日曜12:00〜で23:00まで、1時間で大人1室1名1,100円、2名以上は1人800円、小学生300円・幼児100円（公式）。定休日は公式に記載がなく未確認。石鹸・シャンプー等の備え付けはない（レンタル・販売あり、公式）。宿泊は素泊まりのみの3室で、電話予約のみ（一室2名以上1人5,300円〜、シングル6,500円〜、公式）。23:00〜7:00は玄関を施錠し外出できない（公式）。泉温・成分の異なる2本の自家源泉のモール泉で、大浴場の大浴槽は源泉約48℃を加水せず湯量で約42〜43℃に調節、小浴槽は源泉約37℃のぬる湯（公式）。小浴槽の源泉は気体を多く含み、体に気泡が付く（純温泉協会、2023年）。純温泉協会の2023年の掲載は大浴場480円・素泊まり4,200円〜と現在の公式料金と異なり、家族風呂の浴槽も10槽（現在の公式は8室）と記載している",
+    "station": "帯広駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "アルカリ性単純温泉（丸美ヶ丘温泉3号泉）・単純温泉（丸美ヶ丘温泉2号泉）（植物性モール温泉）",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%B8%E7%BE%8E%E3%83%B6%E4%B8%98%E6%B8%A9%E6%B3%89%E3%83%9B%E3%83%86%E3%83%AB%20%E9%9F%B3%E6%9B%B4%E7%94%BA",
+    "coordinateCheckedAt": "2026-11-22",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/560548485"
   }
 ];
 

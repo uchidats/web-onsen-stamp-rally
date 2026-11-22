@@ -90,7 +90,8 @@ test('gensei: current certification (11 facilities, 28 baths) and the reasons ot
     'onsen-071': ['露天風呂', '大浴場'],
     'onsen-072': ['男湯（野天風呂）', '女湯（野天風呂）', '貸切風呂'],
     'onsen-077': ['男女別の内風呂', '貸切温泉'],
-    'onsen-083': ['殿湯', '姫湯', '福寿', '長寿']
+    'onsen-083': ['殿湯', '姫湯', '福寿', '長寿'],
+    'onsen-102': ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）']
   });
   // 認定された湯は、必ず源泉かけ流しの湯(深緑の波)でもある
   for (const [id, names] of Object.entries(certified)) for (const n of names) assert.ok(kake[id].baths.includes(n), `${id}/${n}`);
@@ -392,4 +393,11 @@ test('gensei: none of Daiichi Takimotokan, Fureai Center and Roma no Izumi is ce
 test('gensei: Kawaraya すのこの湯 is excluded because water is added (third-party Yuchelin)', () => {
   assert.equal(evaluate(kake['onsen-101'], 'すのこの湯').result, 'excluded');
   assert.deepEqual(certifiedBaths(kake['onsen-101']), []);
+});
+
+test('gensei: Marumigaoka certifies only the 2 public-bath tubs (純温泉A, 2023); the family bath has added water and is excluded', () => {
+  assert.equal(evaluate(kake['onsen-102'], '大浴槽（熱めの湯）').result, 'certified');
+  assert.equal(evaluate(kake['onsen-102'], '小浴槽（ぬる湯）').result, 'certified');
+  assert.equal(evaluate(kake['onsen-102'], '個室家族風呂').result, 'excluded');
+  assert.equal(evaluate(kake['onsen-102'], '個室家族風呂').water, 'yes');
 });
