@@ -613,5 +613,21 @@ window.ONSEN_BATH_COLORS = {
       { color: 'milky_white', expression: '乳白色', scope: 'facility', listed: true, evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の評価コメント「日によって鮮やかな緑色から乳白色へと移ろう湯色も魅力です。」施設の湯についての記述で、浴槽を特定した記載ではないため施設全体の色とする。さくら市観光ナビに湯の色の記載はなく、施設の公式サイトは開けず未確認' }, change: { kind: 'tint', note: '日によって鮮やかな緑色から乳白色へと変わります' } }
     ],
     source: { url: 'https://yuchelin.org/award/kitsuregawa-soutome-onsen-2026/', checkedAt: '2026-11-24' }
+  },
+  'onsen-106': {
+    colors: [
+      { color: 'milky_white', expression: '乳白色', scope: 'facility', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '野沢温泉公式(観光局の外湯ガイド)「乳白色・エメラルド色・無色透明などに変色することから、俗称“五色の湯”とも言われています。」施設の湯についての記述。エメラルド色は既存の色分類の「緑」に当てる' }, change: { kind: 'tint', note: '乳白色・エメラルド色・無色透明などに変わります' } },
+      { color: 'green', expression: 'エメラルド色', scope: 'facility', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '野沢温泉公式(観光局の外湯ガイド)「乳白色・エメラルド色・無色透明などに変色することから、俗称“五色の湯”とも言われています。」施設の湯についての記述。エメラルド色は既存の色分類の「緑」に当てる' }, change: { kind: 'tint', note: '乳白色・エメラルド色・無色透明などに変わります' } },
+      { color: 'colorless', expression: '無色透明', scope: 'facility', listed: true, evidence: { type: 'official_text', confidence: 'confirmed', note: '野沢温泉公式(観光局の外湯ガイド)「乳白色・エメラルド色・無色透明などに変色することから、俗称“五色の湯”とも言われています。」施設の湯についての記述。エメラルド色は既存の色分類の「緑」に当てる' }, change: { kind: 'tint', note: '乳白色・エメラルド色・無色透明などに変わります' } }
+    ],
+    source: { url: 'https://nozawakanko.jp/hotspring/', checkedAt: '2026-11-24' }
+  },
+  'onsen-107': {
+    colors: [{
+      color: 'green', expression: '濃い緑色', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '野沢温泉公式(観光局の外湯ガイド)「経時変化で透明感のあるきれいな濃い緑色に変化します。白タイル張りの浴槽にエメラルド色が美しく映え、黒と白の湯の華が舞うお湯」。黒と白は湯の華の色で、湯の色としては登録しない' },
+      change: { kind: 'tint', note: '経時変化で透明感のある濃い緑色に変わります' }
+    }],
+    source: { url: 'https://nozawakanko.jp/hotspring/', checkedAt: '2026-11-24' }
   }
 };
