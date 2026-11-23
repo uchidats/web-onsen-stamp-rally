@@ -37,7 +37,7 @@ const FUKUSHIMA = {
   'onsen-034': '旅館玉子湯', 'onsen-035': '安達屋旅館', 'onsen-036': '野地温泉ホテル', 'onsen-037': '柏屋旅館', 'onsen-039': '御宿 万葉亭'
 };
 
-const TOCHIGI = { 'onsen-040': '明賀屋本館', 'onsen-041': '加仁湯', 'onsen-042': '八丁の湯', 'onsen-043': '秘湯の宿 元泉館', 'onsen-044': '那須 鹿の湯', 'onsen-045': '大黒屋' };
+const TOCHIGI = { 'onsen-040': '明賀屋本館', 'onsen-041': '加仁湯', 'onsen-042': '八丁の湯', 'onsen-043': '秘湯の宿 元泉館', 'onsen-044': '那須 鹿の湯', 'onsen-045': '大黒屋', 'onsen-104': '喜連川早乙女温泉' };
 const GUNMA = { 'onsen-048': '鍾寿館', 'onsen-053': '湯宿 三河屋', 'onsen-070': '山本館' };
 const YAMANASHI = { 'onsen-068': '不老閣', 'onsen-069': '白根館' };
 const SANDOGOYA = { 'onsen-089': '煙草屋旅館', 'onsen-090': '大黒屋旅館' };
@@ -59,7 +59,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 103);
+  assert.equal(data.length, 104);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO_YUCHELIN), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -259,7 +259,7 @@ test('feature baths: Fukushima publishes 15 baths for 5 facilities; Nikaido (ons
   assert.ok(Object.keys(FUKUSHIMA).every(id => feature[id].baths.every(b => !b.color)));
 });
 
-test('feature baths: Tochigi publishes 17 baths for 6 facilities; unconfirmed forms are omitted, official names are kept', () => {
+test('feature baths: Tochigi publishes 18 baths for 7 facilities; unconfirmed forms are omitted, official names are kept', () => {
   const names = id => feature[id].baths.map(b => b.name);
   assert.deepEqual(names('onsen-040'), ['川岸露天風呂(混浴)', '女性専用川岸露天風呂', 'やすらぎの湯・太古の湯']);
   assert.deepEqual(names('onsen-041'), ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯']);
@@ -267,7 +267,7 @@ test('feature baths: Tochigi publishes 17 baths for 6 facilities; unconfirmed fo
   assert.deepEqual(names('onsen-043'), ['高尾の湯(渓流露天風呂)', '邯鄲の湯', '宝の湯']);
   assert.deepEqual(names('onsen-044'), ['男湯(41〜48℃)', '女湯(41〜46℃)']);
   assert.deepEqual(names('onsen-045'), ['露天の湯', 'たいようの湯', 'ひのきの湯']);
-  assert.equal(Object.keys(TOCHIGI).reduce((n, id) => n + feature[id].baths.length, 0), 17);
+  assert.equal(Object.keys(TOCHIGI).reduce((n, id) => n + feature[id].baths.length, 0), 18);
   for (const [id, name] of Object.entries(TOCHIGI)) { assert.equal(data.find(x => x.id === id).facility, name); assert.equal(data.find(x => x.id === id).prefecture, '栃木県'); }
   assert.ok(!JSON.stringify(feature).includes('research-tochigi'));
   // ロマンの湯: 内湯/露天・入浴形態は未確認なので kind/form を省略。大黒屋は男女の形態を公式本文で確認できないため省略
@@ -595,5 +595,13 @@ test('feature baths: Kenichi Onsen lists the official 内湯 and 露天風呂, w
   assert.equal(feature['onsen-103'].baths.map(b => b.name).join(','), '内湯,露天風呂');
   assert.ok(feature['onsen-103'].baths.every(b => !b.color));
   assert.ok(!/円|\d+[:：]\d+|\d+時|\d+分/.test(JSON.stringify(feature['onsen-103'].baths)), 'no prices or hours');
+  assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
+});
+
+test('feature baths: Kitsuregawa Soutome lists the half-open-air bath from the city tourism site; no prices, hours or closure notice in public data', () => {
+  const x = data.find(v => v.id === 'onsen-104');
+  assert.equal(x.onsen, '喜連川温泉'); assert.equal(x.prefecture, '栃木県'); assert.equal(x.station, '氏家駅');
+  assert.equal(feature['onsen-104'].baths.map(b => b.name).join(','), '半露天の岩風呂');
+  assert.ok(!/\d+円|\d{1,2}:\d{2}|休業/.test(x.bathing + JSON.stringify(feature['onsen-104'])));
   assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
 });

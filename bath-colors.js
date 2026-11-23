@@ -606,5 +606,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップ「湯口から注ぎ出るときはほぼ透明ですが、中に含まれる鉄分が酸化するため、湯は赤茶色に濁っています。」源泉欄「鉄分を多く含んだ赤茶色の湯」。北海道公式観光サイトも「注ぎ口では無色透明ですが、鉄分が空気に触れて酸化することで湯船では独特の赤茶色へと変化します」。既存の色分類の「茶褐色」に当てる。湯口の透明は湯船の色として登録しない。浴槽ごとの記載はない(利用者投稿には「黄褐色」「茶褐色」の表現もある)' }
     }],
     source: { url: 'https://www.kenichi-spa.com/', checkedAt: '2026-11-23' }
+  },
+  'onsen-104': {
+    colors: [
+      { color: 'green', expression: '鮮やかな緑色', scope: 'facility', listed: true, evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の評価コメント「日によって鮮やかな緑色から乳白色へと移ろう湯色も魅力です。」施設の湯についての記述で、浴槽を特定した記載ではないため施設全体の色とする。さくら市観光ナビに湯の色の記載はなく、施設の公式サイトは開けず未確認' }, change: { kind: 'tint', note: '日によって鮮やかな緑色から乳白色へと変わります' } },
+      { color: 'milky_white', expression: '乳白色', scope: 'facility', listed: true, evidence: { type: 'third_party', confidence: 'third_party_reported', note: '湯シュラン2026(一般社団法人Yuchelin)の評価コメント「日によって鮮やかな緑色から乳白色へと移ろう湯色も魅力です。」施設の湯についての記述で、浴槽を特定した記載ではないため施設全体の色とする。さくら市観光ナビに湯の色の記載はなく、施設の公式サイトは開けず未確認' }, change: { kind: 'tint', note: '日によって鮮やかな緑色から乳白色へと変わります' } }
+    ],
+    source: { url: 'https://yuchelin.org/award/kitsuregawa-soutome-onsen-2026/', checkedAt: '2026-11-24' }
   }
 };

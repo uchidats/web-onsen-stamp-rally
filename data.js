@@ -2290,6 +2290,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-23",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "node/4269211988"
+  },
+  {
+    "id": "onsen-104",
+    "number": 104,
+    "area": "関東・信越",
+    "prefecture": "栃木県",
+    "onsen": "喜連川温泉",
+    "facility": "喜連川早乙女温泉",
+    "latitude": 36.7039494,
+    "longitude": 140.0092488,
+    "coordinateSource": "https://www.openstreetmap.org/way/697516991",
+    "coordinateVerified": true,
+    "officialUrl": "http://www.soutome-on.com/",
+    "category": "その他",
+    "bathing": "日帰り温泉。営業時間・定休日・料金は公式サイトで確認できていないため未登録（施設へ要確認）。源泉は72.4℃・pH7.4（湯シュラン2026。さくら市観光ナビは約73℃と案内）。沸かさず、循環させず、毎朝清掃して新湯に入れ替える半露天の湯（さくら市観光ナビ）。外気温に合わせて加水している（湯シュラン2026）。硫化水素と石油を思わせる香りがあり、日によって鮮やかな緑色から乳白色へ湯の色が変わる（湯シュラン2026）。入墨・タトゥーは大小を問わず入浴できない（湯シュラン2026掲載の注意事項）",
+    "station": "氏家駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "含硫黄－ナトリウム・カルシウム－塩化物温泉（高張性・中性・高温泉）",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%96%9C%E9%80%A3%E5%B7%9D%E6%97%A9%E4%B9%99%E5%A5%B3%E6%B8%A9%E6%B3%89%20%E6%A0%83%E6%9C%A8%E7%9C%8C%E3%81%95%E3%81%8F%E3%82%89%E5%B8%82",
+    "coordinateCheckedAt": "2026-11-24",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/697516991"
   }
 ];
 

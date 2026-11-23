@@ -668,6 +668,17 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップ「明治から伝わる源泉掛け流しの湯治宿」「見市温泉は源泉掛け流し、泉質は含重酸土類弱塩素泉」、公式の説明文(meta)「見市温泉は明治初年から源泉かけ流しの湯治宿として代々営まれており」。施設全体の記述で、内湯・露天風呂それぞれの浴槽別の記載はないため、個々の湯へは広げない。北海道公式観光サイトも「源泉掛け流しの湯」と書く' },
     dilution: { water: 'unknown', note: '公式・北海道公式観光サイトに加水・加温・循環ろ過・消毒の記載はない。源泉は60〜70℃(公式)。@nifty温泉の利用者投稿に、熱い内湯に浴槽脇の蛇口から地下水を入れていたとの記載が複数あるが、利用者の投稿で施設の運用としては確認できない。浴槽別の湯使いが確認できないため規則は付けず、源生の湯は保留' },
     source: { url: 'https://www.kenichi-spa.com/', checkedAt: '2026-11-23' }
+  },
+  'onsen-104': {
+    scope: 'facility', baths: ['半露天の岩風呂'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '自治体の資料: さくら市観光ナビ(運営 栃木県さくら市 産業経済部 商工観光課)「源泉かけ流しの開放感のある半露天風呂」「循環せず常に湯船からコンコンとあふれ出る新鮮なお湯が自慢で、毎朝清掃し新湯に入れ替えています」と半露天風呂を名指し。施設の公式サイトはTLS証明書の名前不一致で開けず、公式の記載は未確認。湯シュラン2026も「源泉かけ流し」「半露天の岩風呂」とする(第三者資料)。浴槽名は湯シュランの表記に基づく説明用の名称' },
+    dilution: { water: 'for_temperature', note: '湯シュラン2026「外気温に合わせて加水しています」、提供方法「源泉かけ流し、加水あり、加温なし」(第三者資料)。さくら市観光ナビ「７３度無菌源泉ならではの『沸かさず、循環させず』」。「無菌源泉」は源泉の説明で、浴槽の消毒の有無は未確認。ろ過の有無は個別には書かれていない。加水ありのため源生の湯の対象外' },
+    source: { url: 'https://sakura-navi.net/onsen-shukuhaku/kitsuregawa-springs/soutome/', checkedAt: '2026-11-24' },
+    treatment: {
+      water: [{ status: 'yes', scope: 'baths', baths: ['半露天の岩風呂'], evidenceType: 'third_party_reported', coverage: '半露天の岩風呂', scopeNote: '湯シュラン2026の施設紹介・提供方法(第三者資料)。加水ありのため源生の湯の対象外', quote: '外気温に合わせて加水しています。／源泉かけ流し、加水あり、加温なし', url: 'https://yuchelin.org/award/kitsuregawa-soutome-onsen-2026/', checkedAt: '2026-11-24' }],
+      heating: [{ status: 'none', scope: 'baths', baths: ['半露天の岩風呂'], coverage: '半露天風呂', scopeNote: 'さくら市観光ナビ(自治体)が半露天風呂の紹介で「沸かさず、循環させず」と書く。湯シュラン2026も「加温なし」', quote: '地下からくみ上げた７３度無菌源泉ならではの「沸かさず、循環させず」の清潔な温泉', url: 'https://sakura-navi.net/onsen-shukuhaku/kitsuregawa-springs/soutome/', checkedAt: '2026-11-24' }],
+      circulation: [{ status: 'none', scope: 'baths', baths: ['半露天の岩風呂'], coverage: '半露天風呂', scopeNote: 'さくら市観光ナビ(自治体)の循環についての記載。ろ過単独・消毒の有無は書かれていない', quote: '循環せず常に湯船からコンコンとあふれ出る新鮮なお湯', url: 'https://sakura-navi.net/onsen-shukuhaku/kitsuregawa-springs/soutome/', checkedAt: '2026-11-24' }]
+    }
   }
 };
 
