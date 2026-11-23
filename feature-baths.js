@@ -736,5 +736,13 @@ window.ONSEN_FEATURE_BATHS = {
       { name: '個室家族風呂', form: '貸切', tags: ['8部屋', '予約不要', '高温泉使用'], note: '高温泉のモール泉を個室で楽しめます' }
     ],
     source: { url: 'https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel', checkedAt: '2026-11-22' }
+  },
+  'onsen-103': {
+    note: '宿から約300m上流の岩の間から湧き出る60〜70℃の湯を使っています。湯口ではほぼ透明ですが、鉄分が酸化して赤茶色に濁ります。',
+    baths: [
+      { name: '内湯', kind: '内湯', note: '館内の大浴場です' },
+      { name: '露天風呂', kind: '露天', tags: ['見市川を望む', '四季折々の景色', '雪見風呂'], note: '露天風呂から見市川と山峡の四季の景色を眺められます' }
+    ],
+    source: { url: 'https://www.kenichi-spa.com/', checkedAt: '2026-11-23' }
   }
 };

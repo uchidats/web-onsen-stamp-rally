@@ -2267,6 +2267,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-22",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "way/560548485"
+  },
+  {
+    "id": "onsen-103",
+    "number": 103,
+    "area": "北海道",
+    "prefecture": "北海道",
+    "onsen": "見市温泉",
+    "facility": "見市温泉旅館",
+    "latitude": 42.1553131,
+    "longitude": 140.0410721,
+    "coordinateSource": "https://www.openstreetmap.org/node/4269211988",
+    "coordinateVerified": true,
+    "officialUrl": "https://www.kenichi-spa.com/",
+    "category": "その他",
+    "bathing": "日帰り入浴12:00〜21:00、500円（公式）。年中無休（公式）。宿泊は1泊2食付8,500円〜、あわびフルコース宿泊14,500円（要予約）、ビジネスプラン1泊5,500円〜（公式）。客室は和室13室（公式）。明治初年から続く見市川の渓流沿いの湯治宿で、宿から約300m上流の岩の間から60〜70℃・毎分70リットルの湯が湧く（公式）。湯口ではほぼ透明で、鉄分の酸化により湯は赤茶色に濁る（公式・北海道公式観光サイト）。泉質は公式の源泉欄の「ナトリウム・塩化物泉」に合わせた（公式の紹介文には旧泉質名「含重酸土類弱塩素泉」の記載もある）",
+    "station": "八雲駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "ナトリウム－塩化物泉",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%A6%8B%E5%B8%82%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E5%85%AB%E9%9B%B2%E7%94%BA%E7%86%8A%E7%9F%B3",
+    "coordinateCheckedAt": "2026-11-23",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "node/4269211988"
   }
 ];
 

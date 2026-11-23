@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-11-22",
-  "method": "101 verified facilities and 1 pending facility without coordinates (onsen-102 Marumigaoka Onsen Hotel (Otofuke) from unnamed OSM building way/560548485 identified by the official address point, aerial photos and the Japan Real Onsen Association bath layout, added 2026-11-22; onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-23",
+  "method": "102 verified facilities and 1 pending facility without coordinates (onsen-103 Kenichi Onsen Ryokan (Yakumo) from OSM node/4269211988 inside building way/434689351 added 2026-11-23; onsen-102 Marumigaoka Onsen Hotel (Otofuke) from unnamed OSM building way/560548485 identified by the official address point, aerial photos and the Japan Real Onsen Association bath layout, added 2026-11-22; onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -6970,6 +6970,117 @@
             [
               143.2234038,
               42.9470353
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-103",
+      "facility": "見市温泉旅館",
+      "prefecture": "北海道",
+      "latitude": 42.1553131,
+      "longitude": 140.0410721,
+      "coordinateSource": "https://www.openstreetmap.org/node/4269211988",
+      "coordinateVerified": true,
+      "osmName": "見市温泉旅館",
+      "osmAddress": "北海道二海郡八雲町熊石大谷町１３",
+      "osmFeatureType": "tourism/hotel",
+      "addressReference": "https://www.visit-hokkaido.jp/spa/spot/detail_12007.html",
+      "note": "OSMの宿泊施設POI node/4269211988(name=見市温泉旅館、tourism=hotel、addr:city=北海道二海郡八雲町熊石大谷町１３、addr:postcode=043-0401)。所在地・郵便番号が北海道公式観光サイトの見市温泉の基本情報(〒043-0401 北海道二海郡八雲町熊石大谷町13、電話01398-2-2002は公式サイトの電話と一致)と一致。POIはOSM建物way/434689351(building=yes)のポリゴン内にあり、地理院シームレス空中写真(z18)でも見市川沿いの宿の建物に当たる。国土地理院の住所検索は大谷町の代表点(約370m南)までで番地は引けない。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-23",
+      "onsen": "見市温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "北海道二海郡八雲町熊石大谷町13",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/4269211988",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "見市温泉旅館",
+      "identityReferences": [
+        "https://www.kenichi-spa.com/",
+        "https://www.visit-hokkaido.jp/spa/spot/detail_12007.html"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E8%A6%8B%E5%B8%82%E6%B8%A9%E6%B3%89%E6%97%85%E9%A4%A8%20%E5%85%AB%E9%9B%B2%E7%94%BA%E7%86%8A%E7%9F%B3",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              140.0408251,
+              42.1552029
+            ],
+            [
+              140.0407135,
+              42.1550942
+            ],
+            [
+              140.040816,
+              42.1550364
+            ],
+            [
+              140.0409329,
+              42.1551502
+            ],
+            [
+              140.0408899,
+              42.1551926
+            ],
+            [
+              140.0409489,
+              42.1552254
+            ],
+            [
+              140.0409887,
+              42.1551861
+            ],
+            [
+              140.0412983,
+              42.1553582
+            ],
+            [
+              140.0412847,
+              42.1553717
+            ],
+            [
+              140.0412193,
+              42.1554355
+            ],
+            [
+              140.0411975,
+              42.1554572
+            ],
+            [
+              140.0410617,
+              42.155382
+            ],
+            [
+              140.0410364,
+              42.1554071
+            ],
+            [
+              140.0409376,
+              42.1553525
+            ],
+            [
+              140.0409665,
+              42.1553238
+            ],
+            [
+              140.0408999,
+              42.155287
+            ],
+            [
+              140.0409276,
+              42.1552596
+            ],
+            [
+              140.0408251,
+              42.1552029
             ]
           ]
         ]

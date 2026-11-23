@@ -123,6 +123,8 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-101': ['湯の色: 青（すのこの湯）。資料の表現「青色透明」。第三者資料の記載です。'],
       // 2026-11-22 追加(純温泉協会「ウーロン茶のような色」。第三者資料・3号泉の大浴槽と家族風呂)
       'onsen-102': ['湯の色: 茶褐色（大浴槽（熱めの湯）・個室家族風呂）。資料の表現「ウーロン茶のような色」。第三者資料の記載です。'],
+      // 2026-11-23 追加(公式「赤茶色に濁っています」)
+      'onsen-103': ['湯の色: 茶褐色（施設全体）。公式の表現「赤茶色」。'],
       'onsen-070': ['湯の色: 無色透明（施設全体）。公式の表現「基本的には無色透明」。', '湯の色: 乳白色（若鹿の湯）。2026年11月3日の日帰り入浴時の色です。公式は基本的に無色透明で、湯ノ花が舞うと濁ることがあると説明しており、常に乳白色ではありません。現地での観察です。']
     };
     const TOTAL_DOTS = Object.values(TIPS).reduce((n, a) => n + a.length, 0);
@@ -277,7 +279,7 @@ test('E2E: bath color dots on onsen cards and in 代表的な湯 (hover, tap, ke
       'onsen-101': { 'すのこの湯': 1 },
       'onsen-102': { '大浴槽（熱めの湯）': 1, '個室家族風呂': 1 }
     };
-    const NO_DETAIL_DOTS = ['onsen-041', 'onsen-091', 'onsen-092', 'onsen-093', 'onsen-094', 'onsen-095', 'onsen-097', 'onsen-098', 'onsen-099', 'onsen-100', 'onsen-043', 'onsen-044', 'onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014', 'onsen-019', 'onsen-023', 'onsen-024', 'onsen-027', 'onsen-040', 'onsen-045', 'onsen-049', 'onsen-053', 'onsen-065', 'onsen-067'];
+    const NO_DETAIL_DOTS = ['onsen-041', 'onsen-103', 'onsen-091', 'onsen-092', 'onsen-093', 'onsen-094', 'onsen-095', 'onsen-097', 'onsen-098', 'onsen-099', 'onsen-100', 'onsen-043', 'onsen-044', 'onsen-034', 'onsen-036', 'onsen-039', 'onsen-028', 'onsen-004', 'onsen-015', 'onsen-017', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-013', 'onsen-014', 'onsen-019', 'onsen-023', 'onsen-024', 'onsen-027', 'onsen-040', 'onsen-045', 'onsen-049', 'onsen-053', 'onsen-065', 'onsen-067'];
     for (const width of [1280, 390, 320]) {
       await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 400 });
       for (const [id, want] of Object.entries(DETAIL)) {

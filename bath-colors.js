@@ -599,5 +599,12 @@ window.ONSEN_BATH_COLORS = {
       evidence: { type: 'third_party', confidence: 'third_party_reported', note: '純温泉協会の施設ページ(2023年)「丸美ヶ丘温泉3号泉は、モール成分が多く、ウーロン茶のような色をしていて、やや熱めの湯は…美肌の湯です。この源泉は、大浴場の広い浴槽（浴槽①③）と家族風呂（浴槽⑤～⑭）で使用しています。」3号泉を使う大浴槽と家族風呂に当て、既存の色分類の「茶褐色」とする。小浴槽(2号泉)の色は書かれていないため登録しない。公式サイトに湯の色の記載はない' }
     }],
     source: { url: 'https://realonsen.com/marumigaoka/', checkedAt: '2026-11-22' }
+  },
+  'onsen-103': {
+    colors: [{
+      color: 'brown', expression: '赤茶色', scope: 'facility',
+      evidence: { type: 'official_text', confidence: 'confirmed', note: '公式トップ「湯口から注ぎ出るときはほぼ透明ですが、中に含まれる鉄分が酸化するため、湯は赤茶色に濁っています。」源泉欄「鉄分を多く含んだ赤茶色の湯」。北海道公式観光サイトも「注ぎ口では無色透明ですが、鉄分が空気に触れて酸化することで湯船では独特の赤茶色へと変化します」。既存の色分類の「茶褐色」に当てる。湯口の透明は湯船の色として登録しない。浴槽ごとの記載はない(利用者投稿には「黄褐色」「茶褐色」の表現もある)' }
+    }],
+    source: { url: 'https://www.kenichi-spa.com/', checkedAt: '2026-11-23' }
   }
 };

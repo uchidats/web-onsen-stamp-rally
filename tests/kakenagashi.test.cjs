@@ -33,7 +33,7 @@ test('kakenagashi: the card icon facilities are exactly the confirmed ones (72);
     'onsen-001', 'onsen-003', 'onsen-004', 'onsen-005', 'onsen-006', 'onsen-007', 'onsen-008', 'onsen-009', 'onsen-010', 'onsen-011', 'onsen-012',
     'onsen-015', 'onsen-016', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-020', 'onsen-021', 'onsen-023', 'onsen-024', 'onsen-026', 'onsen-027',
     'onsen-028', 'onsen-029', 'onsen-030', 'onsen-031', 'onsen-032', 'onsen-033',
-    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-040', 'onsen-041', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-048', 'onsen-054', 'onsen-055', 'onsen-056', 'onsen-057', 'onsen-058', 'onsen-060', 'onsen-061', 'onsen-065', 'onsen-066', 'onsen-067', 'onsen-068', 'onsen-069', 'onsen-070', 'onsen-071', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-075', 'onsen-076', 'onsen-077', 'onsen-078', 'onsen-079', 'onsen-081', 'onsen-082', 'onsen-083', 'onsen-084', 'onsen-085', 'onsen-086', 'onsen-087', 'onsen-088', 'onsen-090', 'onsen-091', 'onsen-092', 'onsen-093', 'onsen-094', 'onsen-095', 'onsen-096', 'onsen-097', 'onsen-098', 'onsen-099', 'onsen-100', 'onsen-101', 'onsen-102'
+    'onsen-034', 'onsen-035', 'onsen-036', 'onsen-037', 'onsen-038', 'onsen-039', 'onsen-040', 'onsen-041', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-048', 'onsen-054', 'onsen-055', 'onsen-056', 'onsen-057', 'onsen-058', 'onsen-060', 'onsen-061', 'onsen-065', 'onsen-066', 'onsen-067', 'onsen-068', 'onsen-069', 'onsen-070', 'onsen-071', 'onsen-072', 'onsen-073', 'onsen-074', 'onsen-075', 'onsen-076', 'onsen-077', 'onsen-078', 'onsen-079', 'onsen-081', 'onsen-082', 'onsen-083', 'onsen-084', 'onsen-085', 'onsen-086', 'onsen-087', 'onsen-088', 'onsen-090', 'onsen-091', 'onsen-092', 'onsen-093', 'onsen-094', 'onsen-095', 'onsen-096', 'onsen-097', 'onsen-098', 'onsen-099', 'onsen-100', 'onsen-101', 'onsen-102', 'onsen-103'
   ]);
   // 酸ヶ湯・新玉川・玉川・川原毛は、かけ流しを明記した資料を確認できていない
   for (const id of ['onsen-002', 'onsen-013', 'onsen-014', 'onsen-022']) assert.equal(kake[id], undefined, id);
@@ -227,4 +227,12 @@ test('kakenagashi: Marumigaoka marks all 3 baths (official 源泉100%掛け流�
   assert.equal(e.perBathEvidence.type, 'third_party'); assert.match(e.perBathEvidence.note, /2023年2月22日/);
   assert.equal(e.dilution.water, 'for_temperature');
   for (const k of ['water', 'heating', 'circulation', 'disinfection']) assert.ok(e.treatment[k].length >= 1, k);
+});
+
+test('kakenagashi: Kenichi Onsen is facility-level official 源泉掛け流し only; no bath-level wave and no treatment rules (源生の湯 held)', () => {
+  const e = kake['onsen-103'];
+  assert.equal(e.scope, 'facility'); assert.deepEqual(e.baths.length, 0); assert.equal(e.evidence.type, 'official_text');
+  assert.equal(e.dilution.water, 'unknown'); assert.equal(e.treatment, undefined);
+  assert.equal(GENSEI.certifiedBaths(e).length, 0);
+  for (const n of ['内湯', '露天風呂']) assert.equal(GENSEI.evaluate(e, n).result, 'pending');
 });
