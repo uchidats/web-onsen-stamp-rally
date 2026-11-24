@@ -338,7 +338,7 @@ test('Geographic projection matches standard Mercator, preserves aspect and does
   assert.ok(Math.abs(project(140,40)[1]-project(140,41)[1]-(merc(41)-merc(40))*PROJECTION.scale)<1e-8);
 });
 
-test('JapanPrefMap: displays exactly 104 verified onsen markers and no marker for the 3 unverified facilities', () => {
+test('JapanPrefMap: displays exactly 106 verified onsen markers and no marker for the 1 unverified facility', () => {
   const MapModule = loadJapanMap();
   const dataCode = fs.readFileSync('data.js', 'utf8');
   const win = {};
@@ -358,22 +358,22 @@ test('JapanPrefMap: displays exactly 104 verified onsen markers and no marker fo
   });
 
   assert.ok(instance, 'Map instance should be created');
-  assert.equal(instance.getMarkerCount(), 104, 'Must render exactly 104 verified markers');
+  assert.equal(instance.getMarkerCount(), 106, 'Must render exactly 106 verified markers');
 
   const markers = container.querySelectorAll('.japan-map-marker');
-  assert.equal(markers.length, 104, 'DOM should contain 104 marker elements');
+  assert.equal(markers.length, 106, 'DOM should contain 106 marker elements');
 
-  // Verify the 3 unverified facilities (coordinates pending) have no marker
+  // Verify the 1 unverified facility (onsen-091, coordinates pending) has no marker
   const unverified = DATA.filter(x => !x.coordinateVerified);
-  assert.equal(unverified.map(x => x.id).join(','), 'onsen-091,onsen-106,onsen-107', 'Should have 3 unverified onsens');
+  assert.equal(unverified.map(x => x.id).join(','), 'onsen-091', 'Should have 1 unverified onsen');
   for (const u of unverified) {
     const found = markers.find(m => m.getAttribute('data-onsen-id') === u.id);
     assert.equal(found, undefined, `Unverified facility ${u.id} (${u.facility}) must NOT have a marker on the map`);
   }
 
-  // Verify all 104 verified facilities have a marker
+  // Verify all 106 verified facilities have a marker
   const verified = DATA.filter(x => x.coordinateVerified);
-  assert.equal(verified.length, 104, 'Should have 104 verified onsens');
+  assert.equal(verified.length, 106, 'Should have 106 verified onsens');
   for (const v of verified) {
     const found = markers.find(m => m.getAttribute('data-onsen-id') === v.id);
     assert.ok(found, `Verified facility ${v.id} (${v.facility}) must have a marker`);

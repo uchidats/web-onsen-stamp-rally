@@ -1,9 +1,9 @@
 {
-  "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.",
-  "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0",
+  "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.; Overture Maps Foundation / Microsoft ML Buildings; 国土地理院 地理院タイル(全国最新写真(シームレス))を加工して作成",
+  "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0 / PDL-1.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-24",
-  "method": "104 verified facilities and 3 pending facilities without coordinates (onsen-105 Oyu (Nozawa Onsen) from OSM node/1074587418 added 2026-11-24, onsen-106 Shinyu and onsen-107 Takinoyu pending; onsen-104 Kitsuregawa Soutome Onsen (Sakura) from OSM way/697516991 added 2026-11-24; onsen-103 Kenichi Onsen Ryokan (Yakumo) from OSM node/4269211988 inside building way/434689351 added 2026-11-23; onsen-102 Marumigaoka Onsen Hotel (Otofuke) from unnamed OSM building way/560548485 identified by the official address point, aerial photos and the Japan Real Onsen Association bath layout, added 2026-11-22; onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "106 verified facilities and 1 pending facility without coordinates (onsen-106 Shinyu from an Overture building outline (Microsoft ML Buildings, ODbL) and onsen-107 Takinoyu read from GSI seamless aerial photo tiles, both verified 2026-11-24 after street-level identification; onsen-105 Oyu (Nozawa Onsen) from OSM node/1074587418 added 2026-11-24; onsen-104 Kitsuregawa Soutome Onsen (Sakura) from OSM way/697516991 added 2026-11-24; onsen-103 Kenichi Onsen Ryokan (Yakumo) from OSM node/4269211988 inside building way/434689351 added 2026-11-23; onsen-102 Marumigaoka Onsen Hotel (Otofuke) from unnamed OSM building way/560548485 identified by the official address point, aerial photos and the Japan Real Onsen Association bath layout, added 2026-11-22; onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -6853,7 +6853,7 @@
       "osmAddress": "",
       "osmFeatureType": "building",
       "addressReference": "https://bd8p1.hp.peraichi.com/marumigaokaonsenhotel",
-      "note": "OSMの名前タグのない建物way/560548485(building=yes、GSIオルソ画像からのトレース)。OSM・Overture Places 2026-09-23.1に施設名・電話の一致するレコードはなく、名称タグ一致と偽らない。施設の同定: 公式・純温泉協会・音更町十勝川温泉観光協会の所在地「北海道河東郡音更町宝来本通6丁目2」を国土地理院の住所検索で引いた「宝来本通六丁目２番」の地点から約55m東北東。地理院シームレス空中写真(z17・z18)で、住宅地東側の森の中にある唯一の大きな建物群で、駐車場を伴う。建物の形(南北に長い棟と北側の棟)は純温泉協会の浴槽配置図(家族風呂エリアの長い棟・大浴場・客室棟)と向きを90度回すと対応する。公式の「小高い丘の上・森に囲まれた・約9000坪の敷地」とも整合。公開座標はOSM頂点のみから建物内部の最大内接余裕点を計算(200分割格子)。Google座標は不使用。地理院は閲覧照合のみで座標取得なし。",
+      "note": "OSMの名前タグのない建物way/560548485(building=yes、GSIオルソ画像からのトレース)。OSM・Overture Places 2026-09-23.1に施設名・電話の一致するレコードはなく、名称タグ一致と偽らない。2026-11-24に再検証: (1)純温泉協会の浴槽配置図を時計回りに90度回すと、北西の赤屋根の細長い棟(way/560548483、東側中央に玄関の張り出し)=家族風呂エリア、その南端から東へ延びる棟=客室棟、中央=大浴場(谷側の西が大窓)、南寄りの東側の張り出し=大浴場側の玄関となり、棟の数・並び・向き・玄関の位置が空中写真と建物形状に一致する。2026-11-22の照合メモは棟の向きの対応が逆だったため訂正する。(2)Googleマップの「丸美ケ丘温泉ホテル」(所在地・電話・公式サイトが公式と一致)の表示位置がこの建物の範囲内にあることを目視で確認(座標は保存しない)。(3)公式・純温泉協会・観光協会の所在地「宝来本通6丁目2」の国土地理院住所点「宝来本通六丁目２番」から約55m東北東。(4)地理院シームレス空中写真で、住宅地東側の森の中にあり駐車場を伴う建物群。敷地内の道にストリートビューはなく、看板の目視はできていない。公開座標はOSM頂点のみから建物内部の最大内接余裕点を計算(200分割格子)した値で、今回変更していない。Google座標は不使用。地理院は閲覧照合のみで座標取得なし。",
       "coordinateCheckedAt": "2026-11-22",
       "onsen": "丸美ヶ丘温泉",
       "previousLatitude": null,
@@ -6873,7 +6873,7 @@
       ],
       "googleReference": "https://www.google.com/maps/search/?api=1&query=%E4%B8%B8%E7%BE%8E%E3%83%B6%E4%B8%98%E6%B8%A9%E6%B3%89%E3%83%9B%E3%83%86%E3%83%AB%20%E9%9F%B3%E6%9B%B4%E7%94%BA",
       "googleCoordinatesStored": false,
-      "confidence": "高（公式所在地の住所点・航空写真・浴槽配置図と公開建物形状の対応）",
+      "confidence": "高（浴槽配置図と建物群の形・向きの一致、施設名の掲載位置、公式所在地の住所点）",
       "coordinateMethod": "Interior point maximizing distance from OSM polygon boundary over a 200 x 200 local grid; longitude scaled by cos(latitude), rounded to 7 decimals and interior-tested.",
       "geometry": {
         "type": "Polygon",
@@ -7217,57 +7217,112 @@
       "id": "onsen-106",
       "facility": "真湯",
       "prefecture": "長野県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
+      "latitude": 36.9251391,
+      "longitude": 138.4462469,
+      "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+      "coordinateVerified": true,
       "addressReference": "https://nozawakanko.jp/hotspring/",
       "coordinateCheckedAt": "2026-11-24",
       "onsen": "野沢温泉",
       "previousLatitude": null,
       "previousLongitude": null,
       "address": "長野県下高井郡野沢温泉村（番地は公式に記載なし）",
-      "auditResult": "新規追加(座標未確定)",
-      "note": "座標未確定(位置確認中)。候補は、OSMの共同浴場POI node/4224990574(name=外湯 真湯)の地点と、Overture Places 2026-09-23.1(meta)の「真湯靈泉」(OSMから約28m南西)・「野沢温泉・真湯」(約76m西、住所・電話なし)で、OSMと「真湯靈泉」は隣り合う別の建物を指す。Wikimedia Commonsの外観写真(File:真湯.jpg、位置情報なし)では両隣の建物が近接しており、OSMの地点の建物の周囲と合うとは言い切れない。公式は「温泉街の北、つつじ山公園の入り口」とだけ書き、番地はない。隣接する建物との取り違えを避けるため座標を登録しない。Google座標は不使用。地図にはピンを表示せず、Google Mapsの検索リンクのみ。",
-      "coordinateLicense": null,
-      "sourceId": null,
-      "sourceName": null,
+      "auditResult": "追加調査で確認済み",
+      "note": "建物の同定: Googleストリートビュー(2023年10月撮影)で「真湯靈泉」の看板と「真湯」の石柱のある建物を目視し、Wikimedia Commonsの外観写真(File:真湯.jpg)と同じ建物であることを確認。路地を西から東へ、牛柄の壁板のある家、真湯、コンクリートの車庫、レンガ色の家の順に並ぶことを2地点から確認した。地理院空中写真にOverture 2026-09-23.1の建物形状を重ねると、真湯と車庫は1つの形状(bcf761bf、Microsoft ML Buildings、ODbL)で、西側が真湯、東側の細い張り出しが車庫。公開座標はこの形状内部の最大内接余裕点(200分割格子)で、真湯の側にある。OSMのPOI node/4224990574(外湯 真湯)は東隣のレンガ色の家の上にあり(約16m)、Overture Placesの「真湯靈泉」は西隣の建物の上にある(約13m)ため、どちらも採用しない。形状は機械抽出で数mの誤差がある。Google座標は不使用(目視照合のみ、保存なし)。",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "bcf761bf-1fca-4f3a-836a-6f99a617dc8c",
+      "sourceName": "Overture Buildings / Microsoft ML Buildings",
       "identityReferences": [
-        "https://nozawakanko.jp/hotspring/"
+        "https://nozawakanko.jp/hotspring/",
+        "https://commons.wikimedia.org/wiki/File:%E7%9C%9F%E6%B9%AF.jpg"
       ],
       "googleReference": "https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E6%B2%A2%E6%B8%A9%E6%B3%89%20%E5%A4%96%E6%B9%AF%20%E7%9C%9F%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C%E9%87%8E%E6%B2%A2%E6%B8%A9%E6%B3%89%E6%9D%91",
       "googleCoordinatesStored": false,
-      "confidence": "未確定",
-      "geometry": null,
-      "geometryCheck": "座標未確定のため照合なし"
+      "confidence": "高（看板の目視と2方向からの隣接関係）",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              138.4462445,
+              36.925093
+            ],
+            [
+              138.446295,
+              36.9251304
+            ],
+            [
+              138.446313,
+              36.9251149
+            ],
+            [
+              138.4463433,
+              36.9251373
+            ],
+            [
+              138.4462845,
+              36.9251881
+            ],
+            [
+              138.44626,
+              36.92517
+            ],
+            [
+              138.4462305,
+              36.9251954
+            ],
+            [
+              138.4461742,
+              36.9251537
+            ],
+            [
+              138.4462445,
+              36.925093
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内",
+      "sourceFacilityName": "名称なしの建物（施設同定は現地の看板・隣接建物との位置関係）",
+      "sourceRelease": "2026-09-23.1",
+      "coordinateMethod": "Interior point maximizing distance from the Overture building polygon boundary over a 200 x 200 local grid; longitude scaled by cos(latitude), rounded to 7 decimals and interior-tested."
     },
     {
       "id": "onsen-107",
       "facility": "滝の湯",
       "prefecture": "長野県",
-      "latitude": null,
-      "longitude": null,
-      "coordinateSource": "",
-      "coordinateVerified": false,
+      "latitude": 36.925686,
+      "longitude": 138.449259,
+      "coordinateSource": "https://maps.gsi.go.jp/development/ichiran.html#seamlessphoto",
+      "coordinateVerified": true,
       "addressReference": "https://nozawakanko.jp/hotspring/",
       "coordinateCheckedAt": "2026-11-24",
       "onsen": "野沢温泉",
       "previousLatitude": null,
       "previousLongitude": null,
       "address": "長野県下高井郡野沢温泉村（番地は公式に記載なし）",
-      "auditResult": "新規追加(座標未確定)",
-      "note": "座標未確定(位置確認中)。OSMに滝の湯の地点・建物はない。Overture Places 2026-09-23.1(meta)の「野沢温泉滝の湯」(住所・電話なし)は、地理院標準地図・空中写真(z18)で隣り合う2棟の間に落ち、どの建物かを特定できない。第三者資料の所在地は「豊郷8217」と「豊郷8810」に割れ、国土地理院の住所検索では前者が約2.3km、後者が約370m離れた地点で裏付けにならない。公式は「麻釜から坂を登った場所」とだけ書き、番地はない。Wikimedia Commonsの外観写真(File:滝の湯.jpg)に位置情報はない。隣接する建物との取り違えを避けるため座標を登録しない。Google座標は不使用。地図にはピンを表示せず、Google Mapsの検索リンクのみ。",
-      "coordinateLicense": null,
-      "sourceId": null,
-      "sourceName": null,
+      "auditResult": "追加調査で確認済み",
+      "note": "建物の同定: Googleストリートビュー(2023年10月撮影)の2地点から、Wikimedia Commonsの外観写真(File:滝の湯.jpg、「滝乃湯」の看板)と同じ木造の湯屋を目視。細道の北側に建ち、南にTaki No Yu Lodge、北西に麻屋があり、東隣は赤い屋根の家。地理院シームレス空中写真(z18)で、この位置にある白い屋根の小さな建物と一致する。OSM・Overtureの建物形状、地理院標準地図にこの建物はない。公開座標は地理院空中写真から屋根の中心を読み取った値(小数6桁、数mの誤差がある)。出典: 国土地理院 地理院タイル(全国最新写真(シームレス))を加工して作成。Overture Placesの「野沢温泉滝の湯」は南西に約20m離れ、別の建物の脇のため採用しない。第三者資料の番地(豊郷8217・8810)は食い違い、根拠にしていない。Google座標は不使用(目視照合のみ、保存なし)。",
+      "coordinateLicense": "PDL-1.0",
+      "sourceId": "seamlessphoto/18/231887/102102",
+      "sourceName": "国土地理院 地理院タイル（全国最新写真（シームレス））",
       "identityReferences": [
-        "https://nozawakanko.jp/hotspring/"
+        "https://nozawakanko.jp/hotspring/",
+        "https://commons.wikimedia.org/wiki/File:%E6%BB%9D%E3%81%AE%E6%B9%AF.jpg"
       ],
       "googleReference": "https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E6%B2%A2%E6%B8%A9%E6%B3%89%20%E5%A4%96%E6%B9%AF%20%E6%BB%9D%E3%81%AE%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C%E9%87%8E%E6%B2%A2%E6%B8%A9%E6%B3%89%E6%9D%91",
       "googleCoordinatesStored": false,
-      "confidence": "未確定",
-      "geometry": null,
-      "geometryCheck": "座標未確定のため照合なし"
+      "confidence": "高（2地点からの外観の目視と空中写真の一致、位置の精度は数m）",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.449259,
+          36.925686
+        ]
+      },
+      "geometryCheck": "空中写真の屋根の中心(建物形状のオープンデータなし)",
+      "sourceFacilityName": "滝の湯（空中写真の建物。施設同定は現地の外観の目視）",
+      "coordinateMethod": "Roof centre read from GSI seamless aerial photo tile z18 and converted with the Web Mercator tile formula; rounded to 6 decimals."
     }
   ],
   "coordinateSystem": "WGS84 (EPSG:4326), decimal degrees; GeoJSON order is [longitude, latitude], Leaflet is [latitude, longitude]"

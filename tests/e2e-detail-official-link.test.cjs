@@ -23,7 +23,7 @@ test('E2E: facility name in the detail view links to the official site (card and
     const waitFor = async expr => { for (let i = 0; i < 100; i++) { if (await evaluate(expr)) return; await new Promise(r => setTimeout(r, 100)); } assert.fail('Timed out: ' + expr); };
     const delay = ms => new Promise(r => setTimeout(r, ms));
     await send('Page.enable');
-    await waitFor("document.querySelectorAll('#cards .card').length>0 && document.querySelectorAll('.japan-map-marker').length===103");
+    await waitFor("document.querySelectorAll('#cards .card').length>0 && document.querySelectorAll('.japan-map-marker').length===105");
     await evaluate('localStorage.clear()');
     await evaluate("while(!document.getElementById('showMore').classList.contains('hide'))document.getElementById('showMore').click()");
 

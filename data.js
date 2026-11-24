@@ -2344,10 +2344,10 @@ window.ONSEN_DATA = [
     "prefecture": "長野県",
     "onsen": "野沢温泉",
     "facility": "真湯",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 36.9251391,
+    "longitude": 138.4462469,
+    "coordinateSource": "https://stac.overturemaps.org/2026-09-23.1/catalog.json",
+    "coordinateVerified": true,
     "officialUrl": "",
     "category": "その他",
     "bathing": "共同浴場（外湯）。6:00〜22:00（公式）。源泉は真湯で約55℃（公式）。温泉街の北、つつじ山公園の入り口にある（公式）。入場料はなく、湯仲間への協力金として賽銭箱に寸志を納める（公式）。13の外湯は「湯仲間」の村人が維持・管理しており、誰でも利用できる。入浴前に体を洗い、浴槽にタオルを入れず、水を入れたときは入れる温度になったら止める（公式の入浴の心得）。深夜の入浴はできない（公式）",
@@ -2356,7 +2356,10 @@ window.ONSEN_DATA = [
     "elevationM": null,
     "springType": "単純硫黄泉",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E6%B2%A2%E6%B8%A9%E6%B3%89%20%E5%A4%96%E6%B9%AF%20%E7%9C%9F%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C%E9%87%8E%E6%B2%A2%E6%B8%A9%E6%B3%89%E6%9D%91",
-    "coordinateCheckedAt": "2026-11-24"
+    "coordinateCheckedAt": "2026-11-24",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "bcf761bf-1fca-4f3a-836a-6f99a617dc8c",
+    "coordinateSourceRelease": "2026-09-23.1"
   },
   {
     "id": "onsen-107",
@@ -2365,10 +2368,10 @@ window.ONSEN_DATA = [
     "prefecture": "長野県",
     "onsen": "野沢温泉",
     "facility": "滝の湯",
-    "latitude": null,
-    "longitude": null,
-    "coordinateSource": "",
-    "coordinateVerified": false,
+    "latitude": 36.925686,
+    "longitude": 138.449259,
+    "coordinateSource": "https://maps.gsi.go.jp/development/ichiran.html#seamlessphoto",
+    "coordinateVerified": true,
     "officialUrl": "",
     "category": "その他",
     "bathing": "共同浴場（外湯）。4月〜11月5:00〜21:00、12月〜3月6:00〜22:00（公式）。源泉は滝の湯で約78℃（公式）。麻釜（おがま）から坂を登った場所にある（公式）。入場料はなく、湯仲間への協力金として賽銭箱に寸志を納める（公式）。13の外湯は「湯仲間」の村人が維持・管理しており、誰でも利用できる。入浴前に体を洗い、浴槽にタオルを入れず、水を入れたときは入れる温度になったら止める（公式の入浴の心得）。深夜の入浴はできない（公式）",
@@ -2377,7 +2380,9 @@ window.ONSEN_DATA = [
     "elevationM": null,
     "springType": "含硫黄－ナトリウム・カルシウム－硫酸塩泉",
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E6%B2%A2%E6%B8%A9%E6%B3%89%20%E5%A4%96%E6%B9%AF%20%E6%BB%9D%E3%81%AE%E6%B9%AF%20%E9%95%B7%E9%87%8E%E7%9C%8C%E9%87%8E%E6%B2%A2%E6%B8%A9%E6%B3%89%E6%9D%91",
-    "coordinateCheckedAt": "2026-11-24"
+    "coordinateCheckedAt": "2026-11-24",
+    "coordinateLicense": "PDL-1.0",
+    "coordinateSourceId": "seamlessphoto/18/231887/102102"
   }
 ];
 

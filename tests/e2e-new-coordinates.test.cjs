@@ -5,7 +5,7 @@ const {spawn}=require('node:child_process');
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 const added=Array.from({length:67},(_,i)=>'onsen-'+String(i+1).padStart(3,'0')).filter(id=>id!=='onsen-029'); // onsen-029は一時非公開(地図に出ない)
 
-test('E2E: 103 exact projected national markers, direct marker details, regional selection and preserved visit storage',async t=>{
+test('E2E: 105 exact projected national markers, direct marker details, regional selection and preserved visit storage',async t=>{
  const browser=['C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe','C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'].find(fs.existsSync);
  if(!browser){t.skip('Chrome/Edge not installed');return;}
  const server=http.createServer((req,res)=>{
@@ -24,13 +24,13 @@ test('E2E: 103 exact projected national markers, direct marker details, regional
  try{
   const waitFor=async expression=>{for(let i=0;i<100;i++){if(await evaluate(expression))return;await delay(100);}assert.fail('Timed out: '+expression);};
   const click=async(point,mobile)=>{if(mobile){await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[point]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await send('Input.dispatchMouseEvent',{type:'mousePressed',...point,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...point,button:'left',clickCount:1});}};
-  await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===103");
+  await send('Page.enable');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===105");
   await evaluate("(()=>{const repo=OnsenRecords.create(localStorage);let state=repo.load();for(const id of ['onsen-001','onsen-006','onsen-026'])state=repo.setVisited(state,id,true);})()");
-  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===103 && document.getElementById('totalText').textContent.startsWith('3 / 106')");
+  await send('Page.reload');await waitFor("document.readyState==='complete' && document.querySelectorAll('.japan-map-marker').length===105 && document.getElementById('totalText').textContent.startsWith('3 / 106')");
   const stored=await evaluate('JSON.stringify(localStorage)');
-  assert.equal(await evaluate("ONSEN_DATA.filter(OnsenMap.verified).length"),103);
-  assert.equal(await evaluate("ONSEN_DATA.filter(x=>!OnsenMap.verified(x)).map(x=>x.id).join(',')"),'onsen-091,onsen-106,onsen-107');
-  assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 3施設')"),true);
+  assert.equal(await evaluate("ONSEN_DATA.filter(OnsenMap.verified).length"),105);
+  assert.equal(await evaluate("ONSEN_DATA.filter(x=>!OnsenMap.verified(x)).map(x=>x.id).join(',')"),'onsen-091');
+  assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 1施設')"),true);
   assert.equal(await evaluate("!!document.querySelector('.japan-map-attribution a[href=\"https://www.openstreetmap.org/copyright\"]')"),true);
   assert.equal(await evaluate("ONSEN_DATA.filter(x=>!x.coordinateVerified).some(x=>document.querySelector('.japan-map-marker[data-onsen-id=\"'+x.id+'\"]'))"),false);
   const output='scratch/national-projection-qa';fs.mkdirSync(output,{recursive:true});const results=[];
@@ -92,7 +92,7 @@ test('E2E: 103 exact projected national markers, direct marker details, regional
     await click(point,mobile);await waitFor("document.getElementById('modalBg').style.display==='flex'");
     assert.equal(await evaluate("document.querySelector('#modalSubtitle .facility-name').textContent"),await evaluate(`ONSEN_DATA.find(x=>x.id==='${id}').facility`));
     await expectDetail(id);
-    assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 3施設')"),true);
+    assert.equal(await evaluate("document.getElementById('mapUnverifiedCount').textContent.includes('全国 1施設')"),true);
     assert.equal(await evaluate("document.querySelector('.leaflet-control-attribution').textContent.includes('OpenStreetMap')"),true);
     results.push({width,id,view:'regional',count:expected.length,selected:true});
    }
@@ -102,6 +102,6 @@ test('E2E: 103 exact projected national markers, direct marker details, regional
   assert.equal(await evaluate('JSON.stringify(localStorage)'),stored,'Map selection must preserve every stored visit byte');
   assert.equal(await evaluate("document.getElementById('totalText').textContent"),'3 / 106 施設');
   fs.writeFileSync(output+'/results.json',JSON.stringify(results,null,2));
-  t.diagnostic('PASS: 134 national and 150 regional mouse/touch selections; exact shared projection, direct pointer and keyboard details, 103 verified; synthetic 3/67 progress and storage preserved');
+  t.diagnostic('PASS: 134 national and 150 regional mouse/touch selections; exact shared projection, direct pointer and keyboard details, 105 verified; synthetic 3/67 progress and storage preserved');
  }finally{await session.close();server.closeAllConnections();server.close();}
 });
