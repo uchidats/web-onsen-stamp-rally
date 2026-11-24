@@ -629,5 +629,12 @@ window.ONSEN_BATH_COLORS = {
       change: { kind: 'tint', note: '経時変化で透明感のある濃い緑色に変わります' }
     }],
     source: { url: 'https://nozawakanko.jp/hotspring/', checkedAt: '2026-11-24' }
+  },
+  'onsen-108': {
+    colors: [{
+      color: 'colorless', expression: '無色透明', scope: 'facility', scopeLabel: 'かみのやま温泉の湯',
+      evidence: { type: 'third_party', confidence: 'third_party_reported', note: '山形県公式観光サイトの温泉地「かみのやま温泉」の紹介「無色透明でさらりとしたお湯」。同じページが下大湯共同浴場を日帰り入浴の施設として載せているが、温泉地全体の記述で下大湯や浴槽を名指ししていないため、適用範囲を「かみのやま温泉の湯」と明示し、あつゆ・ぬるゆへは広げない。@nifty温泉の利用者投稿(2019年入浴)は下大湯の2つの浴槽を「いずれも無色透明」とする(補助。根拠には使わない)' }
+    }],
+    source: { url: 'https://yamagatakanko.com/attractions/detail_12299.html', checkedAt: '2026-11-25' }
   }
 };

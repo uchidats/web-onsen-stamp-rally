@@ -697,6 +697,17 @@ window.ONSEN_KAKENAGASHI = {
     evidence: { type: 'official_text', confidence: 'confirmed', note: '野沢温泉公式(野沢温泉マウンテンリゾート観光局の外湯ガイド)「温泉街に点在している十三の外湯は村の人たちの共有財産。…良質な天然温泉100%かけ流し」、同ページのQ&A「浴槽に常に新しい温泉を注ぎ、あふれたお湯はそのまま流してしまうという”源泉掛け流し”」。国土交通省観光庁の解説文も13の共同浴場について「全ての浴場は、地元の天然の源泉から絶えずお湯が…源泉かけ流しと呼ばれています」。13の外湯すべてについての記述で、施設(外湯)の単位にとどめ、個々の浴槽へは広げない' },
     dilution: { water: 'for_temperature', note: '公式の入浴の心得「入れる温度になったら水は止めましょう」、観光庁の解説文「熱すぎれば、冷たい水を加えて温度を調節することもできます」(13の外湯全体)。利用者が温度調節のため水を入れられる。常時の加水・加温・循環ろ過・消毒の有無は施設ごとの記載がなく未確認。@nifty温泉の利用者投稿(2024年訪問)に「泉温73.4℃を加水あり・加温なし」(平成28年の分析書)とあるが利用者の投稿で、公式の約78℃とも異なる。規則は付けず、源生の湯は登録しない' },
     source: { url: 'https://nozawakanko.jp/hotspring/', checkedAt: '2026-11-24' }
+  },
+  'onsen-108': {
+    scope: 'facility', baths: [],
+    evidence: { type: 'third_party', confidence: 'third_party_reported', note: 'るるぶ&more.(JTBパブリッシング)の施設情報「源泉かけ流し：あり」。施設全体の第三者資料のため、あつゆ・ぬるゆの個々の湯へは広げない。@nifty温泉の利用者投稿(2019年入浴)も「加温なし、循環・消毒なしで、かけ流し」。県・上山市観光物産協会の下大湯のページにかけ流しの記載はない。上山市のまちあるきレポート(令和8年5月、参加者の執筆)は「市内に共同浴場が4か所ありますが、澤のゆだけが塩素が入っていない、源泉からの掛け流し」と書き、下大湯の湯使いを名指ししていないが、資料に食い違いがある' },
+    dilution: { water: 'for_temperature', note: '第三者資料(かみのやまさいぐべ)「加水 あり(温度調整の為)／加温 なし／循環利用 なし／循環ろ過 なし／入浴剤添加 なし／消毒処理 なし」。@nifty温泉の利用者投稿も「泉温64.3℃を加水して」。消毒は資料が食い違うため未確認とし規則を付けない: 上山市のまちあるきレポート「澤のゆだけが塩素が入っていない」、上山市観光物産協会のサイトの記事(鶴の湯管理人の談)「上山で塩素入れてない純温泉はうちだけ」は、いずれも下大湯に塩素が入っていることを示唆する。加水ありのため源生の湯の対象外' },
+    source: { url: 'https://rurubu.jp/andmore/spot/80004724', checkedAt: '2026-11-25' },
+    treatment: {
+      water: [{ status: 'yes', scope: 'all', evidenceType: 'third_party_reported', coverage: '施設の温泉', scopeNote: '第三者資料(かみのやまさいぐべ)の施設単位の記載。県・市・観光物産協会に記載はない。加水ありのため源生の湯の対象外', quote: '加水 あり(温度調整の為)', url: 'https://www.kaminoyamasaigube.com/about-kaminoyama/onsen/', checkedAt: '2026-11-25' }],
+      heating: [{ status: 'none', scope: 'all', evidenceType: 'third_party_reported', coverage: '施設の温泉', scopeNote: '第三者資料(かみのやまさいぐべ)の施設単位の記載。@nifty温泉の利用者投稿も「加温なし」', quote: '加水 あり(温度調整の為)／加温 なし', url: 'https://www.kaminoyamasaigube.com/about-kaminoyama/onsen/', checkedAt: '2026-11-25' }],
+      circulation: [{ status: 'none', scope: 'all', evidenceType: 'third_party_reported', coverage: '施設の温泉', scopeNote: '第三者資料(かみのやまさいぐべ)の施設単位の記載。県・市・観光物産協会に記載はない', quote: '循環利用 なし／循環ろ過 なし', url: 'https://www.kaminoyamasaigube.com/about-kaminoyama/onsen/', checkedAt: '2026-11-25' }]
+    }
   }
 };
 

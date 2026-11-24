@@ -2383,6 +2383,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-24",
     "coordinateLicense": "PDL-1.0",
     "coordinateSourceId": "seamlessphoto/18/231887/102102"
+  },
+  {
+    "id": "onsen-108",
+    "number": 108,
+    "area": "南東北",
+    "prefecture": "山形県",
+    "onsen": "かみのやま温泉",
+    "facility": "下大湯共同浴場",
+    "latitude": 38.1583193,
+    "longitude": 140.2783818,
+    "coordinateSource": "https://www.openstreetmap.org/node/5132386126",
+    "coordinateVerified": true,
+    "officialUrl": "",
+    "category": "その他",
+    "bathing": "かみのやま温泉の外湯で最も歴史の古い共同浴場。寛永元年（1624年）に上山藩主・松平氏が町方に開放した初の共同浴場で、沢庵禅師も入浴したと伝わり、2024年に開湯400年を迎えた（山形県公式観光サイト）。上山市は共同浴場を、温泉町を象徴する施設で市民の交流や憩いの場と位置づけている（上山市）。6:00〜22:00（最終入館21:30）、12〜2月は6:30から（るるぶ。県・観光協会の掲載は通年6:00〜）。無休、大人（中学生以上）150円・小学生100円・未就学児無料、洗髪料100円（県・観光協会）。2階休憩室は1人300円で1〜3月は利用できない。男女別の内湯で露天風呂はない（るるぶ）。温度調整のため加水あり（第三者資料）",
+    "station": "かみのやま温泉駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "ナトリウム・カルシウム－塩化物・硫酸塩温泉（低張性弱アルカリ性高温泉）",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%8B%E5%A4%A7%E6%B9%AF%E5%85%B1%E5%90%8C%E6%B5%B4%E5%A0%B4%20%E4%B8%8A%E5%B1%B1%E5%B8%82",
+    "coordinateCheckedAt": "2026-11-25",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "node/5132386126"
   }
 ];
 

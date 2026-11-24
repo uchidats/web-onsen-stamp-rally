@@ -26,7 +26,7 @@ const AOMORI = {
 };
 
 const YAMAGATA = {
-  'onsen-028': '東屋', 'onsen-029': '湯守の宿三之亟', 'onsen-030': '湯宿元河原湯', 'onsen-031': '福島屋', 'onsen-032': '桝形屋', 'onsen-033': '吾妻屋', 'onsen-101': 'すのこの湯 かわらや'
+  'onsen-028': '東屋', 'onsen-029': '湯守の宿三之亟', 'onsen-030': '湯宿元河原湯', 'onsen-031': '福島屋', 'onsen-032': '桝形屋', 'onsen-033': '吾妻屋', 'onsen-101': 'すのこの湯 かわらや', 'onsen-108': '下大湯共同浴場'
 };
 
 const MIYAGI = {
@@ -59,7 +59,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 107);
+  assert.equal(data.length, 108);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO_YUCHELIN), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -192,7 +192,7 @@ test('feature baths: Aomori 6 facilities publish only officially confirmed conte
   assert.ok(!/透明/.test(JSON.stringify(feature['onsen-005'])));
 });
 
-test('feature baths: Yamagata 7 facilities publish only confirmed, currently usable baths (16 baths)', () => {
+test('feature baths: Yamagata 8 facilities publish only confirmed, currently usable baths (18 baths)', () => {
   const names = id => feature[id].baths.map(b => b.name);
   assert.deepEqual(names('onsen-028'), ['滝風呂', '石風呂', '露天風呂']);
   assert.deepEqual(names('onsen-029'), ['大岩風呂', 'ひょうたん風呂']);
@@ -200,7 +200,7 @@ test('feature baths: Yamagata 7 facilities publish only confirmed, currently usa
   assert.deepEqual(names('onsen-031'), ['岩風呂', '檜露天風呂', '混浴内風呂']);
   assert.deepEqual(names('onsen-032'), ['混浴露天風呂', '女性専用露天風呂', '檜造りの内風呂']);
   assert.deepEqual(names('onsen-033'), ['根っこ風呂', '眺望露天風呂']);
-  assert.equal(Object.keys(YAMAGATA).reduce((n, id) => n + feature[id].baths.length, 0), 16);
+  assert.equal(Object.keys(YAMAGATA).reduce((n, id) => n + feature[id].baths.length, 0), 18);
   // 休止中の浴槽(三之亟の露天風呂・吾妻屋の滝見露天風呂)は代表的な湯に含めない
   assert.ok(!feature['onsen-029'].baths.some(b => b.name === '露天風呂'));
   assert.ok(!JSON.stringify(feature['onsen-033']).includes('滝見'));
@@ -616,4 +616,13 @@ test('feature baths: the Nozawa Onsen public bathhouses are separate facilities 
   }
   assert.equal(feature['onsen-105'].baths.map(b => b.name).join(','), 'あつ湯,ぬる湯');
   assert.match(fs.readFileSync('app.js', 'utf8'), /name:'野沢温泉',prefecture:'長野県',ids:\['onsen-056','onsen-105','onsen-106','onsen-107'\]/);
+});
+
+test('feature baths: Shimo-Oyu lists the あつゆ and ぬるゆ tubs from the prefectural tourism site, with its history in the description and no official URL', () => {
+  const x = data.find(v => v.id === 'onsen-108');
+  assert.equal(x.onsen, 'かみのやま温泉'); assert.equal(x.officialUrl, ''); assert.equal(x.station, 'かみのやま温泉駅');
+  assert.equal(feature['onsen-108'].baths.map(b => b.name).join(','), 'あつゆ,ぬるゆ');
+  assert.match(x.bathing, /1624年/); assert.match(x.bathing, /大人（中学生以上）150円/);
+  assert.ok(!data.some(v => /澤のゆ|澤の湯|二日町共同浴場/.test(v.facility)), 'only Shimo-Oyu is registered');
+  assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
 });
