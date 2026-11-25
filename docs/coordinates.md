@@ -1,5 +1,14 @@
 # 温泉施設の座標と公開根拠
 
+## 2026-11-26：Overture 2026-09-23.1 の出典リンクを修正(25件)
+
+Overtureは公開データを最長60日(2リリース分)で自動削除するため、STACカタログ `stac.overturemaps.org/2026-09-23.1/catalog.json` が404になった(AWSは削除済み、Azureは空のフォルダだけ)。[公式の保持方針](https://docs.overturemaps.org/release-calendar/)では、リリースノート・変更履歴・ブリッジファイルは残る。出典リンク25件を、2026-09-23.1を明記する[公式リリースノート](https://docs.overturemaps.org/blog/2026/09/23/release-notes/)に変更した。座標・出典ID・リリース番号(2026-09-23.1)・ライセンスは変更していない。別リリースのデータを出典にはしていない。
+
+確認(2026-11-26)：
+- 25件すべての出典ID(GERS ID)が公式のGERSレジストリ(`s3://overturemaps-us-west-2/registry/`)にある。
+- Meta由来23件とFoursquare由来1件は、2026-09-23.1のブリッジファイル(`s3://overturemaps-us-west-2/bridgefiles/2026-09-23.1/`)で出典IDを確認。元レコードIDを記録している22件は一致(onsen-087・onsen-092は元レコードIDを記録していないため照合なし)。
+- onsen-106(Microsoft ML Buildings)はブリッジファイルの提供がなく、レジストリの出典IDと範囲だけを確認。
+
 ## 2026-11-26：夢元さぎり湯(onsen-109)を追加
 
 北海道登別市の夢元さぎり湯を新規追加(固定ID onsen-109)。現在はマスター109施設のうち108施設が座標確認済み、位置確認中1施設(onsen-091)。既存108施設の座標・出典・固定ID・訪問記録は変更なし。駅からの自転車距離・累積獲得標高は登録していない。
@@ -28,7 +37,7 @@ Google Mapsの座標は使用・保存していない。
 
 マスター107施設のうち106施設が座標確認済み、位置確認中1施設(onsen-091)。座標を変更したのは onsen-106・onsen-107(位置確認中→確認済み)だけで、ほかの施設の座標・固定ID・訪問記録は変更なし。
 
-- onsen-106 真湯：現地の看板と2方向からの隣接関係で建物を特定。[Overture Buildings](https://stac.overturemaps.org/2026-09-23.1/catalog.json)の建物形状 bcf761bf(Microsoft ML Buildings、ODbL-1.0)の内部点。OSMのPOIは東隣の家の上、Overture Placesの「真湯靈泉」は西隣の建物の上のため不採用。
+- onsen-106 真湯：現地の看板と2方向からの隣接関係で建物を特定。[Overture Buildings](https://docs.overturemaps.org/blog/2026/09/23/release-notes/)の建物形状 bcf761bf(Microsoft ML Buildings、ODbL-1.0)の内部点。OSMのPOIは東隣の家の上、Overture Placesの「真湯靈泉」は西隣の建物の上のため不採用。
 - onsen-107 滝の湯：2地点からの外観の目視と地理院空中写真で、細道の北側の白い屋根の建物と特定。建物形状のオープンデータがないため、地理院タイル(全国最新写真(シームレス)、PDL-1.0)から屋根の中心を読み取った(数mの誤差)。
 - onsen-102 丸美ヶ丘温泉ホテル：確認済みを維持(座標は変更なし)。純温泉協会の配置図を時計回りに90度回すと、家族風呂棟・客室棟・大浴場・玄関の並びと向きが建物群に一致。以前のメモの向きの対応は逆だったため訂正。
 

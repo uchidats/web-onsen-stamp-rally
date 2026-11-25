@@ -1,7 +1,9 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const c={window:{}};vm.runInNewContext(fs.readFileSync('data.js','utf8'),c);const data=c.window.ONSEN_DATA;
 // Historical coordinate fixtures retain the former display name; only this name was corrected.
-const historicalValue=(row,key)=>row.id==='onsen-020'&&key==='facility'?'源泉・秘湯の宿 ふけの湯':row[key];
+// 2026-11-26: Overture removed the 2026-09-23.1 STAC catalog (60-day retention); only the citation URL was changed, to the official release notes of the same release.
+const OVERTURE_OLD='https://stac.overturemaps.org/2026-09-23.1/catalog.json',OVERTURE_SOURCE='https://docs.overturemaps.org/blog/2026/09/23/release-notes/';
+const historicalValue=(row,key)=>row.id==='onsen-020'&&key==='facility'?'源泉・秘湯の宿 ふけの湯':key==='coordinateSource'&&row[key]===OVERTURE_OLD?OVERTURE_SOURCE:row[key];
 require('../map.js');const M=globalThis.OnsenMap,audit=JSON.parse(fs.readFileSync('assets/coordinates.json','utf8'));
 assert.equal(data.length,109);assert.equal(new Set(data.map(x=>x.id)).size,109);assert.equal(audit.rows.length,109);
 const added1022=new Set(['onsen-068']); // 2026-10-22に追加(増富温泉 不老閣)。既存67施設は変更しない
@@ -38,7 +40,7 @@ const beforeFinal=JSON.parse(fs.readFileSync('tests/fixtures/verified-coordinate
 assert.equal(beforeFinal.length,66);
 for(const original of beforeFinal){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],historicalValue(original,key),original.id+' remains unchanged by final addition');}
 for(const original of original49){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],historicalValue(original,key),original.id+' preserves '+key);}
-for(const expected of currentAdditions){const x=data.find(x=>x.id===expected.id);for(const key of ['id','facility','latitude','longitude','coordinateSource','coordinateVerified','coordinateCheckedAt','coordinateLicense'])assert.equal(x[key],expected[key]);if(expected.sourceId)assert.equal(x.coordinateSourceId,expected.sourceId);if(expected.sourceRelease)assert.equal(x.coordinateSourceRelease,expected.sourceRelease);}
+for(const expected of currentAdditions){const x=data.find(x=>x.id===expected.id);for(const key of ['id','facility','latitude','longitude','coordinateSource','coordinateVerified','coordinateCheckedAt','coordinateLicense'])assert.equal(x[key],historicalValue(expected,key));if(expected.sourceId)assert.equal(x.coordinateSourceId,expected.sourceId);if(expected.sourceRelease)assert.equal(x.coordinateSourceRelease,expected.sourceRelease);}
 assert.equal(original40.length,40);
 for(const original of original40){const x=data.find(x=>x.id===original.id);for(const key of Object.keys(original))assert.equal(x[key],historicalValue(original,key),original.id+' preserves '+key);assert.equal(x.coordinateVerified,true);}
 for(const [id,[name,lat,lon]] of Object.entries(additions)){const x=data.find(x=>x.id===id);assert.equal(x.facility,name);assert.equal(x.latitude,lat);assert.equal(x.longitude,lon);assert.equal(x.coordinateVerified,true);assert.match(x.coordinateSource,/^https:\/\/www\.openstreetmap\.org\/(node|way)\/\d+$/);}
@@ -63,8 +65,9 @@ assert.equal(data.filter(M.verified).length,108);assert.equal(data.filter(x=>!M.
 for(const id of ['onsen-106','onsen-107']){const r=audit.rows.find(r=>r.id===id);assert.equal(r.googleCoordinatesStored,false);assert.ok(['ODbL-1.0','PDL-1.0'].includes(r.coordinateLicense));}
 assert.match(fs.readFileSync('assets/coordinate-credits.html','utf8'),/Microsoft ML Buildings[\s\S]*地理院タイル/);
 {const x=data.find(x=>x.id==='onsen-091'),r=audit.rows.find(r=>r.id==='onsen-091');assert.equal(x.facility,'紅葉館');assert.equal(x.coordinateVerified,false);assert.equal(x.latitude,null);assert.equal(x.longitude,null);assert.equal(x.coordinateSource,'');assert.match(x.mapUrl,/^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=/);assert.equal(r.geometry,null);assert.equal(r.googleCoordinatesStored,false);assert.equal(r.address,'長野県上高井郡高山村大字牧2974-45');}
+{const rows=data.filter(x=>x.coordinateSource===OVERTURE_SOURCE);assert.equal(rows.length,25);for(const x of rows){assert.equal(x.coordinateSourceRelease,'2026-09-23.1');assert.match(x.coordinateSourceId,/^[a-f0-9-]{36}$/);}assert.ok(!data.some(x=>x.coordinateSource.includes('stac.overturemaps.org')));}
 assert.match(audit.attribution,/OpenStreetMap contributors/);assert.match(audit.license,/ODbL-1.0.*CDLA-Permissive-2.0.*Apache-2.0/);
-for(const a of currentAdditions){const r=audit.rows.find(r=>r.id===a.id);assert.equal(r.coordinateLicense,a.coordinateLicense);assert.equal(r.googleCoordinatesStored,false);if(a.coordinateLicense!=='ODbL-1.0'){assert.match(r.coordinateSource,/stac\.overturemaps\.org/);assert.match(r.sourceId,/^[a-f0-9-]{36}$/);assert.equal(Object.hasOwn(r,'osmName'),false);}}
+for(const a of currentAdditions){const r=audit.rows.find(r=>r.id===a.id);assert.equal(r.coordinateLicense,a.coordinateLicense);assert.equal(r.googleCoordinatesStored,false);if(a.coordinateLicense!=='ODbL-1.0'){assert.equal(r.coordinateSource,OVERTURE_SOURCE);assert.match(r.sourceId,/^[a-f0-9-]{36}$/);assert.equal(Object.hasOwn(r,'osmName'),false);}}
 for(const file of ['CDLA-Permissive-2.0.txt','Apache-2.0.txt','Foursquare-NOTICE.txt'])assert.ok(fs.readFileSync('assets/licenses/'+file,'utf8').length>1000);
 const ids=['onsen-002','onsen-003','onsen-004','onsen-005','onsen-081','onsen-093'];assert.deepEqual(Array.from(M.selection(data,'','青森県',()=>false),x=>x.id),ids);
 for(const id of ids){const x=data.find(x=>x.id===id);assert.equal(M.selection(data,'visited','青森県',r=>r.id===id)[0].id,id);}
