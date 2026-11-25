@@ -708,6 +708,18 @@ window.ONSEN_KAKENAGASHI = {
       heating: [{ status: 'none', scope: 'all', evidenceType: 'third_party_reported', coverage: '施設の温泉', scopeNote: '第三者資料(かみのやまさいぐべ)の施設単位の記載。@nifty温泉の利用者投稿も「加温なし」', quote: '加水 あり(温度調整の為)／加温 なし', url: 'https://www.kaminoyamasaigube.com/about-kaminoyama/onsen/', checkedAt: '2026-11-25' }],
       circulation: [{ status: 'none', scope: 'all', evidenceType: 'third_party_reported', coverage: '施設の温泉', scopeNote: '第三者資料(かみのやまさいぐべ)の施設単位の記載。県・市・観光物産協会に記載はない', quote: '循環利用 なし／循環ろ過 なし', url: 'https://www.kaminoyamasaigube.com/about-kaminoyama/onsen/', checkedAt: '2026-11-25' }]
     }
+  },
+  'onsen-109': {
+    scope: 'facility', baths: ['一号乙泉（硫黄泉）'],
+    evidence: { type: 'official_text', confidence: 'confirmed', note: '公式「源泉掛け流しで２つの泉質をご用意した当銭湯」「100％源泉掛け流し 加温·加水することなく、源泉から自然に湧出された温泉を直接浴槽に供給しています。浴槽から溢れ出たお湯は循環されることはない」。大浴場の湯として一号乙泉(硫黄泉)を挙げる。目の湯・24号泉の混合泉の浴槽は、2023-03-16の公式のお知らせ「湯量減少の為、暫定的に浴槽の湯を鉄泉に入れ替えております」以後の再稼働の告知がなく(公式サイトの全35件の投稿を確認)、登別国際観光コンベンション協会も泉質を「硫黄泉・鉄泉」とするため、個別の湯としては付けない。サウナ・水風呂・ジャグジーは対象外' },
+    dilution: { water: 'none', note: '公式「加水・加温・循環（ろ過含む）・消毒処理（又は入浴剤使用）」の四項目とも該当なし(大浴場ページ、当館全体)。目の湯の浴槽に現在入っている鉄泉の源泉名と湯使いは個別に確認できないため、源生の湯は保留。四項目の表示は義務化(2005年)の頃の文章とみられるが、現在も掲載されており、公式のお知らせ(2020〜2026年)に加水・加温・循環・浴用の消毒の告知はない' },
+    source: { url: 'https://sagiriyu-noboribetsu.com/yunituite/', checkedAt: '2026-11-26' },
+    treatment: {
+      water: [{ status: 'none', scope: 'baths', baths: ['一号乙泉（硫黄泉）'], coverage: '大浴場の一号乙泉（硫黄泉）', scopeNote: '公式「大浴場」ページが一号乙泉(硫黄泉)と混合泉を挙げたうえで「当館では…四項目の表示について該当しておりません」と書く。公式「湯について」も「加温·加水することなく」。目の湯の浴槽は2023-03-16の公式のお知らせで鉄泉へ入れ替え中のため、この規則に含めない', quote: '一、加水 二、加温 三、循環（ろ過含む） 四、消毒処理（又は入浴剤使用） 以上の四項目の表示について該当しておりません。', url: 'https://sagiriyu-noboribetsu.com/daiyokujou/', checkedAt: '2026-11-26' }],
+      heating: [{ status: 'none', scope: 'baths', baths: ['一号乙泉（硫黄泉）'], coverage: '大浴場の一号乙泉（硫黄泉）', scopeNote: '公式「大浴場」ページが一号乙泉(硫黄泉)と混合泉を挙げたうえで「当館では…四項目の表示について該当しておりません」と書く。公式「湯について」も「加温·加水することなく」。目の湯の浴槽は2023-03-16の公式のお知らせで鉄泉へ入れ替え中のため、この規則に含めない', quote: '一、加水 二、加温 三、循環（ろ過含む） 四、消毒処理（又は入浴剤使用） 以上の四項目の表示について該当しておりません。', url: 'https://sagiriyu-noboribetsu.com/daiyokujou/', checkedAt: '2026-11-26' }],
+      circulation: [{ status: 'none', scope: 'baths', baths: ['一号乙泉（硫黄泉）'], coverage: '大浴場の一号乙泉（硫黄泉）', scopeNote: '公式「大浴場」ページが一号乙泉(硫黄泉)と混合泉を挙げたうえで「当館では…四項目の表示について該当しておりません」と書く。公式「湯について」も「循環されることはない」。目の湯の浴槽は2023-03-16の公式のお知らせで鉄泉へ入れ替え中のため、この規則に含めない', quote: '一、加水 二、加温 三、循環（ろ過含む） 四、消毒処理（又は入浴剤使用） 以上の四項目の表示について該当しておりません。', url: 'https://sagiriyu-noboribetsu.com/daiyokujou/', checkedAt: '2026-11-26' }],
+      disinfection: [{ status: 'none', scope: 'baths', baths: ['一号乙泉（硫黄泉）'], coverage: '大浴場の一号乙泉（硫黄泉）', scopeNote: '公式「大浴場」ページが一号乙泉(硫黄泉)と混合泉を挙げたうえで「当館では…四項目の表示について該当しておりません」と書く。目の湯の浴槽は2023-03-16の公式のお知らせで鉄泉へ入れ替え中のため、この規則に含めない', quote: '一、加水 二、加温 三、循環（ろ過含む） 四、消毒処理（又は入浴剤使用） 以上の四項目の表示について該当しておりません。', url: 'https://sagiriyu-noboribetsu.com/daiyokujou/', checkedAt: '2026-11-26' }]
+    }
   }
 };
 

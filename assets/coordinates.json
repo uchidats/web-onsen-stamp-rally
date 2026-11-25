@@ -2,8 +2,8 @@
   "attribution": "© OpenStreetMap contributors; Overture Maps Foundation / Meta; Copyright 2024 Foursquare Labs, Inc.; Overture Maps Foundation / Microsoft ML Buildings; 国土地理院 地理院タイル(全国最新写真(シームレス))を加工して作成",
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0 / PDL-1.0",
   "licenseUrl": "assets/coordinate-credits.html",
-  "verifiedOn": "2026-11-25",
-  "method": "107 verified facilities and 1 pending facility without coordinates (onsen-108 Shimo-Oyu (Kaminoyama) from OSM node/5132386126 inside building way/1306272579 added 2026-11-25; onsen-106 Shinyu from an Overture building outline (Microsoft ML Buildings, ODbL) and onsen-107 Takinoyu read from GSI seamless aerial photo tiles, both verified 2026-11-24 after street-level identification; onsen-105 Oyu (Nozawa Onsen) from OSM node/1074587418 added 2026-11-24; onsen-104 Kitsuregawa Soutome Onsen (Sakura) from OSM way/697516991 added 2026-11-24; onsen-103 Kenichi Onsen Ryokan (Yakumo) from OSM node/4269211988 inside building way/434689351 added 2026-11-23; onsen-102 Marumigaoka Onsen Hotel (Otofuke) from unnamed OSM building way/560548485 identified by the official address point, aerial photos and the Japan Real Onsen Association bath layout, added 2026-11-22; onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "verifiedOn": "2026-11-26",
+  "method": "108 verified facilities and 1 pending facility without coordinates (onsen-109 Sagiriyu (Noboribetsu) from OSM way/238814097 added 2026-11-26; onsen-108 Shimo-Oyu (Kaminoyama) from OSM node/5132386126 inside building way/1306272579 added 2026-11-25; onsen-106 Shinyu from an Overture building outline (Microsoft ML Buildings, ODbL) and onsen-107 Takinoyu read from GSI seamless aerial photo tiles, both verified 2026-11-24 after street-level identification; onsen-105 Oyu (Nozawa Onsen) from OSM node/1074587418 added 2026-11-24; onsen-104 Kitsuregawa Soutome Onsen (Sakura) from OSM way/697516991 added 2026-11-24; onsen-103 Kenichi Onsen Ryokan (Yakumo) from OSM node/4269211988 inside building way/434689351 added 2026-11-23; onsen-102 Marumigaoka Onsen Hotel (Otofuke) from unnamed OSM building way/560548485 identified by the official address point, aerial photos and the Japan Real Onsen Association bath layout, added 2026-11-22; onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -7377,6 +7377,86 @@
             [
               140.2783822,
               38.158424
+            ]
+          ]
+        ]
+      },
+      "geometryCheck": "施設ポリゴン内"
+    },
+    {
+      "id": "onsen-109",
+      "facility": "夢元さぎり湯",
+      "prefecture": "北海道",
+      "latitude": 42.4922268,
+      "longitude": 141.1430141,
+      "coordinateSource": "https://www.openstreetmap.org/way/238814097",
+      "coordinateVerified": true,
+      "osmName": "温泉銭湯;夢元さぎり湯",
+      "osmAddress": "",
+      "osmFeatureType": "amenity/public_bath",
+      "addressReference": "https://sagiriyu-noboribetsu.com/access/",
+      "note": "OSM建物way/238814097(name=温泉銭湯;夢元さぎり湯、amenity=public_bath、8階建)のNominatim代表点で、ポリゴン内にあることを確認。公式の「正面入り口向かいに駐車場2箇所」は、道路向かいのOSM「夢元 さぎり湯 専用 駐車場」(node/3031844233・node/3031856233)と一致。国土地理院の住所検索「登別温泉町６０番地」の点は約43m北西。Googleマップの施設(所在地・電話・公式サイトが公式と一致)の表示位置もこの建物の範囲内であることを目視(座標は保存しない)。ストリートビューでは建物に「登別温泉ビル」の表示があり、さぎり湯の看板は車両の陰で確認できなかった。Overture Places 2026-11-18.0の「さぎり湯」(電話・URLは一致)は約86m北西で、建物から外れるため不採用。Google座標は不使用。",
+      "coordinateCheckedAt": "2026-11-26",
+      "onsen": "登別温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "北海道登別市登別温泉町60番地",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "way/238814097",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "温泉銭湯;夢元さぎり湯",
+      "identityReferences": [
+        "https://sagiriyu-noboribetsu.com/",
+        "https://sagiriyu-noboribetsu.com/access/",
+        "https://noboribetsu-spa.jp/oneday/oneday020/"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A2%E5%85%83%E3%81%95%E3%81%8E%E3%82%8A%E6%B9%AF%20%E7%99%BB%E5%88%A5%E6%B8%A9%E6%B3%89",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              141.1428514,
+              42.4924638
+            ],
+            [
+              141.1429791,
+              42.4924767
+            ],
+            [
+              141.1429993,
+              42.4923681
+            ],
+            [
+              141.143047,
+              42.4923729
+            ],
+            [
+              141.1430541,
+              42.4923347
+            ],
+            [
+              141.1431117,
+              42.4923405
+            ],
+            [
+              141.1431485,
+              42.4921423
+            ],
+            [
+              141.1429155,
+              42.4921187
+            ],
+            [
+              141.1428797,
+              42.4923114
+            ],
+            [
+              141.1428514,
+              42.4924638
             ]
           ]
         ]

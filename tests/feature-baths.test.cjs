@@ -50,7 +50,7 @@ const ITO = { 'onsen-076': '東海館', 'onsen-077': 'ケイズハウス伊東�
 const IWAKI = { 'onsen-074': '松柏館', 'onsen-075': '旅館こいと' };
 const SHIZUOKA = { 'onsen-071': '川端の宿 湯本館', 'onsen-072': '野天風呂 山の家', 'onsen-073': '観音温泉' };
 const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
-const HOKKAIDO = { 'onsen-001': '知内温泉旅館', 'onsen-102': '丸美ヶ丘温泉ホテル', 'onsen-103': '見市温泉旅館' };
+const HOKKAIDO = { 'onsen-001': '知内温泉旅館', 'onsen-102': '丸美ヶ丘温泉ホテル', 'onsen-103': '見市温泉旅館', 'onsen-109': '夢元さぎり湯' };
 const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘', 'onsen-088': '泡の湯旅館', 'onsen-094': '棧温泉旅館', 'onsen-096': '渋・辰野館', 'onsen-105': '大湯', 'onsen-106': '真湯', 'onsen-107': '滝の湯' };
 const NIIGATA = { 'onsen-060': 'ひなの宿ちとせ', 'onsen-061': '自在館', 'onsen-062': '貝掛温泉', 'onsen-063': '瀬波グランドホテルはぎのや', 'onsen-064': '嵐渓荘' };
 
@@ -59,7 +59,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 108);
+  assert.equal(data.length, 109);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO_YUCHELIN), ...Object.keys(HOKKAIDO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -624,5 +624,14 @@ test('feature baths: Shimo-Oyu lists the あつゆ and ぬるゆ tubs from the p
   assert.equal(feature['onsen-108'].baths.map(b => b.name).join(','), 'あつゆ,ぬるゆ');
   assert.match(x.bathing, /1624年/); assert.match(x.bathing, /大人（中学生以上）150円/);
   assert.ok(!data.some(v => /澤のゆ|澤の湯|二日町共同浴場/.test(v.facility)), 'only Shimo-Oyu is registered');
+  assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
+});
+
+test('feature baths: Sagiriyu is grouped with Daiichi Takimotokan, and the 目の湯 bath says it is currently replaced by 鉄泉', () => {
+  const x = data.find(v => v.id === 'onsen-109');
+  assert.equal(x.onsen, '登別温泉'); assert.equal(x.onsen, data.find(v => v.id === 'onsen-098').onsen); assert.equal(x.officialUrl, 'https://sagiriyu-noboribetsu.com/');
+  assert.equal(feature['onsen-109'].baths.map(b => b.name).join('/'), '一号乙泉（硫黄泉）/目の湯・24号泉の混合泉');
+  assert.match(feature['onsen-109'].baths[1].note, /鉄泉へ入れ替え/); assert.match(x.bathing, /再稼働の告知は確認できない/);
+  assert.match(fs.readFileSync('app.js', 'utf8'), /name:'登別温泉',prefecture:'北海道',ids:\['onsen-098','onsen-109'\]/);
   assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
 });

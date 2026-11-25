@@ -779,5 +779,13 @@ window.ONSEN_FEATURE_BATHS = {
       { name: 'ぬるゆ', note: '「あつゆ」「ぬるゆ」のうち、ぬるいほうの浴槽です' }
     ],
     source: { url: 'https://yamagatakanko.com/attractions/detail_10389.html', checkedAt: '2026-11-25' }
+  },
+  'onsen-109': {
+    note: '登別温泉のほぼ中ほどにある温泉銭湯です。サウナ・水風呂・ジャグジーもあります。',
+    baths: [
+      { name: '一号乙泉（硫黄泉）', tags: ['登別定番の湯', '強酸性', '硫黄泉'], note: '独特の香りをもつ硫黄泉で、よく温まります' },
+      { name: '目の湯・24号泉の混合泉', tags: ['鉄泉に入れ替え中'], note: '登別温泉でここだけの目の湯（ミョウバン泉）を使う混合泉です。湯量減少のため2023年3月から暫定的に鉄泉へ入れ替えています' }
+    ],
+    source: { url: 'https://sagiriyu-noboribetsu.com/daiyokujou/', checkedAt: '2026-11-26' }
   }
 };

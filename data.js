@@ -2406,6 +2406,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-25",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "node/5132386126"
+  },
+  {
+    "id": "onsen-109",
+    "number": 109,
+    "area": "北海道",
+    "prefecture": "北海道",
+    "onsen": "登別温泉",
+    "facility": "夢元さぎり湯",
+    "latitude": 42.4922268,
+    "longitude": 141.1430141,
+    "coordinateSource": "https://www.openstreetmap.org/way/238814097",
+    "coordinateVerified": true,
+    "officialUrl": "https://sagiriyu-noboribetsu.com/",
+    "category": "その他",
+    "bathing": "登別温泉のほぼ中ほどにある日帰りの温泉銭湯で、地元の人にも親しまれている（公式・登別国際観光コンベンション協会）。9:00〜21:00（最終受付20:30）。入浴のみ大人（中学生以上）500円・子供（小学生）180円・未就学児無料、有料休憩所を使える一日券は大人710円・子供300円（公式。登別国際観光コンベンション協会は大人550円と案内）。定休日は公式に記載がなく未確認。源泉を加水・加温せず直接浴槽に注ぎ、循環していない（公式）。大浴場には登別定番の一号乙泉（硫黄泉）と、登別温泉でここだけの目の湯（ミョウバン泉）を使う24号泉との混合泉がある（公式）。目の湯は湯量減少のため2023年3月から暫定的に鉄泉へ入れ替えており、再稼働の告知は確認できない（公式のお知らせ）。サウナ・水風呂・ジャグジーあり。フェイスタオルなしの入浴は不可で、タオル・石鹸類の備え付けはない（公式）",
+    "station": "登別駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "硫黄泉（一号乙泉）・鉄泉（目の湯のミョウバン泉は休止中）",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A2%E5%85%83%E3%81%95%E3%81%8E%E3%82%8A%E6%B9%AF%20%E7%99%BB%E5%88%A5%E6%B8%A9%E6%B3%89",
+    "coordinateCheckedAt": "2026-11-26",
+    "coordinateLicense": "ODbL-1.0",
+    "coordinateSourceId": "way/238814097"
   }
 ];
 

@@ -66,7 +66,8 @@ const CARD_GROUPS = [
   {id:'toyotomi',name:'豊富温泉',prefecture:'北海道',ids:['onsen-082','onsen-085','onsen-099']},
   {id:'shirahone',name:'白骨温泉',prefecture:'長野県',ids:['onsen-057','onsen-088']},
   {id:'sandogoya',name:'三斗小屋温泉',prefecture:'栃木県',ids:['onsen-089','onsen-090']},
-  {id:'nozawa',name:'野沢温泉',prefecture:'長野県',ids:['onsen-056','onsen-105','onsen-106','onsen-107']}
+  {id:'nozawa',name:'野沢温泉',prefecture:'長野県',ids:['onsen-056','onsen-105','onsen-106','onsen-107']},
+  {id:'noboribetsu',name:'登別温泉',prefecture:'北海道',ids:['onsen-098','onsen-109']}
 ];
 function groupedCards(list){
   const groups=new Map();

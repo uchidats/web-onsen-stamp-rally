@@ -29,10 +29,10 @@ test('E2E: 源生の湯 gold drop next to the green wave on cards and in 代表�
     await evaluate('localStorage.clear()');
     fs.mkdirSync('scratch/gensei-qa', { recursive: true });
 
-    const GOLD = ['onsen-007', 'onsen-009', 'onsen-031', 'onsen-034', 'onsen-035', 'onsen-041', 'onsen-066', 'onsen-071', 'onsen-072', 'onsen-077', 'onsen-083', 'onsen-102'];
+    const GOLD = ['onsen-007', 'onsen-009', 'onsen-031', 'onsen-034', 'onsen-035', 'onsen-041', 'onsen-066', 'onsen-071', 'onsen-072', 'onsen-077', 'onsen-083', 'onsen-102', 'onsen-109'];
     // 深緑の波はあるが、源生の湯の根拠が足りない/非該当の施設には金色の水滴を付けない
     const GREEN_ONLY = ['onsen-001', 'onsen-003', 'onsen-004', 'onsen-006', 'onsen-010', 'onsen-012', 'onsen-017', 'onsen-018', 'onsen-019', 'onsen-032', 'onsen-030', 'onsen-036', 'onsen-037', 'onsen-039', 'onsen-040', 'onsen-042', 'onsen-043', 'onsen-044', 'onsen-045', 'onsen-065', 'onsen-067', 'onsen-069', 'onsen-070', 'onsen-073', 'onsen-074', 'onsen-075', 'onsen-076', 'onsen-078', 'onsen-079', 'onsen-081', 'onsen-082', 'onsen-084', 'onsen-085', 'onsen-086', 'onsen-087', 'onsen-088', 'onsen-090', 'onsen-094', 'onsen-095', 'onsen-096', 'onsen-097', 'onsen-098', 'onsen-099', 'onsen-100', 'onsen-101', 'onsen-103', 'onsen-104', 'onsen-105', 'onsen-106', 'onsen-107', 'onsen-108'];
-    const DETAIL_GOLD = { 'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'], 'onsen-009': ['大湯', '滝の湯', '真湯'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'], 'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], 'onsen-035': ['大気の湯(東・西)'], 'onsen-041': ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'], 'onsen-066': ['男女別の展望内湯'], 'onsen-071': ['露天風呂', '大浴場'], 'onsen-072': ['男湯（野天風呂）', '女湯（野天風呂）', '貸切風呂'], 'onsen-077': ['男女別の内風呂', '貸切温泉'], 'onsen-083': ['殿湯', '姫湯', '福寿', '長寿'], 'onsen-102': ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）'] };
+    const DETAIL_GOLD = { 'onsen-007': ['白猿の湯', '桂の湯', '白糸の湯'], 'onsen-009': ['大湯', '滝の湯', '真湯'], 'onsen-031': ['岩風呂', '檜露天風呂', '混浴内風呂'], 'onsen-034': ['萱ぶき湯小屋「玉子湯」', '天渓の湯', '瀬音'], 'onsen-035': ['大気の湯(東・西)'], 'onsen-041': ['第三露天風呂', '第一露天風呂', '利き湯 ロマンの湯'], 'onsen-066': ['男女別の展望内湯'], 'onsen-071': ['露天風呂', '大浴場'], 'onsen-072': ['男湯（野天風呂）', '女湯（野天風呂）', '貸切風呂'], 'onsen-077': ['男女別の内風呂', '貸切温泉'], 'onsen-083': ['殿湯', '姫湯', '福寿', '長寿'], 'onsen-102': ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）'], 'onsen-109': ['一号乙泉（硫黄泉）'] };
     const TIP_CARD = '源生の湯の浴槽あり', TIP_BATH = '源生の湯｜源泉かけ流し・加水なし・加温なし';
     const entry = id => `document.querySelector('[data-facility-id="${id}"]')`;
     const rect = async expr => evaluate(`(()=>{const n=${expr};if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})()`);

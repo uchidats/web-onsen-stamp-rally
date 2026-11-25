@@ -228,3 +228,5 @@ test('bath colors: Nozawa Shinyu lists its 3 official colors; Takinoyu is green 
   assert.equal(colors['onsen-107'].colors.map(c => c.color).join(','), 'green');
   assert.equal(colors['onsen-105'], undefined);
 });
+
+test('bath colors: Sagiriyu has no color because the official site states none', () => { assert.equal(colors['onsen-109'], undefined); });

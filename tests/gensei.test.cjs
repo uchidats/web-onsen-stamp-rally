@@ -91,7 +91,8 @@ test('gensei: current certification (11 facilities, 28 baths) and the reasons ot
     'onsen-072': ['男湯（野天風呂）', '女湯（野天風呂）', '貸切風呂'],
     'onsen-077': ['男女別の内風呂', '貸切温泉'],
     'onsen-083': ['殿湯', '姫湯', '福寿', '長寿'],
-    'onsen-102': ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）']
+    'onsen-102': ['大浴槽（熱めの湯）', '小浴槽（ぬる湯）'],
+    'onsen-109': ['一号乙泉（硫黄泉）']
   });
   // 認定された湯は、必ず源泉かけ流しの湯(深緑の波)でもある
   for (const [id, names] of Object.entries(certified)) for (const n of names) assert.ok(kake[id].baths.includes(n), `${id}/${n}`);
@@ -400,4 +401,9 @@ test('gensei: Marumigaoka certifies only the 2 public-bath tubs (純温泉A, 202
   assert.equal(evaluate(kake['onsen-102'], '小浴槽（ぬる湯）').result, 'certified');
   assert.equal(evaluate(kake['onsen-102'], '個室家族風呂').result, 'excluded');
   assert.equal(evaluate(kake['onsen-102'], '個室家族風呂').water, 'yes');
+});
+
+test('gensei: Sagiriyu certifies 一号乙泉 (official: no added water, heating, circulation or disinfection) and holds the 目の湯 bath', () => {
+  assert.equal(evaluate(kake['onsen-109'], '一号乙泉（硫黄泉）').result, 'certified');
+  assert.equal(evaluate(kake['onsen-109'], '目の湯・24号泉の混合泉').result, 'pending');
 });
