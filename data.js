@@ -2429,6 +2429,29 @@ window.ONSEN_DATA = [
     "coordinateCheckedAt": "2026-11-26",
     "coordinateLicense": "ODbL-1.0",
     "coordinateSourceId": "way/238814097"
+  },
+  {
+    "id": "onsen-110",
+    "number": 110,
+    "area": "北東北",
+    "prefecture": "青森県",
+    "onsen": "下風呂温泉",
+    "facility": "海峡の湯",
+    "latitude": 41.46719,
+    "longitude": 141.093986,
+    "coordinateSource": "https://maps.gsi.go.jp/development/ichiran.html#seamlessphoto",
+    "coordinateVerified": true,
+    "officialUrl": "https://www.yukaimura.com/kaikyonoyu.html",
+    "category": "その他",
+    "bathing": "風間浦村営の日帰り入浴施設。旧共同浴場の「大湯」「新湯」が2020年11月30日に閉館し、翌12月1日に開業して、2つの湯を引き継いだ（風間浦村の観光ポータル）。室町時代から続く下風呂温泉で、昭和の作家・井上靖は1958年に小説「海峡」の取材で訪れ、大湯2号泉の湯に入った（公式）。青森ヒバ造りの浴場で、窓の外に津軽海峡が広がる。サウナあり、1階に下風呂おんせん食堂、2階に下風呂ゆかりの文人の展示室（公式）。4月〜10月7:00〜20:30、11月〜3月8:00〜20:30（最終受付20:00）、定休日は毎月第2・4火曜日と1月1日（公式）。入浴料は大人（村民以外）450円・中学生150円・小学生100円・未就学児無料（2026年4月改定、公式）。湯温が高いため、浸かる前にシャワーの水で調節するよう案内されている（公式）。泉質は村の表記で、2026年5月の第三者資料（@nifty温泉）は大湯1号を「酸性・含鉄(Ⅱ・Ⅲ)－ナトリウム－塩化物・硫酸塩泉」、新湯（4本の源泉の混合）を「酸性・含硫黄－ナトリウム－塩化物・硫酸塩泉」と書き、表記が異なる。同資料によると大湯2号泉の浴槽は設備不良のため2026年5月時点で休止中",
+    "station": "下北駅",
+    "distanceKm": null,
+    "elevationM": null,
+    "springType": "大湯系：酸性・含硫酸－ナトリウム－塩化物・硫酸塩泉（硫化水素型）／新湯系：含硫黄－ナトリウム－塩化物泉（硫化水素型）",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%8B%E9%A2%A8%E5%91%82%E6%B8%A9%E6%B3%89%20%E6%B5%B7%E5%B3%A1%E3%81%AE%E6%B9%AF",
+    "coordinateCheckedAt": "2026-11-28",
+    "coordinateLicense": "PDL-1.0",
+    "coordinateSourceId": "seamlessphoto/18/233813/97832"
   }
 ];
 
