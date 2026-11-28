@@ -3,7 +3,7 @@
   "license": "Mixed: ODbL-1.0 / CDLA-Permissive-2.0 / Apache-2.0 / PDL-1.0",
   "licenseUrl": "assets/coordinate-credits.html",
   "verifiedOn": "2026-11-28",
-  "method": "109 verified facilities and 1 pending facility without coordinates (onsen-110 Kaikyo no Yu (Shimofuro) read from GSI seamless aerial photo tiles after street-level identification, added 2026-11-28; onsen-109 Sagiriyu (Noboribetsu) from OSM way/238814097 added 2026-11-26; onsen-108 Shimo-Oyu (Kaminoyama) from OSM node/5132386126 inside building way/1306272579 added 2026-11-25; onsen-106 Shinyu from an Overture building outline (Microsoft ML Buildings, ODbL) and onsen-107 Takinoyu read from GSI seamless aerial photo tiles, both verified 2026-11-24 after street-level identification; onsen-105 Oyu (Nozawa Onsen) from OSM node/1074587418 added 2026-11-24; onsen-104 Kitsuregawa Soutome Onsen (Sakura) from OSM way/697516991 added 2026-11-24; onsen-103 Kenichi Onsen Ryokan (Yakumo) from OSM node/4269211988 inside building way/434689351 added 2026-11-23; onsen-102 Marumigaoka Onsen Hotel (Otofuke) from unnamed OSM building way/560548485 identified by the official address point, aerial photos and the Japan Real Onsen Association bath layout, added 2026-11-22; onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
+  "method": "111 verified facilities and 1 pending facility without coordinates (onsen-111 Kawayu public bath Yukichi from OSM node/5788214897 and onsen-112 Kotan no Yu from Overture Places 2026-11-18.0, added 2026-11-28; onsen-110 Kaikyo no Yu (Shimofuro) read from GSI seamless aerial photo tiles after street-level identification, added 2026-11-28; onsen-109 Sagiriyu (Noboribetsu) from OSM way/238814097 added 2026-11-26; onsen-108 Shimo-Oyu (Kaminoyama) from OSM node/5132386126 inside building way/1306272579 added 2026-11-25; onsen-106 Shinyu from an Overture building outline (Microsoft ML Buildings, ODbL) and onsen-107 Takinoyu read from GSI seamless aerial photo tiles, both verified 2026-11-24 after street-level identification; onsen-105 Oyu (Nozawa Onsen) from OSM node/1074587418 added 2026-11-24; onsen-104 Kitsuregawa Soutome Onsen (Sakura) from OSM way/697516991 added 2026-11-24; onsen-103 Kenichi Onsen Ryokan (Yakumo) from OSM node/4269211988 inside building way/434689351 added 2026-11-23; onsen-102 Marumigaoka Onsen Hotel (Otofuke) from unnamed OSM building way/560548485 identified by the official address point, aerial photos and the Japan Real Onsen Association bath layout, added 2026-11-22; onsen-101 Sunoko no Yu Kawaraya (Zao) from OSM way/855381867 added 2026-11-22; onsen-098 Daiichi Takimotokan from OSM way/238811172, onsen-099 Toyotomi Town Fureai Center from OSM way/571733394 and onsen-100 Roma no Izumi from OSM way/545316603 added 2026-11-21; onsen-095 Kagai Onsen Ichiyokan from OSM way/683097216, onsen-096 Shibu Tatsunokan from OSM way/1218652392 and onsen-097 Niitsu Onsen from OSM node/5323165721 added 2026-11-20; onsen-094 Kakehashi Onsen Ryokan from OSM node/1674228880 added 2026-11-15; onsen-093 Aoni Onsen from OSM way/736900231 added 2026-11-08; onsen-092 Yado Miyama (Kawatabi) from Overture Places / meta added 2026-11-08; onsen-091 Kouyoukan (Shichimi) registered 2026-11-08 with latitude/longitude null; no open-licensed building-level source found; onsen-089 Tabakoya from OSM node/5471132725 and onsen-090 Daikokuya (Sandogoya) from OSM node/5471132726 added 2026-11-08; onsen-087 Iwanoyu from Overture Places / meta and onsen-088 Awanoyu from OSM node/1742303844 added 2026-11-08; onsen-086 Kuroyu Onsen from OSM way/457387981 added 2026-11-08; onsen-085 Kawashima Ryokan from OSM way/577709929 added 2026-11-08; onsen-084 Kurikoma Sanso from OSM node/5094654423 added 2026-11-08; onsen-083 Matsushirosou from OSM node/10713333985 added 2026-11-08; onsen-082 New Onsenkaku Hotel from OSM way/577709936 added 2026-11-08; onsen-081 Tohoku Onsen from OSM way/695770388 added 2026-11-08; onsen-080 Takigawaya from Overture Places / meta added 2026-11-08; onsen-079 Ryounkaku from OSM way/889237285 added 2026-11-08; onsen-078 Renge Onsen Lodge from OSM node/4424692395 added 2026-11-07; onsen-076 Tokaikan from OSM way/190835270 and onsen-077 K's House Ito Onsen from OSM node/1131014120 added 2026-11-06; onsen-074 Shohakukan and onsen-075 Ryokan Koito added 2026-11-05 from Overture Places / meta; onsen-071 Yumotokan from OSM node/5491225152, onsen-072 Yamanoie from Overture Places / meta and onsen-073 Kannon Onsen from OSM way/659518585 added 2026-11-03; onsen-070 Yamamotokan added 2026-11-03 from OSM way/948490088; onsen-069 Shiranekan added 2026-11-02 and onsen-068 Furoukaku added 2026-10-22, both from Overture Places / meta; earlier records are unchanged). Before this final addition, 66 facility records and national marker positions were retained unchanged. Ishizuka Ryokan was identified with official/tourism materials and user-confirmed current location; its published representative point is computed solely from OSM way/292873196 vertices. The incorrect Overture record remains rejected. No Google Maps coordinates extracted or stored.",
   "rows": [
     {
       "id": "onsen-001",
@@ -7498,6 +7498,86 @@
         ]
       },
       "geometryCheck": "空中写真の屋根の中心(建物形状のオープンデータなし)"
+    },
+    {
+      "id": "onsen-111",
+      "facility": "川湯公衆浴場 湯吉",
+      "prefecture": "北海道",
+      "latitude": 43.6383131,
+      "longitude": 144.435724,
+      "coordinateSource": "https://www.openstreetmap.org/node/5788214897",
+      "coordinateVerified": true,
+      "osmName": "川湯温泉公衆浴場",
+      "osmAddress": "",
+      "osmFeatureType": "amenity/public_bath",
+      "addressReference": "https://www.masyuko.or.jp/enjoy/kawayukosyu/",
+      "note": "OSMの公衆浴場POI node/5788214897(name=川湯温泉公衆浴場。2018年登録、湯吉への改称前の名称で同じ浴場)。Googleストリートビュー(2026年10月撮影)で「湯吉」「川湯公衆浴場」の看板がある切妻屋根の建物を目視し、POIはその建物の正面(南側)にある。地理院シームレス空中写真・標準地図で、川湯郵便局の北西の建物。Overture Places 2026-11-18.0の「川湯公衆浴場 湯吉」(所在地「3 Chome-1-7 Kawayuonsen」、電話+81154867518は公式と一致)は約9m西で同じ建物の前庭。OSMに建物形状はない。Google座標は不使用(目視照合のみ)。",
+      "coordinateCheckedAt": "2026-11-28",
+      "onsen": "川湯温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "北海道川上郡弟子屈町川湯温泉3丁目1",
+      "auditResult": "新規追加",
+      "coordinateLicense": "ODbL-1.0",
+      "sourceId": "node/5788214897",
+      "sourceName": "OpenStreetMap",
+      "sourceFacilityName": "川湯温泉公衆浴場(湯吉の改称前の名称)",
+      "identityReferences": [
+        "https://www.masyuko.or.jp/enjoy/kawayukosyu/",
+        "https://www.kawayu-onsen.com/hot-spring/accommodation/794/",
+        "https://x.com/kawayuonsenycg"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E5%B7%9D%E6%B9%AF%E5%85%AC%E8%A1%86%E6%B5%B4%E5%A0%B4%20%E6%B9%AF%E5%90%89%20%E5%BC%9F%E5%AD%90%E5%B1%88%E7%94%BA",
+      "googleCoordinatesStored": false,
+      "confidence": "高",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.435724,
+          43.6383131
+        ]
+      },
+      "geometryCheck": "施設POI(建物の正面。看板を目視)"
+    },
+    {
+      "id": "onsen-112",
+      "facility": "コタンの湯",
+      "prefecture": "北海道",
+      "latitude": 43.56466674804687,
+      "longitude": 144.34132385253906,
+      "coordinateSource": "https://docs.overturemaps.org/blog/2026/11/18/release-notes/",
+      "coordinateVerified": true,
+      "addressReference": "https://www.masyuko.or.jp/enjoy/kotannoyu/",
+      "note": "Overture Places 2026-11-18.0(meta)の施設名付きレコード「屈斜路湖露天風呂」。URLが弟子屈町の旧観光サイト(弟子屈なび)のコタンの湯のページ(masyuko.or.jp/pc/onsen/cotan.html)を指し、施設を同定できる(住所欄の「屈斜路和琴」は誤り)。Googleの「コタン温泉露天風呂」のパノラマ(2015年10月)で、湖岸の脱衣小屋と浴場の位置を目視。地理院シームレス空中写真で、湖岸の岩風呂と小屋とみられる形から約4m。同じ湖岸に「Kotan Onsen」(電話+81154822940=弟子屈町観光商工課、約10m北東)「古丹温泉」のレコードもある。OSMの「コタン共同浴場」(way/669253922)は約95m北東の屋内の別施設、OSMの無名の露天の公衆浴場(node/13011535680)は道路沿いの建物で採用しない。座標の出典はOvertureの同リリースの公式リリースノート(データ本体は約60日で配布終了)。Google座標は不使用(目視照合のみ)。",
+      "coordinateCheckedAt": "2026-11-28",
+      "onsen": "コタン温泉",
+      "previousLatitude": null,
+      "previousLongitude": null,
+      "address": "北海道川上郡弟子屈町屈斜路古丹",
+      "auditResult": "新規追加",
+      "coordinateLicense": "CDLA-Permissive-2.0",
+      "sourceName": "Overture Places / meta",
+      "sourceId": "14f4298d-308f-46f1-bfa9-0862b13f0035",
+      "sourceFacilityName": "屈斜路湖露天風呂",
+      "identityReferences": [
+        "https://www.masyuko.or.jp/enjoy/kotannoyu/",
+        "https://masyukocam.marimo.jp/pc/onsen/cotan.html"
+      ],
+      "googleReference": "https://www.google.com/maps/search/?api=1&query=%E3%82%B3%E3%82%BF%E3%83%B3%E6%B8%A9%E6%B3%89%E9%9C%B2%E5%A4%A9%E9%A2%A8%E5%91%82%20%E5%B1%88%E6%96%9C%E8%B7%AF%E6%B9%96",
+      "googleCoordinatesStored": false,
+      "confidence": "高（施設ページを指すレコード・パノラマ・空中写真の一致、位置の精度は数m）",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.34132385253906,
+          43.56466674804687
+        ]
+      },
+      "sourceRelease": "2026-11-18.0",
+      "sourceRecordId": "135719569855582",
+      "sourceWebsites": [
+        "http://www.masyuko.or.jp/pc/onsen/cotan.html"
+      ]
     }
   ],
   "coordinateSystem": "WGS84 (EPSG:4326), decimal degrees; GeoJSON order is [longitude, latitude], Leaflet is [latitude, longitude]"

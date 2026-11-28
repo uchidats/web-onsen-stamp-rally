@@ -51,7 +51,7 @@ const IWAKI = { 'onsen-074': '松柏館', 'onsen-075': '旅館こいと' };
 const SHIZUOKA = { 'onsen-071': '川端の宿 湯本館', 'onsen-072': '野天風呂 山の家', 'onsen-073': '観音温泉' };
 const TOYAMA = { 'onsen-065': '大牧温泉観光旅館', 'onsen-066': 'みくりが池温泉', 'onsen-067': 'ホテルおがわ' };
 const SHIMOFURO = { 'onsen-110': '海峡の湯' }; // 浴槽の構成・休止中の浴槽は第三者資料(noteに明記)
-const HOKKAIDO = { 'onsen-001': '知内温泉旅館', 'onsen-102': '丸美ヶ丘温泉ホテル', 'onsen-103': '見市温泉旅館', 'onsen-109': '夢元さぎり湯' };
+const HOKKAIDO = { 'onsen-001': '知内温泉旅館', 'onsen-102': '丸美ヶ丘温泉ホテル', 'onsen-103': '見市温泉旅館', 'onsen-109': '夢元さぎり湯', 'onsen-111': '川湯公衆浴場 湯吉', 'onsen-112': 'コタンの湯' };
 const NAGANO = { 'onsen-054': 'ランプの宿高峰温泉', 'onsen-055': '中棚荘', 'onsen-056': '奈良屋旅館', 'onsen-057': '湯元齋藤旅館', 'onsen-058': '七草の湯', 'onsen-059': '神乃湯', 'onsen-083': '黄金の湯 松代荘', 'onsen-088': '泡の湯旅館', 'onsen-094': '棧温泉旅館', 'onsen-096': '渋・辰野館', 'onsen-105': '大湯', 'onsen-106': '真湯', 'onsen-107': '滝の湯' };
 const NIIGATA = { 'onsen-060': 'ひなの宿ちとせ', 'onsen-061': '自在館', 'onsen-062': '貝掛温泉', 'onsen-063': '瀬波グランドホテルはぎのや', 'onsen-064': '嵐渓荘' };
 
@@ -60,7 +60,7 @@ const IWATE = {
 };
 
 test('feature baths: data is keyed by existing facility IDs and covers the confirmed facilities including 3 Gunma facilities', () => {
-  assert.equal(data.length, 110);
+  assert.equal(data.length, 112);
   assert.deepEqual(Object.keys(feature).sort(), [...Object.keys(YAMAGATA), ...Object.keys(AOMORI), ...Object.keys(IWATE), ...Object.keys(AKITA), ...Object.keys(MIYAGI), ...Object.keys(FUKUSHIMA), ...Object.keys(TOCHIGI), ...Object.keys(GUNMA), ...Object.keys(NIIGATA), ...Object.keys(NAGANO), ...Object.keys(TOYAMA), ...Object.keys(YAMANASHI), ...Object.keys(SHIZUOKA), ...Object.keys(IWAKI), ...Object.keys(ITO), ...Object.keys(RENGE), ...Object.keys(TOKACHIDAKE), ...Object.keys(TOYOTOMI), ...Object.keys(SANDOGOYA), ...Object.keys(SHICHIMI), ...Object.keys(HOKKAIDO_YUCHELIN), ...Object.keys(HOKKAIDO), ...Object.keys(SHIMOFURO)].sort());
   for (const [id, name] of Object.entries(GUNMA)) {
     assert.equal(data.find(x => x.id === id).facility, name);
@@ -643,4 +643,13 @@ test('feature baths: Kaikyo no Yu lists 大湯 and 新湯, and 大湯2号泉 sta
   assert.equal(feature['onsen-110'].baths.map(b => b.name).join(','), '大湯,新湯,大湯2号泉');
   assert.ok(feature['onsen-110'].baths[2].tags.includes('休止中')); assert.match(x.bathing, /表記が異なる/);
   assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null);
+});
+
+test('feature baths: Yukichi and Kotan no Yu publish only the tourism-association text; Kotan is a free lakeside open-air bath with its cleaning-day difference recorded', () => {
+  const y = data.find(v => v.id === 'onsen-111'), k = data.find(v => v.id === 'onsen-112');
+  assert.equal(y.onsen, '川湯温泉'); assert.equal(k.onsen, 'コタン温泉'); assert.equal(k.officialUrl, '');
+  assert.equal(feature['onsen-111'].baths.map(b => b.name).join(','), '内湯,浅い湯船');
+  assert.equal(feature['onsen-112'].baths[0].kind, '露天'); assert.match(k.bathing, /無料/); assert.match(k.bathing, /金曜日は清掃/); assert.match(k.bathing, /清掃日の案内が資料で異なる/);
+  assert.match(y.bathing, /表記が異なる/); assert.match(y.bathing, /加水の有無）は公式資料で確認できない/);
+  for (const x of [y, k]) { assert.equal(x.distanceKm, null); assert.equal(x.elevationM, null); assert.ok(!/訪問/.test(x.bathing)); }
 });
